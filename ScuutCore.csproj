@@ -71,6 +71,27 @@
     <Reference Include="Exiled.Updater, Version=3.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\EXILED.5.2.1\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
+    <Reference Include="LiteDB, Version=5.0.9.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>packages\LiteDB.5.0.9\lib\net45\LiteDB.dll</HintPath>
+    </Reference>
+    <Reference Include="Mirror">
+      <HintPath>..\..\11.0\Mirror.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils, Version=22.5.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MonoMod.Utils.22.5.1.1\lib\net452\MonoMod.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -80,6 +101,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -100,6 +122,62 @@
     <Compile Include="API\Loader\Loader.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="EventHandlers.cs" />
+    <Compile Include="Modules\AntiAFK\Components\AfkComponent.cs" />
+    <Compile Include="Modules\AntiAFK\Models\PlayerInfo.cs" />
+    <Compile Include="Modules\AntiAFK\Models\PositionInfo.cs" />
+    <Compile Include="Modules\AutoFFToggle\Config.cs" />
+    <Compile Include="Modules\AutoFFToggle\AutoFFToggle.cs" />
+    <Compile Include="Modules\AutoFFToggle\EventHandlers.cs" />
+    <Compile Include="Modules\AntiAFK\AntiAFK.cs" />
+    <Compile Include="Modules\AntiAFK\Config.cs" />
+    <Compile Include="Modules\AntiAFK\EventHandlers.cs" />
+    <Compile Include="Modules\Better106Attack\Better106Attack.cs" />
+    <Compile Include="Modules\Better106Attack\Config.cs" />
+    <Compile Include="Modules\Better106Attack\EventHandlers.cs" />
+    <Compile Include="Modules\BetterSinkholes\BetterSinkholes.cs" />
+    <Compile Include="Modules\BetterSinkholes\Config.cs" />
+    <Compile Include="Modules\BetterSinkholes\EventHandlers.cs" />
+    <Compile Include="Modules\BetterLateSpawn\BetterLateSpawn.cs" />
+    <Compile Include="Modules\BetterLateSpawn\Config.cs" />
+    <Compile Include="Modules\BetterLateSpawn\EventHandlers.cs" />
+    <Compile Include="Modules\RoundSummary\RoundSummary.cs" />
+    <Compile Include="Modules\RoundSummary\Config.cs" />
+    <Compile Include="Modules\RoundSummary\EventHandlers.cs" />
+    <Compile Include="Modules\WhoAreMyTeammates\Commands\WamtList.cs" />
+    <Compile Include="Modules\WhoAreMyTeammates\DisplayType.cs" />
+    <Compile Include="Modules\WhoAreMyTeammates\Models\WamtBroadcast.cs" />
+    <Compile Include="Modules\WhoAreMyTeammates\WhoAreMyTeammates.cs" />
+    <Compile Include="Modules\WhoAreMyTeammates\Config.cs" />
+    <Compile Include="Modules\WhoAreMyTeammates\EventHandlers.cs" />
+    <Compile Include="Modules\Chaos\Chaos.cs" />
+    <Compile Include="Modules\Chaos\Config.cs" />
+    <Compile Include="Modules\Chaos\EventHandlers.cs" />
+    <Compile Include="Modules\Teslas\Teslas.cs" />
+    <Compile Include="Modules\Teslas\Config.cs" />
+    <Compile Include="Modules\Teslas\EventHandlers.cs" />
+    <Compile Include="Modules\Health\Health.cs" />
+    <Compile Include="Modules\Health\Config.cs" />
+    <Compile Include="Modules\Health\EventHandlers.cs" />
+    <Compile Include="Modules\ScpSpeech\ScpSpeech.cs" />
+    <Compile Include="Modules\ScpSpeech\Config.cs" />
+    <Compile Include="Modules\ScpSpeech\EventHandlers.cs" />
+    <Compile Include="Modules\Scp096Notifications\Scp096Notifications.cs" />
+    <Compile Include="Modules\Scp096Notifications\Config.cs" />
+    <Compile Include="Modules\Scp096Notifications\EventHandlers.cs" />
+    <Compile Include="Modules\KillMessages\Commands\Delete.cs" />
+    <Compile Include="Modules\KillMessages\Commands\Parent.cs" />
+    <Compile Include="Modules\KillMessages\Commands\Set.cs" />
+    <Compile Include="Modules\KillMessages\Commands\SetColor.cs" />
+    <Compile Include="Modules\KillMessages\Commands\Toggle.cs" />
+    <Compile Include="Modules\KillMessages\Database\Database.cs" />
+    <Compile Include="Modules\KillMessages\Database\Extensions.cs" />
+    <Compile Include="Modules\KillMessages\Database\MessageData.cs" />
+    <Compile Include="Modules\KillMessages\KillMessages.cs" />
+    <Compile Include="Modules\KillMessages\Config.cs" />
+    <Compile Include="Modules\KillMessages\EventHandlers.cs" />
+    <Compile Include="Modules\CuffedTK\CuffedTK.cs" />
+    <Compile Include="Modules\CuffedTK\Config.cs" />
+    <Compile Include="Modules\CuffedTK\EventHandlers.cs" />
     <Compile Include="Modules\BetterCandy\EventHandlers.cs" />
     <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
     <Compile Include="Modules\BetterCandy\Config.cs" />

@@ -14,6 +14,6 @@ namespace ScuutCore.Modules.BetterCandy
         public int ChoosenNumber { get; set; } = 5;
 
         [Description("The number of times someone can pick the candy before the hands get severed.")]
-        public float PickCandyTimes { get; set; } = 3;
+        public float PickCandyTimes { get; set; } = 2;
     }
 }

@@ -74,11 +74,11 @@ namespace ScuutCore.API
 
             module.Config.CopyProperties(cfg);
 
-            if (!module.Config.IsEnabled)
-				return;
-
-            module.OnEnabled();
-            ActiveModules.Add(module);
+            if (module.Config.IsEnabled)
+            {
+                module.OnEnabled();
+                ActiveModules.Add(module);
+            }
         }
 
         public static void StopModules()
