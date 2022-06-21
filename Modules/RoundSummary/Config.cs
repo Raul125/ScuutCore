@@ -8,27 +8,27 @@ namespace ScuutCore.Modules.RoundSummary
         public bool IsEnabled { get; set; } = true;
 
         [Description("Show most kills:")]
-        public bool ShowKills { get; private set; } = true;
+        public bool ShowKills { get; set; } = true;
 
         [Description("Most kills messeage:")]
-        public string KillsMessage { get; private set; } = "<size=30><color=yellow><b>{player}</color> had the most kills, they had <color=red>{kills} kills</b></color></size>";
+        public string KillsMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> had the most kills, they had <color=red>{kills} kills</b></color></size>";
 
-        public string NoKillsMessage { get; private set; } = "No one got any kills.";
+        public string NoKillsMessage { get; set; } = "No one got any kills.";
 
         [Description("Show first escapee:")]
-        public bool ShowEscapee { get; private set; } = true;
+        public bool ShowEscapee { get; set; } = true;
 
         [Description("First escapee message:")]
-        public string EscapeeMessage { get; private set; } = "<size=30><color=yellow><b>{player}</color> was the first to escape at <color=red>{time}</b></color></size>";
+        public string EscapeeMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> was the first to escape at <color=red>{time}</b></color></size>";
 
-        public string NoEscapeeMessage { get; private set; } = "No one escaped!";
+        public string NoEscapeeMessage { get; set; } = "No one escaped!";
 
         [Description("Show first one who killed a SCP:")]
-        public bool ShowScpFirstKill { get; private set; } = true;
+        public bool ShowScpFirstKill { get; set; } = true;
 
         [Description("First SCP killer message:")]
-        public string ScpFirstKillMessage { get; private set; } = "<size=30><color=yellow><b>{player}</color> was the first person to contain a scp!</b></size>";
+        public string ScpFirstKillMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> was the first person to contain a scp!</b></size>";
 
-        public string NoScpKillMessage { get; private set; } = "No one killed a SCP!";
+        public string NoScpKillMessage { get; set; } = "No one killed a SCP!";
     }
 }

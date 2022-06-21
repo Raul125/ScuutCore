@@ -1,5 +1,6 @@
 ﻿using Exiled.Events.EventArgs;
 using Exiled.API.Features;
+using MEC;
 
 namespace ScuutCore.Modules.Chaos
 {
@@ -14,7 +15,7 @@ namespace ScuutCore.Modules.Chaos
         public void OnRespawningTeam(RespawningTeamEventArgs ev)
         {
             if (ev.NextKnownTeam == Respawning.SpawnableTeamType.ChaosInsurgency)
-                Cassie.Message(chaos.Config.ChaosCassie, false, false, false);
+                Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.Message(chaos.Config.ChaosCassie, false, false, false)));
         }
     }
 }

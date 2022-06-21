@@ -9,7 +9,7 @@ namespace ScuutCore.Modules.Teslas
         public bool IsEnabled { get; set; } = true;
 
         [Description("Roles with disabled teslas")]
-        public List<RoleType> Roles = new List<RoleType>
+        public List<RoleType> Roles { get; set; } = new List<RoleType>
         {
             RoleType.FacilityGuard
         };
