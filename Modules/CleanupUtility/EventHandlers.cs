@@ -18,23 +18,57 @@ namespace ScuutCore.Modules.CleanupUtility
             Plugin.Coroutines.Add(Timing.RunCoroutine(CleanupCoroutine()));
         }
 
+        public void OnDecontaminating(DecontaminatingEventArgs ev)
+        {
+            if (!ev.IsAllowed)
+                return;
+
+            foreach (var item in Map.Pickups)
+            {
+                if (item == null)
+                    continue;
+
+                var room = Map.FindParentRoom(item.GameObject);
+                if (room != null && room.Zone == Exiled.API.Enums.ZoneType.LightContainment)
+                    item.Destroy();
+            }
+        }
+
+        public void OnDetonated()
+        {
+            foreach (var item in Map.Pickups)
+            {
+                if (item == null)
+                    continue;
+
+                var room = Map.FindParentRoom(item.GameObject);
+                if (room != null && room.Zone != Exiled.API.Enums.ZoneType.Surface)
+                    item.Destroy();
+            }
+        }
+
         private IEnumerator<float> CleanupCoroutine()
         {
             while (Round.IsStarted)
             {
                 yield return Timing.WaitForSeconds(cleanupUtility.Config.CleanDelay);
 
-                foreach (var ragdoll in Map.Ragdolls)
+                if (cleanupUtility.Config.DestroyRagdolls)
                 {
-                    if (ragdoll != null)
-                        ragdoll.Delete();
+                    foreach (var ragdoll in Map.Ragdolls)
+                    {
+                        if (ragdoll != null)
+                            ragdoll.Delete();
+                    }
                 }
-                    
 
-                foreach (var item in Map.Pickups)
+                if (cleanupUtility.Config.ClearItems)
                 {
-                    if (item != null)
-                        item.Destroy();
+                    foreach (var item in Map.Pickups)
+                    {
+                        if (item != null)
+                            item.Destroy();
+                    }
                 }
             }
         }

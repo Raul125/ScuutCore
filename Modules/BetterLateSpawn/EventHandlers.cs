@@ -20,6 +20,7 @@ namespace ScuutCore.Modules.BetterLateSpawn
 
         public void OnWaitingForPlayers()
         {
+            Server.LaterJoinEnabled = false;
             DisconnectedPlayers.Clear();
         }
 
@@ -47,12 +48,6 @@ namespace ScuutCore.Modules.BetterLateSpawn
 
                 ev.Player.Broadcast(betterLateSpawn.Config.Broadcast);
             }));
-        }
-
-        public void OnChangingRole(ChangingRoleEventArgs ev)
-        {
-            if (ev.Reason == Exiled.API.Enums.SpawnReason.LateJoin)
-                ev.IsAllowed = false;
         }
 
         public void OnDestroying(DestroyingEventArgs ev)

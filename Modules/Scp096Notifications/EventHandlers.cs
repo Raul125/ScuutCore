@@ -19,7 +19,7 @@ namespace ScuutCore.Modules.Scp096Notifications
 
             if (scp096Notifications.Config.Enable096SeenMessage)
             {
-                ev.Target.ShowHint(scp096Notifications.Config.Scp096SeenMessage, 5f);
+                ev.Target.ShowHint(scp096Notifications.Config.Scp096SeenMessage, scp096Notifications.Config.HintDuration);
             }
 
             if (scp096Notifications.Config.Enable096NewTargetMessage)
@@ -31,7 +31,7 @@ namespace ScuutCore.Modules.Scp096Notifications
                     .Replace("$name", ev.Target.Nickname)
                     .Replace("$class", $"<color={ev.Target.Role.Color.ToHex()}>{translatedRole}</color>");
 
-                ev.Scp096.ShowHint(message, 5f);
+                ev.Scp096.ShowHint(message, scp096Notifications.Config.HintDuration);
             }
         }
     }

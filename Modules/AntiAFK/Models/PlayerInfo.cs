@@ -6,7 +6,6 @@ using Exiled.CustomItems.API.Features;
 using Exiled.CustomRoles.API.Features;
 using InventorySystem.Items.Usables.Scp330;
 using MEC;
-using MonoMod.Utils;
 using UnityEngine;
 
 namespace ScuutCore.Modules.AntiAFK
@@ -20,7 +19,6 @@ namespace ScuutCore.Modules.AntiAFK
         private readonly Vector3 position;
         private readonly float health;
         private readonly IReadOnlyCollection<CustomRole> customRoles;
-        private readonly Dictionary<ItemType, ushort> ammo;
         private readonly byte level;
         private readonly float experience;
         private readonly float energy;
@@ -30,7 +28,6 @@ namespace ScuutCore.Modules.AntiAFK
             role = player.Role.Type;
             position = player.Position;
             health = player.Health;
-            ammo = player.Ammo;
             CustomRole.TryGet(player, out customRoles);
 
             foreach (Item item in player.Items)
@@ -62,8 +59,7 @@ namespace ScuutCore.Modules.AntiAFK
                     customRole.AddRole(player);
             }
 
-            float delay = isCustom ? 2f : 0.5f;
-            Timing.CallDelayed(delay, () =>
+            Timing.CallDelayed(2f, () =>
             {
                 player.Health = health;
                 player.Position = position;
@@ -81,8 +77,6 @@ namespace ScuutCore.Modules.AntiAFK
                     scp330.Give(player);
                 }
 
-                player.Ammo.Clear();
-                player.Ammo.AddRange(ammo);
                 if (player.Role is Scp079Role scp079Role)
                 {
                     scp079Role.Level = level;

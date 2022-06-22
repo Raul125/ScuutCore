@@ -1,29 +1,27 @@
 ﻿using ScuutCore.API;
 using Player = Exiled.Events.Handlers.Player;
 
-namespace ScuutCore.Modules.BetterLateSpawn
+namespace ScuutCore.Modules.RainbowTags
 {
-    public class BetterLateSpawn : Module<Config>
+    public class RainbowTags : Module<Config>
     {
-        public override string Name { get; } = "BetterLateSpawn";
+        public override string Name { get; } = "RainbowTags";
 
         private EventHandlers EventHandlers;
 
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.Verified += EventHandlers.OnVerified;
-            Player.Destroying += EventHandlers.OnDestroying;
+            Player.ChangingGroup += EventHandlers.OnChangingGroup;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Verified -= EventHandlers.OnVerified;
-            Player.Destroying -= EventHandlers.OnDestroying;
-
+            Player.ChangingGroup -= EventHandlers.OnChangingGroup;
             EventHandlers = null;
+
             base.OnDisabled();
         }
     }

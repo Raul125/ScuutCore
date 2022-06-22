@@ -12,6 +12,8 @@ namespace ScuutCore.Modules.CleanupUtility
         {
             EventHandlers = new EventHandlers(this);
             Exiled.Events.Handlers.Server.RoundStarted += EventHandlers.OnRoundStart;
+            Exiled.Events.Handlers.Map.Decontaminating += EventHandlers.OnDecontaminating;
+            Exiled.Events.Handlers.Warhead.Detonated += EventHandlers.OnDetonated;
 
             base.OnEnabled();
         }
@@ -19,6 +21,8 @@ namespace ScuutCore.Modules.CleanupUtility
         public override void OnDisabled()
         {
             Exiled.Events.Handlers.Server.RoundStarted -= EventHandlers.OnRoundStart;
+            Exiled.Events.Handlers.Map.Decontaminating -= EventHandlers.OnDecontaminating;
+            Exiled.Events.Handlers.Warhead.Detonated -= EventHandlers.OnDetonated;
             EventHandlers = null;
 
             base.OnDisabled();

@@ -33,6 +33,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\Plugins-SCP\NeonCore\bin\Release\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\11.0\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
@@ -89,9 +92,6 @@
     <Reference Include="Mono.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
     </Reference>
-    <Reference Include="MonoMod.Utils, Version=22.5.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\MonoMod.Utils.22.5.1.1\lib\net452\MonoMod.Utils.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -145,6 +145,31 @@
     <Compile Include="Modules\AdminTools\AdminTools.cs" />
     <Compile Include="Modules\AdminTools\Config.cs" />
     <Compile Include="Modules\AdminTools\EventHandlers.cs" />
+    <Compile Include="Modules\AutoNuke\AutoNuke.cs" />
+    <Compile Include="Modules\AutoNuke\Config.cs" />
+    <Compile Include="Modules\AutoNuke\EventHandlers.cs" />
+    <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
+    <Compile Include="Modules\ScpSwap\Commands\Cancel.cs" />
+    <Compile Include="Modules\ScpSwap\Commands\Decline.cs" />
+    <Compile Include="Modules\ScpSwap\Commands\List.cs" />
+    <Compile Include="Modules\ScpSwap\Commands\ScpSwapParent.cs" />
+    <Compile Include="Modules\ScpSwap\Models\ConsoleMessage.cs" />
+    <Compile Include="Modules\ScpSwap\Models\CustomSwap.cs" />
+    <Compile Include="Modules\ScpSwap\Models\Swap.cs" />
+    <Compile Include="Modules\ScpSwap\Models\SwapData.cs" />
+    <Compile Include="Modules\ScpSwap\ScpSwap.cs" />
+    <Compile Include="Modules\ScpSwap\Config.cs" />
+    <Compile Include="Modules\ScpSwap\EventHandlers.cs" />
+    <Compile Include="Modules\RainbowTags\Component\RainbowTagController.cs" />
+    <Compile Include="Modules\RainbowTags\RainbowTags.cs" />
+    <Compile Include="Modules\RainbowTags\Config.cs" />
+    <Compile Include="Modules\RainbowTags\EventHandlers.cs" />
+    <Compile Include="Modules\Scp1162\Scp1162.cs" />
+    <Compile Include="Modules\Scp1162\Config.cs" />
+    <Compile Include="Modules\Scp1162\EventHandlers.cs" />
+    <Compile Include="Modules\BetterRAList\BetterRAList.cs" />
+    <Compile Include="Modules\BetterRAList\Patches\RAPlayerListPatch.cs" />
+    <Compile Include="Modules\BetterRAList\Config.cs" />
     <Compile Include="Modules\RemoteKeycard\RemoteKeycard.cs" />
     <Compile Include="Modules\RemoteKeycard\Config.cs" />
     <Compile Include="Modules\RemoteKeycard\EventHandlers.cs" />
@@ -152,6 +177,7 @@
     <Compile Include="Modules\CleanupUtility\Commands\CleanupCommand.cs" />
     <Compile Include="Modules\CleanupUtility\Config.cs" />
     <Compile Include="Modules\CleanupUtility\EventHandlers.cs" />
+    <Compile Include="Modules\ScpSwap\ValidSwaps.cs" />
     <Compile Include="Modules\TpsLogger\Commands\CurrentCommand.cs" />
     <Compile Include="Modules\TpsLogger\TpsLogger.cs" />
     <Compile Include="Modules\TpsLogger\Config.cs" />

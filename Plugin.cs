@@ -2,6 +2,7 @@
 using System;
 using MEC;
 using System.Collections.Generic;
+using HarmonyLib;
 
 namespace ScuutCore
 {
@@ -11,7 +12,7 @@ namespace ScuutCore
         public override string Prefix { get; } = "scuutcore";
         public override string Author { get; } = "Raul125";
         public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
-        public override Version Version { get; } = new Version(1, 0, 3);
+        public override Version Version { get; } = new Version(1, 0, 4);
 
         // Static Part
         public static Plugin Singleton { get; internal set; }
@@ -29,12 +30,16 @@ namespace ScuutCore
             }
         }
 
+        public static Harmony Harmony { get; private set; }
         public EventHandlers.EventHandlers EventHandlers;
 
         public override void OnEnabled()
         {
             Singleton = this;
             API.Loader.InitModules();
+
+            Harmony = new Harmony("scuutcore.raul." + DateTime.Now.Ticks);
+            Harmony.PatchAll();
 
             EventHandlers = new EventHandlers.EventHandlers();
             Exiled.Events.Handlers.Server.RestartingRound += EventHandlers.OnRoundRestarting;
@@ -50,6 +55,7 @@ namespace ScuutCore
             EventHandlers = null;
 
             Singleton = null;
+            Harmony?.UnpatchAll();
 
             base.OnDisabled();
         }

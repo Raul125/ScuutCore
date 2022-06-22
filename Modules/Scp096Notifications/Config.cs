@@ -20,6 +20,8 @@ namespace ScuutCore.Modules.Scp096Notifications
         [Description("The message to show Scp096 when they gain a target.")]
         public string Scp096NewTargetMessage { get; set; } = "<b>$name</b> has viewed your face! They are a <b>$class</b>.";
 
+        public float HintDuration { get; set; } = 10f;
+
         [Description("Change the display strings of each class (applies to SCP-096's notification).")]
         public Dictionary<RoleType, string> RoleStrings { get; set; } = new Dictionary<RoleType, string>
         {

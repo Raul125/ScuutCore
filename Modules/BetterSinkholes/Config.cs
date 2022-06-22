@@ -15,6 +15,8 @@ namespace ScuutCore.Modules.BetterSinkholes
         [Description("Thea amount of damage to deal to someone when they fall into the pocket dimension")]
         public float EntranceDamage { get; set; } = 40;
 
+        public float PositionChange { get; set; } = 0.0001f;
+
         [Description("The message to show to someone when they fall into the pocket dimension.")]
         public Exiled.API.Features.Broadcast TeleportMessage { get; set; } = new Exiled.API.Features.Broadcast
         {
