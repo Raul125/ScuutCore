@@ -11,15 +11,18 @@ namespace ScuutCore.Modules.BetterLateSpawn
         [Description("How long after the round started should you still be able to spawn (seconds)")]
         public double SpawnTime { get; set; } = 60;
 
-        [Description("Random role when joining")]
-        public List<RoleType> Roles { get; set; } = new List<RoleType>
-        {
-            RoleType.FacilityGuard,
-            RoleType.ClassD,
-            RoleType.Scientist
-        };
+        [Description("Chances as what class you spawn:")]
+        public float FacilityGuardChance { get; set; } = 10f;
+        public float ScientistChance { get; set; } = 20f;
+        public float ClassDChance { get; set; } = 70f;
 
         [Description("What should it broadcast when you late spawn.")]
-        public string Broadcast { get; set; } = "You joined late and have been spawned";
+        public Exiled.API.Features.Broadcast Broadcast { get; set; } = new Exiled.API.Features.Broadcast
+        {
+            Show = true,
+            Content = "You joined late and have been spawned",
+            Duration = 10,
+            Type = global::Broadcast.BroadcastFlags.Normal
+        };
     }
 }

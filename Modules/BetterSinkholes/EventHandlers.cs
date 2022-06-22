@@ -36,7 +36,7 @@ namespace ScuutCore.Modules.BetterSinkholes
             Plugin.Coroutines.Add(Timing.RunCoroutine(PortalAnimation(ev.Player)));
 
             ev.Player.Hurt(betterSinkholes.Config.EntranceDamage, DamageType.Scp106);
-            ev.Player.Broadcast(6, betterSinkholes.Config.TeleportMessage);
+            ev.Player.Broadcast(betterSinkholes.Config.TeleportMessage);
         }
 
         public IEnumerator<float> PortalAnimation(Player player)

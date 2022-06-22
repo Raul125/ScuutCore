@@ -16,6 +16,12 @@ namespace ScuutCore.Modules.BetterSinkholes
         public float EntranceDamage { get; set; } = 40;
 
         [Description("The message to show to someone when they fall into the pocket dimension.")]
-        public string TeleportMessage { get; set; } = "You've fallen into the pocket dimension!";
+        public Exiled.API.Features.Broadcast TeleportMessage { get; set; } = new Exiled.API.Features.Broadcast
+        {
+            Duration = 5,
+            Content = "You've fallen into the pocket dimension!",
+            Show = false,
+            Type = Broadcast.BroadcastFlags.Normal
+        };
     }
 }

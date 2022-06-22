@@ -13,26 +13,17 @@ namespace ScuutCore.Modules.KillMessages
 
         public override void OnEnabled()
         {
-            Singleton = this;
-            Database.Open();
             EventHandlers = new EventHandlers(this);
-
             Player.Died += EventHandlers.OnDied;
-            Player.Verified += EventHandlers.OnVerified;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Died += EventHandlers.OnDied;
-            Player.Verified += EventHandlers.OnVerified;
+            Player.Died -= EventHandlers.OnDied;
 
             EventHandlers = null;
-            Database.Close();
-
-            Singleton = null;
-
             base.OnDisabled();
         }
     }

@@ -71,9 +71,6 @@
     <Reference Include="Exiled.Updater, Version=3.1.1.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\EXILED.5.2.1\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
-    <Reference Include="LiteDB, Version=5.0.9.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
-      <HintPath>packages\LiteDB.5.0.9\lib\net45\LiteDB.dll</HintPath>
-    </Reference>
     <Reference Include="Mirror">
       <HintPath>..\..\11.0\Mirror.dll</HintPath>
     </Reference>
@@ -164,14 +161,6 @@
     <Compile Include="Modules\Scp096Notifications\Scp096Notifications.cs" />
     <Compile Include="Modules\Scp096Notifications\Config.cs" />
     <Compile Include="Modules\Scp096Notifications\EventHandlers.cs" />
-    <Compile Include="Modules\KillMessages\Commands\Delete.cs" />
-    <Compile Include="Modules\KillMessages\Commands\Parent.cs" />
-    <Compile Include="Modules\KillMessages\Commands\Set.cs" />
-    <Compile Include="Modules\KillMessages\Commands\SetColor.cs" />
-    <Compile Include="Modules\KillMessages\Commands\Toggle.cs" />
-    <Compile Include="Modules\KillMessages\Database\Database.cs" />
-    <Compile Include="Modules\KillMessages\Database\Extensions.cs" />
-    <Compile Include="Modules\KillMessages\Database\MessageData.cs" />
     <Compile Include="Modules\KillMessages\KillMessages.cs" />
     <Compile Include="Modules\KillMessages\Config.cs" />
     <Compile Include="Modules\KillMessages\EventHandlers.cs" />

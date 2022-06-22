@@ -2,6 +2,7 @@
 using Exiled.Events.EventArgs;
 using MEC;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ScuutCore.Modules.BetterLateSpawn
 {
@@ -11,8 +12,10 @@ namespace ScuutCore.Modules.BetterLateSpawn
         public EventHandlers(BetterLateSpawn bls)
         {
             betterLateSpawn = bls;
+            Chances = new float[] { betterLateSpawn.Config.ClassDChance, betterLateSpawn.Config.ScientistChance, betterLateSpawn.Config.FacilityGuardChance };
         }
 
+        private float[] Chances;
         private List<string> DisconnectedPlayers = new List<string>();
 
         public void OnWaitingForPlayers()
@@ -27,7 +30,7 @@ namespace ScuutCore.Modules.BetterLateSpawn
 
             Plugin.Coroutines.Add(Timing.CallDelayed(2f, () =>
             {
-                switch (Plugin.Random.Next(0, 2))
+                switch (Choose())
                 {
                     case 0:
                         ev.Player.Role.Type = RoleType.ClassD;
@@ -42,7 +45,7 @@ namespace ScuutCore.Modules.BetterLateSpawn
                         break;
                 }
 
-                ev.Player.Broadcast(10, betterLateSpawn.Config.Broadcast);
+                ev.Player.Broadcast(betterLateSpawn.Config.Broadcast);
             }));
         }
 
@@ -58,6 +61,32 @@ namespace ScuutCore.Modules.BetterLateSpawn
             {
                 DisconnectedPlayers.Add(ev.Player.UserId);
             }
+        }
+
+        private int Choose()
+        {
+            float total = 0;
+
+            foreach (float elem in Chances)
+            {
+                total += elem;
+            }
+
+            float randomPoint = Random.value * total;
+
+            for (int i = 0; i < Chances.Length; i++)
+            {
+                if (randomPoint < Chances[i])
+                {
+                    return i;
+                }
+                else
+                {
+                    randomPoint -= Chances[i];
+                }
+            }
+
+            return Chances.Length - 1;
         }
     }
 }
