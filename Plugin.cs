@@ -11,7 +11,7 @@ namespace ScuutCore
         public override string Prefix { get; } = "scuutcore";
         public override string Author { get; } = "Raul125";
         public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
-        public override Version Version { get; } = new Version(1, 0, 2);
+        public override Version Version { get; } = new Version(1, 0, 3);
 
         // Static Part
         public static Plugin Singleton { get; internal set; }
