@@ -25,21 +25,43 @@ namespace ScuutCore.Modules.RoundSummary
             firstScpKiller = string.Empty;
         }
 
+        public void OnDying(DyingEventArgs ev)
+        {
+            if (!ev.IsAllowed)
+                return;
+
+            if (ev.Target != null && ev.Target.IsScp && firstScpKiller == string.Empty)
+                firstScpKiller = ev.Killer.Nickname;
+        }
+
         public void OnDied(DiedEventArgs ev)
         {
             if (ev.Handler.Type == Exiled.API.Enums.DamageType.PocketDimension || ev.Handler.Type == Exiled.API.Enums.DamageType.Scp106)
             {
                 foreach (var ply in Player.Get(RoleType.Scp106))
-                    playerKills[ply]++;
+                {
+                    if (!playerKills.ContainsKey(ply))
+                    {
+                        playerKills.Add(ply, 1);
+                    }
+                    else
+                    {
+                        playerKills[ply]++;
+                    }
+                }
             }
 
             if (ev.Killer == null)
                 return;
 
-            playerKills[ev.Killer]++;
-
-            if (ev.Target != null && ev.Target.IsScp && firstScpKiller == string.Empty)
-                firstScpKiller = ev.Killer.Nickname;
+            if (!playerKills.ContainsKey(ev.Killer))
+            {
+                playerKills.Add(ev.Killer, 1);
+            }
+            else
+            {
+                playerKills[ev.Killer]++;
+            }
         }
 
         public void OnPlayerEscaping(EscapingEventArgs ev)

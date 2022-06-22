@@ -14,6 +14,7 @@ namespace ScuutCore.Modules.RoundSummary
         {
             EventHandlers = new EventHandlers(this);
             Player.Died += EventHandlers.OnDied;
+            Player.Dying += EventHandlers.OnDying;
             Player.Escaping += EventHandlers.OnPlayerEscaping;
             Server.WaitingForPlayers += EventHandlers.OnWaitingForPlayers;
             Server.RoundEnded += EventHandlers.OnRoundEnd;
@@ -24,6 +25,7 @@ namespace ScuutCore.Modules.RoundSummary
         public override void OnDisabled()
         {
             Player.Died -= EventHandlers.OnDied;
+            Player.Dying -= EventHandlers.OnDying;
             Player.Escaping -= EventHandlers.OnPlayerEscaping;
             Server.WaitingForPlayers -= EventHandlers.OnWaitingForPlayers;
             Server.RoundEnded -= EventHandlers.OnRoundEnd;
