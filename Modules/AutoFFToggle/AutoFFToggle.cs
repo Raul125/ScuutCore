@@ -12,7 +12,7 @@ namespace ScuutCore.Modules.AutoFFToggle
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers();
-            Server.RoundStarted += EventHandlers.OnRoundStarted;
+            Server.WaitingForPlayers += EventHandlers.OnWaitingForPlayers;
             Server.RoundEnded += EventHandlers.OnRoundEnded;
 
             base.OnEnabled();
@@ -20,7 +20,7 @@ namespace ScuutCore.Modules.AutoFFToggle
 
         public override void OnDisabled()
         {
-            Server.RoundStarted -= EventHandlers.OnRoundStarted;
+            Server.WaitingForPlayers -= EventHandlers.OnWaitingForPlayers;
             Server.RoundEnded -= EventHandlers.OnRoundEnded;
             EventHandlers = null;
 

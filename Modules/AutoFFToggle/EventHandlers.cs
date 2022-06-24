@@ -9,14 +9,14 @@ namespace ScuutCore.Modules.AutoFFToggle
         {
         }
 
-        public void OnRoundStarted()
+        public void OnWaitingForPlayers()
         {
-            Server.FriendlyFire = false;
+            GameCore.Console.singleton.TypeCommand("/setconfig friendly_fire false", null);
         }
 
         public void OnRoundEnded(RoundEndedEventArgs ev)
         {
-            Server.FriendlyFire = true;
+            GameCore.Console.singleton.TypeCommand("/setconfig friendly_fire true", null);
         }
     }
 }

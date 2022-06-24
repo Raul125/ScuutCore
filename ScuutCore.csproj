@@ -225,6 +225,8 @@
     <Compile Include="Modules\BetterCandy\EventHandlers.cs" />
     <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
     <Compile Include="Modules\BetterCandy\Config.cs" />
+    <Compile Include="Patches\FixDefaultSegmentPatch.cs" />
+    <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
