@@ -12,14 +12,14 @@ namespace ScuutCore.Modules.BetterSinkholes
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.WalkingOnSinkhole += EventHandlers.OnWalkingOnSinkhole;
+            Player.StayingOnEnvironmentalHazard += EventHandlers.OnStayingOnEnvironmentalHazard;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.WalkingOnSinkhole -= EventHandlers.OnWalkingOnSinkhole;
+            Player.StayingOnEnvironmentalHazard -= EventHandlers.OnStayingOnEnvironmentalHazard;
 
             EventHandlers = null;
             base.OnDisabled();

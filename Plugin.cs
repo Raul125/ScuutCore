@@ -12,9 +12,10 @@ namespace ScuutCore
         public override string Prefix { get; } = "scuutcore";
         public override string Author { get; } = "Raul125";
         public override Version RequiredExiledVersion { get; } = new Version(5, 0, 0);
-        public override Version Version { get; } = new Version(1, 0, 6);
+        public override Version Version { get; } = new Version(1, 0, 7);
 
         // Static Part
+        public static Harmony Harmony { get; internal set; }
         public static Plugin Singleton { get; internal set; }
         public static List<CoroutineHandle> Coroutines = new List<CoroutineHandle>();
 
@@ -30,7 +31,6 @@ namespace ScuutCore
             }
         }
 
-        public static Harmony Harmony { get; private set; }
         public EventHandlers.EventHandlers EventHandlers;
 
         public override void OnEnabled()

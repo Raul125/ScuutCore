@@ -1,5 +1,5 @@
 ﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+using Handlers = Exiled.Events.Handlers;
 
 namespace ScuutCore.Modules.BetterCandy
 {
@@ -12,14 +12,14 @@ namespace ScuutCore.Modules.BetterCandy
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.InteractingScp330 += EventHandlers.OnInteractingWithScp330;
+            Handlers.Scp330.InteractingScp330 += EventHandlers.OnInteractingWithScp330;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.InteractingScp330 -= EventHandlers.OnInteractingWithScp330;
+            Handlers.Scp330.InteractingScp330 -= EventHandlers.OnInteractingWithScp330;
             EventHandlers = null;
 
             base.OnDisabled();

@@ -17,22 +17,22 @@ namespace ScuutCore.Modules.BetterSinkholes
             betterSinkholes = btc;
         }
 
-        public void OnWalkingOnSinkhole(WalkingOnSinkholeEventArgs ev)
+        public void OnStayingOnEnvironmentalHazard(StayingOnEnvironmentalHazardEventArgs ev)
         {
-            if (ev.Player.SessionVariables.ContainsKey("IsNPC"))
-                return;
+            if (ev.EnvironmentalHazard is SinkholeEnvironmentalHazard sinkhole)
+            {
+                if (ev.Player.SessionVariables.ContainsKey("IsNPC") || ev.Player.IsScp)
+                    return;
 
-            if (ev.Player.IsScp && ev.Sinkhole.SCPImmune)
-                return;
+                if ((ev.Player.Position - sinkhole.transform.position).sqrMagnitude > betterSinkholes.Config.TeleportDistance * betterSinkholes.Config.TeleportDistance)
+                    return;
 
-            if ((ev.Player.Position - ev.Sinkhole.transform.position).sqrMagnitude > betterSinkholes.Config.TeleportDistance * betterSinkholes.Config.TeleportDistance)
-                return;
+                ev.IsAllowed = false;
 
-            ev.IsAllowed = false;
+                ev.Player.ReferenceHub.scp106PlayerScript.GrabbedPosition = ev.Player.Position;
 
-            ev.Player.ReferenceHub.scp106PlayerScript.GrabbedPosition = ev.Player.Position;
-
-            Plugin.Coroutines.Add(Timing.RunCoroutine(PortalAnimation(ev.Player)));
+                Plugin.Coroutines.Add(Timing.RunCoroutine(PortalAnimation(ev.Player)));
+            }
         }
 
         private IEnumerator<float> PortalAnimation(Player player)
