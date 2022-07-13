@@ -1,5 +1,5 @@
 ﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+using Server = Exiled.Events.Handlers.Server;
 
 namespace ScuutCore.Modules.CustomEscape
 {
@@ -13,14 +13,14 @@ namespace ScuutCore.Modules.CustomEscape
         {
             EventHandlers = new EventHandlers(this);
 
-            Player.Escaping += EventHandlers.OnEscaping;
+            Server.RoundStarted += EventHandlers.OnRoundStarted;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Escaping -= EventHandlers.OnEscaping;
+            Server.RoundStarted -= EventHandlers.OnRoundStarted;
 
             EventHandlers = null;
             base.OnDisabled();

@@ -76,6 +76,7 @@ namespace ScuutCore.API
 
             if (module.Config.IsEnabled)
             {
+                File.WriteAllText(configPath, Serializer.Serialize(module.Config));
                 module.OnEnabled();
                 ActiveModules.Add(module);
             }

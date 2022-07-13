@@ -35,9 +35,9 @@ namespace ScuutCore.Modules.Stalky106
 
 		public void OnCreatePortal(CreatingPortalEventArgs ev)
 		{
-			if (Warhead.IsDetonated && stalky106.Config.DisableAutoNuke && AutoNuke.EventHandlers.IsAutoNuke)
+			if (Warhead.IsDetonated && stalky106.Config.DisableNuke)
             {
-				ev.Player.ShowHint(stalky106.Config.DisableAutoNukeHint.Message, stalky106.Config.DisableAutoNukeHint.Time);
+				stalky106.Config.DisableNukeHint.Show(ev.Player);
 				return;
             }
 

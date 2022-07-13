@@ -13,7 +13,7 @@ namespace ScuutCore.Modules.AutoNuke
             autoNuke = at;
         }
 
-        public static bool IsAutoNuke = false;
+        public bool IsAutoNuke = false;
 
         public void OnRoundStart()
         {

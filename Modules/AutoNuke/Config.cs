@@ -20,33 +20,35 @@ namespace ScuutCore.Modules.AutoNuke
         public CassieConfig AutoNukeCassieWarn { get; set; } = new CassieConfig
         {
             isSubtitles = true,
-            Text = "automatic warhead will detonate in 5 minutes"
+            Text = "automatic warhead will detonate in 5 minutes",
+            customSubtitle = "<color=#FF0000><b>Head to the exit!</b></color>"
         };
 
-        public HintConfig AutoNukeWarnHint = new HintConfig
+        public HintConfig AutoNukeWarnHint { get; set; } = new HintConfig
         {
             Time = 15,
-            Message = "<color=#FF0000><b>Head to the exit!</b></color>"
+            Message = "<color=#FF0000><b>Head to the exit!</b></color>",
         };
 
         // No Disable
-        public HintConfig CantDisableHint = new HintConfig
+        public HintConfig CantDisableHint { get; set; } = new HintConfig
         {
             Time = 7,
             Message = "<color=#FF0000>You cannot disable the warhead! EVACUATE RIGHT NOW!</color>"
         };
 
         // Nuke Start
-        public HintConfig AutoNukeStartHint = new HintConfig
+        public HintConfig AutoNukeStartHint { get; set; } = new HintConfig
         {
             Time = 15,
-            Message = "<color=#FF0000><b>RUN</b></color>"
+            Message = "<color=#FF0000><b>RUN</b></color>",
         };
 
         public CassieConfig AutoNukeCassieStart { get; set; } = new CassieConfig
         {
             isSubtitles = true,
-            Text = "automatic warhead has been activated"
+            Text = "automatic warhead has been activated",
+            customSubtitle = "AutoNuke has started"
         };
 
         public Exiled.API.Features.Broadcast AutoNukeStartBroadcast { get; set; } = new Exiled.API.Features.Broadcast
