@@ -5,9 +5,19 @@ using System.Collections.Generic;
 
 namespace ScuutCore.Modules.Stalky106
 {
-    public class Config : IModuleConfig
-    {
-        public bool IsEnabled { get; set; } = true;
+	public class Config : IModuleConfig
+	{
+		public bool IsEnabled { get; set; } = true;
+
+		[Description("Should SCP-106 be able to stalk when the autonuke did boom boom?")]
+		public bool DisableAutoNuke { get; set; } = true;
+
+		[Description("Should SCP-106 be able to stalk when the autonuke did boom boom? hint")]
+		public HintConfig DisableAutoNukeHint { get; set; } = new HintConfig
+		{
+			Message = "You can't stalk because the AutoNuke exploded!",
+			Time = 6
+		};
 
 		public bool AnnounceReady { get; set; } = true;
 		public float Cooldown { set; get; } = 40f;

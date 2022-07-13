@@ -35,6 +35,12 @@ namespace ScuutCore.Modules.Stalky106
 
 		public void OnCreatePortal(CreatingPortalEventArgs ev)
 		{
+			if (Warhead.IsDetonated && stalky106.Config.DisableAutoNuke && AutoNuke.EventHandlers.IsAutoNuke)
+            {
+				ev.Player.ShowHint(stalky106.Config.DisableAutoNukeHint.Message, stalky106.Config.DisableAutoNukeHint.Time);
+				return;
+            }
+
 			var list = ListPool<Player>.Shared.Rent(Player.List);
 			int playerCount = list.Count;
 			if (stalky106.Config.MinimumPlayers > playerCount)

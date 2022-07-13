@@ -13,20 +13,20 @@ namespace ScuutCore.Modules.AutoNuke
             autoNuke = at;
         }
 
-        private bool isAutoNuke = false;
+        public static bool IsAutoNuke = false;
 
         public void OnRoundStart()
         {
-            isAutoNuke = false;
+            IsAutoNuke = false;
             Plugin.Coroutines.Add(Timing.RunCoroutine(AutoNukeCoroutine()));
         }
 
         public void OnWarheadStopping(StoppingEventArgs ev)
         {
-            if (isAutoNuke)
+            if (IsAutoNuke)
             {
                 ev.IsAllowed = false;
-                ev.Player.ShowHint(autoNuke.Config.CantDisableHint, autoNuke.Config.CantDisableHintTime);
+                autoNuke.Config.CantDisableHint.Show(ev.Player);
             }
         }
 
@@ -37,18 +37,18 @@ namespace ScuutCore.Modules.AutoNuke
             if (Warhead.IsDetonated)
                 yield break;
 
-            Cassie.Message(autoNuke.Config.AutoNukeCassieWarn, false, false, false);
+            autoNuke.Config.AutoNukeCassieWarn.Play();
             Map.Broadcast(autoNuke.Config.AutoNukeWarnBroadcast);
-            Map.ShowHint(autoNuke.Config.AutoNukeWarnHint, autoNuke.Config.AutoNukeWarnHintDuration);
+            autoNuke.Config.AutoNukeWarnHint.Show();
 
             yield return Timing.WaitForSeconds(autoNuke.Config.AutoNukeStartTime - autoNuke.Config.AutoNukeWarn);
 
-            isAutoNuke = true;
+            IsAutoNuke = true;
             if (!Warhead.IsDetonated && !Warhead.IsInProgress)
             {
-                Cassie.Message(autoNuke.Config.AutoNukeCassieStart, false, false, false);
+                autoNuke.Config.AutoNukeCassieStart.Play();
                 Map.Broadcast(autoNuke.Config.AutoNukeStartBroadcast);
-                Map.ShowHint(autoNuke.Config.AutoNukeStartHint, autoNuke.Config.AutoNukeStartHintDuration);
+                autoNuke.Config.AutoNukeStartHint.Show();
                 Warhead.Start();
             }
         }

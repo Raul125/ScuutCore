@@ -19,7 +19,7 @@ namespace ScuutCore.Modules.RoundSummary
         public bool ShowEscapee { get; set; } = true;
 
         [Description("First escapee message:")]
-        public string EscapeeMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> was the first to escape at <color=red>{time}</b></color></size>";
+        public string EscapeeMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> was the first to escape at <color=red>{time}</b> as {role}</color></size>";
 
         public string NoEscapeeMessage { get; set; } = "No one escaped!";
 
@@ -27,7 +27,7 @@ namespace ScuutCore.Modules.RoundSummary
         public bool ShowScpFirstKill { get; set; } = true;
 
         [Description("First SCP killer message:")]
-        public string ScpFirstKillMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> was the first person to contain a scp!</b></size>";
+        public string ScpFirstKillMessage { get; set; } = "<size=30><color={killerColor}><b>{player}</color> as {killerRole} was the first person to contain a {killedScp}!</b></size>";
 
         public string NoScpKillMessage { get; set; } = "No one killed a SCP!";
     }

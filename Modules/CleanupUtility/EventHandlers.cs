@@ -15,7 +15,7 @@ namespace ScuutCore.Modules.CleanupUtility
 
         public void OnRoundStart()
         {
-            Plugin.Coroutines.Add(Timing.RunCoroutine(CleanupCoroutine()));
+            Timing.CallDelayed(0.2f, () => Plugin.Coroutines.Add(Timing.RunCoroutine(CleanupCoroutine())));
         }
 
         public void OnDecontaminating(DecontaminatingEventArgs ev)
@@ -49,26 +49,20 @@ namespace ScuutCore.Modules.CleanupUtility
 
         private IEnumerator<float> CleanupCoroutine()
         {
-            while (Round.IsStarted)
+            while (!Round.IsEnded)
             {
                 yield return Timing.WaitForSeconds(cleanupUtility.Config.CleanDelay);
 
                 if (cleanupUtility.Config.DestroyRagdolls)
                 {
                     foreach (var ragdoll in Map.Ragdolls)
-                    {
-                        if (ragdoll != null)
-                            ragdoll.Delete();
-                    }
+                        ragdoll.Delete();
                 }
 
                 if (cleanupUtility.Config.ClearItems)
                 {
                     foreach (var item in Map.Pickups)
-                    {
-                        if (item != null)
-                            item.Destroy();
-                    }
+                        item.Destroy();
                 }
             }
         }

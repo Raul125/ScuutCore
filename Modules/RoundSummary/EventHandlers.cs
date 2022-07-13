@@ -1,5 +1,8 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs;
+using MEC;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,12 +20,21 @@ namespace ScuutCore.Modules.RoundSummary
         private string firstEscaped = string.Empty;
         private uint escapeTime = 0;
         private string firstScpKiller = string.Empty;
+        private string escapedRole = string.Empty;
+        private string killedScp = string.Empty;
+        private string killerRole = string.Empty;
+
+        public static bool PreventHints = false;
 
         public void OnWaitingForPlayers()
         {
             playerKills.Clear();
             firstEscaped = string.Empty;
             firstScpKiller = string.Empty;
+            escapedRole = string.Empty;
+            killedScp = string.Empty;
+            killerRole = string.Empty;
+            PreventHints = false;
         }
 
         public void OnDying(DyingEventArgs ev)
@@ -31,7 +43,11 @@ namespace ScuutCore.Modules.RoundSummary
                 return;
 
             if (ev.Target != null && ev.Target.IsScp && firstScpKiller == string.Empty)
+            {
                 firstScpKiller = ev.Killer.Nickname;
+                killerRole = ev.Killer.Role.Type.ToString();
+                killedScp = ev.Target.Role.Type.ToString();
+            }
         }
 
         public void OnDied(DiedEventArgs ev)
@@ -68,6 +84,7 @@ namespace ScuutCore.Modules.RoundSummary
         {
             if (firstEscaped == string.Empty)
             {
+                escapedRole = ev.Player.Role.Type.ToString();
                 firstEscaped = ev.Player.Nickname;
                 escapeTime = (uint)Round.ElapsedTime.TotalSeconds;
             }
@@ -86,12 +103,15 @@ namespace ScuutCore.Modules.RoundSummary
                 message += roundSummary.Config.NoKillsMessage + "\n";
 
             if (roundSummary.Config.ShowEscapee && firstEscaped != string.Empty)
-                message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}") + "\n";
+                message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole) + "\n";
             else
                 message += roundSummary.Config.NoEscapeeMessage + "\n";
 
             if (roundSummary.Config.ShowScpFirstKill && firstScpKiller != string.Empty)
-                message += roundSummary.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller) + "\n";
+            {
+                Enum.TryParse<RoleType>(killerRole, out RoleType kRole);
+                message += roundSummary.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller).Replace("{killerRole}", killerRole).Replace("{killedScp}", killedScp).Replace("{killerColor}", kRole.GetColor().ToHex()) + "\n";
+            }
             else
                 message += roundSummary.Config.NoScpKillMessage + "\n";
 
@@ -101,6 +121,7 @@ namespace ScuutCore.Modules.RoundSummary
             }
 
             Map.ShowHint(message, ev.TimeToRestart);
+            Timing.CallDelayed(0.25f, () => PreventHints = true);
         }
     }
 }
