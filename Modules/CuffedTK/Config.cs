@@ -30,6 +30,18 @@ namespace ScuutCore.Modules.CuffedTK
             Team.CHI
         };
 
+        public HashSet<Team> DisallowDamagetoChaos { get; set; } = new HashSet<Team>
+        {
+            Team.MTF,
+            Team.RSC
+        };
+
+        public HashSet<Team> DisallowDamagetoMTF { get; set; } = new HashSet<Team>
+        {
+            Team.CDP,
+            Team.CHI
+        };
+
         [Description("0 To disable")]
         public int DamageTypeTime { get; set; } = 3;
 

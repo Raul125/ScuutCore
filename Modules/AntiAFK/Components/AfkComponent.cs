@@ -87,7 +87,7 @@ namespace ScuutCore.Modules.AntiAFK
 
         private void ForceSpectator()
         {
-            player.Role.Type = RoleType.Spectator;
+            player.SetRole(RoleType.Spectator);
             player.Broadcast(AntiAFK.Singleton.Config.SpectatorForced);
         }
     }

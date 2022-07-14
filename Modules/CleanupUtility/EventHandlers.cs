@@ -15,7 +15,7 @@ namespace ScuutCore.Modules.CleanupUtility
 
         public void OnRoundStart()
         {
-            Timing.CallDelayed(0.2f, () => Plugin.Coroutines.Add(Timing.RunCoroutine(CleanupCoroutine())));
+            Plugin.Coroutines.Add(Timing.RunCoroutine(CleanupCoroutine()));
         }
 
         public void OnDecontaminating(DecontaminatingEventArgs ev)
@@ -49,7 +49,7 @@ namespace ScuutCore.Modules.CleanupUtility
 
         private IEnumerator<float> CleanupCoroutine()
         {
-            while (!Round.IsEnded)
+            while (true)
             {
                 yield return Timing.WaitForSeconds(cleanupUtility.Config.CleanDelay);
 

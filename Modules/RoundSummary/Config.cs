@@ -19,7 +19,7 @@ namespace ScuutCore.Modules.RoundSummary
         public bool ShowEscapee { get; set; } = true;
 
         [Description("First escapee message:")]
-        public string EscapeeMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> was the first to escape at <color=red>{time}</b> as {role}</color></size>";
+        public string EscapeeMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> was the first to escape at <color=red>{time}</color> as <color={roleColor}>{role}</color></b></size>";
 
         public string NoEscapeeMessage { get; set; } = "No one escaped!";
 

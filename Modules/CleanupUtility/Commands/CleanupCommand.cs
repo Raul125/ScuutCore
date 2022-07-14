@@ -17,8 +17,8 @@ namespace ScuutCore.Modules.CleanupUtility
         public string InsufficientPermission { get; set; } = "You do not have permission to use this command.";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
-        {;
-            if (sender.CheckPermission("ScuutCore.cleanup"))
+        {
+            if (!sender.CheckPermission("ScuutCore.cleanup"))
             {
                 response = InsufficientPermission;
                 return false;
@@ -26,15 +26,12 @@ namespace ScuutCore.Modules.CleanupUtility
 
             foreach (var ragdoll in Map.Ragdolls)
             {
-                if (ragdoll != null)
-                    ragdoll.Delete();
+                ragdoll.Delete();
             }
-
 
             foreach (var item in Map.Pickups)
             {
-                if (item != null)
-                    item.Destroy();
+                item.Destroy();
             }
 
             response = "Done";

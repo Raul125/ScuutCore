@@ -42,7 +42,7 @@ namespace ScuutCore.Modules.RoundSummary
             if (!ev.IsAllowed)
                 return;
 
-            if (ev.Target != null && ev.Target.IsScp && firstScpKiller == string.Empty)
+            if (ev.Killer != null && ev.Target != null && ev.Target.IsScp && firstScpKiller == string.Empty)
             {
                 firstScpKiller = ev.Killer.Nickname;
                 killerRole = ev.Killer.Role.Type.ToString();
@@ -103,7 +103,10 @@ namespace ScuutCore.Modules.RoundSummary
                 message += roundSummary.Config.NoKillsMessage + "\n";
 
             if (roundSummary.Config.ShowEscapee && firstEscaped != string.Empty)
-                message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole) + "\n";
+            {
+                Enum.TryParse<RoleType>(killerRole, out RoleType eRole);
+                message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole).Replace("{roleColor}", eRole.GetColor().ToHex()) + "\n";
+            }
             else
                 message += roundSummary.Config.NoEscapeeMessage + "\n";
 

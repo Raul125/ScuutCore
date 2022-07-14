@@ -2,6 +2,9 @@
 using MEC;
 using Exiled.API.Features;
 using System.Collections.Generic;
+using LightContainmentZoneDecontamination;
+using Mirror;
+using Respawning.NamingRules;
 
 namespace ScuutCore.Modules.AutoNuke
 {
@@ -17,6 +20,10 @@ namespace ScuutCore.Modules.AutoNuke
 
         public void OnRoundStart()
         {
+            // Fix maingame(11.x)
+            DecontaminationController.Singleton.NetworkRoundStartTime = NetworkTime.time;
+            UnitNamingRule.UsedCombinations.Clear();
+
             IsAutoNuke = false;
             Plugin.Coroutines.Add(Timing.RunCoroutine(AutoNukeCoroutine()));
         }

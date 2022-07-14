@@ -21,6 +21,30 @@ namespace ScuutCore.Modules.Health
             }
         };
 
+        public Dictionary<RoleType, AhpRole> AhpValues { get; set; } = new Dictionary<RoleType, AhpRole>()
+        {
+            {
+                RoleType.Scp173,
+                new AhpRole
+                {
+                    Sustain = 1f,
+                    Amount = 760,
+                    Decay = 0,
+                    Efficacy = 0.75f,
+                    Limit = 760,
+                    Persistent = true,
+                }
+            },
+        };
+
+        public Dictionary<RoleType, float> AhpOnKill { get; set; } = new Dictionary<RoleType, float>()
+        {
+             {
+                RoleType.Scp173,
+                5
+            },
+        };
+
         [Description("A list of roles and how much health they should be given when they kill someone.")]
         public Dictionary<RoleType, float> HealthOnKill { get; set; } = new Dictionary<RoleType, float>()
         {

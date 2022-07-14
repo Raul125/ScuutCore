@@ -59,7 +59,7 @@ namespace ScuutCore.Modules.AntiAFK
                     customRole.AddRole(player);
             }
 
-            Timing.CallDelayed(2f, () =>
+            Timing.CallDelayed(3f, () =>
             {
                 player.Health = health;
                 player.Position = position;
