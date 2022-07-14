@@ -16,10 +16,10 @@ namespace ScuutCore.Modules.Chaos
         {
             if (ev.NextKnownTeam == Respawning.SpawnableTeamType.ChaosInsurgency)
             {
-                if (chaos.Config.CustomSubtitle != "")
+                if (chaos.Config.CustomSubtitle == "")
                     Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.Message(chaos.Config.ChaosCassie, false, false, false)));
                 else
-                    Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.MessageTranslated(chaos.Config.ChaosCassie, chaos.Config.CustomSubtitle, false, false, false)));
+                    Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.MessageTranslated(chaos.Config.ChaosCassie, chaos.Config.CustomSubtitle, false, false, true)));
             }
         }
     }

@@ -65,14 +65,12 @@ namespace ScuutCore.API
             try
             {
                 cfg = (IModuleConfig)Deserializer.Deserialize(File.ReadAllText(configPath), module.Config.GetType());
+                module.Config.CopyProperties(cfg);
             }
             catch (Exception)
             {
-                Log.Error($"{module.Name} configs could not be loaded, check them with a yaml validator");
-                return;
+                Log.Error($"{module.Name} configs could not be loaded, replacing with default config");
             }
-
-            module.Config.CopyProperties(cfg);
 
             if (module.Config.IsEnabled)
             {

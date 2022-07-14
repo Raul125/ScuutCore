@@ -1,7 +1,10 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.Events.EventArgs;
 using MEC;
+using PlayableScps.Interfaces;
 using PlayerStatsSystem;
+using System.Linq;
+using System.Reflection;
 
 namespace ScuutCore.Modules.Health
 {
@@ -28,48 +31,26 @@ namespace ScuutCore.Modules.Health
             {
                 Plugin.Coroutines.Add(Timing.CallDelayed(3f, () =>
                 {
-                    if (ev.NewRole.GetSide() == Exiled.API.Enums.Side.Scp)
+                    var module = ev.Player.ReferenceHub.playerStats.GetModule<AhpStat>();
+                    if (ev.Player.CurrentScp is IShielded shielded)
                     {
-                        switch (ev.NewRole)
-                        {
-                            case RoleType.Scp173:
-                                {
-                                    var script = ev.Player.Role.As<Exiled.API.Features.Roles.Scp173Role>().Script;
-                                    script.Shield.SustainTime = ahp.Sustain;
-                                    script.Shield.Limit = ahp.Limit;
-                                    script.Shield.Efficacy = ahp.Efficacy;
-                                    script.Shield.DecayRate = ahp.Decay;
-                                    script.Shield.CurrentAmount = ahp.Amount;
-                                    return;
-                                }
-                            case RoleType.Scp096:
-                                {
-                                    var script = ev.Player.Role.As<Exiled.API.Features.Roles.Scp096Role>().Script;
-                                    script.Shield.SustainTime = ahp.Sustain;
-                                    script.Shield.Limit = ahp.Limit;
-                                    script.Shield.Efficacy = ahp.Efficacy;
-                                    script.Shield.DecayRate = ahp.Decay;
-                                    script.Shield.CurrentAmount = ahp.Amount;
-                                    return;
-                                }
-                            case RoleType.Scp93989:
-                            case RoleType.Scp93953:
-                                {
-                                    var script = ev.Player.Role.As<Exiled.API.Features.Roles.Scp939Role>().Script;
-                                    script.Shield.SustainTime = ahp.Sustain;
-                                    script.Shield.Limit = ahp.Limit;
-                                    script.Shield.Efficacy = ahp.Efficacy;
-                                    script.Shield.DecayRate = ahp.Decay;
-                                    script.Shield.CurrentAmount = ahp.Amount;
-                                    return;
-                                }
-                        }
+                        var shield = shielded.Shield;
+                        shield.Limit = ahp.Limit;
+                        shield.CurrentAmount = ahp.Amount;
+                        shield.DecayRate = ahp.Decay;
+                        shield.Efficacy = ahp.Efficacy;
+                        shield.SustainTime = ahp.SustainTime;
+                        shield.GetType().GetField("Persistant", BindingFlags.Instance | BindingFlags.Public).SetValue(shield, ahp.Persistent);
                     }
-                }));
+                    else
+                    {
+                        foreach (var process in ev.Player.ActiveArtificialHealthProcesses)
+                        {
+                            module.ServerKillProcess(process.KillCode);
+                        }
 
-                Plugin.Coroutines.Add(Timing.CallDelayed(3f, () =>
-                {
-                    ev.Player.AddAhp(ahp.Amount, ahp.Limit, ahp.Decay, ahp.Efficacy, ahp.Sustain, ahp.Persistent);
+                        ev.Player.AddAhp(ahp.Amount, ahp.Limit, ahp.Decay, ahp.Efficacy, ahp.SustainTime, ahp.Persistent);
+                    }
                 }));
             }
         }
@@ -89,10 +70,14 @@ namespace ScuutCore.Modules.Health
 
             if (health.Config.AhpOnKill.ContainsKey(ev.Killer.Role))
             {
-                if (ev.Killer.ArtificialHealth + health.Config.AhpOnKill[ev.Killer.Role] <= ev.Killer.MaxArtificialHealth)
-                    ev.Killer.ArtificialHealth += health.Config.AhpOnKill[ev.Killer.Role];
+                if (ev.Killer.CurrentScp is IShielded shielded)
+                {
+                    shielded.Shield.CurrentAmount += health.Config.AhpOnKill[ev.Killer.Role.Type];
+                }
                 else
-                    ev.Killer.ArtificialHealth = ev.Killer.MaxArtificialHealth;
+                {
+                    ev.Killer.ArtificialHealth += health.Config.AhpOnKill[ev.Killer.Role.Type];
+                }
             }
         }
     }

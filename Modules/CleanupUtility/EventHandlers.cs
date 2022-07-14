@@ -2,6 +2,7 @@
 using Exiled.Events.EventArgs;
 using MEC;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ScuutCore.Modules.CleanupUtility
 {
@@ -55,13 +56,13 @@ namespace ScuutCore.Modules.CleanupUtility
 
                 if (cleanupUtility.Config.DestroyRagdolls)
                 {
-                    foreach (var ragdoll in Map.Ragdolls)
+                    foreach (var ragdoll in Map.Ragdolls.Where(x => x != null))
                         ragdoll.Delete();
                 }
 
                 if (cleanupUtility.Config.ClearItems)
                 {
-                    foreach (var item in Map.Pickups)
+                    foreach (var item in Map.Pickups.Where(x => x != null))
                         item.Destroy();
                 }
             }

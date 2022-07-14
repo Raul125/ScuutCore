@@ -27,12 +27,12 @@ namespace ScuutCore.Modules.Health
                 RoleType.Scp173,
                 new AhpRole
                 {
-                    Sustain = 1f,
                     Amount = 760,
                     Decay = 0,
                     Efficacy = 0.75f,
                     Limit = 760,
                     Persistent = true,
+                    SustainTime = 10f,
                 }
             },
         };

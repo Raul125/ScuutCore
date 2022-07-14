@@ -16,36 +16,14 @@ namespace ScuutCore.Modules.Scp1162
         public ushort ItemDropMessageDuration { get; set; } = 5;
 
         [Description("The list of item chances.")]
-        public List<ItemType> Chances { get; set; } = new List<ItemType>
+        public Dictionary<ItemType, int> Chances { get; set; } = new Dictionary<ItemType, int>
         {
-            ItemType.KeycardO5,
-            ItemType.SCP500,
-            ItemType.MicroHID,
-            ItemType.KeycardNTFCommander,
-            ItemType.KeycardContainmentEngineer,
-            ItemType.SCP268,
-            ItemType.GunCOM15,
-            ItemType.SCP207,
-            ItemType.Adrenaline,
-            ItemType.GunCOM18,
-            ItemType.KeycardFacilityManager,
-            ItemType.Medkit,
-            ItemType.KeycardNTFLieutenant,
-            ItemType.KeycardGuard,
-            ItemType.GrenadeHE,
-            ItemType.KeycardZoneManager,
-            ItemType.KeycardGuard,
-            ItemType.Radio,
-            ItemType.Ammo9x19,
-            ItemType.Ammo12gauge,
-            ItemType.Ammo44cal,
-            ItemType.Ammo556x45,
-            ItemType.Ammo762x39,
-            ItemType.GrenadeFlash,
-            ItemType.KeycardScientist,
-            ItemType.KeycardJanitor,
-            ItemType.Coin,
-            ItemType.Flashlight
+            { ItemType.GrenadeFlash, 20 },
+            { ItemType.ArmorLight, 10 },
+            { ItemType.MicroHID, 10 },
+            { ItemType.KeycardO5, 10 },
+            { ItemType.Flashlight, 20 },
+            { ItemType.Coin, 30 }
         };
     }
 }

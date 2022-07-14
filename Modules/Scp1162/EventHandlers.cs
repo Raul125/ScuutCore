@@ -25,10 +25,26 @@ namespace ScuutCore.Modules.Scp1162
                         ev.Player.ShowHint(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration);
                     else
                         ev.Player.Broadcast(scp1162.Config.ItemDropMessageDuration, scp1162.Config.ItemDropMessage, Broadcast.BroadcastFlags.Normal, true);
+
                     ev.IsAllowed = false;
                     var oldItem = ev.Item.Base.ItemTypeId;
                     ev.Player.RemoveItem(ev.Item);
-                    var newItemType = scp1162.Config.Chances[Random.Range(0, scp1162.Config.Chances.Count)];
+
+                    ItemType newItemType = ItemType.None;
+
+                    getItem:
+                    foreach (var item in scp1162.Config.Chances)
+                    {
+                        if (Plugin.Random.Next(0, 100) <= item.Value)
+                        {
+                            newItemType = item.Key;
+                            break;
+                        }
+                    }
+
+                    if (newItemType == ItemType.None)
+                        goto getItem;
+
                     var newItem = Item.Create(newItemType);
                     ev.Player.AddItem(newItem);
                     ev.Player.DropItem(newItem);
@@ -36,7 +52,7 @@ namespace ScuutCore.Modules.Scp1162
             }
             catch
             {
-                //Ignore, ev.Player.RemoveItem false positive.
+                // Ignore, ev.Player.RemoveItem false positive.
             }
         }
     }
