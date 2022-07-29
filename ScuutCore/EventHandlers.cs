@@ -1,4 +1,6 @@
 ﻿using MEC;
+using Exiled.Events.EventArgs;
+using Exiled.API.Features;
 
 namespace ScuutCore.EventHandlers
 {
@@ -16,6 +18,12 @@ namespace ScuutCore.EventHandlers
                 Timing.KillCoroutines(cor);
 
             Plugin.Coroutines.Clear();
+        }
+
+        public void OnDecontaminating(DecontaminatingEventArgs ev)
+        {
+            if (Round.ElapsedTime.TotalMinutes < 6)
+                ev.IsAllowed = false;
         }
     }
 }

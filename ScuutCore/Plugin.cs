@@ -43,6 +43,7 @@ namespace ScuutCore
 
             EventHandlers = new EventHandlers.EventHandlers();
             Exiled.Events.Handlers.Server.RestartingRound += EventHandlers.OnRoundRestarting;
+            Exiled.Events.Handlers.Map.Decontaminating += EventHandlers.OnDecontaminating;
 
             base.OnEnabled();
         }
@@ -52,6 +53,7 @@ namespace ScuutCore
             API.Loader.StopModules();
 
             Exiled.Events.Handlers.Server.RestartingRound -= EventHandlers.OnRoundRestarting;
+            Exiled.Events.Handlers.Map.Decontaminating -= EventHandlers.OnDecontaminating;
             EventHandlers = null;
 
             Singleton = null;

@@ -21,7 +21,6 @@ namespace ScuutCore.Modules.AutoNuke
         public void OnRoundStart()
         {
             // Fix maingame(11.x)
-            DecontaminationController.Singleton.NetworkRoundStartTime = NetworkTime.time;
             UnitNamingRule.UsedCombinations.Clear();
 
             IsAutoNuke = false;
