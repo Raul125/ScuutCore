@@ -2,6 +2,7 @@
 using Exiled.API.Features;
 using Exiled.API.Features.Roles;
 using Exiled.Permissions.Extensions;
+using PlayerRoles;
 using UnityEngine;
 
 namespace ScuutCore.Modules.AntiAFK

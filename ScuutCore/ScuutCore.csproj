@@ -109,7 +109,7 @@
       <HintPath>..\..\..\ScpSl\Refs Beta\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
     <Reference Include="YamlDotNet">
-      <HintPath>C:\Users\jorge\AppData\Roaming\EXILED\Plugins\dependencies\YamlDotNet.dll</HintPath>
+      <HintPath>..\..\..\ScpSl\EXILED\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -164,9 +164,6 @@
     <Compile Include="Modules\Scp1162\Scp1162.cs" />
     <Compile Include="Modules\Scp1162\Config.cs" />
     <Compile Include="Modules\Scp1162\EventHandlers.cs" />
-    <Compile Include="Modules\BetterRAList\BetterRAList.cs" />
-    <Compile Include="Modules\BetterRAList\Patches\RAPlayerListPatch.cs" />
-    <Compile Include="Modules\BetterRAList\Config.cs" />
     <Compile Include="Modules\RemoteKeycard\RemoteKeycard.cs" />
     <Compile Include="Modules\RemoteKeycard\Config.cs" />
     <Compile Include="Modules\RemoteKeycard\EventHandlers.cs" />

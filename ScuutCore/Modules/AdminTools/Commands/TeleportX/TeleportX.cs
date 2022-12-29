@@ -1,6 +1,7 @@
 ﻿using CommandSystem;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
+using PlayerRoles;
 using System;
 
 namespace ScuutCore.Modules.AdminTools

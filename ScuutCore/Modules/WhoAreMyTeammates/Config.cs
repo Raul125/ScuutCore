@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -16,7 +17,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
         {
             new WamtBroadcast()
             {
-                Team = Team.SCP,
+                Team = Team.SCPs,
                 Contents = "Welcome to the<color=red><b> SCP Team.</b></color><color=aqua> The following SCPs are on this team: </color><color=red>%list%</color>",
                 AloneContents = "<color=red>Attention - You are the <b>only</b> SCP This game. Good Luck.</color>",
                 Delay = 20,
@@ -27,7 +28,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             },
             new WamtBroadcast()
             {
-                Team = Team.MTF,
+                Team = Team.FoundationForces,
                 Contents = "Welcome to the<color=grey><b> MTF Team.</b></color><color=aqua> The following Guards are on this team: </color><color=grey>%list%</color>",
                 AloneContents = "<color=grey>Attention - You are the <b>only</b> Facility Guard this game. Good Luck.</color>",
                 Delay = 3,
@@ -38,7 +39,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             },
             new WamtBroadcast()
             {
-                Team = Team.RSC,
+                Team = Team.Scientists,
                 Contents = "Welcome to the<color=yellow><b> Scientist Team.</b></color><color=aqua> These are your partners in science: </color><color=yellow>%list%</color>",
                 AloneContents = "<color=yellow>Attention - You are the <b>only</b> Scientist this game. Good Luck.</color>",
                 Delay = 3,
@@ -49,7 +50,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             },
             new WamtBroadcast()
             {
-                Team = Team.CDP,
+                Team = Team.ClassD,
                 Contents = "Welcome to the<color=orange><b> Class D Team.</b></color> The following class Ds are on this team: <color=orange>%list%</color>",
                 AloneContents = "<color=orange>Attention - You are the <b>only</b> Class D Personnel this game. Good Luck.</color>",
                 Delay = 3,
@@ -60,7 +61,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             },
             new WamtBroadcast
             {
-                Team = Team.CHI,
+                Team = Team.ChaosInsurgency,
                 Contents = "Welcome to the<color=green><b> Chaos Insurgency.</b></color> The following players are your comrades: <color=green>%list%</color>",
                 AloneContents = "<color=green>Attention - You are the <b>only</b> Insurgent this game. Good Luck.</color>",
                 Delay = 3,

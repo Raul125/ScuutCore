@@ -55,7 +55,7 @@ namespace ScuutCore.Modules.RemoteKeycard
         // Extension
         public bool HasKeycardPermission(Player player, KeycardPermissions permissions, bool requiresAllPermissions = false)
         {
-            if (remotekeycard.Config.AmnesiaMatters && player.GetEffectActive<Amnesia>())
+            if (remotekeycard.Config.AmnesiaMatters && player.IsEffectActive<AmnesiaVision>())
                 return false;
 
             return requiresAllPermissions ?

@@ -3,6 +3,7 @@ using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Player;
 using MEC;
+using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -39,9 +40,9 @@ namespace ScuutCore.Modules.CustomEscape
                 foreach (Player player in Player.List)
                 {
                     if (EscapeZone == Vector3.zero)
-                        EscapeZone = player.GameObject.GetComponent<Escape>().worldPosition;
+                        EscapeZone = Escape.WorldPos;
 
-                    if (!player.IsCuffed || (player.Role.Team != Team.CHI && player.Role.Team != Team.MTF) || (EscapeZone - player.Position).sqrMagnitude > 400f)
+                    if (!player.IsCuffed || (player.Role.Team != Team.ChaosInsurgency && player.Role.Team != Team.FoundationForces) || (EscapeZone - player.Position).sqrMagnitude > 400f)
                         continue;
 
                     if (customEscape.Config.CuffedRoleConversions.TryGetValue(player.Role.Type, out var role))
