@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,36 +22,35 @@ namespace ScuutCore.Modules.ScpSwap
         public bool AllowNewScps { get; set; } = true;
 
         [Description("A collection of roles blacklisted from being swapped to.")]
-        public RoleType[] BlacklistedScps { get; set; } =
+        public RoleTypeId[] BlacklistedScps { get; set; } =
         {
-            RoleType.Scp0492,
+            RoleTypeId.Scp0492,
         };
 
         [Description("A collection of the names of custom scps blacklisted from being swapped to. This must match the name the developer integrated the SCP into this plugin's API with.")]
         public string[] BlacklistedNames { get; set; } = Array.Empty<string>();
 
         // Translations
-        [Description("A collection of custom names with their correlating RoleType.")]
-        public Dictionary<string, RoleType> TranslatableSwaps { get; set; } = new Dictionary<string, RoleType>
+        [Description("A collection of custom names with their correlating RoleTypeId.")]
+        public Dictionary<string, RoleTypeId> TranslatableSwaps { get; set; } = new Dictionary<string, RoleTypeId>
         {
-            { "173", RoleType.Scp173 },
-            { "peanut", RoleType.Scp173 },
-            { "939", RoleType.Scp93953 },
-            { "dog", RoleType.Scp93953 },
-            { "079", RoleType.Scp079 },
-            { "79", RoleType.Scp079 },
-            { "computer", RoleType.Scp079 },
-            { "106", RoleType.Scp106 },
-            { "larry", RoleType.Scp106 },
-            { "096", RoleType.Scp096 },
-            { "96", RoleType.Scp096 },
-            { "shyguy", RoleType.Scp096 },
-            { "049", RoleType.Scp049 },
-            { "49", RoleType.Scp049 },
-            { "doctor", RoleType.Scp049 },
-            { "0492", RoleType.Scp0492 },
-            { "492", RoleType.Scp0492 },
-            { "zombie", RoleType.Scp0492 },
+            { "173", RoleTypeId.Scp173 },
+            { "peanut", RoleTypeId.Scp173 },
+            { "939", RoleTypeId.Scp939 },
+            { "079", RoleTypeId.Scp079 },
+            { "79", RoleTypeId.Scp079 },
+            { "computer", RoleTypeId.Scp079 },
+            { "106", RoleTypeId.Scp106 },
+            { "larry", RoleTypeId.Scp106 },
+            { "096", RoleTypeId.Scp096 },
+            { "96", RoleTypeId.Scp096 },
+            { "shyguy", RoleTypeId.Scp096 },
+            { "049", RoleTypeId.Scp049 },
+            { "49", RoleTypeId.Scp049 },
+            { "doctor", RoleTypeId.Scp049 },
+            { "0492", RoleTypeId.Scp0492 },
+            { "492", RoleTypeId.Scp0492 },
+            { "zombie", RoleTypeId.Scp0492 },
         };
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
 
 namespace ScuutCore.Modules.Teslas
 {
@@ -12,9 +13,9 @@ namespace ScuutCore.Modules.Teslas
 
         public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
-            if (teslas.Config.Roles.Contains(ev.Player.Role))
+            if (teslas.Config.Roles.Contains(ev.Player.Role.Type))
             {
-                ev.IsTriggerable = false;
+                ev.IsAllowed = false;
                 ev.IsInIdleRange = false;
             }
         }

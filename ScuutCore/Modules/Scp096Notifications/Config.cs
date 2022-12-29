@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -23,20 +24,20 @@ namespace ScuutCore.Modules.Scp096Notifications
         public float HintDuration { get; set; } = 10f;
 
         [Description("Change the display strings of each class (applies to SCP-096's notification).")]
-        public Dictionary<RoleType, string> RoleStrings { get; set; } = new Dictionary<RoleType, string>
+        public Dictionary<RoleTypeId, string> RoleStrings { get; set; } = new Dictionary<RoleTypeId, string>
         {
-            [RoleType.ClassD] = "Class-D Personnel",
-            [RoleType.Scientist] = "Scientist",
-            [RoleType.FacilityGuard] = "Facility Guard",
-            [RoleType.NtfPrivate] = "NTF Private",
-            [RoleType.NtfSergeant] = "NTF Sergeant",
-            [RoleType.NtfSpecialist] = "NTF Specialist",
-            [RoleType.NtfCaptain] = "NTF Captain",
-            [RoleType.ChaosRifleman] = "Chaos Rifleman",
-            [RoleType.ChaosConscript] = "Chaos Conscript",
-            [RoleType.ChaosRepressor] = "Chaos Repressor",
-            [RoleType.ChaosMarauder] = "Chaos Marauder",
-            [RoleType.Tutorial] = "Tutorial",
+            [RoleTypeId.ClassD] = "Class-D Personnel",
+            [RoleTypeId.Scientist] = "Scientist",
+            [RoleTypeId.FacilityGuard] = "Facility Guard",
+            [RoleTypeId.NtfPrivate] = "NTF Private",
+            [RoleTypeId.NtfSergeant] = "NTF Sergeant",
+            [RoleTypeId.NtfSpecialist] = "NTF Specialist",
+            [RoleTypeId.NtfCaptain] = "NTF Captain",
+            [RoleTypeId.ChaosRifleman] = "Chaos Rifleman",
+            [RoleTypeId.ChaosConscript] = "Chaos Conscript",
+            [RoleTypeId.ChaosRepressor] = "Chaos Repressor",
+            [RoleTypeId.ChaosMarauder] = "Chaos Marauder",
+            [RoleTypeId.Tutorial] = "Tutorial",
         };
     }
 }

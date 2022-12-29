@@ -4,6 +4,7 @@ using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using System.Linq;
 using Exiled.API.Features.Items;
+using Exiled.Events.EventArgs.Player;
 
 namespace ScuutCore.Modules.RemoteKeycard
 {

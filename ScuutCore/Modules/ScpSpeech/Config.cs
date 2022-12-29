@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -9,11 +10,10 @@ namespace ScuutCore.Modules.ScpSpeech
         public bool IsEnabled { get; set; } = true;
 
         [Description("A collection of roles that can speak regardless of their permissions.")]
-        public List<RoleType> GlobalTalking { get; set; } = new List<RoleType>
+        public List<RoleTypeId> GlobalTalking { get; set; } = new List<RoleTypeId>
         {
-            RoleType.Scp049,
-            RoleType.Scp93953,
-            RoleType.Scp93989,
+            RoleTypeId.Scp049,
+            RoleTypeId.Scp939,
         };
     }
 }

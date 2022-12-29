@@ -1,4 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Scp330;
 
 namespace ScuutCore.Modules.BetterCandy
 {

@@ -1,6 +1,7 @@
 ﻿using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
 using MEC;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace ScuutCore.Modules.CustomEscape
                     if (customEscape.Config.CuffedRoleConversions.TryGetValue(player.Role.Type, out var role))
                     {
                         Plugin.Coroutines.Add(Timing.RunCoroutine(DropItems(player, player.Items.ToList())));
-                        player.SetRole(role);
+                        player.Role.Set(role);
                     }
                 }
             }

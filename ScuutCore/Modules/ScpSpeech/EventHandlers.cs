@@ -10,12 +10,5 @@ namespace ScuutCore.Modules.ScpSpeech
             scpSpeech = scpsp;
         }
 
-        public void OnTransmitting(TransmittingEventArgs ev)
-        {
-            if (scpSpeech.Config.GlobalTalking.Contains(ev.Player.Role))
-            {
-                ev.Player.DissonanceUserSetup.MimicAs939 = ev.IsTransmitting;
-            }
-        }
     }
 }

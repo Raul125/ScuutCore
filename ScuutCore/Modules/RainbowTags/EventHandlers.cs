@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
 using UnityEngine;
 
 namespace ScuutCore.Modules.RainbowTags

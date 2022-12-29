@@ -1,4 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
 
 namespace ScuutCore.Modules.KillMessages
 {
@@ -12,10 +13,10 @@ namespace ScuutCore.Modules.KillMessages
 
         public void OnDied(DiedEventArgs ev)
         {
-            if (ev.Killer is null || ev.Target is null || ev.Target == ev.Killer)
+            if (ev.Attacker is null || ev.Player is null || ev.Player == ev.Attacker)
                 return;
 
-            ev.Killer.ShowHint(killMessages.Config.Message.Replace("{name}", ev.Target.Nickname), 4);
+            ev.Attacker.ShowHint(killMessages.Config.Message.Replace("{name}", ev.Player.Nickname), 4);
         }
     }
 }

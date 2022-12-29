@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Map;
 using MEC;
 using System.Collections.Generic;
 using System.Linq;

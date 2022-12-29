@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -9,9 +10,9 @@ namespace ScuutCore.Modules.Teslas
         public bool IsEnabled { get; set; } = true;
 
         [Description("Roles with disabled teslas")]
-        public List<RoleType> Roles { get; set; } = new List<RoleType>
+        public List<RoleTypeId> Roles { get; set; } = new List<RoleTypeId>
         {
-            RoleType.FacilityGuard
+            RoleTypeId.FacilityGuard
         };
     }
 }

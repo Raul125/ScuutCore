@@ -3,6 +3,7 @@ using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Exiled.API.Features;
+using PlayerRoles;
 
 namespace ScuutCore.Modules.CuffedTK
 {
@@ -19,27 +20,27 @@ namespace ScuutCore.Modules.CuffedTK
         [Description("What Team should not be allowed to damage an Cuffed D-Class! CDP = Class-D, CHI = Chaos, MTF = Nine-Tailed Fox, RSC = Scientists, TUT = Tutorial")]
         public HashSet<Team> DisallowDamagetoClassD { get; set; } = new HashSet<Team>
         {
-            Team.MTF,
-            Team.RSC
+            Team.FoundationForces,
+            Team.Scientists
         };
 
         [Description("What Team should not be allowed to damage an Cuffed Scientists! CDP = Class-D, CHI = Chaos, MTF = Nine-Tailed Fox, RSC = Scientists, TUT = Tutorial")]
         public HashSet<Team> DisallowDamagetoScientists { get; set; } = new HashSet<Team>
         {
-            Team.CDP,
-            Team.CHI
+            Team.ClassD,
+            Team.ChaosInsurgency
         };
 
         public HashSet<Team> DisallowDamagetoChaos { get; set; } = new HashSet<Team>
         {
-            Team.MTF,
-            Team.RSC
+            Team.FoundationForces,
+            Team.Scientists
         };
 
         public HashSet<Team> DisallowDamagetoMTF { get; set; } = new HashSet<Team>
         {
-            Team.CDP,
-            Team.CHI
+            Team.ClassD,
+            Team.ChaosInsurgency
         };
 
         [Description("0 To disable")]

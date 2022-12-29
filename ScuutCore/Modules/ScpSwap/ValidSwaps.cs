@@ -12,6 +12,7 @@ namespace ScuutCore.Modules.ScpSwap
     using System.Collections.ObjectModel;
     using Exiled.API.Extensions;
     using Exiled.API.Features;
+    using PlayerRoles;
 
     /// <summary>
     /// Handles queries that expose the names of swappable classes and config blacklists.
@@ -20,8 +21,8 @@ namespace ScuutCore.Modules.ScpSwap
     {
         private static readonly List<string> NamesValue = new List<string>();
         private static readonly List<CustomSwap> CustomSwapsValue = new List<CustomSwap>();
-        private static readonly List<RoleType> DefaultSwapsValue = new List<RoleType>();
-        private static readonly Dictionary<string, RoleType> TranslatableSwapsValue = new Dictionary<string, RoleType>();
+        private static readonly List<RoleTypeId> DefaultSwapsValue = new List<RoleTypeId>();
+        private static readonly Dictionary<string, RoleTypeId> TranslatableSwapsValue = new Dictionary<string, RoleTypeId>();
 
         /// <summary>
         /// Gets a collection of all available swap names.
@@ -36,27 +37,27 @@ namespace ScuutCore.Modules.ScpSwap
         /// <summary>
         /// Gets a collection of all default swaps.
         /// </summary>
-        public static ReadOnlyCollection<RoleType> DefaultSwaps => DefaultSwapsValue.AsReadOnly();
+        public static ReadOnlyCollection<RoleTypeId> DefaultSwaps => DefaultSwapsValue.AsReadOnly();
 
         /// <summary>
         /// Gets a collection of all translatable swaps.
         /// </summary>
-        public static ReadOnlyDictionary<string, RoleType> TranslatableSwaps => new ReadOnlyDictionary<string, RoleType>(TranslatableSwapsValue);
+        public static ReadOnlyDictionary<string, RoleTypeId> TranslatableSwaps => new ReadOnlyDictionary<string, RoleTypeId>(TranslatableSwapsValue);
 
         /// <summary>
-        /// Attempts to get a <see cref="RoleType"/> from <see cref="Translation.TranslatableSwaps"/> or from directly parsing a request.
+        /// Attempts to get a <see cref="RoleTypeId"/> from <see cref="Translation.TranslatableSwaps"/> or from directly parsing a request.
         /// </summary>
-        /// <param name="request">The query to get the <see cref="RoleType"/>.</param>
-        /// <returns>The found <see cref="RoleType"/>.</returns>
-        public static RoleType Get(string request)
+        /// <param name="request">The query to get the <see cref="RoleTypeId"/>.</param>
+        /// <returns>The found <see cref="RoleTypeId"/>.</returns>
+        public static RoleTypeId Get(string request)
         {
-            if (TranslatableSwaps.TryGetValue(request, out RoleType roleType))
-                return roleType;
+            if (TranslatableSwaps.TryGetValue(request, out RoleTypeId RoleTypeId))
+                return RoleTypeId;
 
-            if (Enum.TryParse(request, true, out roleType) && DefaultSwaps.Contains(roleType))
-                return roleType;
+            if (Enum.TryParse(request, true, out RoleTypeId) && DefaultSwaps.Contains(RoleTypeId))
+                return RoleTypeId;
 
-            return RoleType.None;
+            return RoleTypeId.None;
         }
 
         /// <summary>
@@ -123,15 +124,15 @@ namespace ScuutCore.Modules.ScpSwap
             if (ScpSwap.Singleton.Config.TranslatableSwaps == null)
                 return;
 
-            foreach (KeyValuePair<string, RoleType> kvp in ScpSwap.Singleton.Config.TranslatableSwaps)
+            foreach (KeyValuePair<string, RoleTypeId> kvp in ScpSwap.Singleton.Config.TranslatableSwaps)
             {
                 if ((ScpSwap.Singleton.Config.BlacklistedScps != null && ScpSwap.Singleton.Config.BlacklistedScps.Contains(kvp.Value))
-                    || kvp.Value.GetTeam() != Team.SCP)
+                    || Exiled.API.Extensions.RoleExtensions.GetTeam(kvp.Value) != Team.SCPs)
                     continue;
 
                 if (NamesValue.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
                 {
-                    Log.Debug($"Failed to add a translation that was a duplicate of another swap with the name of {kvp.Key}.", ScpSwap.Singleton.Config.ShowDebug);
+                    Log.Debug($"Failed to add a translation that was a duplicate of another swap with the name of {kvp.Key}.");
                     continue;
                 }
 
@@ -143,16 +144,16 @@ namespace ScuutCore.Modules.ScpSwap
         private static void RefreshDefaultSwaps()
         {
             DefaultSwapsValue.Clear();
-            foreach (RoleType role in Enum.GetValues(typeof(RoleType)))
+            foreach (RoleTypeId role in Enum.GetValues(typeof(RoleTypeId)))
             {
                 if ((ScpSwap.Singleton.Config.BlacklistedScps != null && ScpSwap.Singleton.Config.BlacklistedScps.Contains(role))
-                    || role.GetTeam() != Team.SCP)
+                    || Exiled.API.Extensions.RoleExtensions.GetTeam(role) != Team.SCPs)
                     continue;
 
                 string roleText = role.ToString();
                 if (NamesValue.Contains(roleText, StringComparison.OrdinalIgnoreCase))
                 {
-                    Log.Debug($"Failed to add a translation that was a duplicate of another swap with the name of {roleText}.", ScpSwap.Singleton.Config.ShowDebug);
+                    Log.Debug($"Failed to add a translation that was a duplicate of another swap with the name of {roleText}.");
                     continue;
                 }
 

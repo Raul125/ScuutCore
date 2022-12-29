@@ -11,6 +11,7 @@ namespace ScuutCore.Modules.ScpSwap
     using System.Linq;
     using CommandSystem;
     using Exiled.API.Features;
+    using PlayerRoles;
 
     /// <summary>
     /// The base command for ScpSwapParent.
@@ -121,10 +122,10 @@ namespace ScuutCore.Modules.ScpSwap
                 return Player.List.FirstOrDefault(player => customSwap.VerificationMethod(player));
             }
 
-            RoleType roleSwap = ValidSwaps.Get(request);
-            if (roleSwap != RoleType.None)
+            RoleTypeId roleSwap = ValidSwaps.Get(request);
+            if (roleSwap != RoleTypeId.None)
             {
-                spawnMethod = player => player.Role.Type = roleSwap;
+                spawnMethod = player => player.Role.Set(roleSwap);
                 return Player.List.FirstOrDefault(player => player.Role == roleSwap);
             }
 

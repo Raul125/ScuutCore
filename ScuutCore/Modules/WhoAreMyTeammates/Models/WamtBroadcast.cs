@@ -1,4 +1,6 @@
-﻿namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿using PlayerRoles;
+
+namespace ScuutCore.Modules.WhoAreMyTeammates
 {
     public class WamtBroadcast
     {

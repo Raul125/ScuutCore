@@ -12,14 +12,12 @@ namespace ScuutCore.Modules.ScpSpeech
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.Transmitting += EventHandlers.OnTransmitting;
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Transmitting -= EventHandlers.OnTransmitting;
             EventHandlers = null;
 
             base.OnDisabled();

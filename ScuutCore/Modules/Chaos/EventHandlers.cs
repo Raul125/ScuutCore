@@ -1,6 +1,7 @@
 ﻿using Exiled.Events.EventArgs;
 using Exiled.API.Features;
 using MEC;
+using Exiled.Events.EventArgs.Server;
 
 namespace ScuutCore.Modules.Chaos
 {

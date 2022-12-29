@@ -15,9 +15,9 @@ namespace ScuutCore.API
 
         public TModuleConfig Config { get; set; } = new TModuleConfig();
 
-        public virtual void OnEnabled() => Log.Debug($"Module {Name} Enabled", Plugin.Singleton.Config.Debug);
+        public virtual void OnEnabled() => Log.Debug($"Module {Name} Enabled");
 
-        public virtual void OnDisabled() => Log.Debug($"Module {Name} Disabled", Plugin.Singleton.Config.Debug);
+        public virtual void OnDisabled() => Log.Debug($"Module {Name} Disabled");
 
         // Don't needed
         public int CompareTo(IModule<IModuleConfig> other) => 0;

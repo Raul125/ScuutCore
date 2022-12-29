@@ -9,13 +9,13 @@ namespace ScuutCore.Modules.AntiAFK
     {
         private readonly Vector3 position;
         private readonly Vector2 rotation;
-        private readonly float cameraRotation;
+        private readonly Vector3 cameraRotation;
 
         public PositionInfo(Player player)
         {
             position = player.Position;
             rotation = player.Rotation;
-            cameraRotation = player.Role is Scp079Role scp079 ? scp079.Camera.Rotation : 0f;
+            cameraRotation = player.Role is Scp079Role scp079 ? scp079.Camera.Rotation : Vector3.zero;
         }
 
         public static bool operator ==(PositionInfo x, PositionInfo y) => x.Equals(y);

@@ -6,6 +6,7 @@ using Exiled.CustomItems.API.Features;
 using Exiled.CustomRoles.API.Features;
 using InventorySystem.Items.Usables.Scp330;
 using MEC;
+using PlayerRoles;
 using UnityEngine;
 
 namespace ScuutCore.Modules.AntiAFK
@@ -15,12 +16,12 @@ namespace ScuutCore.Modules.AntiAFK
         private readonly List<ItemType> items = new List<ItemType>();
         private readonly List<CandyKindID> candies = new List<CandyKindID>();
         private readonly List<CustomItem> customItems = new List<CustomItem>();
-        private readonly RoleType role;
+        private readonly RoleTypeId role;
         private readonly Vector3 position;
         private readonly float health;
         private readonly IReadOnlyCollection<CustomRole> customRoles;
-        private readonly byte level;
-        private readonly float experience;
+        private readonly int level;
+        private readonly int experience;
         private readonly float energy;
 
         public PlayerInfo(Player player)
@@ -50,7 +51,7 @@ namespace ScuutCore.Modules.AntiAFK
 
         public void AddTo(Player player)
         {
-            player.Role.Type = role;
+            player.Role.Set(role);
 
             bool isCustom = customRoles != null;
             if (isCustom)
@@ -82,7 +83,6 @@ namespace ScuutCore.Modules.AntiAFK
                     scp079Role.Level = level;
                     scp079Role.Experience = experience;
                     scp079Role.Energy = energy;
-                    scp079Role.MaxEnergy = scp079Role.Levels[level].maxMana;
                 }
             });
         }

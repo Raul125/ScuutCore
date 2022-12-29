@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using LightContainmentZoneDecontamination;
 using Mirror;
 using Respawning.NamingRules;
+using Exiled.Events.EventArgs.Warhead;
 
 namespace ScuutCore.Modules.AutoNuke
 {
@@ -20,9 +21,6 @@ namespace ScuutCore.Modules.AutoNuke
 
         public void OnRoundStart()
         {
-            // Fix maingame(11.x)
-            UnitNamingRule.UsedCombinations.Clear();
-
             IsAutoNuke = false;
             Plugin.Coroutines.Add(Timing.RunCoroutine(AutoNukeCoroutine()));
         }

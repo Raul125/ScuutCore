@@ -10,6 +10,7 @@
     using Exiled.Permissions.Extensions;
     using Mirror;
     using NorthwoodLib.Pools;
+    using PlayerRoles;
     using RemoteAdmin;
 
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
@@ -25,17 +26,17 @@
         {
             if (sender is PlayerCommandSender playerSender)
             {
-                if (!playerSender.CharacterClassManager.IsAnyScp())
+                if (playerSender.ReferenceHub.roleManager._curRole.Team != Team.SCPs)
                 {
                     response = "You must be an SCP to run this command!";
                     return false;
                 }
 
-                var scps = Player.Get(Team.SCP);
+                var scps = Player.Get(Team.SCPs);
                 var scpNames = new List<string>();
                 foreach (var scp in scps)
                 {
-                    scpNames.Add(scp.ReferenceHub.characterClassManager.CurRole.fullName);                  
+                    scpNames.Add(scp.ReferenceHub.roleManager._curRole.RoleName);                  
                     if (scp != scps.Last())
                         scpNames.Append(", ");
                     else
@@ -50,11 +51,11 @@
             }
             else
             {
-                var scps = Player.Get(Team.SCP);
+                var scps = Player.Get(Team.SCPs);
                 var scpNames = new List<string>();
                 foreach (var scp in scps)
                 {
-                    scpNames.Add(scp.ReferenceHub.characterClassManager.CurRole.fullName);
+                    scpNames.Add(scp.ReferenceHub.roleManager._curRole.RoleName);
                     if (scp != scps.Last())
                         scpNames.Append(", ");
                     else

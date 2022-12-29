@@ -1,6 +1,8 @@
 ﻿using Exiled.API.Features;
 using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
 using MEC;
+using PlayerRoles;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +22,6 @@ namespace ScuutCore.Modules.BetterLateSpawn
 
         public void OnWaitingForPlayers()
         {
-            Server.LaterJoinEnabled = false;
             DisconnectedPlayers.Clear();
         }
 
@@ -34,15 +35,15 @@ namespace ScuutCore.Modules.BetterLateSpawn
                 switch (Choose())
                 {
                     case 0:
-                        ev.Player.Role.Type = RoleType.ClassD;
+                        ev.Player.Role.Set(RoleTypeId.ClassD);
                         break;
 
                     case 1:
-                        ev.Player.Role.Type = RoleType.Scientist;
+                        ev.Player.Role.Set(RoleTypeId.Scientist);
                         break;
 
                     case 2:
-                        ev.Player.Role.Type = RoleType.FacilityGuard;
+                        ev.Player.Role.Set(RoleTypeId.FacilityGuard);
                         break;
                 }
 

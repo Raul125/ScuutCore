@@ -36,7 +36,7 @@ namespace ScuutCore.Modules.AntiAFK
             if (player.CheckPermission("ScuutCore.afkignore") ||
                 player.IsDead ||
                 AntiAFK.Singleton.Config.MinimumPlayers > Player.Dictionary.Count ||
-                (AntiAFK.Singleton.Config.IgnoreTutorials && player.Role.Type == RoleType.Tutorial) ||
+                (AntiAFK.Singleton.Config.IgnoreTutorials && player.Role.Type == RoleTypeId.Tutorial) ||
                 player.Role is Scp096Role rol && rol.TryingNotToCry)
             {
                 afkTime = 0;
@@ -62,7 +62,7 @@ namespace ScuutCore.Modules.AntiAFK
                 return;
             }
 
-            Log.Debug($"{player} has been detected as AFK.", Plugin.Singleton.Config.Debug);
+            Log.Debug($"{player} has been detected as AFK.");
             afkTime = 0;
 
             if (AntiAFK.Singleton.Config.TryReplace)
@@ -87,7 +87,7 @@ namespace ScuutCore.Modules.AntiAFK
 
         private void ForceSpectator()
         {
-            player.SetRole(RoleType.Spectator);
+            player.Role.Set(RoleTypeId.Spectator);
             player.Broadcast(AntiAFK.Singleton.Config.SpectatorForced);
         }
     }

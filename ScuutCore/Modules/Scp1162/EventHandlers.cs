@@ -1,5 +1,7 @@
 ﻿using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
+using PlayerRoles;
 using UnityEngine;
 
 namespace ScuutCore.Modules.Scp1162
@@ -19,7 +21,7 @@ namespace ScuutCore.Modules.Scp1162
                 if (!ev.IsAllowed) 
                     return;
 
-                if (Vector3.Distance(ev.Player.Position, Exiled.API.Extensions.RoleExtensions.GetRandomSpawnProperties(RoleType.Scp173).Item1) <= 8.2f)
+                if (Vector3.Distance(ev.Player.Position, Exiled.API.Extensions.RoleExtensions.GetRandomSpawnLocation(RoleTypeId.Scp173).Position) <= 8.2f)
                 {
                     if (scp1162.Config.UseHints)
                         ev.Player.ShowHint(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration);

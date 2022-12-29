@@ -1,5 +1,6 @@
 ﻿using Exiled.API.Extensions;
 using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
 using MEC;
 using PlayableScps.Interfaces;
 using PlayerStatsSystem;
@@ -32,7 +33,7 @@ namespace ScuutCore.Modules.Health
                 Plugin.Coroutines.Add(Timing.CallDelayed(3f, () =>
                 {
                     var module = ev.Player.ReferenceHub.playerStats.GetModule<AhpStat>();
-                    if (ev.Player.CurrentScp is IShielded shielded)
+                    if (ev.Player.Role.Base is IShielded shielded)
                     {
                         var shield = shielded.Shield;
                         shield.Limit = ahp.Limit;
@@ -57,26 +58,26 @@ namespace ScuutCore.Modules.Health
 
         public void OnPlayerDied(DiedEventArgs ev)
         {
-            if (ev.Killer == null)
+            if (ev.Attacker == null)
                 return;
 
-            if (health.Config.HealthOnKill.ContainsKey(ev.Killer.Role))
+            if (health.Config.HealthOnKill.ContainsKey(ev.Attacker.Role))
             {
-                if (ev.Killer.Health + health.Config.HealthOnKill[ev.Killer.Role] <= ev.Killer.MaxHealth)
-                    ev.Killer.Health += health.Config.HealthOnKill[ev.Killer.Role];
+                if (ev.Attacker.Health + health.Config.HealthOnKill[ev.Attacker.Role] <= ev.Attacker.MaxHealth)
+                    ev.Attacker.Health += health.Config.HealthOnKill[ev.Attacker.Role];
                 else
-                    ev.Killer.Health = ev.Killer.MaxHealth;
+                    ev.Attacker.Health = ev.Attacker.MaxHealth;
             }
 
-            if (health.Config.AhpOnKill.ContainsKey(ev.Killer.Role))
+            if (health.Config.AhpOnKill.ContainsKey(ev.Attacker.Role))
             {
-                if (ev.Killer.CurrentScp is IShielded shielded)
+                if (ev.Attacker.Role.Base is IShielded shielded)
                 {
-                    shielded.Shield.CurrentAmount += health.Config.AhpOnKill[ev.Killer.Role.Type];
+                    shielded.Shield.CurrentAmount += health.Config.AhpOnKill[ev.Attacker.Role.Type];
                 }
                 else
                 {
-                    ev.Killer.ArtificialHealth += health.Config.AhpOnKill[ev.Killer.Role.Type];
+                    ev.Attacker.ArtificialHealth += health.Config.AhpOnKill[ev.Attacker.Role.Type];
                 }
             }
         }

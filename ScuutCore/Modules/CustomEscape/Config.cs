@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -8,13 +9,13 @@ namespace ScuutCore.Modules.CustomEscape
     {
         public bool IsEnabled { get; set; } = true;
 
-        public Dictionary<RoleType, RoleType> CuffedRoleConversions { get; set; } = new Dictionary<RoleType, RoleType>
+        public Dictionary<RoleTypeId, RoleTypeId> CuffedRoleConversions { get; set; } = new Dictionary<RoleTypeId, RoleTypeId>
         {
-            { RoleType.FacilityGuard, RoleType.ChaosRifleman },
-            { RoleType.ChaosRifleman, RoleType.NtfPrivate },
-            { RoleType.ChaosRepressor, RoleType.NtfPrivate },
-            { RoleType.ChaosMarauder, RoleType.NtfPrivate },
-            { RoleType.ChaosConscript, RoleType.NtfPrivate }
+            { RoleTypeId.FacilityGuard, RoleTypeId.ChaosRifleman },
+            { RoleTypeId.ChaosRifleman, RoleTypeId.NtfPrivate },
+            { RoleTypeId.ChaosRepressor, RoleTypeId.NtfPrivate },
+            { RoleTypeId.ChaosMarauder, RoleTypeId.NtfPrivate },
+            { RoleTypeId.ChaosConscript, RoleTypeId.NtfPrivate }
         };
 
         public bool Debug { get; set; } = false;

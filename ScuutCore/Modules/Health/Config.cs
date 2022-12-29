@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -9,22 +10,22 @@ namespace ScuutCore.Modules.Health
         public bool IsEnabled { get; set; } = true;
 
         [Description("A list of roles and what their default starting health should be.")]
-        public Dictionary<RoleType, int> HealthValues { get; set; } = new Dictionary<RoleType, int>()
+        public Dictionary<RoleTypeId, int> HealthValues { get; set; } = new Dictionary<RoleTypeId, int>()
         {
             {
-                RoleType.Scp173,
+                RoleTypeId.Scp173,
                 3200
             },
             {
-                RoleType.NtfCaptain,
+                RoleTypeId.NtfCaptain,
                 150
             }
         };
 
-        public Dictionary<RoleType, AhpRole> AhpValues { get; set; } = new Dictionary<RoleType, AhpRole>()
+        public Dictionary<RoleTypeId, AhpRole> AhpValues { get; set; } = new Dictionary<RoleTypeId, AhpRole>()
         {
             {
-                RoleType.Scp173,
+                RoleTypeId.Scp173,
                 new AhpRole
                 {
                     Amount = 760,
@@ -37,28 +38,24 @@ namespace ScuutCore.Modules.Health
             },
         };
 
-        public Dictionary<RoleType, float> AhpOnKill { get; set; } = new Dictionary<RoleType, float>()
+        public Dictionary<RoleTypeId, float> AhpOnKill { get; set; } = new Dictionary<RoleTypeId, float>()
         {
              {
-                RoleType.Scp173,
+                RoleTypeId.Scp173,
                 5
             },
         };
 
         [Description("A list of roles and how much health they should be given when they kill someone.")]
-        public Dictionary<RoleType, float> HealthOnKill { get; set; } = new Dictionary<RoleType, float>()
+        public Dictionary<RoleTypeId, float> HealthOnKill { get; set; } = new Dictionary<RoleTypeId, float>()
         {
             {
-                RoleType.Scp173,
+                RoleTypeId.Scp173,
                 0
             },
             {
-                RoleType.Scp93953,
+                RoleTypeId.Scp939,
                 10
-            },
-            {
-                RoleType.Scp93989,
-                20
             }
         };
     }

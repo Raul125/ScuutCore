@@ -74,7 +74,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
 
                 stringBuilder.Append(' ').Append(player.Nickname);
                 if (player.IsScp)
-                    stringBuilder.Append(' ').Append(player.ReferenceHub.characterClassManager.CurRole.fullName);
+                    stringBuilder.Append(' ').Append(player.ReferenceHub.roleManager._curRole.RoleName);
 
                 if (i != cutOff)
                     stringBuilder.Append(", ");

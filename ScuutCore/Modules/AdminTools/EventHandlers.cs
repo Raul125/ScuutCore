@@ -3,7 +3,10 @@ using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs;
+using Exiled.Events.EventArgs.Player;
+using Exiled.Events.EventArgs.Server;
 using MEC;
+using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +70,7 @@ namespace ScuutCore.Modules.AdminTools
 
 			yield return Timing.WaitForSeconds(1f);
 			player.ClearInventory(false);
-			player.SetRole(RoleType.Tutorial);
+			player.Role.Set(RoleTypeId.Tutorial);
 			player.Position = new Vector3(53f, 1020f, -44f);
 		}
 
@@ -76,7 +79,7 @@ namespace ScuutCore.Modules.AdminTools
 			Jailed jail = JailedPlayers.Find(j => j.Userid == player.UserId);
 			if (jail.CurrentRound)
 			{
-				player.SetRole(jail.Role, SpawnReason.ForceClass, true);
+				player.Role.Set(jail.Role, SpawnReason.ForceClass);
 				yield return Timing.WaitForSeconds(0.5f);
 				try
 				{
@@ -93,7 +96,7 @@ namespace ScuutCore.Modules.AdminTools
 			}
 			else
 			{
-				player.SetRole(RoleType.Spectator);
+				player.Role.Set(RoleTypeId.Spectator);
 			}
 
 			JailedPlayers.Remove(jail);
@@ -104,7 +107,7 @@ namespace ScuutCore.Modules.AdminTools
 			public string Userid;
 			public string Name;
 			public List<Item> Items;
-			public RoleType Role;
+			public RoleTypeId Role;
 			public Vector3 Position;
 			public float Health;
 			public Dictionary<AmmoType, ushort> Ammo;
