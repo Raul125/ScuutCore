@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Player;
 using UnityEngine;
@@ -15,12 +16,11 @@ namespace ScuutCore.Modules.RainbowTags
 
         public void OnChangingGroup(ChangingGroupEventArgs ev)
         {
-            if (!ev.IsAllowed)
+            if (!ev.IsAllowed || ev.Player is null)
                 return;
 
             bool hasColors = TryGetColors(ev.NewGroup?.GetKey(), out string[] colors);
-
-            if (ev.NewGroup != null && ev.Player.Group == null && hasColors)
+            if (ev.NewGroup != null && hasColors)
             {
                 RainbowTagController controller = ev.Player.GameObject.AddComponent<RainbowTagController>();
                 controller.Colors = colors;

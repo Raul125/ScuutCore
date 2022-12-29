@@ -21,8 +21,9 @@ namespace ScuutCore.Modules.RemoteKeycard
             if (!remotekeycard.Config.AffectDoors)
                 return;
 
-            if (!ev.IsAllowed && HasKeycardPermission(ev.Player, ev.Door.RequiredPermissions.RequiredPermissions))
-                ev.IsAllowed = true;
+            ev.IsAllowed = false;
+            if (!ev.Door.RequiredPermissions.CheckPermissions(ev.Player.CurrentItem?.Base, ev.Player.ReferenceHub) && HasKeycardPermission(ev.Player, ev.Door.RequiredPermissions.RequiredPermissions))
+                ev.Door.IsOpen = !ev.Door.IsOpen;
         }
 
         public void OnWarheadUnlock(ActivatingWarheadPanelEventArgs ev)
@@ -40,7 +41,7 @@ namespace ScuutCore.Modules.RemoteKeycard
                 return;
 
             if (!ev.IsAllowed && HasKeycardPermission(ev.Player, ev.Generator.Base._requiredPermission))
-                ev.IsAllowed = true;
+                ev.Generator.IsOpen = !ev.Generator.IsOpen;
         }
 
         public void OnLockerInteract(InteractingLockerEventArgs ev)
@@ -49,7 +50,7 @@ namespace ScuutCore.Modules.RemoteKeycard
                 return;
 
             if (!ev.IsAllowed && ev.Chamber != null && HasKeycardPermission(ev.Player, ev.Chamber.RequiredPermissions, true))
-                ev.IsAllowed = true;
+                ev.Chamber.IsOpen = !ev.Chamber.IsOpen;
         }
 
         // Extension

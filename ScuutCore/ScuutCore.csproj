@@ -141,6 +141,9 @@
     <Compile Include="Modules\AutoNuke\AutoNuke.cs" />
     <Compile Include="Modules\AutoNuke\Config.cs" />
     <Compile Include="Modules\AutoNuke\EventHandlers.cs" />
+    <Compile Include="Modules\Replacer\Config.cs" />
+    <Compile Include="Modules\Replacer\Replacer.cs" />
+    <Compile Include="Modules\Replacer\EventHandlers.cs" />
     <Compile Include="Modules\CustomEscape\Config.cs" />
     <Compile Include="Modules\CustomEscape\EventHandlers.cs" />
     <Compile Include="Modules\CustomEscape\CustomEscape.cs" />
@@ -176,16 +179,12 @@
     <Compile Include="Modules\Subclasses\Config.cs" />
     <Compile Include="Modules\Subclasses\EventHandlers.cs" />
     <Compile Include="Modules\Subclasses\Subclasses.cs" />
-    <Compile Include="Modules\TpsLogger\Commands\CurrentCommand.cs" />
-    <Compile Include="Modules\TpsLogger\TpsLogger.cs" />
-    <Compile Include="Modules\TpsLogger\Config.cs" />
     <Compile Include="Modules\BetterLateSpawn\BetterLateSpawn.cs" />
     <Compile Include="Modules\BetterLateSpawn\Config.cs" />
     <Compile Include="Modules\BetterLateSpawn\EventHandlers.cs" />
     <Compile Include="Modules\RoundSummary\RoundSummary.cs" />
     <Compile Include="Modules\RoundSummary\Config.cs" />
     <Compile Include="Modules\RoundSummary\EventHandlers.cs" />
-    <Compile Include="Modules\TpsLogger\WebhookController.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Commands\WamtList.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\DisplayType.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Models\WamtBroadcast.cs" />

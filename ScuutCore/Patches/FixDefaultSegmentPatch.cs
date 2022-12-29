@@ -7,7 +7,7 @@ using MEC;
 
 namespace ScuutCore.Patches
 {
-	[HarmonyPatch(typeof(Timing), nameof(Timing.RunCoroutine), new Type[] { typeof(IEnumerator<float>) })]
+	// [HarmonyPatch(typeof(Timing), nameof(Timing.RunCoroutine), new Type[] { typeof(IEnumerator<float>) })]
 	public static class FixDefaultSegmentPatch
 	{
 		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

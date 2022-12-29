@@ -1,7 +1,9 @@
-﻿using Exiled.API.Features.Items;
+﻿using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Player;
 using PlayerRoles;
+using System;
 using UnityEngine;
 
 namespace ScuutCore.Modules.Scp1162
@@ -54,7 +56,6 @@ namespace ScuutCore.Modules.Scp1162
             }
             catch
             {
-                // Ignore, ev.Player.RemoveItem false positive.
             }
         }
     }

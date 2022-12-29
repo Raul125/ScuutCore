@@ -71,7 +71,9 @@ namespace ScuutCore.Modules.AdminTools
 			yield return Timing.WaitForSeconds(1f);
 			player.ClearInventory(false);
 			player.Role.Set(RoleTypeId.Tutorial);
-			player.Position = new Vector3(53f, 1020f, -44f);
+			yield return Timing.WaitForSeconds(1f);
+			player.IsGodModeEnabled = true;
+			player.Position = new Vector3(38.000f, 1014.112f, -32.000f);
 		}
 
 		public static IEnumerator<float> DoUnJail(Player player)
@@ -83,7 +85,8 @@ namespace ScuutCore.Modules.AdminTools
 				yield return Timing.WaitForSeconds(0.5f);
 				try
 				{
-					player.ResetInventory(jail.Items);
+                    player.IsGodModeEnabled = false;
+                    player.ResetInventory(jail.Items);
 					player.Health = jail.Health;
 					player.Position = jail.Position;
 					foreach (KeyValuePair<AmmoType, ushort> kvp in jail.Ammo)

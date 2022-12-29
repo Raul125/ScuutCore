@@ -81,7 +81,7 @@ namespace ScuutCore.Modules.AntiAFK
 
         private void TryReplace()
         {
-            Player toSwap = Player.List.FirstOrDefault(x => x.IsDead && !x.IsOverwatchEnabled && x != player);
+            Player toSwap = Player.List.FirstOrDefault(x => x.Role.Type is RoleTypeId.Spectator && !x.IsOverwatchEnabled && x != player);
             if (toSwap != null)
                 new PlayerInfo(player).AddTo(toSwap);
         }

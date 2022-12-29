@@ -108,7 +108,6 @@ namespace ScuutCore.Modules.RoundSummary
             if (roundSummary.Config.ShowEscapee && firstEscaped != string.Empty)
             {
                 Enum.TryParse<RoleTypeId>(escapedRole, out RoleTypeId eRole);
-                Log.Info($"Role color: {eRole.GetColor().ToHex()}");
                 message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole).Replace("{roleColor}", eRole.GetColor().ToHex()) + "\n";
             }
             else
