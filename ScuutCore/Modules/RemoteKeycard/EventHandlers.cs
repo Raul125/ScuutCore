@@ -21,7 +21,6 @@ namespace ScuutCore.Modules.RemoteKeycard
             if (!remotekeycard.Config.AffectDoors)
                 return;
 
-            ev.IsAllowed = false;
             if (!ev.Door.RequiredPermissions.CheckPermissions(ev.Player.CurrentItem?.Base, ev.Player.ReferenceHub) && HasKeycardPermission(ev.Player, ev.Door.RequiredPermissions.RequiredPermissions))
                 ev.Door.IsOpen = !ev.Door.IsOpen;
         }

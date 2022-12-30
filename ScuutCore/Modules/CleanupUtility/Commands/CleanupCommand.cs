@@ -2,6 +2,7 @@
 using CommandSystem;
 using Exiled.API.Features;
 using Exiled.Permissions.Extensions;
+using Exiled.API.Features.Pickups;
 
 namespace ScuutCore.Modules.CleanupUtility
 {
@@ -29,7 +30,7 @@ namespace ScuutCore.Modules.CleanupUtility
                 ragdoll.Delete();
             }
 
-            foreach (var item in Map.Pickups)
+            foreach (var item in Pickup.List)
             {
                 item.Destroy();
             }

@@ -18,5 +18,15 @@ namespace ScuutCore.Modules.Replacer
             Show = true,
             Type = Broadcast.BroadcastFlags.Normal
         };
+
+        public int DontReplaceTime { get; set; } = 360;
+
+        public List<RoleTypeId> DisallowedRolesToReplace { get; set; } = new List<RoleTypeId>
+        {
+            RoleTypeId.Tutorial,
+            RoleTypeId.Overwatch,
+            RoleTypeId.Spectator,
+            RoleTypeId.None,
+        };
     }
 }

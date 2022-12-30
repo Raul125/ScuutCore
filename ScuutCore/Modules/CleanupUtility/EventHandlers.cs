@@ -1,4 +1,5 @@
 ﻿using Exiled.API.Features;
+using Exiled.API.Features.Pickups;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Map;
 using MEC;
@@ -25,7 +26,7 @@ namespace ScuutCore.Modules.CleanupUtility
             if (!ev.IsAllowed)
                 return;
 
-            foreach (var item in Map.Pickups)
+            foreach (var item in Pickup.List)
             {
                 if (item == null)
                     continue;
@@ -38,7 +39,7 @@ namespace ScuutCore.Modules.CleanupUtility
 
         public void OnDetonated()
         {
-            foreach (var item in Map.Pickups)
+            foreach (var item in Pickup.List)
             {
                 if (item == null)
                     continue;
@@ -63,7 +64,7 @@ namespace ScuutCore.Modules.CleanupUtility
 
                 if (cleanupUtility.Config.ClearItems)
                 {
-                    foreach (var item in Map.Pickups.Where(x => x != null))
+                    foreach (var item in Pickup.List.Where(x => x != null))
                         item.Destroy();
                 }
             }

@@ -13,7 +13,7 @@ namespace ScuutCore.Modules.AdminTools
     {
         public Jail() => LoadGeneratedCommands();
 
-        public override string Command { get; } = "jail";
+        public override string Command { get; } = "scjail";
 
         public override string[] Aliases { get; } = new string[] { };
 
@@ -31,7 +31,7 @@ namespace ScuutCore.Modules.AdminTools
 
             if (arguments.Count != 1)
             {
-                response = "Usage: jail (player id / name)";
+                response = "Usage: scjail (player id / name)";
                 return false;
             }
 

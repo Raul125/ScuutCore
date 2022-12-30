@@ -59,7 +59,7 @@ namespace ScuutCore.Modules.CustomEscape
             yield return Timing.WaitForSeconds(1f);
 
             foreach (Item item in items)
-                item.Spawn(player.Position, default);
+                item.CreatePickup(player.Position, default);
         }
     }
 }
