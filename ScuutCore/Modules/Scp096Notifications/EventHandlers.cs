@@ -1,7 +1,4 @@
-﻿using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Scp096;
-
-namespace ScuutCore.Modules.Scp096Notifications
+﻿namespace ScuutCore.Modules.Scp096Notifications
 {
     public class EventHandlers
     {
@@ -11,7 +8,7 @@ namespace ScuutCore.Modules.Scp096Notifications
             scp096Notifications = scp096nt;
         }
 
-        public void OnAddingTarget(AddingTargetEventArgs ev)
+        /*public void OnAddingTarget(AddingTargetEventArgs ev)
         {
             if (ev.Target == null ||
                 ev.Target.SessionVariables.ContainsKey("IsNPC") ||
@@ -34,6 +31,6 @@ namespace ScuutCore.Modules.Scp096Notifications
 
                 ev.Player.ShowHint(message, scp096Notifications.Config.HintDuration);
             }
-        }
+        }*/
     }
 }

@@ -1,26 +1,21 @@
-﻿using ScuutCore.API;
-using Server = Exiled.Events.Handlers.Server;
-
-namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates
 {
+    using PluginAPI.Events;
+    using ScuutCore.API;
+
     public class WhoAreMyTeammates : Module<Config>
     {
         public override string Name { get; } = "WhoAreMyTeammates";
 
-        private EventHandlers EventHandlers;
-
         public override void OnEnabled()
         {
-            EventHandlers = new EventHandlers(this);
-            Server.RoundStarted += EventHandlers.OnRoundStarted;
-
+            EventManager.RegisterEvents<EventHandlers>(this);
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Server.RoundStarted -= EventHandlers.OnRoundStarted;
-            EventHandlers = null;
+            EventManager.UnregisterEvents<EventHandlers>(this);
 
             base.OnDisabled();
         }

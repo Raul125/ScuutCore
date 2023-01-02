@@ -1,9 +1,9 @@
-﻿using Exiled.API.Features;
-using HarmonyLib;
-
-namespace ScuutCore.Patches
+﻿namespace ScuutCore.Patches
 {
-	[HarmonyPatch(typeof(Player), nameof(Player.ShowHint))]
+    using HarmonyLib;
+	using PluginAPI.Core;
+
+	[HarmonyPatch(typeof(Player), nameof(Player.ReceiveHint))]
 	public static class OverrideHintPatch
 	{
 		public static bool Prefix(Player __instance, string message, float duration = 3)

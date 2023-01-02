@@ -2,7 +2,7 @@
 using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using PlayerRoles;
 
 namespace ScuutCore.Modules.CuffedTK

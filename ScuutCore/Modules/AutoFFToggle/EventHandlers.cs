@@ -1,5 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using Exiled.Events.EventArgs.Server;
 
 namespace ScuutCore.Modules.AutoFFToggle

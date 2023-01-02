@@ -1,6 +1,6 @@
 ﻿using Exiled.Events.EventArgs;
 using MEC;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using System.Collections.Generic;
 using LightContainmentZoneDecontamination;
 using Mirror;

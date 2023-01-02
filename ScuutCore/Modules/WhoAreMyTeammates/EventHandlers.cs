@@ -1,12 +1,13 @@
-﻿using Exiled.API.Features;
-using MEC;
-using NorthwoodLib.Pools;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates
 {
+    using MEC;
+    using NorthwoodLib.Pools;
+    using PlayerRoles;
+    using PluginAPI.Core;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class EventHandlers
     {
         private WhoAreMyTeammates whoAreMyTeammates;
@@ -29,7 +30,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             if (!broadcast.IsEnabled)
                 return;
 
-            List<Player> players = Player.Get(broadcast.Team).ToList();
+            List<Player> players = Player.GetPlayers().Where(x => x.Role.GetTeam() == broadcast.Team).ToList();
             if (broadcast.MaxPlayers > -1 && players.Count >= broadcast.MaxPlayers)
                 return;
 
@@ -50,10 +51,10 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             switch (displayType)
             {
                 case DisplayType.Broadcast:
-                    player.Broadcast(duration, content);
+                    player.SendBroadcast(content, duration);
                     return;
                 case DisplayType.Hint:
-                    player.ShowHint(content, duration);
+                    player.ReceiveHint(content, duration);
                     return;
                 case DisplayType.ConsoleMessage:
                     player.SendConsoleMessage(content, "cyan");

@@ -7,9 +7,9 @@
 
 namespace ScuutCore.Modules.ScpSwap
 {
+    using PluginAPI.Core;
     using System;
     using System.Collections.Generic;
-    using Exiled.API.Features;
 
     /// <summary>
     /// A container to aid in the swapping of custom classes.
@@ -59,7 +59,7 @@ namespace ScuutCore.Modules.ScpSwap
             {
                 if (string.Equals(Name, swap.Name, StringComparison.OrdinalIgnoreCase))
                 {
-                    Log.Warn($"Attempted to register a {nameof(CustomSwap)} with a duplicate name of {Name}.");
+                    Log.Warning($"Attempted to register a {nameof(CustomSwap)} with a duplicate name of {Name}.");
                     return false;
                 }
             }
@@ -77,7 +77,7 @@ namespace ScuutCore.Modules.ScpSwap
             if (Registered.Remove(this))
                 return true;
 
-            Log.Warn($"Attempted to remove an unregistered {nameof(CustomSwap)} with a name of {Name}.");
+            Log.Warning($"Attempted to remove an unregistered {nameof(CustomSwap)} with a name of {Name}.");
             return false;
         }
     }

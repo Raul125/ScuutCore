@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.API.Features.Roles;
+using PluginAPI.Core;
+using PluginAPI.Core.Items;
+using PluginAPI.Core.Roles;
 using Exiled.CustomItems.API.Features;
 using Exiled.CustomRoles.API.Features;
 using InventorySystem.Items.Usables.Scp330;

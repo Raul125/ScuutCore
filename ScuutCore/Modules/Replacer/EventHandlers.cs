@@ -1,6 +1,6 @@
 ﻿using Exiled.API.Enums;
-using Exiled.API.Features;
-using Exiled.API.Features.Roles;
+using PluginAPI.Core;
+using PluginAPI.Core.Roles;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Player;
 using MEC;

@@ -1,13 +1,14 @@
-﻿using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
-using PlayerRoles;
-using System;
-using UnityEngine;
-
-namespace ScuutCore.Modules.Scp1162
+﻿namespace ScuutCore.Modules.Scp1162
 {
+    using PluginAPI.Core;
+    using PlayerRoles;
+    using UnityEngine;
+    using InventorySystem.Items;
+    using InventorySystem;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using PlayerRoles.FirstPersonControl.Spawnpoints;
+
     public class EventHandlers
     {
         private Scp1162 scp1162;
@@ -16,32 +17,31 @@ namespace ScuutCore.Modules.Scp1162
             scp1162 = btc;
         }
 
-        public void OnDroppingItem(DroppingItemEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerDropItem)]
+        public void OnDroppingItem(Player player, ItemBase item)
         {
             try
             {
-                if (!ev.IsAllowed) 
-                    return;
+                RoleSpawnpointManager.TryGetSpawnpointForRole(RoleTypeId.Scp173, out ISpawnpointHandler spawnpoint);
+                spawnpoint.TryGetSpawnpoint(out Vector3 position, out float horizontalRotation);
 
-                if (Vector3.Distance(ev.Player.Position, Exiled.API.Extensions.RoleExtensions.GetRandomSpawnLocation(RoleTypeId.Scp173).Position) <= 8.2f)
+                if (Vector3.Distance(player.Position, position) <= 8.2f)
                 {
                     if (scp1162.Config.UseHints)
-                        ev.Player.ShowHint(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration);
+                        player.ReceiveHint(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration);
                     else
-                        ev.Player.Broadcast(scp1162.Config.ItemDropMessageDuration, scp1162.Config.ItemDropMessage, Broadcast.BroadcastFlags.Normal, true);
+                        player.SendBroadcast(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration, Broadcast.BroadcastFlags.Normal, true);
 
-                    ev.IsAllowed = false;
-                    var oldItem = ev.Item.Base.ItemTypeId;
-                    ev.Player.RemoveItem(ev.Item);
+                    player.ReferenceHub.inventory.ServerRemoveItem(item.ItemSerial, item.PickupDropModel);
 
                     ItemType newItemType = ItemType.None;
 
-                    getItem:
-                    foreach (var item in scp1162.Config.Chances)
+                getItem:
+                    foreach (var itemTuple in scp1162.Config.Chances)
                     {
-                        if (Plugin.Random.Next(0, 100) <= item.Value)
+                        if (UnityEngine.Random.Range(0, 100) <= itemTuple.Value)
                         {
-                            newItemType = item.Key;
+                            newItemType = itemTuple.Key;
                             break;
                         }
                     }
@@ -49,9 +49,7 @@ namespace ScuutCore.Modules.Scp1162
                     if (newItemType == ItemType.None)
                         goto getItem;
 
-                    var newItem = Item.Create(newItemType);
-                    ev.Player.AddItem(newItem);
-                    ev.Player.DropItem(newItem);
+                    player.ReferenceHub.inventory.ServerAddItem(newItemType);
                 }
             }
             catch

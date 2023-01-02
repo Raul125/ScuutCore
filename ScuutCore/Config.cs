@@ -1,12 +1,10 @@
-﻿using Exiled.API.Features;
-using Exiled.API.Interfaces;
-using System.IO;
-
-namespace ScuutCore.Config
+﻿namespace ScuutCore.Main
 {
-    public class Config : IConfig
+    using PluginAPI.Helpers;
+    using System.IO;
+
+    public class Config
     {
-        public bool IsEnabled { get; set; } = true;
         public string ConfigsFolder = Path.Combine(Paths.Configs, "ScuutCore");
         public bool Debug { get; set; } = false;
     }

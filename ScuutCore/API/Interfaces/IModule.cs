@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace ScuutCore.API
+﻿namespace ScuutCore.API
 {
+    using System;
+
     public interface IModule<out TModuleConfig> : IComparable<IModule<IModuleConfig>>
     where TModuleConfig : IModuleConfig
     {

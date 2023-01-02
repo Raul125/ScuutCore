@@ -1,6 +1,6 @@
 ﻿using System;
-using Exiled.API.Features;
-using Exiled.API.Features.Roles;
+using PluginAPI.Core;
+using PluginAPI.Core.Roles;
 using UnityEngine;
 
 namespace ScuutCore.Modules.AntiAFK

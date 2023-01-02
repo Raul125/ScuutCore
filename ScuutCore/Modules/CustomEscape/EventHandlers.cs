@@ -1,5 +1,5 @@
-﻿using Exiled.API.Features;
-using Exiled.API.Features.Items;
+﻿using PluginAPI.Core;
+using PluginAPI.Core.Items;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Player;
 using MEC;

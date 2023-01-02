@@ -1,5 +1,5 @@
-﻿using Exiled.API.Features;
-using Exiled.API.Features.Pickups;
+﻿using PluginAPI.Core;
+using PluginAPI.Core.Pickups;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Map;
 using MEC;

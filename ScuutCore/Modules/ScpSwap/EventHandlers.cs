@@ -1,10 +1,11 @@
-﻿using Exiled.API.Features;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
-using MEC;
-
-namespace ScuutCore.Modules.ScpSwap
+﻿namespace ScuutCore.Modules.ScpSwap
 {
+    using MEC;
+    using PlayerRoles;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+
     public class EventHandlers
     {
         private ScpSwap scpSwap;
@@ -13,24 +14,27 @@ namespace ScuutCore.Modules.ScpSwap
             scpSwap = sc;
         }
 
-        public void OnChangingRole(ChangingRoleEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerChangeRole)]
+        public void OnChangingRole(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
         {
-            if (!ev.IsAllowed || ev.Player.IsScp || ValidSwaps.GetCustom(ev.Player) != null)
+            if (player.Role.GetTeam() is Team.SCPs || ValidSwaps.GetCustom(player) != null)
                 return;
 
             Timing.CallDelayed(0.1f, () =>
             {
-                if ((ev.Player.IsScp || ValidSwaps.GetCustom(ev.Player) != null) &&
-                    Round.ElapsedTime.TotalSeconds < scpSwap.Config.SwapTimeout)
-                    ev.Player.Broadcast(scpSwap.Config.StartMessage);
+                if ((player.Role.GetTeam() is Team.SCPs || ValidSwaps.GetCustom(player) != null) &&
+                    Round.Duration.TotalSeconds < scpSwap.Config.SwapTimeout)
+                    player.SendBroadcast(scpSwap.Config.StartMessage);
             });
         }
 
+        [PluginEvent(ServerEventType.RoundRestart)]
         public void OnRestartingRound()
         {
             Swap.Clear();
         }
 
+        [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void OnWaitingForPlayers()
         {
             ValidSwaps.Refresh();

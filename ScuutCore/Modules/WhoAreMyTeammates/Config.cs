@@ -1,10 +1,10 @@
-﻿using PlayerRoles;
-using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates
 {
+    using PlayerRoles;
+    using ScuutCore.API;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;

@@ -7,8 +7,8 @@
 
 namespace ScuutCore.Modules.ScpSwap
 {
+    using PluginAPI.Core;
     using System;
-    using Exiled.API.Features;
 
     /// <summary>
     /// Container to make translations for console messages more fun.

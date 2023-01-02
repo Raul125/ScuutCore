@@ -3,14 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using CommandSystem;
-    using Exiled.API.Features;
-    using Exiled.Permissions.Extensions;
-    using Mirror;
-    using NorthwoodLib.Pools;
     using PlayerRoles;
+    using PluginAPI.Core;
     using RemoteAdmin;
 
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
@@ -32,7 +27,7 @@
                     return false;
                 }
 
-                var scps = Player.Get(Team.SCPs);
+                var scps = Player.GetPlayers().Where(x => x.Role.GetTeam() is Team.SCPs);
                 var scpNames = new List<string>();
                 foreach (var scp in scps)
                 {
@@ -45,13 +40,13 @@
                 }
 
                 string NameString = String.Join(",", scpNames);
-                Player.Get(sender).Broadcast(10, $"<color=red>The Following SCPs are ingame: {NameString}</color>");
+                Player.Get(sender).SendBroadcast($"<color=red>The Following SCPs are ingame: {NameString}</color>", 10);
                 response = $"The Following SCPs are ingame: {NameString}";
                 return true;
             }
             else
             {
-                var scps = Player.Get(Team.SCPs);
+                var scps = Player.GetPlayers().Where(x => x.Role.GetTeam() is Team.SCPs);
                 var scpNames = new List<string>();
                 foreach (var scp in scps)
                 {

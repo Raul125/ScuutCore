@@ -1,8 +1,8 @@
 ﻿using System;
 using CommandSystem;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using Exiled.Permissions.Extensions;
-using Exiled.API.Features.Pickups;
+using PluginAPI.Core.Pickups;
 
 namespace ScuutCore.Modules.CleanupUtility
 {

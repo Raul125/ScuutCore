@@ -1,5 +1,5 @@
 ﻿using Exiled.API.Extensions;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using Exiled.Events.EventArgs;
 using Exiled.Events.EventArgs.Player;
 using Exiled.Events.EventArgs.Server;
@@ -83,7 +83,7 @@ namespace ScuutCore.Modules.RoundSummary
             }
         }
 
-        public void OnPlayerEscaping(EscapingEventArgs ev)
+        public void OnPlayerEscaping()
         {
             if (firstEscaped == string.Empty)
             {
@@ -93,7 +93,7 @@ namespace ScuutCore.Modules.RoundSummary
             }
         }
 
-        public void OnRoundEnd(RoundEndedEventArgs ev)
+        public void OnRoundEnd()
         {
             string message = string.Empty;
 

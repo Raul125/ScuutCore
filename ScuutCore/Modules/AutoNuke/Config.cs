@@ -10,7 +10,7 @@ namespace ScuutCore.Modules.AutoNuke
         public float AutoNukeWarn { get; set; } = 780f;
 
         // Nuke Warn
-        public Exiled.API.Features.Broadcast AutoNukeWarnBroadcast { get; set; } = new Exiled.API.Features.Broadcast
+        public PluginAPI.Core.Broadcast AutoNukeWarnBroadcast { get; set; } = new PluginAPI.Core.Broadcast
         {
             Show = true,
             Duration = 10,
@@ -51,7 +51,7 @@ namespace ScuutCore.Modules.AutoNuke
             customSubtitle = "AutoNuke has started"
         };
 
-        public Exiled.API.Features.Broadcast AutoNukeStartBroadcast { get; set; } = new Exiled.API.Features.Broadcast
+        public PluginAPI.Core.Broadcast AutoNukeStartBroadcast { get; set; } = new PluginAPI.Core.Broadcast
         {
             Show = true,
             Duration = 10,

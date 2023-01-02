@@ -1,5 +1,5 @@
 ﻿using Exiled.Events.EventArgs;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using MEC;
 using Exiled.Events.EventArgs.Server;
 

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Exiled.API.Features;
-using Exiled.API.Features.Roles;
+using PluginAPI.Core;
+using PluginAPI.Core.Roles;
 using Exiled.Permissions.Extensions;
 using PlayerRoles;
 using UnityEngine;

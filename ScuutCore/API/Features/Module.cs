@@ -1,9 +1,7 @@
-﻿using CommandSystem;
-using Exiled.API.Features;
-using System;
-
-namespace ScuutCore.API
+﻿namespace ScuutCore.API
 {
+    using PluginAPI.Core;
+
     public abstract class Module<TModuleConfig> : IModule<TModuleConfig> where TModuleConfig : IModuleConfig, new()
     {
         public Module()

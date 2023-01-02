@@ -17,7 +17,7 @@ namespace ScuutCore.Modules.BetterLateSpawn
         public float ClassDChance { get; set; } = 70f;
 
         [Description("What should it broadcast when you late spawn.")]
-        public Exiled.API.Features.Broadcast Broadcast { get; set; } = new Exiled.API.Features.Broadcast
+        public PluginAPI.Core.Broadcast Broadcast { get; set; } = new PluginAPI.Core.Broadcast
         {
             Show = true,
             Content = "You joined late and have been spawned",

@@ -1,5 +1,5 @@
 ﻿using CommandSystem;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using Exiled.Permissions.Extensions;
 using PlayerRoles;
 using System;

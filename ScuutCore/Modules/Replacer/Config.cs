@@ -2,7 +2,7 @@
 using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using PlayerRoles;
 
 namespace ScuutCore.Modules.Replacer
@@ -11,7 +11,7 @@ namespace ScuutCore.Modules.Replacer
     {
         public bool IsEnabled { get; set; } = true;
 
-        public Exiled.API.Features.Broadcast BroadCast { get; set; } = new Exiled.API.Features.Broadcast
+        public PluginAPI.Core.Broadcast BroadCast { get; set; } = new PluginAPI.Core.Broadcast
         {
             Duration = 10,
             Content = "<i>You have replaced a disconnected player</i>",

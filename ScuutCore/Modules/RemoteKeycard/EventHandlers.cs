@@ -1,9 +1,9 @@
 ﻿using CustomPlayerEffects;
 using Interactables.Interobjects.DoorUtils;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using Exiled.Events.EventArgs;
 using System.Linq;
-using Exiled.API.Features.Items;
+using PluginAPI.Core.Items;
 using Exiled.Events.EventArgs.Player;
 
 namespace ScuutCore.Modules.RemoteKeycard
