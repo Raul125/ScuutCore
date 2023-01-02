@@ -16,7 +16,7 @@
         }
 
         [PluginEvent(ServerEventType.PlayerDropItem)]
-        public void OnDroppingItem(Player player, ItemBase item)
+        public bool OnDroppingItem(Player player, ItemBase item)
         {
             try
             {
@@ -31,28 +31,16 @@
                         player.SendBroadcast(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration, Broadcast.BroadcastFlags.Normal, true);
 
                     player.ReferenceHub.inventory.ServerRemoveItem(item.ItemSerial, item.PickupDropModel);
-
-                    ItemType newItemType = ItemType.None;
-
-                getItem:
-                    foreach (var itemTuple in Scp1162.Instance.Config.Chances)
-                    {
-                        if (Random.Range(0, 100) <= itemTuple.Value)
-                        {
-                            newItemType = itemTuple.Key;
-                            break;
-                        }
-                    }
-
-                    if (newItemType == ItemType.None)
-                        goto getItem;
-
-                    player.ReferenceHub.inventory.ServerAddItem(newItemType);
+                    ItemType newItemType = Scp1162.Instance.Config.Chances.RandomItem();
+                    PluginAPI.Core.Items.ItemPickup.Create(newItemType, player.Position, Quaternion.identity);
+                    return false;
                 }
             }
             catch
             {
             }
+
+            return true;
         }
     }
 }
