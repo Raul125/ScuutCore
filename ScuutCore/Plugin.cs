@@ -34,7 +34,7 @@
         [PluginConfig] public Config Config;
 
         [PluginPriority(LoadPriority.Highest)]
-        [PluginEntryPoint("ScuutCore", "1.0.0", "ScuutCore", "Raul125")]
+        [PluginEntryPoint("ScuutCore", "1.0.1", "ScuutCore", "Raul125")]
         public void LoadPlugin()
         {
             Singleton = this;
