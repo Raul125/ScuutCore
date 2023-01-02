@@ -1,10 +1,10 @@
 ﻿using PluginAPI.Core;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
 using MEC;
 using PlayerRoles;
 using System.Collections.Generic;
 using UnityEngine;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.BetterLateSpawn
 {
@@ -20,14 +20,16 @@ namespace ScuutCore.Modules.BetterLateSpawn
         private float[] Chances;
         private List<string> DisconnectedPlayers = new List<string>();
 
+        [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void OnWaitingForPlayers()
         {
             DisconnectedPlayers.Clear();
         }
 
-        public void OnVerified(VerifiedEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerJoined)]
+        public void OnVerified(Player player)
         {
-            if (!Round.IsStarted || DisconnectedPlayers.Contains(ev.Player.UserId) || Round.ElapsedTime.TotalSeconds > betterLateSpawn.Config.SpawnTime)
+            if (!Round.IsRoundStarted || DisconnectedPlayers.Contains(player.UserId) || Round.Duration.TotalSeconds > betterLateSpawn.Config.SpawnTime)
                 return;
 
             Plugin.Coroutines.Add(Timing.CallDelayed(2f, () =>
@@ -35,28 +37,27 @@ namespace ScuutCore.Modules.BetterLateSpawn
                 switch (Choose())
                 {
                     case 0:
-                        ev.Player.Role.Set(RoleTypeId.ClassD);
+                        player.SetRole(RoleTypeId.ClassD);
                         break;
 
                     case 1:
-                        ev.Player.Role.Set(RoleTypeId.Scientist);
+                        player.SetRole(RoleTypeId.Scientist);
                         break;
 
                     case 2:
-                        ev.Player.Role.Set(RoleTypeId.FacilityGuard);
+                        player.SetRole(RoleTypeId.FacilityGuard);
                         break;
                 }
 
-                ev.Player.Broadcast(betterLateSpawn.Config.Broadcast);
+                betterLateSpawn.Config.Broadcast.Show(player);
             }));
         }
 
-        public void OnDestroying(DestroyingEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerLeft)]
+        public void OnDestroying(Player player)
         {
-            if (!Round.IsEnded && Round.ElapsedTime.TotalSeconds < betterLateSpawn.Config.SpawnTime)
-            {
-                DisconnectedPlayers.Add(ev.Player.UserId);
-            }
+            if (!global::RoundSummary.singleton._roundEnded && Round.Duration.TotalSeconds < betterLateSpawn.Config.SpawnTime)
+                DisconnectedPlayers.Add(player.UserId);
         }
 
         private int Choose()

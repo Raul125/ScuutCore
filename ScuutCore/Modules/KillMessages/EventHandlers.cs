@@ -1,5 +1,7 @@
-﻿using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
+﻿using PlayerStatsSystem;
+using PluginAPI.Core;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.KillMessages
 {
@@ -11,12 +13,13 @@ namespace ScuutCore.Modules.KillMessages
             killMessages = btc;
         }
 
-        public void OnDied(DiedEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerDeath)]
+        public void OnDied(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (ev.Attacker is null || ev.Player is null || ev.Player == ev.Attacker)
+            if (attacker is null || player is null || player == attacker)
                 return;
 
-            ev.Attacker.ShowHint(killMessages.Config.Message.Replace("{name}", ev.Player.Nickname), 4);
+            attacker.ReceiveHint(killMessages.Config.Message.Replace("{name}", player.Nickname), 4);
         }
     }
 }

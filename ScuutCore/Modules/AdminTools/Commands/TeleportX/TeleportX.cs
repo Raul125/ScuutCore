@@ -1,6 +1,5 @@
 ﻿using CommandSystem;
 using PluginAPI.Core;
-using Exiled.Permissions.Extensions;
 using PlayerRoles;
 using System;
 
@@ -22,12 +21,6 @@ namespace ScuutCore.Modules.AdminTools
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("ScuutCore.tp"))
-            {
-                response = "You do not have permission to use this command";
-                return false;
-            }
-
             if (arguments.Count != 2)
             {
                 response = "Usage: teleportx (People teleported: (player id / name) or (all / *)) (Teleported to: (player id / name) or (all / *))";
@@ -45,7 +38,7 @@ namespace ScuutCore.Modules.AdminTools
                         return false;
                     }
 
-                    foreach (Player plyr in Player.List)
+                    foreach (Player plyr in Player.GetPlayers())
                     {
                         if (plyr.Role == RoleTypeId.Spectator || ply.Role == RoleTypeId.None)
                             continue;

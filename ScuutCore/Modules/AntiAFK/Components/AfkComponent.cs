@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using PluginAPI.Core;
-using PluginAPI.Core.Roles;
-using Exiled.Permissions.Extensions;
 using PlayerRoles;
 using UnityEngine;
 
@@ -34,11 +32,10 @@ namespace ScuutCore.Modules.AntiAFK
 
         private void CheckAfk()
         {
-            if (player.CheckPermission("ScuutCore.afkignore") ||
-                player.IsDead ||
-                AntiAFK.Singleton.Config.MinimumPlayers > Player.Dictionary.Count ||
-                (AntiAFK.Singleton.Config.IgnoreTutorials && player.Role.Type == RoleTypeId.Tutorial) ||
-                player.Role is Scp096Role rol && rol.TryingNotToCry)
+            if (/*player.CheckPermission("ScuutCore.afkignore") ||*/
+                !player.IsAlive ||
+                AntiAFK.Singleton.Config.MinimumPlayers > Player.Count ||
+                (AntiAFK.Singleton.Config.IgnoreTutorials && player.Role == RoleTypeId.Tutorial))
             {
                 afkTime = 0;
                 return;
@@ -59,7 +56,7 @@ namespace ScuutCore.Modules.AntiAFK
             int gracePeriodRemaining = AntiAFK.Singleton.Config.GraceTime + AntiAFK.Singleton.Config.AfkTime - afkTime;
             if (gracePeriodRemaining > 0)
             {
-                player.Broadcast(1, string.Format(AntiAFK.Singleton.Config.GracePeriodWarning, gracePeriodRemaining).Replace("$seconds", gracePeriodRemaining == 1 ? "second" : "seconds"), shouldClearPrevious: true);
+                player.SendBroadcast(string.Format(AntiAFK.Singleton.Config.GracePeriodWarning, gracePeriodRemaining).Replace("$seconds", gracePeriodRemaining == 1 ? "second" : "seconds"), 1, shouldClearPrevious: true);
                 return;
             }
 
@@ -81,15 +78,15 @@ namespace ScuutCore.Modules.AntiAFK
 
         private void TryReplace()
         {
-            Player toSwap = Player.List.FirstOrDefault(x => x.Role.Type is RoleTypeId.Spectator && !x.IsOverwatchEnabled && x != player);
+            Player toSwap = Player.GetPlayers().FirstOrDefault(x => x.Role is RoleTypeId.Spectator && !x.IsOverwatchEnabled && x != player);
             if (toSwap != null)
                 new PlayerInfo(player).AddTo(toSwap);
         }
 
         private void ForceSpectator()
         {
-            player.Role.Set(RoleTypeId.Spectator);
-            player.Broadcast(AntiAFK.Singleton.Config.SpectatorForced);
+            player.SetRole(RoleTypeId.Spectator);
+            AntiAFK.Singleton.Config.SpectatorForced.Show(player);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using CommandSystem;
 using PluginAPI.Core;
-using Exiled.Permissions.Extensions;
 
 namespace ScuutCore.Modules.AdminTools
 {
@@ -15,21 +14,15 @@ namespace ScuutCore.Modules.AdminTools
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("ScuutCore.tp"))
-            {
-                response = "You do not have permission to use this command";
-                return false;
-            }
-
             if (arguments.Count != 0)
             {
                 response = "Usage: tags show";
                 return false;
             }
 
-            foreach (Player player in Player.List)
+            foreach (Player player in Player.GetPlayers())
                 if (player.ReferenceHub.serverRoles.RemoteAdmin && !player.ReferenceHub.serverRoles.RaEverywhere)
-                    player.BadgeHidden = false;
+                    player.ReferenceHub.characterClassManager.UserCode_CmdRequestShowTag(false);
 
             response = "All staff tags are now visible";
             return true;

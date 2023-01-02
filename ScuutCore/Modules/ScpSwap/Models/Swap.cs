@@ -9,11 +9,8 @@ namespace ScuutCore.Modules.ScpSwap
 {
     using System.Collections.Generic;
     using PluginAPI.Core;
-    using Exiled.Events.EventArgs;
-    using Exiled.Events.EventArgs.Player;
     using MEC;
     using PlayerRoles;
-    using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using PluginAPI.Events;
@@ -157,7 +154,7 @@ namespace ScuutCore.Modules.ScpSwap
             consoleMessage = consoleMessage.Replace("$SenderName", Sender.DisplayNickname ?? Sender.Nickname);
             consoleMessage = consoleMessage.Replace("$RoleName", ValidSwaps.GetCustom(Sender)?.Name ?? Sender.Role.ToString());
             Receiver.SendConsoleMessage(consoleMessage, ScpSwap.Singleton.Config.RequestConsoleMessage.Color);
-            Receiver.SendBroadcast(ScpSwap.Singleton.Config.RequestBroadcast);
+            ScpSwap.Singleton.Config.RequestBroadcast.Show(Receiver);
         }
 
         [PluginEvent(ServerEventType.PlayerChangeRole)]

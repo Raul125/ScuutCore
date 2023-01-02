@@ -4,6 +4,9 @@
     using NorthwoodLib.Pools;
     using PlayerRoles;
     using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using ScuutCore.Modules.RemoteKeycard;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -16,6 +19,7 @@
             whoAreMyTeammates = wamt;
         }
 
+        [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStarted()
         {
             Plugin.Coroutines.Add(Timing.CallDelayed(whoAreMyTeammates.Config.DelayTime, () =>
@@ -74,7 +78,7 @@
                 Player player = players[i];
 
                 stringBuilder.Append(' ').Append(player.Nickname);
-                if (player.IsScp)
+                if (player.IsSCP())
                     stringBuilder.Append(' ').Append(player.ReferenceHub.roleManager._curRole.RoleName);
 
                 if (i != cutOff)

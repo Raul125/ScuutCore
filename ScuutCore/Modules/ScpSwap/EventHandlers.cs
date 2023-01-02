@@ -24,7 +24,7 @@
             {
                 if ((player.Role.GetTeam() is Team.SCPs || ValidSwaps.GetCustom(player) != null) &&
                     Round.Duration.TotalSeconds < scpSwap.Config.SwapTimeout)
-                    player.SendBroadcast(scpSwap.Config.StartMessage);
+                    scpSwap.Config.StartMessage.Show(player);
             });
         }
 

@@ -1,13 +1,13 @@
-﻿using Exiled.API.Enums;
-using PluginAPI.Core;
-using PluginAPI.Core.Roles;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
+﻿using PluginAPI.Core;
 using MEC;
 using PlayerRoles;
-using ScuutCore.Modules.ScpSwap;
 using System.Collections.Generic;
 using System.Linq;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
+using PlayerRoles.PlayableScps.Scp079;
+using UnityEngine;
+using RemoteAdmin.Communication;
 
 namespace ScuutCore.Modules.Replacer
 {
@@ -19,44 +19,47 @@ namespace ScuutCore.Modules.Replacer
             replacer = btc;
         }
 
-        public void OnDestroying(DestroyingEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerLeft)]
+        public void OnDestroying(Player player)
         {
-            if (Round.IsEnded || Round.IsLobby || !Round.IsStarted || Round.ElapsedTime.TotalSeconds > replacer.Config.DontReplaceTime 
-                || replacer.Config.DisallowedRolesToReplace.Contains(ev.Player.Role.Type))
+            if (global::RoundSummary.singleton._roundEnded || !Round.IsRoundStarted || Round.Duration.TotalSeconds > replacer.Config.DontReplaceTime 
+                || replacer.Config.DisallowedRolesToReplace.Contains(player.Role))
                 return;
 
-            if (ev.Player.IsAlive)
+            if (player.IsAlive)
             {
-                bool isScp079 = ev.Player.Role.Is(out Scp079Role scp079);
                 int level = 0;
-                if (isScp079)
-                    level = scp079.Level;
+                if (player.ReferenceHub.roleManager._curRole is Scp079Role scp079)
+                    level = scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability) ? ability.AccessTierLevel : 0;
 
-                UnityEngine.Vector3 oldPos = ev.Player.Position;
-                RoleTypeId oldRole = ev.Player.Role.Type;
-                float oldHealth = ev.Player.Health;
+                Vector3 oldPos = player.Position;
+                RoleTypeId oldRole = player.Role;
+                float oldHealth = player.Health;
                 List<ItemType> oldItems = new List<ItemType>();
-                foreach (var item in ev.Player.Items)
-                    oldItems.Add(item.Type);
-                ev.Player.ClearInventory();
+                foreach (var item in player.Items)
+                    oldItems.Add(item.ItemTypeId);
+                player.ClearInventory();
 
-                Player randomSpec = Player.List.FirstOrDefault(x => x.Role.Type is RoleTypeId.Spectator && !x.IsOverwatchEnabled);
+                Player randomSpec = Player.GetPlayers().FirstOrDefault(x => x.Role is RoleTypeId.Spectator && !x.IsOverwatchEnabled);
                 if (randomSpec != null)
                 {
-                    ev.Player.Broadcast(replacer.Config.BroadCast);
-                    ev.Player.Role.Set(oldRole);
+                    replacer.Config.BroadCast.Show(randomSpec);
+                    randomSpec.SetRole(oldRole);
                     Timing.CallDelayed(1f, () =>
                     {
-                        if (isScp079)
+                        if (randomSpec.ReferenceHub.roleManager._curRole is Scp079Role scp079role)
                         {
+                            if (!scp079role.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability))
+                                return;
 
+                            ability.TotalExp = level <= 1 ? 0 : ability.AbsoluteThresholds[Mathf.Clamp(level - 2, 0, ability.AbsoluteThresholds.Length - 1)];
                             return;
                         }
 
-                        ev.Player.Position = oldPos;
-                        ev.Player.Health = oldHealth;
+                        randomSpec.Position = oldPos;
+                        randomSpec.Health = oldHealth;
                         foreach (var item in oldItems)
-                            ev.Player.AddItem(item);
+                            randomSpec.AddItem(item);
                     });
                 }
             }

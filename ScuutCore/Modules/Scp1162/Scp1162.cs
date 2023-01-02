@@ -7,18 +7,21 @@
     {
         public override string Name { get; } = "Scp1162";
         public static Scp1162 Instance { get; set; }
+        public EventHandlers EventHandlers;
 
         public override void OnEnabled()
         {
             Instance = this;
-            EventManager.RegisterEvents<EventHandlers>(this);
+            EventHandlers = new EventHandlers();
+            EventManager.RegisterEvents(this, EventHandlers);
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents<EventHandlers>(this);
+            EventManager.UnregisterEvents(this, EventHandlers);
             Instance = null;
+            EventHandlers = null;
             base.OnDisabled();
         }
     }

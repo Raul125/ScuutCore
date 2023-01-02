@@ -6,16 +6,20 @@ namespace ScuutCore.Modules.Teslas
     public class Teslas : Module<Config>
     {
         public override string Name { get; } = "Teslas";
+        public EventHandlers EventHandlers;
 
         public override void OnEnabled()
         {
-            EventManager.RegisterEvents<EventHandlers>(this);
+            EventHandlers = new EventHandlers(this);
+            EventManager.RegisterEvents(this, EventHandlers);
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents<EventHandlers>(this);
+            EventManager.UnregisterEvents(this, EventHandlers);
+            EventHandlers = null;
+
             base.OnDisabled();
         }
     }

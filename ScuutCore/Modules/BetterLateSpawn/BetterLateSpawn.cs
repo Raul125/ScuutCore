@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.BetterLateSpawn
 {
@@ -12,18 +12,16 @@ namespace ScuutCore.Modules.BetterLateSpawn
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.Verified += EventHandlers.OnVerified;
-            Player.Destroying += EventHandlers.OnDestroying;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Verified -= EventHandlers.OnVerified;
-            Player.Destroying -= EventHandlers.OnDestroying;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
+
             base.OnDisabled();
         }
     }

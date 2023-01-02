@@ -1,5 +1,4 @@
-﻿using Exiled.API.Enums;
-using ScuutCore.API;
+﻿using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
 using PluginAPI.Core;
@@ -41,20 +40,6 @@ namespace ScuutCore.Modules.CuffedTK
         {
             Team.ClassD,
             Team.ChaosInsurgency
-        };
-
-        [Description("0 To disable")]
-        public int DamageTypeTime { get; set; } = 3;
-
-        [Description("What hint should be displayed when trying to damage a Cuffed D-Class with a Disallowed DamageType? %PLAYER% will be replaced with the Target Username and %DAMAGETYPE% will be replaced with the DamageType. Time, 0 to disable")]
-        public string DamageTypesHint { get; set; } = "You cannot damage %PLAYER% with %DAMAGETYPE%!";
-
-        [Description("What DamageType should not be allowed to damage a Cuffed D-Class or Cuffed Scientist? Check https://exiled-team.github.io/EXILED/api/Exiled.API.Enums.DamageType.html for all DamageTypes")]
-        public HashSet<DamageType> DisallowedDamageTypes { get; set; } = new HashSet<DamageType>
-        {
-            DamageType.Explosion,
-            DamageType.FriendlyFireDetector,
-            DamageType.Falldown
         };
     }
 }

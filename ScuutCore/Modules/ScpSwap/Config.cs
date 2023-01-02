@@ -57,13 +57,13 @@ namespace ScuutCore.Modules.ScpSwap
         /// Gets or sets the message to be displayed to all Scp subjects at the start of the round.
         /// </summary>
         [Description("The message to be displayed to all Scp subjects at the start of the round.")]
-        public PluginAPI.Core.Broadcast StartMessage { get; set; } = new PluginAPI.Core.Broadcast("<color=yellow><b>Did you know you can swap classes with other SCP's?</b></color> Simply type <color=orange>.scpswap (role number)</color> in your in-game console (not RA) to swap!", 15);
+        public BroadcastConfig StartMessage { get; set; } = new BroadcastConfig("<color=yellow><b>Did you know you can swap classes with other SCP's?</b></color> Simply type <color=orange>.scpswap (role number)</color> in your in-game console (not RA) to swap!", 15);
 
         /// <summary>
         /// Gets or sets the broadcast to display to the receiver of a swap request.
         /// </summary>
         [Description("The broadcast to display to the receiver of a swap request.")]
-        public PluginAPI.Core.Broadcast RequestBroadcast { get; set; } = new PluginAPI.Core.Broadcast("<i>You have an SCP Swap request!\nCheck your console by pressing [`] or [~]</i>", 5);
+        public BroadcastConfig RequestBroadcast { get; set; } = new BroadcastConfig("<i>You have an SCP Swap request!\nCheck your console by pressing [`] or [~]</i>", 5);
 
         /// <summary>
         /// Gets or sets the console message to send to the receiver of a swap request.

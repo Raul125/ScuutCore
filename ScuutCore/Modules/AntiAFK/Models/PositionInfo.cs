@@ -1,6 +1,5 @@
 ﻿using System;
 using PluginAPI.Core;
-using PluginAPI.Core.Roles;
 using UnityEngine;
 
 namespace ScuutCore.Modules.AntiAFK
@@ -9,13 +8,13 @@ namespace ScuutCore.Modules.AntiAFK
     {
         private readonly Vector3 position;
         private readonly Vector2 rotation;
-        private readonly Vector3 cameraRotation;
+        private readonly Quaternion cameraRotation;
 
         public PositionInfo(Player player)
         {
             position = player.Position;
             rotation = player.Rotation;
-            cameraRotation = player.Role is Scp079Role scp079 ? scp079.Camera.Rotation : Vector3.zero;
+            cameraRotation = player.Camera.rotation;
         }
 
         public static bool operator ==(PositionInfo x, PositionInfo y) => x.Equals(y);

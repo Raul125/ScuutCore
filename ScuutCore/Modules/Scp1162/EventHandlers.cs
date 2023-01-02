@@ -11,10 +11,8 @@
 
     public class EventHandlers
     {
-        private Scp1162 scp1162;
-        public EventHandlers(Scp1162 btc)
+        public EventHandlers()
         {
-            scp1162 = btc;
         }
 
         [PluginEvent(ServerEventType.PlayerDropItem)]
@@ -27,19 +25,19 @@
 
                 if (Vector3.Distance(player.Position, position) <= 8.2f)
                 {
-                    if (scp1162.Config.UseHints)
-                        player.ReceiveHint(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration);
+                    if (Scp1162.Instance.Config.UseHints)
+                        player.ReceiveHint(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
                     else
-                        player.SendBroadcast(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration, Broadcast.BroadcastFlags.Normal, true);
+                        player.SendBroadcast(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration, Broadcast.BroadcastFlags.Normal, true);
 
                     player.ReferenceHub.inventory.ServerRemoveItem(item.ItemSerial, item.PickupDropModel);
 
                     ItemType newItemType = ItemType.None;
 
                 getItem:
-                    foreach (var itemTuple in scp1162.Config.Chances)
+                    foreach (var itemTuple in Scp1162.Instance.Config.Chances)
                     {
-                        if (UnityEngine.Random.Range(0, 100) <= itemTuple.Value)
+                        if (Random.Range(0, 100) <= itemTuple.Value)
                         {
                             newItemType = itemTuple.Key;
                             break;

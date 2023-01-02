@@ -14,14 +14,16 @@ namespace ScuutCore.Modules.ScpSwap
         public override void OnEnabled()
         {
             Singleton = this;
-            EventManager.RegisterEvents<EventHandlers>(this);
+            EventHandlers = new EventHandlers(this);
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents<EventHandlers>(this);
+            EventManager.UnregisterEvents(this, EventHandlers);
+            EventHandlers = null;
             Singleton = null;
 
             base.OnDisabled();

@@ -8,6 +8,9 @@
     using PluginAPI.Enums;
     using PluginAPI.Events;
     using ScuutCore.Main;
+    using PluginAPI.Loader.Features;
+    using System.IO;
+    using PluginAPI.Core;
 
     public class Plugin
     {
@@ -31,7 +34,7 @@
         [PluginConfig] public Config Config;
 
         [PluginPriority(LoadPriority.Highest)]
-        [PluginEntryPoint("Template Plugin", "1.0.0", "Just a template plugin.", "Northwood")]
+        [PluginEntryPoint("ScuutCore", "1.0.0", "ScuutCore", "Raul125")]
         public void LoadPlugin()
         {
             Singleton = this;
@@ -39,7 +42,6 @@
 
             Harmony = new Harmony("scuutcore.raul." + DateTime.Now.Ticks);
             Harmony.PatchAll();
-
             EventManager.RegisterEvents<EventHandlers>(this);
         }
 

@@ -1,13 +1,15 @@
-﻿using Exiled.API.Extensions;
-using PluginAPI.Core;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
-using Exiled.Events.EventArgs.Server;
+﻿using PluginAPI.Core;
 using MEC;
 using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
+using PlayerStatsSystem;
+using static ScuutCore.Modules.AdminTools.EventHandlers;
+using static System.Net.Mime.MediaTypeNames;
+using static RoundSummary;
 
 namespace ScuutCore.Modules.RoundSummary
 {
@@ -29,6 +31,7 @@ namespace ScuutCore.Modules.RoundSummary
 
         public static bool PreventHints = false;
 
+        [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void OnWaitingForPlayers()
         {
             playerKills.Clear();
@@ -40,60 +43,61 @@ namespace ScuutCore.Modules.RoundSummary
             PreventHints = false;
         }
 
-        public void OnDying(DyingEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerDeath)]
+        public void OnDying(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (!ev.IsAllowed)
-                return;
-
-            if (ev.Attacker != null && ev.Player != null && ev.Player.IsScp && firstScpKiller == string.Empty)
+            if (attacker != null && player != null && player.Role.GetTeam() is Team.SCPs && firstScpKiller == string.Empty)
             {
-                firstScpKiller = ev.Attacker.Nickname;
-                killerRole = ev.Attacker.Role.Type.ToString();
-                killedScp = ev.Player.Role.Type.ToString();
+                firstScpKiller = attacker.Nickname;
+                killerRole = attacker.Role.ToString();
+                killedScp = player.Role.ToString();
             }
-        }
 
-        public void OnDied(DiedEventArgs ev)
-        {
-            if (ev.DamageHandler.Type == Exiled.API.Enums.DamageType.PocketDimension || ev.DamageHandler.Type == Exiled.API.Enums.DamageType.Scp106)
+            if (damageHandler is UniversalDamageHandler universal)
             {
-                foreach (var ply in Player.Get(RoleTypeId.Scp106))
+                if (universal.TranslationId == DeathTranslations.PocketDecay.Id)
                 {
-                    if (!playerKills.ContainsKey(ply))
+                    foreach (var ply in Player.GetPlayers().Where(x => x.Role is RoleTypeId.Scp106))
                     {
-                        playerKills.Add(ply, 1);
-                    }
-                    else
-                    {
-                        playerKills[ply]++;
+                        if (!playerKills.ContainsKey(ply))
+                        {
+                            playerKills.Add(ply, 1);
+                        }
+                        else
+                        {
+                            playerKills[ply]++;
+                        }
                     }
                 }
             }
+            
 
-            if (ev.Attacker == null)
+            if (attacker == null)
                 return;
 
-            if (!playerKills.ContainsKey(ev.Attacker))
+            if (!playerKills.ContainsKey(attacker))
             {
-                playerKills.Add(ev.Attacker, 1);
+                playerKills.Add(attacker, 1);
             }
             else
             {
-                playerKills[ev.Attacker]++;
+                playerKills[attacker]++;
             }
         }
 
-        public void OnPlayerEscaping()
+        [PluginEvent(ServerEventType.PlayerEscape)]
+        public void OnPlayerEscaping(Player player, RoleTypeId newRole)
         {
             if (firstEscaped == string.Empty)
             {
-                escapedRole = ev.Player.Role.Type.ToString();
-                firstEscaped = ev.Player.Nickname;
-                escapeTime = (uint)Round.ElapsedTime.TotalSeconds;
+                escapedRole = player.Role.ToString();
+                firstEscaped = player.Nickname;
+                escapeTime = (uint)Round.Duration.TotalSeconds;
             }
         }
 
-        public void OnRoundEnd()
+        [PluginEvent(ServerEventType.RoundEnd)]
+        public void OnRoundEnd(LeadingTeam leadingTeam)
         {
             string message = string.Empty;
 
@@ -108,7 +112,7 @@ namespace ScuutCore.Modules.RoundSummary
             if (roundSummary.Config.ShowEscapee && firstEscaped != string.Empty)
             {
                 Enum.TryParse<RoleTypeId>(escapedRole, out RoleTypeId eRole);
-                message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole).Replace("{roleColor}", eRole.GetColor().ToHex()) + "\n";
+                message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole).Replace("{roleColor}", ColorsDict[eRole]) + "\n";
             }
             else
                 message += roundSummary.Config.NoEscapeeMessage + "\n";
@@ -116,7 +120,7 @@ namespace ScuutCore.Modules.RoundSummary
             if (roundSummary.Config.ShowScpFirstKill && firstScpKiller != string.Empty)
             {
                 Enum.TryParse<RoleTypeId>(killerRole, out RoleTypeId kRole);
-                message += roundSummary.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller).Replace("{killerRole}", killerRole).Replace("{killedScp}", killedScp).Replace("{killerColor}", kRole.GetColor().ToHex()) + "\n";
+                message += roundSummary.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller).Replace("{killerRole}", killerRole).Replace("{killedScp}", killedScp).Replace("{killerColor}", ColorsDict[kRole]) + "\n";
             }
             else
                 message += roundSummary.Config.NoScpKillMessage + "\n";
@@ -126,8 +130,37 @@ namespace ScuutCore.Modules.RoundSummary
                 message += "\n";
             }
 
-            Map.ShowHint(message, ev.TimeToRestart);
+            foreach (var ply in Player.GetPlayers())
+                ply.ReceiveHint(message, 30);
+
             Timing.CallDelayed(0.25f, () => PreventHints = true);
         }
+
+        public static Dictionary<RoleTypeId, string> ColorsDict = new Dictionary<RoleTypeId, string>
+        {
+            {RoleTypeId.Scp173, "#FF0000FF"},
+            {RoleTypeId.ClassD, "#FF8000FF"},
+            {RoleTypeId.Spectator, "#FFFFFFFF"},
+            {RoleTypeId.Scp106, "#FF0000FF"},
+            {RoleTypeId.NtfSpecialist, "#0096FFFF"},
+            {RoleTypeId.Scp049, "#FF0000FF"},
+            {RoleTypeId.Scientist, "#FFFF7CFF"},
+            {RoleTypeId.Scp079, "#FF0000FF"},
+            {RoleTypeId.ChaosConscript, "#008F1CFF"},
+            {RoleTypeId.Scp096, "#FF0000FF"},
+            {RoleTypeId.Scp0492, "#FF0000FF"},
+            {RoleTypeId.NtfSergeant, "#0096FFFF"},
+            {RoleTypeId.NtfCaptain, "#003DCAFF"},
+            {RoleTypeId.NtfPrivate, "#70C3FFFF"},
+            {RoleTypeId.Tutorial, "#FF00B0FF"},
+            {RoleTypeId.FacilityGuard, "#556278FF"},
+            {RoleTypeId.Scp939, "#FF0000FF"},
+            {RoleTypeId.CustomRole, "#FFFFFFFF"},
+            {RoleTypeId.ChaosRifleman, "#008F1CFF"},
+            {RoleTypeId.ChaosRepressor, "#008F1CFF"},
+            {RoleTypeId.ChaosMarauder, "#008F1CFF"},
+            {RoleTypeId.Overwatch, "#00FFFFFF"},
+            {RoleTypeId.None, "#FFFFFFFF"}
+        };
     }
 }

@@ -6,17 +6,20 @@ namespace ScuutCore.Modules.Scp096Notifications
     public class Scp096Notifications : Module<Config>
     {
         public override string Name { get; } = "Scp096Notifications";
+        public EventHandlers EventHandlers;
 
         public override void OnEnabled()
         {
-            EventManager.RegisterEvents<EventHandlers>(this);
+            EventHandlers = new EventHandlers(this);
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents<EventHandlers>(this);
+            EventManager.UnregisterEvents(this, EventHandlers);
+            EventHandlers = null;
 
             base.OnDisabled();
         }

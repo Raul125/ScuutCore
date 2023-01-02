@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.CuffedTK
 {
@@ -12,14 +12,14 @@ namespace ScuutCore.Modules.CuffedTK
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.Hurting += EventHandlers.OnHurting;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Hurting -= EventHandlers.OnHurting;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

@@ -1,10 +1,13 @@
 ﻿using PluginAPI.Core;
-using PluginAPI.Core.Pickups;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Map;
 using MEC;
 using System.Collections.Generic;
 using System.Linq;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
+using PluginAPI.Core.Items;
+using InventorySystem.Items.Pickups;
+using PlayerRoles.PlayableScps.Scp079;
+using UnityEngine;
 
 namespace ScuutCore.Modules.CleanupUtility
 {
@@ -16,21 +19,20 @@ namespace ScuutCore.Modules.CleanupUtility
             cleanupUtility = cln;
         }
 
-        public void OnRoundStart()
+        /*public void OnRoundStart()
         {
             Plugin.Coroutines.Add(Timing.RunCoroutine(CleanupCoroutine()));
         }
 
-        public void OnDecontaminating(DecontaminatingEventArgs ev)
+        [PluginEvent(ServerEventType.LczDecontaminationStart)]
+        public void OnDecontaminating()
         {
-            if (!ev.IsAllowed)
-                return;
-
-            foreach (var item in Pickup.List)
+            foreach (var item in UnityEngine.Object.FindObjectsOfType<ItemPickupBase>())
             {
                 if (item == null)
                     continue;
 
+                item.
                 var room = Map.FindParentRoom(item.GameObject);
                 if (room != null && room.Zone == Exiled.API.Enums.ZoneType.LightContainment)
                     item.Destroy();
@@ -68,6 +70,6 @@ namespace ScuutCore.Modules.CleanupUtility
                         item.Destroy();
                 }
             }
-        }
+        }*/
     }
 }

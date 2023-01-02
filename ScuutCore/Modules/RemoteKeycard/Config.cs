@@ -1,4 +1,6 @@
-﻿using ScuutCore.API;
+﻿using PlayerRoles;
+using ScuutCore.API;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace ScuutCore.Modules.RemoteKeycard
@@ -7,19 +9,30 @@ namespace ScuutCore.Modules.RemoteKeycard
     {
         public bool IsEnabled { get; set; } = true;
 
-        [Description("Whether  Amnesia affects the usage of keycards.")]
-        public bool AmnesiaMatters { get; set; } = true;
+        [Description("RolesType that are in this list cannot use RemoteKeycard")]
+        public List<RoleTypeId> BlackListRole { get; set; } = new List<RoleTypeId>()
+        {
+            RoleTypeId.None
+        };
 
-        [Description("Whether this plugin works on generators.")]
-        public bool AffectGenerators { get; set; } = true;
 
-        [Description("Whether this plugin works on Warhead's panel.")]
-        public bool AffectWarheadPanel { get; set; } = true;
+        [Description("RemoteKeycard will not work with doors that are in this list")]
+        public List<string> BlacklistedDoors { get; set; } = new List<string>()
+        {
+            "HCZ",
+            "LCZ",
+            "EZ",
+            "Prison BreakableDoor",
+            "Unsecured Pryable GateDoor",
+            "Pryable 173 GateDoor"
+        };
 
-        [Description("Whether this plugin works on SCP lockers.")]
-        public bool AffectScpLockers { get; set; } = true;
-
-        [Description("Whether this plugin works on doors.")]
-        public bool AffectDoors { get; set; } = true;
+        [Description("RemoteKeycard will not work with lockers that are on this list")]
+        public List<string> BlacklistedLockers { get; set; } = new List<string>()
+        {
+            "MiscLocker",
+            "Adrenaline",
+            "Medkit"
+        };
     }
 }

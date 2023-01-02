@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.RainbowTags
 {
@@ -12,14 +12,14 @@ namespace ScuutCore.Modules.RainbowTags
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.ChangingGroup += EventHandlers.OnChangingGroup;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.ChangingGroup -= EventHandlers.OnChangingGroup;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

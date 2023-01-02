@@ -5,7 +5,7 @@
 
     public class Config
     {
-        public string ConfigsFolder = Path.Combine(Paths.Configs, "ScuutCore");
+        public string ConfigsFolder = Path.Combine(Paths.GlobalPlugins.Plugins, "ScuutCore");
         public bool Debug { get; set; } = false;
     }
 }

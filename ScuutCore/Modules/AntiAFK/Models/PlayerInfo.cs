@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using PluginAPI.Core;
 using PluginAPI.Core.Items;
-using PluginAPI.Core.Roles;
-using Exiled.CustomItems.API.Features;
-using Exiled.CustomRoles.API.Features;
 using InventorySystem.Items.Usables.Scp330;
 using MEC;
 using PlayerRoles;
 using UnityEngine;
+using PlayerRoles.PlayableScps.Scp079;
+using YamlDotNet.Core.Tokens;
+using Newtonsoft.Json.Linq;
 
 namespace ScuutCore.Modules.AntiAFK
 {
@@ -15,74 +15,53 @@ namespace ScuutCore.Modules.AntiAFK
     {
         private readonly List<ItemType> items = new List<ItemType>();
         private readonly List<CandyKindID> candies = new List<CandyKindID>();
-        private readonly List<CustomItem> customItems = new List<CustomItem>();
         private readonly RoleTypeId role;
         private readonly Vector3 position;
         private readonly float health;
-        private readonly IReadOnlyCollection<CustomRole> customRoles;
         private readonly int level;
         private readonly int experience;
         private readonly float energy;
 
         public PlayerInfo(Player player)
         {
-            role = player.Role.Type;
+            role = player.Role;
             position = player.Position;
             health = player.Health;
-            CustomRole.TryGet(player, out customRoles);
 
-            foreach (Item item in player.Items)
-            {
-                if (CustomItem.TryGet(item, out CustomItem customItem))
-                    customItems.Add(customItem);
-                else if (item is Scp330 scp330)
-                    candies.AddRange(scp330.Candies);
-                else
-                    items.Add(item.Type);
-            }
+            foreach (var item in player.Items)
+                items.Add(item.ItemTypeId);
 
-            if (player.Role is Scp079Role scp079Role)
+            if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079)
             {
-                level = scp079Role.Level;
-                experience = scp079Role.Experience;
-                energy = scp079Role.Energy;
+                bool sub = scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability);
+                level = sub ? ability.AccessTierLevel : 0; ;
+                experience = sub ? ability.TotalExp : 0;
+                energy = scp079.SubroutineModule.TryGetSubroutine(out Scp079AuxManager abilityaux) ? abilityaux.CurrentAux : 0;
             }
         }
 
         public void AddTo(Player player)
         {
-            player.Role.Set(role);
-
-            bool isCustom = customRoles != null;
-            if (isCustom)
-            {
-                foreach (CustomRole customRole in customRoles)
-                    customRole.AddRole(player);
-            }
+            player.SetRole(role);
 
             Timing.CallDelayed(3f, () =>
             {
                 player.Health = health;
                 player.Position = position;
-                player.ResetInventory(items);
 
-                foreach (CustomItem customItem in customItems)
-                    customItem.Give(player);
+                foreach (var item in items)
+                    player.AddItem(item);
 
-                if (candies.Count > 0)
+                if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079)
                 {
-                    Scp330 scp330 = (Scp330)Item.Create(ItemType.SCP330);
-                    foreach (CandyKindID candy in candies)
-                        scp330.AddCandy(candy);
+                    bool sub = scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability);
+                    ability.TotalExp = level <= 1 ? 0 : ability.AbsoluteThresholds[Mathf.Clamp(level - 2, 0, ability.AbsoluteThresholds.Length - 1)];
+                    ability.TotalExp = experience;
 
-                    scp330.Give(player);
-                }
+                    if (!scp079.SubroutineModule.TryGetSubroutine(out Scp079AuxManager abilityaux))
+                        return;
 
-                if (player.Role is Scp079Role scp079Role)
-                {
-                    scp079Role.Level = level;
-                    scp079Role.Experience = experience;
-                    scp079Role.Energy = energy;
+                    abilityaux.CurrentAux = energy;
                 }
             });
         }
