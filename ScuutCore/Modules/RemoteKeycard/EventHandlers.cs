@@ -43,7 +43,7 @@ namespace ScuutCore.Modules.RemoteKeycard
             if (ply.HasKeycardPermission(chamber.RequiredPermissions, true))
             {
                 canOpen = true;
-                chamber.IsOpen = !chamber.IsOpen;
+                locker.Toggle(0);
                 return false;
             }
 
