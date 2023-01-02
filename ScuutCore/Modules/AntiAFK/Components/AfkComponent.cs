@@ -32,7 +32,7 @@ namespace ScuutCore.Modules.AntiAFK
 
         private void CheckAfk()
         {
-            if (/*player.CheckPermission("ScuutCore.afkignore") ||*/
+            if (player.Role is RoleTypeId.Scp079 ||
                 !player.IsAlive ||
                 AntiAFK.Singleton.Config.MinimumPlayers > Player.Count ||
                 (AntiAFK.Singleton.Config.IgnoreTutorials && player.Role == RoleTypeId.Tutorial))

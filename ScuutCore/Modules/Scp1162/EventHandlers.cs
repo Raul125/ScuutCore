@@ -47,7 +47,23 @@
             if (player.CurrentItem != null)
             {
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
-                player.AddItem(Scp1162.Instance.Config.Chances.RandomItem());
+
+                ItemType newItem = ItemType.None;
+
+                getItem:
+                foreach (var itemd in Scp1162.Instance.Config.Chances)
+                {
+                    if (Plugin.Random.Next(0, 100) <= itemd.Value)
+                    {
+                        newItem = itemd.Key;
+                        break;
+                    }
+                }
+
+                if (newItem == ItemType.None)
+                    goto getItem;
+
+                player.AddItem(newItem);
 
                 if (Scp1162.Instance.Config.UseHints)
                     player.ReceiveHint(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);

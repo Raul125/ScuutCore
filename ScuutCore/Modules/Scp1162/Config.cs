@@ -16,14 +16,14 @@ namespace ScuutCore.Modules.Scp1162
         public ushort ItemDropMessageDuration { get; set; } = 5;
 
         [Description("The list of item chances.")]
-        public List<ItemType> Chances { get; set; } = new List<ItemType>
+        public Dictionary<ItemType, int> Chances { get; set; } = new Dictionary<ItemType, int>
         {
-            ItemType.GrenadeFlash,
-            ItemType.ArmorLight,
-            ItemType.MicroHID,
-            ItemType.KeycardO5,
-            ItemType.Flashlight,
-            ItemType.Coin
+            { ItemType.GrenadeFlash, 20 },
+            { ItemType.ArmorLight, 10 },
+            { ItemType.MicroHID, 10 },
+            { ItemType.KeycardO5, 10 },
+            { ItemType.Flashlight, 20 },
+            { ItemType.Coin, 30 }
         };
     }
 }
