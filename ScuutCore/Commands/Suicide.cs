@@ -20,7 +20,7 @@ namespace ScuutCore.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
-            if (player.CheckPermission("scuutcore.suicide"))
+            if (sender.CheckPermission("scuutcore.suicide"))
             {
                 player.Kill();
                 response = "Done";
