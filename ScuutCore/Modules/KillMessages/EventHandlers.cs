@@ -16,7 +16,7 @@ namespace ScuutCore.Modules.KillMessages
         [PluginEvent(ServerEventType.PlayerDeath)]
         public void OnDied(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (attacker is null || player is null || player == attacker)
+            if (attacker is null || player is null || player == attacker || global::RoundSummary.singleton._roundEnded)
                 return;
 
             attacker.ReceiveHint(killMessages.Config.Message.Replace("{name}", player.Nickname), 4);

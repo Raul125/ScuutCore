@@ -3,6 +3,7 @@ using PluginAPI.Core;
 using MEC;
 using System;
 using System.Linq;
+using Hints;
 
 namespace ScuutCore.Modules.AdminTools
 {
@@ -28,7 +29,7 @@ namespace ScuutCore.Modules.AdminTools
                 return false;
             }
 
-            Player ply = Player.Get(arguments.At(0));
+            Player ply = Player.Get(int.Parse(arguments.At(0)));
             if (ply == null)
             {
                 response = $"Player not found: {arguments.At(0)}";

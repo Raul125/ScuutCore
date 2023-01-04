@@ -31,7 +31,7 @@ namespace ScuutCore.Modules.AdminTools
             {
                 case "*":
                 case "all":
-                    Player ply = Player.Get(arguments.At(1));
+                    Player ply = Player.Get(int.Parse(arguments.At(1)));
                     if (ply == null)
                     {
                         response = $"Player not found: {arguments.At(1)}";
@@ -49,14 +49,14 @@ namespace ScuutCore.Modules.AdminTools
                     response = $"Everyone has been teleported to Player {ply.Nickname}";
                     return true;
                 default:
-                    Player pl = Player.Get(arguments.At(0));
+                    Player pl = Player.Get(int.Parse(arguments.At(0)));
                     if (pl == null)
                     {
                         response = $"Player not found: {arguments.At(0)}";
                         return false;
                     }
 
-                    Player plr = Player.Get(arguments.At(1));
+                    Player plr = Player.Get(int.Parse(arguments.At(1)));
                     if (plr == null)
                     {
                         response = $"Player not found: {arguments.At(1)}";

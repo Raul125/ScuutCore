@@ -41,7 +41,7 @@
             API.Loader.InitModules();
 
             Harmony = new Harmony("scuutcore.raul." + DateTime.Now.Ticks);
-            Harmony.PatchAll();
+            // Harmony.PatchAll();
             EventManager.RegisterEvents<EventHandlers>(this);
         }
 

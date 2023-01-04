@@ -65,6 +65,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ScpSl\Refs Beta\NorthwoodLib.dll</HintPath>
     </Reference>
+    <Reference Include="NWAPIPermissionSystem">
+      <HintPath>..\..\..\..\..\Downloads\NWAPIPermissionSystem.dll</HintPath>
+    </Reference>
     <Reference Include="PluginAPI, Version=12.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\ScpSl\Refs Beta\PluginAPI.dll</HintPath>
@@ -106,6 +109,9 @@
     <Compile Include="API\Interfaces\IModuleConfig.cs" />
     <Compile Include="API\Interfaces\IModule.cs" />
     <Compile Include="API\Loader\Loader.cs" />
+    <Compile Include="Commands\Server.cs" />
+    <Compile Include="Commands\Suicide.cs" />
+    <Compile Include="Commands\Nick.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="Modules\AdminTools\Commands\Jail\Jail.cs" />
