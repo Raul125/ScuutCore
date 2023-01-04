@@ -20,7 +20,7 @@ namespace ScuutCore.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
-            if (sender.CheckPermission("scuutcore.server"))
+            if (PermissionHandler.CheckPermission(player.UserId, "scuutcore.server"))
             {
                 if (!Plugin.Singleton.Config.ServerCommand.TryGetValue(arguments.At(0), out ushort port))
                 {

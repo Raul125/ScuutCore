@@ -20,8 +20,14 @@ namespace ScuutCore.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
-            if (sender.CheckPermission("scuutcore.suicide"))
+            if (PermissionHandler.CheckPermission(player.UserId, "scuutcore.suicide"))
             {
+                if (Plugin.Singleton.Config.SuicideDisabledRoles.Contains(player.Role))
+                {
+                    response = "Disabled for this role";
+                    return false;
+                }
+
                 player.Kill();
                 response = "Done";
                 return true;

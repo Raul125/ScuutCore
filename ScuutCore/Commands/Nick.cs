@@ -20,7 +20,7 @@ namespace ScuutCore.Commands
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
-            if (sender.CheckPermission("scuutcore.nick"))
+            if (PermissionHandler.CheckPermission(player.UserId, "scuutcore.nick"))
             {
                 string nombreMsg = string.Empty;
                 foreach (string str in arguments)
