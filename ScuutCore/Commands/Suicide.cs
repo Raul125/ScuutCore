@@ -8,7 +8,7 @@ using NWAPIPermissionSystem;
 
 namespace ScuutCore.Commands
 {
-    [CommandHandler(typeof(GameConsoleCommandHandler))]
+    [CommandHandler(typeof(ClientCommandHandler))]
     public class Suicide : ICommand
     {
         public string Command { get; } = "suicide";
