@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Players = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.RemoteKeycard
 {
@@ -12,22 +12,16 @@ namespace ScuutCore.Modules.RemoteKeycard
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Players.InteractingDoor += EventHandlers.OnDoorInteract;
-            Players.UnlockingGenerator += EventHandlers.OnGeneratorUnlock;
-            Players.InteractingLocker += EventHandlers.OnLockerInteract;
-            Players.ActivatingWarheadPanel += EventHandlers.OnWarheadUnlock;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Players.InteractingDoor -= EventHandlers.OnDoorInteract;
-            Players.UnlockingGenerator -= EventHandlers.OnGeneratorUnlock;
-            Players.InteractingLocker -= EventHandlers.OnLockerInteract;
-            Players.ActivatingWarheadPanel -= EventHandlers.OnWarheadUnlock;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
+
             base.OnDisabled();
         }
     }

@@ -1,8 +1,9 @@
-﻿using Exiled.API.Extensions;
-using Exiled.API.Features;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
+﻿using PluginAPI.Core;
 using UnityEngine;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
+using MEC;
+using System.Linq;
 
 namespace ScuutCore.Modules.RainbowTags
 {
@@ -14,27 +15,31 @@ namespace ScuutCore.Modules.RainbowTags
             rainbowTags = rb;
         }
 
-        public void OnChangingGroup(ChangingGroupEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerJoined)]
+        public void OnJoined(Player player)
         {
-            if (!ev.IsAllowed || ev.Player is null)
+            if (player is null)
                 return;
 
-            bool hasColors = TryGetColors(ev.NewGroup?.GetKey(), out string[] colors);
-            if (ev.NewGroup != null && hasColors)
+            Timing.CallDelayed(2f, () =>
             {
-                RainbowTagController controller = ev.Player.GameObject.AddComponent<RainbowTagController>();
-                controller.Colors = colors;
-                controller.Interval = rainbowTags.Config.TagInterval;
-                return;
-            }
+                bool hasColors = TryGetColors(GetKey(player.ReferenceHub.serverRoles.Group), out string[] colors);
+                if (player.ReferenceHub.serverRoles.Group != null && hasColors)
+                {
+                    RainbowTagController controller = player.GameObject.AddComponent<RainbowTagController>();
+                    controller.Colors = colors;
+                    controller.Interval = rainbowTags.Config.TagInterval;
+                    return;
+                }
 
-            if (!ev.Player.GameObject.TryGetComponent(out RainbowTagController rainbowTagController))
-                return;
+                if (!player.GameObject.TryGetComponent(out RainbowTagController rainbowTagController))
+                    return;
 
-            if (hasColors)
-                rainbowTagController.Colors = colors;
-            else
-                Object.Destroy(rainbowTagController);
+                if (hasColors)
+                    rainbowTagController.Colors = colors;
+                else
+                    Object.Destroy(rainbowTagController);
+            });
         }
 
         private bool TryGetColors(string rank, out string[] availableColors)
@@ -42,5 +47,8 @@ namespace ScuutCore.Modules.RainbowTags
             availableColors = null;
             return !string.IsNullOrEmpty(rank) && rainbowTags.Config.Sequences.TryGetValue(rank, out availableColors);
         }
+
+        public string GetKey(UserGroup @this) => ServerStatic.PermissionsHandler._groups
+            .FirstOrDefault(pair => pair.Value.Equals(@this)).Key;
     }
 }

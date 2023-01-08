@@ -34,6 +34,6 @@ namespace ScuutCore.Modules.AntiAFK
         public string KickReason { get; set; } = "[Kicked by uAFK]\nYou were AFK for too long!";
 
         [Description("The broadcast to send when a player is forced to spectator for being afk.")]
-        public Exiled.API.Features.Broadcast SpectatorForced { get; set; } = new Exiled.API.Features.Broadcast("You were detected as AFK and moved to spectator!", 30);
+        public BroadcastConfig SpectatorForced { get; set; } = new BroadcastConfig("You were detected as AFK and moved to spectator!", 30);
     }
 }

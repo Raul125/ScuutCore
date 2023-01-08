@@ -1,17 +1,27 @@
-﻿using Exiled.API.Extensions;
-using Exiled.API.Features;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-
-namespace ScuutCore.API
+﻿namespace ScuutCore.API
 {
+    using LiteNetLib.Utils;
+    using PluginAPI.Core;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Reflection;
+    using YamlDotNet.Serialization;
+    using YamlDotNet.Serialization.NamingConventions;
+
     public static class Loader
     {
-        public static YamlDotNet.Serialization.ISerializer Serializer = Exiled.Loader.Loader.Serializer;
-        public static YamlDotNet.Serialization.IDeserializer Deserializer = Exiled.Loader.Loader.Deserializer;
+        public static ISerializer Serializer { get; set; } = new SerializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .IgnoreFields()
+            .Build();
+
+        public static IDeserializer Deserializer { get; set; } = new DeserializerBuilder()
+            .WithNamingConvention(UnderscoredNamingConvention.Instance)
+            .IgnoreFields()
+            .IgnoreUnmatchedProperties()
+            .Build();
+
         public static SortedSet<IModule<IModuleConfig>> Modules { get; } = new SortedSet<IModule<IModuleConfig>>();
         public static SortedSet<IModule<IModuleConfig>> ActiveModules { get; } = new SortedSet<IModule<IModuleConfig>>();
         
@@ -65,7 +75,7 @@ namespace ScuutCore.API
             try
             {
                 cfg = (IModuleConfig)Deserializer.Deserialize(File.ReadAllText(configPath), module.Config.GetType());
-                module.Config.CopyProperties(cfg);
+                CopyProperties(module.Config, cfg);
             }
             catch (Exception)
             {
@@ -78,6 +88,16 @@ namespace ScuutCore.API
                 module.OnEnabled();
                 ActiveModules.Add(module);
             }
+        }
+
+        private static void CopyProperties(object target, object source)
+        {
+            Type type = target.GetType();
+            if (type != source.GetType())
+                throw new InvalidTypeException("Target and source type mismatch!");
+
+            foreach (PropertyInfo sourceProperty in type.GetProperties())
+                type.GetProperty(sourceProperty.Name)?.SetValue(target, sourceProperty.GetValue(source, null), null);
         }
 
         public static void StopModules()

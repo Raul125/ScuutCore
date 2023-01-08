@@ -10,18 +10,17 @@ namespace ScuutCore.Modules.AutoNuke
         public float AutoNukeWarn { get; set; } = 780f;
 
         // Nuke Warn
-        public Exiled.API.Features.Broadcast AutoNukeWarnBroadcast { get; set; } = new Exiled.API.Features.Broadcast
+        public BroadcastConfig AutoNukeWarnBroadcast { get; set; } = new BroadcastConfig
         {
-            Show = true,
+            AbleToShow = true,
             Duration = 10,
-            Content = "<color=#FF0000><b>WARNING - Warhead will automatically start in 5 minutes. You cannot cancel this. </b></color>"
+            Text = "<color=#FF0000><b>WARNING - Warhead will automatically start in 5 minutes. You cannot cancel this. </b></color>"
         };
 
         public CassieConfig AutoNukeCassieWarn { get; set; } = new CassieConfig
         {
             isSubtitles = true,
             Text = "automatic warhead will detonate in 5 minutes",
-            customSubtitle = "<color=#FF0000><b>Head to the exit!</b></color>"
         };
 
         public HintConfig AutoNukeWarnHint { get; set; } = new HintConfig
@@ -48,14 +47,13 @@ namespace ScuutCore.Modules.AutoNuke
         {
             isSubtitles = true,
             Text = "automatic warhead has been activated",
-            customSubtitle = "AutoNuke has started"
         };
 
-        public Exiled.API.Features.Broadcast AutoNukeStartBroadcast { get; set; } = new Exiled.API.Features.Broadcast
+        public BroadcastConfig AutoNukeStartBroadcast { get; set; } = new BroadcastConfig
         {
-            Show = true,
+            AbleToShow = true,
             Duration = 10,
-            Content = "<color=#FF0000><b>WARNING - Automatic Warhead has been activated. You cannot cancel this. </b></color>"
+            Text = "<color=#FF0000><b>WARNING - Automatic Warhead has been activated. You cannot cancel this. </b></color>"
         };
     }
 }

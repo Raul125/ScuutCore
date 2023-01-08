@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Server = Exiled.Events.Handlers.Server;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.AutoFFToggle
 {
@@ -12,16 +12,14 @@ namespace ScuutCore.Modules.AutoFFToggle
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers();
-            Server.WaitingForPlayers += EventHandlers.OnWaitingForPlayers;
-            Server.RoundEnded += EventHandlers.OnRoundEnded;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Server.WaitingForPlayers -= EventHandlers.OnWaitingForPlayers;
-            Server.RoundEnded -= EventHandlers.OnRoundEnded;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.CleanupUtility
 {
@@ -11,18 +12,14 @@ namespace ScuutCore.Modules.CleanupUtility
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Exiled.Events.Handlers.Server.RoundStarted += EventHandlers.OnRoundStart;
-            Exiled.Events.Handlers.Map.Decontaminating += EventHandlers.OnDecontaminating;
-            Exiled.Events.Handlers.Warhead.Detonated += EventHandlers.OnDetonated;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Exiled.Events.Handlers.Server.RoundStarted -= EventHandlers.OnRoundStart;
-            Exiled.Events.Handlers.Map.Decontaminating -= EventHandlers.OnDecontaminating;
-            Exiled.Events.Handlers.Warhead.Detonated -= EventHandlers.OnDetonated;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

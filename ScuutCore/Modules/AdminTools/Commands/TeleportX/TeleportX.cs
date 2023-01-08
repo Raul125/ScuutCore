@@ -1,6 +1,5 @@
 ﻿using CommandSystem;
-using Exiled.API.Features;
-using Exiled.Permissions.Extensions;
+using PluginAPI.Core;
 using PlayerRoles;
 using System;
 
@@ -22,12 +21,6 @@ namespace ScuutCore.Modules.AdminTools
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("ScuutCore.tp"))
-            {
-                response = "You do not have permission to use this command";
-                return false;
-            }
-
             if (arguments.Count != 2)
             {
                 response = "Usage: teleportx (People teleported: (player id / name) or (all / *)) (Teleported to: (player id / name) or (all / *))";
@@ -38,14 +31,14 @@ namespace ScuutCore.Modules.AdminTools
             {
                 case "*":
                 case "all":
-                    Player ply = Player.Get(arguments.At(1));
+                    Player ply = Player.Get(int.Parse(arguments.At(1)));
                     if (ply == null)
                     {
                         response = $"Player not found: {arguments.At(1)}";
                         return false;
                     }
 
-                    foreach (Player plyr in Player.List)
+                    foreach (Player plyr in Player.GetPlayers())
                     {
                         if (plyr.Role == RoleTypeId.Spectator || ply.Role == RoleTypeId.None)
                             continue;
@@ -56,14 +49,14 @@ namespace ScuutCore.Modules.AdminTools
                     response = $"Everyone has been teleported to Player {ply.Nickname}";
                     return true;
                 default:
-                    Player pl = Player.Get(arguments.At(0));
+                    Player pl = Player.Get(int.Parse(arguments.At(0)));
                     if (pl == null)
                     {
                         response = $"Player not found: {arguments.At(0)}";
                         return false;
                     }
 
-                    Player plr = Player.Get(arguments.At(1));
+                    Player plr = Player.Get(int.Parse(arguments.At(1)));
                     if (plr == null)
                     {
                         response = $"Player not found: {arguments.At(1)}";

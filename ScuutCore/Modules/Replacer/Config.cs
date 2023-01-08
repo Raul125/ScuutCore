@@ -1,8 +1,7 @@
-﻿using Exiled.API.Enums;
-using ScuutCore.API;
+﻿using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using PlayerRoles;
 
 namespace ScuutCore.Modules.Replacer
@@ -11,12 +10,13 @@ namespace ScuutCore.Modules.Replacer
     {
         public bool IsEnabled { get; set; } = true;
 
-        public Exiled.API.Features.Broadcast BroadCast { get; set; } = new Exiled.API.Features.Broadcast
+        public BroadcastConfig BroadCast { get; set; } = new BroadcastConfig
         {
             Duration = 10,
-            Content = "<i>You have replaced a disconnected player</i>",
-            Show = true,
-            Type = Broadcast.BroadcastFlags.Normal
+            Text = "<i>You have replaced a disconnected player</i>",
+            AbleToShow = true,
+            BroadcastFlags = Broadcast.BroadcastFlags.Normal,
+            ClearPrevious = false,
         };
 
         public int DontReplaceTime { get; set; } = 360;

@@ -1,6 +1,5 @@
 ﻿using System;
 using CommandSystem;
-using Exiled.Permissions.Extensions;
 
 namespace ScuutCore.Modules.AdminTools
 {
@@ -24,12 +23,6 @@ namespace ScuutCore.Modules.AdminTools
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("ScuutCore.tp"))
-            {
-                response = "You do not have permission to use this command";
-                return false;
-            }
-
             response = "Invalid subcommand. Available ones: hide, show";
             return false;
         }

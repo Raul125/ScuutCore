@@ -1,9 +1,9 @@
 ﻿using CommandSystem;
-using Exiled.API.Features;
-using Exiled.Permissions.Extensions;
+using PluginAPI.Core;
 using MEC;
 using System;
 using System.Linq;
+using Hints;
 
 namespace ScuutCore.Modules.AdminTools
 {
@@ -23,19 +23,13 @@ namespace ScuutCore.Modules.AdminTools
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("ScuutCore.jail"))
-            {
-                response = "You do not have permission to use this command";
-                return false;
-            }
-
             if (arguments.Count != 1)
             {
                 response = "Usage: scjail (player id / name)";
                 return false;
             }
 
-            Player ply = Player.Get(arguments.At(0));
+            Player ply = Player.Get(int.Parse(arguments.At(0)));
             if (ply == null)
             {
                 response = $"Player not found: {arguments.At(0)}";

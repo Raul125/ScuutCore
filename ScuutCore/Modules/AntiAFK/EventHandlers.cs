@@ -1,5 +1,6 @@
-﻿using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
+﻿using PluginAPI.Core;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.AntiAFK
 {
@@ -9,9 +10,10 @@ namespace ScuutCore.Modules.AntiAFK
         {
         }
 
-        public void OnVerified(VerifiedEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerJoined)]
+        public void OnVerified(Player player)
         {
-            ev.Player.GameObject.AddComponent<AfkComponent>();
+            player.GameObject.AddComponent<AfkComponent>();
         }
     }
 }

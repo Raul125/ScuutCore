@@ -1,10 +1,10 @@
-﻿using MEC;
-using Exiled.Events.EventArgs;
-using Exiled.API.Features;
-using Exiled.Events.EventArgs.Map;
-
-namespace ScuutCore.EventHandlers
+﻿namespace ScuutCore.Main
 {
+    using MEC;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using PluginAPI.Core;
+
     public class EventHandlers
     {
         public EventHandlers()
@@ -12,6 +12,7 @@ namespace ScuutCore.EventHandlers
 
         }
 
+        [PluginEvent(ServerEventType.RoundRestart)]
         public void OnRoundRestarting()
         {
             // This prevent us from having unwanted coroutines running
@@ -21,10 +22,13 @@ namespace ScuutCore.EventHandlers
             Plugin.Coroutines.Clear();
         }
 
-        public void OnDecontaminating(DecontaminatingEventArgs ev)
+        [PluginEvent(ServerEventType.LczDecontaminationStart)]
+        public bool OnDecontaminating()
         {
-            if (Round.ElapsedTime.TotalMinutes < 6)
-                ev.IsAllowed = false;
+            if (Round.Duration.TotalMinutes < 6)
+                return false;
+
+            return true;
         }
     }
 }

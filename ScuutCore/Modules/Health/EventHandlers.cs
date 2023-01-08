@@ -1,8 +1,9 @@
-﻿using Exiled.API.Extensions;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
-using MEC;
+﻿using MEC;
+using PlayerRoles;
 using PlayerStatsSystem;
+using PluginAPI.Core;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 using System.Linq;
 using System.Reflection;
 
@@ -16,29 +17,30 @@ namespace ScuutCore.Modules.Health
             health = h;
         }
 
-        public void OnChangingRole(ChangingRoleEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerChangeRole)]
+        public void OnChangingRole(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
         {
-            if (health.Config.HealthValues.ContainsKey(ev.NewRole))
+            if (health.Config.HealthValues.ContainsKey(newRole))
             {
                 Plugin.Coroutines.Add(Timing.CallDelayed(2.5f, () =>
                 {
-                    ev.Player.Health = health.Config.HealthValues[ev.NewRole];
-                    ev.Player.MaxHealth = health.Config.HealthValues[ev.NewRole];
+                    player.Health = health.Config.HealthValues[newRole];
                 }));
             }
         }
 
-        public void OnPlayerDied(DiedEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerDeath)]
+        public void OnPlayerDied(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (ev.Attacker == null)
+            if (attacker is null)
                 return;
 
-            if (health.Config.HealthOnKill.ContainsKey(ev.Attacker.Role))
+            if (health.Config.HealthOnKill.ContainsKey(attacker.Role))
             {
-                if (ev.Attacker.Health + health.Config.HealthOnKill[ev.Attacker.Role] <= ev.Attacker.MaxHealth)
-                    ev.Attacker.Health += health.Config.HealthOnKill[ev.Attacker.Role];
+                if (attacker.Health + health.Config.HealthOnKill[attacker.Role] <= attacker.MaxHealth)
+                    attacker.Health += health.Config.HealthOnKill[attacker.Role];
                 else
-                    ev.Attacker.Health = ev.Attacker.MaxHealth;
+                    attacker.Health = attacker.MaxHealth;
             }
         }
     }

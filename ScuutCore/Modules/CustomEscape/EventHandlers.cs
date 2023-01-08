@@ -1,12 +1,14 @@
-﻿using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
+﻿using PluginAPI.Core;
+using PluginAPI.Core.Items;
 using MEC;
 using PlayerRoles;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
+using InventorySystem.Disarming;
+using Mirror;
 
 namespace ScuutCore.Modules.CustomEscape
 {
@@ -20,15 +22,19 @@ namespace ScuutCore.Modules.CustomEscape
 
         public Vector3 EscapeZone = Vector3.zero;
 
+        [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStarted()
         {
             Plugin.Coroutines.Add(Timing.RunCoroutine(BetterDisarm()));
         }
 
-        public void OnEscaping(EscapingEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerEscape)]
+        public bool OnEscaping(Player player, RoleTypeId newRole)
         {
-            if (customEscape.Config.CuffedRoleConversions.ContainsKey(ev.Player.Role.Type))
-                ev.IsAllowed = false;
+            if (customEscape.Config.CuffedRoleConversions.ContainsKey(player.Role))
+                return false;
+
+            return true;
         }
 
         private IEnumerator<float> BetterDisarm()
@@ -37,29 +43,33 @@ namespace ScuutCore.Modules.CustomEscape
             {
                 yield return Timing.WaitForSeconds(1.5f);
 
-                foreach (Player player in Player.List)
+                foreach (Player player in Player.GetPlayers())
                 {
                     if (EscapeZone == Vector3.zero)
                         EscapeZone = Escape.WorldPos;
 
-                    if (!player.IsCuffed || (player.Role.Team != Team.ChaosInsurgency && player.Role.Team != Team.FoundationForces) || (EscapeZone - player.Position).sqrMagnitude > 400f)
+                    if (!player.ReferenceHub.inventory.IsDisarmed() || (player.Role.GetTeam() != Team.ChaosInsurgency && player.Role.GetTeam() != Team.FoundationForces) || (EscapeZone - player.Position).sqrMagnitude > 400f)
                         continue;
 
-                    if (customEscape.Config.CuffedRoleConversions.TryGetValue(player.Role.Type, out var role))
+                    if (customEscape.Config.CuffedRoleConversions.TryGetValue(player.Role, out var role))
                     {
-                        Plugin.Coroutines.Add(Timing.RunCoroutine(DropItems(player, player.Items.ToList())));
-                        player.Role.Set(role);
+                        var itemList = new List<ItemType>();
+                        foreach (var item in player.Items)
+                            itemList.Add(item.ItemTypeId);
+
+                        Plugin.Coroutines.Add(Timing.RunCoroutine(DropItems(player, itemList)));
+                        player.SetRole(role);
                     }
                 }
             }
         }
 
-        private IEnumerator<float> DropItems(Player player, IEnumerable<Item> items)
+        private IEnumerator<float> DropItems(Player player, List<ItemType> items)
         {
             yield return Timing.WaitForSeconds(1f);
 
-            foreach (Item item in items)
-                item.CreatePickup(player.Position, default);
+            foreach (ItemType item in items)
+                ItemPickup.Create(item, player.Position, default);
         }
     }
 }

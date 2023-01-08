@@ -1,7 +1,8 @@
-﻿using Exiled.Events.EventArgs;
-using Exiled.API.Features;
+﻿using PluginAPI.Core;
 using MEC;
-using Exiled.Events.EventArgs.Server;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
+using Respawning;
 
 namespace ScuutCore.Modules.Chaos
 {
@@ -13,15 +14,11 @@ namespace ScuutCore.Modules.Chaos
             chaos = ch;
         }
 
-        public void OnRespawningTeam(RespawningTeamEventArgs ev)
+        [PluginEvent(ServerEventType.TeamRespawn)]
+        public void OnRespawningTeam(SpawnableTeamType team)
         {
-            if (ev.NextKnownTeam == Respawning.SpawnableTeamType.ChaosInsurgency)
-            {
-                if (chaos.Config.CustomSubtitle == "")
-                    Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.Message(chaos.Config.ChaosCassie, false, false, false)));
-                else
-                    Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.MessageTranslated(chaos.Config.ChaosCassie, chaos.Config.CustomSubtitle, false, false, true)));
-            }
+            if (team == SpawnableTeamType.ChaosInsurgency)
+                Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.Message(chaos.Config.ChaosCassie, false, false, false)));
         }
     }
 }

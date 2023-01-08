@@ -1,6 +1,5 @@
 ﻿using CommandSystem;
-using Exiled.API.Features;
-using Exiled.Permissions.Extensions;
+using PluginAPI.Core;
 using System;
 
 namespace ScuutCore.Modules.AdminTools
@@ -15,21 +14,15 @@ namespace ScuutCore.Modules.AdminTools
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if (!sender.CheckPermission("ScuutCore.tp"))
-            {
-                response = "You do not have permission to use this command";
-                return false;
-            }
-
             if (arguments.Count != 0)
             {
                 response = "Usage: tags hide";
                 return false;
             }
 
-            foreach (Player player in Player.List)
+            foreach (Player player in Player.GetPlayers())
                 if (player.ReferenceHub.serverRoles.RemoteAdmin)
-                    player.BadgeHidden = true;
+                    player.ReferenceHub.characterClassManager.UserCode_CmdRequestHideTag();
 
             response = "All staff tags are hidden now";
             return true;

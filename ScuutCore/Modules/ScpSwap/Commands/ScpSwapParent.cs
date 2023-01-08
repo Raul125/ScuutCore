@@ -10,7 +10,7 @@ namespace ScuutCore.Modules.ScpSwap
     using System;
     using System.Linq;
     using CommandSystem;
-    using Exiled.API.Features;
+    using PluginAPI.Core;
     using PlayerRoles;
 
     /// <summary>
@@ -52,13 +52,13 @@ namespace ScuutCore.Modules.ScpSwap
                 return false;
             }
 
-            if (!Round.IsStarted)
+            if (!Round.IsRoundStarted)
             {
                 response = "The round has not yet started.";
                 return false;
             }
 
-            if (Round.ElapsedTime.TotalSeconds > ScpSwap.Singleton.Config.SwapTimeout)
+            if (Round.Duration.TotalSeconds > ScpSwap.Singleton.Config.SwapTimeout)
             {
                 response = "The swap period has ended.";
                 return false;
@@ -70,7 +70,7 @@ namespace ScuutCore.Modules.ScpSwap
                 return false;
             }
 
-            if (!playerSender.IsScp && ValidSwaps.GetCustom(playerSender) == null)
+            if (playerSender.Role.GetTeam() != Team.SCPs && ValidSwaps.GetCustom(playerSender) == null)
             {
                 response = "You must be an Scp to use this command.";
                 return false;
@@ -119,14 +119,14 @@ namespace ScuutCore.Modules.ScpSwap
             if (customSwap != null)
             {
                 spawnMethod = customSwap.SpawnMethod;
-                return Player.List.FirstOrDefault(player => customSwap.VerificationMethod(player));
+                return Player.GetPlayers().FirstOrDefault(player => customSwap.VerificationMethod(player));
             }
 
             RoleTypeId roleSwap = ValidSwaps.Get(request);
             if (roleSwap != RoleTypeId.None)
             {
-                spawnMethod = player => player.Role.Set(roleSwap);
-                return Player.List.FirstOrDefault(player => player.Role == roleSwap);
+                spawnMethod = player => player.SetRole(roleSwap);
+                return Player.GetPlayers().FirstOrDefault(player => player.Role == roleSwap);
             }
 
             spawnMethod = null;

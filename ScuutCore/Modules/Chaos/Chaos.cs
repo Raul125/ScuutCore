@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Server = Exiled.Events.Handlers.Server;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.Chaos
 {
@@ -12,14 +12,14 @@ namespace ScuutCore.Modules.Chaos
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Server.RespawningTeam += EventHandlers.OnRespawningTeam;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Server.RespawningTeam -= EventHandlers.OnRespawningTeam;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

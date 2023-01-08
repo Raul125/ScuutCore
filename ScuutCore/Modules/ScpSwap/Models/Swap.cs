@@ -8,10 +8,12 @@
 namespace ScuutCore.Modules.ScpSwap
 {
     using System.Collections.Generic;
-    using Exiled.API.Features;
-    using Exiled.Events.EventArgs;
-    using Exiled.Events.EventArgs.Player;
+    using PluginAPI.Core;
     using MEC;
+    using PlayerRoles;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using PluginAPI.Events;
 
     /// <summary>
     /// Handles the swapping of players.
@@ -30,7 +32,7 @@ namespace ScuutCore.Modules.ScpSwap
             SendRequestMessages();
             coroutine = Timing.RunCoroutine(RunTimeout());
             Coroutines.Add(coroutine);
-            Exiled.Events.Handlers.Player.ChangingRole += OnChangingRole;
+            EventManager.RegisterEvents(this);
         }
 
         /// <summary>
@@ -119,7 +121,7 @@ namespace ScuutCore.Modules.ScpSwap
         /// </summary>
         public void Cancel()
         {
-            Sender.Broadcast(5, "Swap request cancelled!", shouldClearPrevious: true);
+            Sender.SendBroadcast("Swap request cancelled!",5, shouldClearPrevious: true);
             Destroy();
         }
 
@@ -128,7 +130,7 @@ namespace ScuutCore.Modules.ScpSwap
         /// </summary>
         public void Decline()
         {
-            Sender.Broadcast(5, $"{Receiver.DisplayNickname ?? Receiver.Nickname} has declined your swap request.", shouldClearPrevious: true);
+            Sender.SendBroadcast($"{Receiver.DisplayNickname ?? Receiver.Nickname} has declined your swap request.",5, shouldClearPrevious: true);
             Destroy();
         }
 
@@ -137,7 +139,7 @@ namespace ScuutCore.Modules.ScpSwap
             if (coroutine.IsRunning)
                 Timing.KillCoroutines(coroutine);
 
-            Exiled.Events.Handlers.Player.ChangingRole -= OnChangingRole;
+            EventManager.UnregisterEvents(this);
         }
 
         private void Destroy()
@@ -152,12 +154,13 @@ namespace ScuutCore.Modules.ScpSwap
             consoleMessage = consoleMessage.Replace("$SenderName", Sender.DisplayNickname ?? Sender.Nickname);
             consoleMessage = consoleMessage.Replace("$RoleName", ValidSwaps.GetCustom(Sender)?.Name ?? Sender.Role.ToString());
             Receiver.SendConsoleMessage(consoleMessage, ScpSwap.Singleton.Config.RequestConsoleMessage.Color);
-            Receiver.Broadcast(ScpSwap.Singleton.Config.RequestBroadcast);
+            ScpSwap.Singleton.Config.RequestBroadcast.Show(Receiver);
         }
 
-        private void OnChangingRole(ChangingRoleEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerChangeRole)]
+        private void OnChangingRole(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
         {
-            if (ev.Player == Sender || ev.Player == Receiver)
+            if (player == Sender || player == Receiver)
                 Cancel();
         }
 

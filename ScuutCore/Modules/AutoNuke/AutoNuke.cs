@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.AutoNuke
 {
@@ -11,18 +12,16 @@ namespace ScuutCore.Modules.AutoNuke
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Exiled.Events.Handlers.Warhead.Stopping += EventHandlers.OnWarheadStopping;
-            Exiled.Events.Handlers.Server.RoundStarted += EventHandlers.OnRoundStart;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Exiled.Events.Handlers.Warhead.Stopping -= EventHandlers.OnWarheadStopping;
-            Exiled.Events.Handlers.Server.RoundStarted -= EventHandlers.OnRoundStart;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
+
             base.OnDisabled();
         }
     }

@@ -1,23 +1,25 @@
-﻿using Exiled.Events.EventArgs;
-using Exiled.API.Features;
-using Exiled.Events.EventArgs.Server;
-
-namespace ScuutCore.Modules.AutoFFToggle
+﻿namespace ScuutCore.Modules.AutoFFToggle
 {
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+
     public class EventHandlers
     {
         public EventHandlers()
         {
         }
 
+        [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void OnWaitingForPlayers()
         {
-            GameCore.Console.singleton.TypeCommand("/setconfig friendly_fire false", null);
+            Server.RunCommand("/setconfig friendly_fire false");
         }
 
-        public void OnRoundEnded(RoundEndedEventArgs ev)
+        [PluginEvent(ServerEventType.RoundEnd)]
+        public void OnRoundEnded(global::RoundSummary.LeadingTeam leadingTeam)
         {
-            GameCore.Console.singleton.TypeCommand("/setconfig friendly_fire true", null);
+            Server.RunCommand("/setconfig friendly_fire true");
         }
     }
 }

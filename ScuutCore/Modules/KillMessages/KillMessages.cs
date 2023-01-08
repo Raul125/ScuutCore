@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.KillMessages
 {
@@ -14,16 +14,16 @@ namespace ScuutCore.Modules.KillMessages
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.Died += EventHandlers.OnDied;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Died -= EventHandlers.OnDied;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
+
             base.OnDisabled();
         }
     }

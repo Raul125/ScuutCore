@@ -1,19 +1,19 @@
-﻿using Exiled.API.Features;
-using System;
-using MEC;
-using System.Collections.Generic;
-using HarmonyLib;
-
-namespace ScuutCore
+﻿namespace ScuutCore
 {
-    public class Plugin : Plugin<Config.Config>
-    {
-        public override string Name { get; } = "ScuutCore";
-        public override string Prefix { get; } = "scuutcore";
-        public override string Author { get; } = "Raul125";
-        public override Version RequiredExiledVersion { get; } = new Version(6, 0, 0);
-        public override Version Version { get; } = new Version(2, 0, 1);
+    using System;
+    using MEC;
+    using System.Collections.Generic;
+    using HarmonyLib;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using PluginAPI.Events;
+    using ScuutCore.Main;
+    using PluginAPI.Loader.Features;
+    using System.IO;
+    using PluginAPI.Core;
 
+    public class Plugin
+    {
         // Static Part
         public static Harmony Harmony { get; internal set; }
         public static Plugin Singleton { get; internal set; }
@@ -31,35 +31,29 @@ namespace ScuutCore
             }
         }
 
-        public EventHandlers.EventHandlers EventHandlers;
+        [PluginConfig] public Config Config;
 
-        public override void OnEnabled()
+        [PluginPriority(LoadPriority.Highest)]
+        [PluginEntryPoint("ScuutCore", "1.0.2", "ScuutCore", "Raul125")]
+        public void LoadPlugin()
         {
             Singleton = this;
             API.Loader.InitModules();
 
             Harmony = new Harmony("scuutcore.raul." + DateTime.Now.Ticks);
-            Harmony.PatchAll();
-
-            EventHandlers = new EventHandlers.EventHandlers();
-            Exiled.Events.Handlers.Server.RestartingRound += EventHandlers.OnRoundRestarting;
-            Exiled.Events.Handlers.Map.Decontaminating += EventHandlers.OnDecontaminating;
-
-            base.OnEnabled();
+            // Harmony.PatchAll();
+            EventManager.RegisterEvents<EventHandlers>(this);
         }
 
-        public override void OnDisabled()
+        [PluginUnload]
+        public void OnDisabled()
         {
             API.Loader.StopModules();
 
-            Exiled.Events.Handlers.Server.RestartingRound -= EventHandlers.OnRoundRestarting;
-            Exiled.Events.Handlers.Map.Decontaminating -= EventHandlers.OnDecontaminating;
-            EventHandlers = null;
+            EventManager.UnregisterEvents<EventHandlers>(this);
 
             Singleton = null;
             Harmony?.UnpatchAll();
-
-            base.OnDisabled();
         }
     }
 }

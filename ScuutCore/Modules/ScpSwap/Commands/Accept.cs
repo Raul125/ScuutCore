@@ -9,7 +9,7 @@ namespace ScuutCore.Modules.ScpSwap
 {
     using System;
     using CommandSystem;
-    using Exiled.API.Features;
+    using PluginAPI.Core;
 
     /// <summary>
     /// Accepts an active swap request.

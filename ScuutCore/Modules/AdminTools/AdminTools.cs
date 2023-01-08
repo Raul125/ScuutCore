@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.AdminTools
 {
@@ -11,16 +12,14 @@ namespace ScuutCore.Modules.AdminTools
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Exiled.Events.Handlers.Player.Verified += EventHandlers.OnPlayerVerified;
-            Exiled.Events.Handlers.Server.RoundEnded += EventHandlers.OnRoundEnd;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Exiled.Events.Handlers.Player.Verified -= EventHandlers.OnPlayerVerified;
-            Exiled.Events.Handlers.Server.RoundEnded -= EventHandlers.OnRoundEnd;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

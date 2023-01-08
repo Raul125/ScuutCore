@@ -10,6 +10,7 @@
     <RootNamespace>ScuutCore</RootNamespace>
     <AssemblyName>ScuutCore</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -33,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\..\..\ScpSl\EXILED\0Harmony.dll</HintPath>
@@ -40,41 +44,16 @@
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\ScpSl\Refs Beta\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-Publicized, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Assembly-CSharp-Publicized.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>False</Private>
+    <Reference Include="Assembly-CSharp-Publicized">
+      <HintPath>..\..\..\ScpSl\Refs Beta\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\CommandSystem.Core.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ScpSl\Refs Beta\CommandSystem.Core.dll</HintPath>
     </Reference>
     <Reference Include="DSharp4Webhook, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\DSharp4Webhook.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.API, Version=6.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.API.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.CreditTags, Version=6.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.CreditTags.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.CustomItems, Version=6.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.CustomItems.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.CustomRoles, Version=6.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.CustomRoles.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Events, Version=6.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.Events.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Loader, Version=6.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.Loader.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Permissions, Version=6.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.Permissions.dll</HintPath>
-    </Reference>
-    <Reference Include="Exiled.Updater, Version=3.1.1.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Mirror">
       <HintPath>..\..\..\ScpSl\Refs Beta\Mirror.dll</HintPath>
@@ -83,10 +62,16 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NorthwoodLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\NorthwoodLib.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ScpSl\Refs Beta\NorthwoodLib.dll</HintPath>
+    </Reference>
+    <Reference Include="NWAPIPermissionSystem, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\NWAPIPermissionSystem.dll</HintPath>
     </Reference>
     <Reference Include="PluginAPI, Version=12.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>packages\EXILED.6.0.0-beta.17\lib\net48\PluginAPI.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\ScpSl\Refs Beta\PluginAPI.dll</HintPath>
     </Reference>
     <Reference Include="SemanticVersioning">
       <HintPath>..\..\..\ScpSl\EXILED\SemanticVersioning.dll</HintPath>
@@ -104,23 +89,30 @@
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\ScpSl\Refs Beta\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>..\..\..\ScpSl\Refs Beta\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\..\ScpSl\Refs Beta\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>..\..\..\ScpSl\Refs Beta\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
-    <Reference Include="YamlDotNet">
-      <HintPath>..\..\..\ScpSl\EXILED\YamlDotNet.dll</HintPath>
+    <Reference Include="YamlDotNet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
+      <HintPath>packages\YamlDotNet.12.2.1\lib\net47\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Features\BroadcastConfig.cs" />
     <Compile Include="API\Features\CassieConfig.cs" />
     <Compile Include="API\Features\HintConfig.cs" />
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Interfaces\IModuleConfig.cs" />
     <Compile Include="API\Interfaces\IModule.cs" />
     <Compile Include="API\Loader\Loader.cs" />
+    <Compile Include="Commands\Server.cs" />
+    <Compile Include="Commands\Suicide.cs" />
+    <Compile Include="Commands\Nick.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="Modules\AdminTools\Commands\Jail\Jail.cs" />
@@ -143,6 +135,7 @@
     <Compile Include="Modules\AutoNuke\AutoNuke.cs" />
     <Compile Include="Modules\AutoNuke\Config.cs" />
     <Compile Include="Modules\AutoNuke\EventHandlers.cs" />
+    <Compile Include="Modules\RemoteKeycard\Extensions.cs" />
     <Compile Include="Modules\Replacer\Config.cs" />
     <Compile Include="Modules\Replacer\Replacer.cs" />
     <Compile Include="Modules\Replacer\EventHandlers.cs" />
@@ -173,14 +166,9 @@
     <Compile Include="Modules\RemoteKeycard\Config.cs" />
     <Compile Include="Modules\RemoteKeycard\EventHandlers.cs" />
     <Compile Include="Modules\CleanupUtility\CleanupUtility.cs" />
-    <Compile Include="Modules\CleanupUtility\Commands\CleanupCommand.cs" />
     <Compile Include="Modules\CleanupUtility\Config.cs" />
     <Compile Include="Modules\CleanupUtility\EventHandlers.cs" />
     <Compile Include="Modules\ScpSwap\ValidSwaps.cs" />
-    <Compile Include="Modules\Subclasses\API\Subclass.cs" />
-    <Compile Include="Modules\Subclasses\Config.cs" />
-    <Compile Include="Modules\Subclasses\EventHandlers.cs" />
-    <Compile Include="Modules\Subclasses\Subclasses.cs" />
     <Compile Include="Modules\BetterLateSpawn\BetterLateSpawn.cs" />
     <Compile Include="Modules\BetterLateSpawn\Config.cs" />
     <Compile Include="Modules\BetterLateSpawn\EventHandlers.cs" />
@@ -202,9 +190,6 @@
     <Compile Include="Modules\Health\Health.cs" />
     <Compile Include="Modules\Health\Config.cs" />
     <Compile Include="Modules\Health\EventHandlers.cs" />
-    <Compile Include="Modules\ScpSpeech\ScpSpeech.cs" />
-    <Compile Include="Modules\ScpSpeech\Config.cs" />
-    <Compile Include="Modules\ScpSpeech\EventHandlers.cs" />
     <Compile Include="Modules\Scp096Notifications\Scp096Notifications.cs" />
     <Compile Include="Modules\Scp096Notifications\Config.cs" />
     <Compile Include="Modules\Scp096Notifications\EventHandlers.cs" />
@@ -217,7 +202,6 @@
     <Compile Include="Modules\BetterCandy\EventHandlers.cs" />
     <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
     <Compile Include="Modules\BetterCandy\Config.cs" />
-    <Compile Include="Patches\OverrideHintPatch.cs" />
     <Compile Include="Patches\FixDefaultSegmentPatch.cs" />
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Plugin.cs" />
@@ -227,6 +211,8 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\..\..\ScpSl\Refs Beta\PluginAPI.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

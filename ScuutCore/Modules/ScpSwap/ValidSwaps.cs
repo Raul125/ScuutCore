@@ -10,9 +10,8 @@ namespace ScuutCore.Modules.ScpSwap
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using Exiled.API.Extensions;
-    using Exiled.API.Features;
     using PlayerRoles;
+    using PluginAPI.Core;
 
     /// <summary>
     /// Handles queries that expose the names of swappable classes and config blacklists.
@@ -127,7 +126,7 @@ namespace ScuutCore.Modules.ScpSwap
             foreach (KeyValuePair<string, RoleTypeId> kvp in ScpSwap.Singleton.Config.TranslatableSwaps)
             {
                 if ((ScpSwap.Singleton.Config.BlacklistedScps != null && ScpSwap.Singleton.Config.BlacklistedScps.Contains(kvp.Value))
-                    || Exiled.API.Extensions.RoleExtensions.GetTeam(kvp.Value) != Team.SCPs)
+                    || kvp.Value.GetTeam() != Team.SCPs)
                     continue;
 
                 if (NamesValue.Contains(kvp.Key, StringComparison.OrdinalIgnoreCase))
@@ -147,7 +146,7 @@ namespace ScuutCore.Modules.ScpSwap
             foreach (RoleTypeId role in Enum.GetValues(typeof(RoleTypeId)))
             {
                 if ((ScpSwap.Singleton.Config.BlacklistedScps != null && ScpSwap.Singleton.Config.BlacklistedScps.Contains(role))
-                    || Exiled.API.Extensions.RoleExtensions.GetTeam(role) != Team.SCPs)
+                    || role.GetTeam() != Team.SCPs)
                     continue;
 
                 string roleText = role.ToString();

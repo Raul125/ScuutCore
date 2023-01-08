@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.AntiAFK
 {
@@ -15,14 +15,14 @@ namespace ScuutCore.Modules.AntiAFK
         {
             Singleton = this;
             EventHandlers = new EventHandlers();
-            Player.Verified += EventHandlers.OnVerified;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Verified -= EventHandlers.OnVerified;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
             Singleton = null;
 

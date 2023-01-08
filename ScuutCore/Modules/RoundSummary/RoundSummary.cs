@@ -1,6 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
-using Server = Exiled.Events.Handlers.Server;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.RoundSummary
 {
@@ -13,23 +12,13 @@ namespace ScuutCore.Modules.RoundSummary
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.Died += EventHandlers.OnDied;
-            Player.Dying += EventHandlers.OnDying;
-            Player.Escaping += EventHandlers.OnPlayerEscaping;
-            Server.WaitingForPlayers += EventHandlers.OnWaitingForPlayers;
-            Server.RoundEnded += EventHandlers.OnRoundEnd;
-
+            EventManager.RegisterEvents(this, EventHandlers);
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Died -= EventHandlers.OnDied;
-            Player.Dying -= EventHandlers.OnDying;
-            Player.Escaping -= EventHandlers.OnPlayerEscaping;
-            Server.WaitingForPlayers -= EventHandlers.OnWaitingForPlayers;
-            Server.RoundEnded -= EventHandlers.OnRoundEnd;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
             base.OnDisabled();
         }

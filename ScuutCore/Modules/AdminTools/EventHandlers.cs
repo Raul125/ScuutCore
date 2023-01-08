@@ -1,16 +1,13 @@
-﻿using Exiled.API.Enums;
-using Exiled.API.Extensions;
-using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
-using Exiled.Events.EventArgs.Server;
+﻿using PluginAPI.Core;
+using PluginAPI.Core.Items;
 using MEC;
 using PlayerRoles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.AdminTools
 {
@@ -24,13 +21,15 @@ namespace ScuutCore.Modules.AdminTools
 
 		public static List<Jailed> JailedPlayers = new List<Jailed>();
 
-		public void OnPlayerVerified(VerifiedEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerJoined)]
+        public void OnPlayerVerified(Player player)
 		{
-			if (JailedPlayers.Any(j => j.Userid == ev.Player.UserId))
-				Plugin.Coroutines.Add(Timing.RunCoroutine(DoJail(ev.Player, true)));
+			if (JailedPlayers.Any(j => j.Userid == player.UserId))
+				Plugin.Coroutines.Add(Timing.RunCoroutine(DoJail(player, true)));
 		}
 
-		public void OnRoundEnd(RoundEndedEventArgs ev)
+        [PluginEvent(ServerEventType.RoundEnd)]
+        public void OnRoundEnd(global::RoundSummary.LeadingTeam leadingTeam)
 		{
 			foreach (Jailed jail in JailedPlayers)
 			{
@@ -42,13 +41,13 @@ namespace ScuutCore.Modules.AdminTools
 		// Jail Part
 		public static IEnumerator<float> DoJail(Player player, bool skipadd = false)
 		{
-			List<Item> items = new List<Item>();
-			Dictionary<AmmoType, ushort> ammo = new Dictionary<AmmoType, ushort>();
-			foreach (KeyValuePair<ItemType, ushort> kvp in player.Ammo)
-				ammo.Add(kvp.Key.GetAmmoType(), kvp.Value);
+			List<ItemType> items = new List<ItemType>();
+			Dictionary<ItemType, ushort> ammo = new Dictionary<ItemType, ushort>();
+			foreach (KeyValuePair<ItemType, ushort> kvp in player.ReferenceHub.inventory.UserInventory.ReserveAmmo)
+				ammo.Add(kvp.Key, kvp.Value);
 
-			foreach (Item item in player.Items)
-				items.Add(item);
+			foreach (var item in player.Items)
+				items.Add(item.ItemTypeId);
 
 			if (!skipadd)
 			{
@@ -70,7 +69,7 @@ namespace ScuutCore.Modules.AdminTools
 
 			yield return Timing.WaitForSeconds(1f);
 			player.ClearInventory(false);
-			player.Role.Set(RoleTypeId.Tutorial);
+			player.SetRole(RoleTypeId.Tutorial);
 			yield return Timing.WaitForSeconds(1f);
 			player.IsGodModeEnabled = true;
 			player.Position = new Vector3(38.000f, 1014.112f, -32.000f);
@@ -81,16 +80,18 @@ namespace ScuutCore.Modules.AdminTools
 			Jailed jail = JailedPlayers.Find(j => j.Userid == player.UserId);
 			if (jail.CurrentRound)
 			{
-				player.Role.Set(jail.Role, SpawnReason.ForceClass);
+				player.SetRole(jail.Role);
 				yield return Timing.WaitForSeconds(0.5f);
 				try
 				{
                     player.IsGodModeEnabled = false;
-                    player.ResetInventory(jail.Items);
+					foreach (var item in jail.Items)
+						player.AddItem(item);
+
 					player.Health = jail.Health;
 					player.Position = jail.Position;
-					foreach (KeyValuePair<AmmoType, ushort> kvp in jail.Ammo)
-						player.Ammo[kvp.Key.GetItemType()] = kvp.Value;
+					foreach (KeyValuePair<ItemType, ushort> kvp in jail.Ammo)
+						player.AddAmmo(kvp.Key, kvp.Value);
 				}
 				catch (Exception e)
 				{
@@ -99,7 +100,7 @@ namespace ScuutCore.Modules.AdminTools
 			}
 			else
 			{
-				player.Role.Set(RoleTypeId.Spectator);
+				player.SetRole(RoleTypeId.Spectator);
 			}
 
 			JailedPlayers.Remove(jail);
@@ -109,11 +110,11 @@ namespace ScuutCore.Modules.AdminTools
 		{
 			public string Userid;
 			public string Name;
-			public List<Item> Items;
+			public List<ItemType> Items;
 			public RoleTypeId Role;
 			public Vector3 Position;
 			public float Health;
-			public Dictionary<AmmoType, ushort> Ammo;
+			public Dictionary<ItemType, ushort> Ammo;
 			public bool CurrentRound;
 		}
 	}

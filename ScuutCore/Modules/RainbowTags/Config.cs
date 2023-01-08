@@ -1,4 +1,4 @@
-﻿using Exiled.API.Features;
+﻿using PluginAPI.Core;
 using ScuutCore.API;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +20,7 @@ namespace ScuutCore.Modules.RainbowTags
                 if (value < 0.5f)
                 {
                     value = 0.5f;
-                    Log.Warn($"The {nameof(TagInterval)} config cannot be set below 0.5 and has been automatically clamped.");
+                    Log.Warning($"The {nameof(TagInterval)} config cannot be set below 0.5 and has been automatically clamped.");
                 }
 
                 tagInterval = value;

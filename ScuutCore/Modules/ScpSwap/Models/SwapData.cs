@@ -7,8 +7,8 @@
 
 namespace ScuutCore.Modules.ScpSwap
 {
-    using Exiled.API.Features;
     using PlayerRoles;
+    using PluginAPI.Core;
     using UnityEngine;
 
     /// <summary>
@@ -40,7 +40,7 @@ namespace ScuutCore.Modules.ScpSwap
         public void Swap(Player player)
         {
             if (customSwap == null)
-                player.Role.Set(role);
+                player.SetRole(role);
             else
                 customSwap.SpawnMethod(player);
 

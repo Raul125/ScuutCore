@@ -1,4 +1,5 @@
-﻿using ScuutCore.API;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.ScpSwap
 {
@@ -14,21 +15,16 @@ namespace ScuutCore.Modules.ScpSwap
         {
             Singleton = this;
             EventHandlers = new EventHandlers(this);
-            Exiled.Events.Handlers.Player.ChangingRole += EventHandlers.OnChangingRole;
-            Exiled.Events.Handlers.Server.WaitingForPlayers += EventHandlers.OnWaitingForPlayers;
-            Exiled.Events.Handlers.Server.RestartingRound += EventHandlers.OnRestartingRound;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Exiled.Events.Handlers.Player.ChangingRole -= EventHandlers.OnChangingRole;
-            Exiled.Events.Handlers.Server.WaitingForPlayers -= EventHandlers.OnWaitingForPlayers;
-            Exiled.Events.Handlers.Server.RestartingRound -= EventHandlers.OnRestartingRound;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
-            Singleton = this;
+            Singleton = null;
 
             base.OnDisabled();
         }

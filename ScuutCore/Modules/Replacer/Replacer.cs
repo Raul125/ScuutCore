@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.Replacer
 {
@@ -12,14 +12,14 @@ namespace ScuutCore.Modules.Replacer
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            Player.Destroying += EventHandlers.OnDestroying;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.Destroying -= EventHandlers.OnDestroying;
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

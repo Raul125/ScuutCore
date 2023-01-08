@@ -1,5 +1,7 @@
-﻿using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Scp330;
+﻿using InventorySystem.Items.Pickups;
+using PluginAPI.Core;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.BetterCandy
 {
@@ -11,7 +13,8 @@ namespace ScuutCore.Modules.BetterCandy
             betterCandy = btc;
         }
 
-        public void OnInteractingWithScp330(InteractingScp330EventArgs ev)
+        /*[PluginEvent(ServerEventType.PlayerPickupScp330)]
+        public void OnInteractingWithScp330(Player player, ItemPickupBase item)
         {
             ev.ShouldSever = false;
 
@@ -23,6 +26,6 @@ namespace ScuutCore.Modules.BetterCandy
                 ev.IsAllowed = false;
                 ev.Player.TryAddCandy(InventorySystem.Items.Usables.Scp330.CandyKindID.Pink);
             }
-        }
+        }*/
     }
 }

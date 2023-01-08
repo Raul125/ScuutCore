@@ -1,7 +1,7 @@
-﻿using Exiled.API.Features;
-
-namespace ScuutCore.API
+﻿namespace ScuutCore.API
 {
+    using PluginAPI.Core;
+
     public class HintConfig
     {
         public HintConfig(string ms)
@@ -19,9 +19,12 @@ namespace ScuutCore.API
         public void Show(Player ply = null)
         {
             if (ply != null)
-                ply.ShowHint(Message, Time);
+                ply.ReceiveHint(Message, Time);
             else
-                Map.ShowHint(Message, Time);
+            {
+                foreach (var player in Player.GetPlayers())
+                    player.ReceiveHint(Message, Time);
+            }
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Server = Exiled.Events.Handlers.Server;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.CustomEscape
 {
@@ -12,17 +12,16 @@ namespace ScuutCore.Modules.CustomEscape
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-
-            Server.RoundStarted += EventHandlers.OnRoundStarted;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Server.RoundStarted -= EventHandlers.OnRoundStarted;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
+
             base.OnDisabled();
         }
     }

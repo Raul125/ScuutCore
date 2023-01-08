@@ -17,12 +17,13 @@ namespace ScuutCore.Modules.BetterLateSpawn
         public float ClassDChance { get; set; } = 70f;
 
         [Description("What should it broadcast when you late spawn.")]
-        public Exiled.API.Features.Broadcast Broadcast { get; set; } = new Exiled.API.Features.Broadcast
+        public BroadcastConfig Broadcast { get; set; } = new BroadcastConfig
         {
-            Show = true,
-            Content = "You joined late and have been spawned",
+            AbleToShow = true,
+            Text = "You joined late and have been spawned",
             Duration = 10,
-            Type = global::Broadcast.BroadcastFlags.Normal
+            BroadcastFlags = global::Broadcast.BroadcastFlags.Normal,
+            ClearPrevious = true,
         };
     }
 }

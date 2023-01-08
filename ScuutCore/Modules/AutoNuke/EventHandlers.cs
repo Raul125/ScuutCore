@@ -1,11 +1,8 @@
-﻿using Exiled.Events.EventArgs;
-using MEC;
-using Exiled.API.Features;
+﻿using MEC;
+using PluginAPI.Core;
 using System.Collections.Generic;
-using LightContainmentZoneDecontamination;
-using Mirror;
-using Respawning.NamingRules;
-using Exiled.Events.EventArgs.Warhead;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.AutoNuke
 {
@@ -19,19 +16,23 @@ namespace ScuutCore.Modules.AutoNuke
 
         public bool IsAutoNuke = false;
 
+        [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
         {
             IsAutoNuke = false;
             Plugin.Coroutines.Add(Timing.RunCoroutine(AutoNukeCoroutine()));
         }
 
-        public void OnWarheadStopping(StoppingEventArgs ev)
+        [PluginEvent(ServerEventType.WarheadStop)]
+        public bool OnWarheadStopping(Player player)
         {
             if (IsAutoNuke)
             {
-                ev.IsAllowed = false;
-                autoNuke.Config.CantDisableHint.Show(ev.Player);
+                autoNuke.Config.CantDisableHint.Show(player);
+                return false;
             }
+
+            return true;
         }
 
         public IEnumerator<float> AutoNukeCoroutine()
@@ -42,16 +43,21 @@ namespace ScuutCore.Modules.AutoNuke
                 yield break;
 
             autoNuke.Config.AutoNukeCassieWarn.Play();
-            Map.Broadcast(autoNuke.Config.AutoNukeWarnBroadcast);
+
+            foreach (var ply in Player.GetPlayers())
+                autoNuke.Config.AutoNukeWarnBroadcast.Show(ply);
+
             autoNuke.Config.AutoNukeWarnHint.Show();
 
             yield return Timing.WaitForSeconds(autoNuke.Config.AutoNukeStartTime - autoNuke.Config.AutoNukeWarn);
 
             IsAutoNuke = true;
-            if (!Warhead.IsDetonated && !Warhead.IsInProgress)
+            if (!Warhead.IsDetonated && !Warhead.IsDetonationInProgress)
             {
                 autoNuke.Config.AutoNukeCassieStart.Play();
-                Map.Broadcast(autoNuke.Config.AutoNukeStartBroadcast);
+                foreach (var ply in Player.GetPlayers())
+                    autoNuke.Config.AutoNukeStartBroadcast.Show(ply);
+
                 autoNuke.Config.AutoNukeStartHint.Show();
                 Warhead.Start();
             }

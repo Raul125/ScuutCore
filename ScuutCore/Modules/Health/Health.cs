@@ -1,5 +1,5 @@
-﻿using ScuutCore.API;
-using Player = Exiled.Events.Handlers.Player;
+﻿using PluginAPI.Events;
+using ScuutCore.API;
 
 namespace ScuutCore.Modules.Health
 {
@@ -12,19 +12,16 @@ namespace ScuutCore.Modules.Health
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-
-            Player.ChangingRole += EventHandlers.OnChangingRole;
-            Player.Died += EventHandlers.OnPlayerDied;
+            EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Player.ChangingRole -= EventHandlers.OnChangingRole;
-            Player.Died -= EventHandlers.OnPlayerDied;
-
+            EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
+
             base.OnDisabled();
         }
     }

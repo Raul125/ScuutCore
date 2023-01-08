@@ -1,12 +1,16 @@
-﻿using Exiled.API.Features;
-using MEC;
-using NorthwoodLib.Pools;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates
 {
+    using MEC;
+    using NorthwoodLib.Pools;
+    using PlayerRoles;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using ScuutCore.Modules.RemoteKeycard;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public class EventHandlers
     {
         private WhoAreMyTeammates whoAreMyTeammates;
@@ -15,6 +19,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             whoAreMyTeammates = wamt;
         }
 
+        [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStarted()
         {
             Plugin.Coroutines.Add(Timing.CallDelayed(whoAreMyTeammates.Config.DelayTime, () =>
@@ -29,7 +34,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             if (!broadcast.IsEnabled)
                 return;
 
-            List<Player> players = Player.Get(broadcast.Team).ToList();
+            List<Player> players = Player.GetPlayers().Where(x => x.Role.GetTeam() == broadcast.Team).ToList();
             if (broadcast.MaxPlayers > -1 && players.Count >= broadcast.MaxPlayers)
                 return;
 
@@ -50,10 +55,10 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
             switch (displayType)
             {
                 case DisplayType.Broadcast:
-                    player.Broadcast(duration, content);
+                    player.SendBroadcast(content, duration);
                     return;
                 case DisplayType.Hint:
-                    player.ShowHint(content, duration);
+                    player.ReceiveHint(content, duration);
                     return;
                 case DisplayType.ConsoleMessage:
                     player.SendConsoleMessage(content, "cyan");
@@ -73,7 +78,7 @@ namespace ScuutCore.Modules.WhoAreMyTeammates
                 Player player = players[i];
 
                 stringBuilder.Append(' ').Append(player.Nickname);
-                if (player.IsScp)
+                if (player.IsSCP())
                     stringBuilder.Append(' ').Append(player.ReferenceHub.roleManager._curRole.RoleName);
 
                 if (i != cutOff)

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using HarmonyLib;
-using MEC;
-
-namespace ScuutCore.Patches
+﻿namespace ScuutCore.Patches
 {
-	// [HarmonyPatch(typeof(Timing), nameof(Timing.RunCoroutine), new Type[] { typeof(IEnumerator<float>) })]
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection.Emit;
+    using HarmonyLib;
+
+    using MEC;
+    [HarmonyPatch(typeof(Timing), nameof(Timing.RunCoroutine), new Type[] { typeof(IEnumerator<float>) })]
 	public static class FixDefaultSegmentPatch
 	{
 		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)

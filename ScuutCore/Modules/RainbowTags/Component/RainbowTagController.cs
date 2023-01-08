@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Exiled.API.Features;
+using PluginAPI.Core;
 using MEC;
 using UnityEngine;
 
@@ -72,7 +72,7 @@ namespace ScuutCore.Modules.RainbowTags
                     break;
                 }
 
-                player.RankColor = nextColor;
+                player.ReferenceHub.serverRoles.SetColor(nextColor);
             }
         }
     }

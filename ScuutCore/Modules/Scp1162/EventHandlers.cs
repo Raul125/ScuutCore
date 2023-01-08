@@ -1,62 +1,77 @@
-﻿using Exiled.API.Features;
-using Exiled.API.Features.Items;
-using Exiled.Events.EventArgs;
-using Exiled.Events.EventArgs.Player;
-using PlayerRoles;
-using System;
-using UnityEngine;
-
-namespace ScuutCore.Modules.Scp1162
+﻿namespace ScuutCore.Modules.Scp1162
 {
+    using PluginAPI.Core;
+    using PlayerRoles;
+    using UnityEngine;
+    using InventorySystem.Items;
+    using InventorySystem;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using PlayerRoles.FirstPersonControl.Spawnpoints;
+    using Mirror;
+    using PluginAPI.Events;
+    using InventorySystem.Items.Pickups;
+
     public class EventHandlers
     {
-        private Scp1162 scp1162;
-        public EventHandlers(Scp1162 btc)
+        public EventHandlers()
         {
-            scp1162 = btc;
         }
 
-        public void OnDroppingItem(DroppingItemEventArgs ev)
+        private GameObject Scp1162gameObject = null;
+        [PluginEvent(ServerEventType.RoundStart)]
+        public void OnRoundStarted()
         {
-            try
-            {
-                if (!ev.IsAllowed) 
-                    return;
+            Scp1162gameObject = null;
+            var item = PluginAPI.Core.Items.ItemPickup.Create(ItemType.SCP500, Vector3.zero, default);
+            Scp1162gameObject = item.GameObject;
+            NetworkServer.UnSpawn(item.GameObject);
 
-                if (Vector3.Distance(ev.Player.Position, Exiled.API.Extensions.RoleExtensions.GetRandomSpawnLocation(RoleTypeId.Scp173).Position) <= 8.2f)
+            item.Rigidbody.transform.parent = GameObject.Find("LCZ_173").transform;
+            item.Rigidbody.useGravity = false;
+            item.Rigidbody.drag = 0f;
+            item.Rigidbody.freezeRotation = true;
+            item.Rigidbody.isKinematic = true;
+            item.GameObject.transform.localPosition = new Vector3(17f, 13.1f, 3f);
+            item.GameObject.transform.localRotation = Quaternion.Euler(90, 1, 0);
+            item.GameObject.transform.localScale = new Vector3(10, 10, 10);
+            NetworkServer.Spawn(item.GameObject);
+        }
+
+        [PluginEvent(ServerEventType.PlayerSearchPickup)]
+        public bool OnPlayerPickup(Player player, ItemPickupBase item)
+        {
+            if (item.gameObject != Scp1162gameObject)
+                return true;
+
+            if (player.CurrentItem != null)
+            {
+                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
+
+                ItemType newItem = ItemType.None;
+
+                getItem:
+                foreach (var itemd in Scp1162.Instance.Config.Chances)
                 {
-                    if (scp1162.Config.UseHints)
-                        ev.Player.ShowHint(scp1162.Config.ItemDropMessage, scp1162.Config.ItemDropMessageDuration);
-                    else
-                        ev.Player.Broadcast(scp1162.Config.ItemDropMessageDuration, scp1162.Config.ItemDropMessage, Broadcast.BroadcastFlags.Normal, true);
-
-                    ev.IsAllowed = false;
-                    var oldItem = ev.Item.Base.ItemTypeId;
-                    ev.Player.RemoveItem(ev.Item);
-
-                    ItemType newItemType = ItemType.None;
-
-                    getItem:
-                    foreach (var item in scp1162.Config.Chances)
+                    if (Plugin.Random.Next(0, 100) <= itemd.Value)
                     {
-                        if (Plugin.Random.Next(0, 100) <= item.Value)
-                        {
-                            newItemType = item.Key;
-                            break;
-                        }
+                        newItem = itemd.Key;
+                        break;
                     }
-
-                    if (newItemType == ItemType.None)
-                        goto getItem;
-
-                    var newItem = Item.Create(newItemType);
-                    ev.Player.AddItem(newItem);
-                    ev.Player.DropItem(newItem);
                 }
+
+                if (newItem == ItemType.None)
+                    goto getItem;
+
+                player.AddItem(newItem);
+
+                if (Scp1162.Instance.Config.UseHints)
+                    player.ReceiveHint(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
+                else
+                    player.SendBroadcast(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
             }
-            catch
-            {
-            }
+
+            return false;
         }
     }
 }

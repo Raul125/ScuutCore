@@ -1,10 +1,10 @@
-﻿using CustomPlayerEffects;
-using Interactables.Interobjects.DoorUtils;
-using Exiled.API.Features;
-using Exiled.Events.EventArgs;
+﻿using Interactables.Interobjects.DoorUtils;
+using PluginAPI.Core;
 using System.Linq;
-using Exiled.API.Features.Items;
-using Exiled.Events.EventArgs.Player;
+using InventorySystem.Items.Keycards;
+using MapGeneration.Distributors;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.RemoteKeycard
 {
@@ -16,51 +16,38 @@ namespace ScuutCore.Modules.RemoteKeycard
             remotekeycard = rm;
         }
 
-        public void OnDoorInteract(InteractingDoorEventArgs ev)
+        [PluginEvent(ServerEventType.PlayerInteractDoor)]
+        public bool OnPlayerInteractDoor(Player ply, DoorVariant door, bool canOpen)
         {
-            if (!remotekeycard.Config.AffectDoors)
-                return;
+            if (!remotekeycard.Config.IsEnabled || ply.IsSCP() || remotekeycard.Config.BlackListRole.Contains(ply.Role) || ply.IsWithoutItems() ||
+                remotekeycard.Config.BlacklistedDoors.Any(d => door.name.StartsWith(d))
+                || ply.CurrentItem is KeycardItem) return true;
 
-            if (!ev.Door.RequiredPermissions.CheckPermissions(ev.Player.CurrentItem?.Base, ev.Player.ReferenceHub) && HasKeycardPermission(ev.Player, ev.Door.RequiredPermissions.RequiredPermissions))
-                ev.Door.IsOpen = !ev.Door.IsOpen;
-        }
-
-        public void OnWarheadUnlock(ActivatingWarheadPanelEventArgs ev)
-        {
-            if (!remotekeycard.Config.AffectWarheadPanel)
-                return;
-
-            if (!ev.IsAllowed && HasKeycardPermission(ev.Player, KeycardPermissions.AlphaWarhead))
-                ev.IsAllowed = true;
-        }
-
-        public void OnGeneratorUnlock(UnlockingGeneratorEventArgs ev)
-        {
-            if (!remotekeycard.Config.AffectGenerators)
-                return;
-
-            if (!ev.IsAllowed && HasKeycardPermission(ev.Player, ev.Generator.Base._requiredPermission))
-                ev.Generator.IsOpen = !ev.Generator.IsOpen;
-        }
-
-        public void OnLockerInteract(InteractingLockerEventArgs ev)
-        {
-            if (!remotekeycard.Config.AffectScpLockers)
-                return;
-
-            if (!ev.IsAllowed && ev.Chamber != null && HasKeycardPermission(ev.Player, ev.Chamber.RequiredPermissions, true))
-                ev.Chamber.IsOpen = !ev.Chamber.IsOpen;
-        }
-
-        // Extension
-        public bool HasKeycardPermission(Player player, KeycardPermissions permissions, bool requiresAllPermissions = false)
-        {
-            if (remotekeycard.Config.AmnesiaMatters && player.IsEffectActive<AmnesiaVision>())
+            if (ply.HasKeycardPermission(door.RequiredPermissions.RequiredPermissions))
+            {
+                canOpen = true;
+                door.Toggle();
                 return false;
+            }
 
-            return requiresAllPermissions ?
-                player.Items.Any(item => item is Keycard keycard && keycard.Base.Permissions.HasFlagFast(permissions))
-                : player.Items.Any(item => item is Keycard keycard && (keycard.Base.Permissions & permissions) != 0);
+            return true;
+        }
+
+        [PluginEvent(ServerEventType.PlayerInteractLocker)]
+        public bool OnPlayerInteractLocker(Player ply, Locker locker, LockerChamber chamber, bool canOpen)
+        {
+            if (!remotekeycard.Config.IsEnabled || ply.IsSCP() || remotekeycard.Config.BlackListRole.Contains(ply.Role) || ply.IsWithoutItems() ||
+                remotekeycard.Config.BlacklistedLockers.Any(l => locker.name.StartsWith(l)) ||
+                ply.CurrentItem is KeycardItem) return true;
+
+            if (ply.HasKeycardPermission(chamber.RequiredPermissions, true))
+            {
+                canOpen = true;
+                locker.Toggle(0);
+                return false;
+            }
+
+            return true;
         }
     }
 }
