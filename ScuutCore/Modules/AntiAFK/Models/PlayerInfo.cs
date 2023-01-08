@@ -7,7 +7,6 @@ using PlayerRoles;
 using UnityEngine;
 using PlayerRoles.PlayableScps.Scp079;
 using YamlDotNet.Core.Tokens;
-using Newtonsoft.Json.Linq;
 
 namespace ScuutCore.Modules.AntiAFK
 {
