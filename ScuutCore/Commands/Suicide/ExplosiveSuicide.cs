@@ -12,7 +12,7 @@
 	using PermissionHandler = NWAPIPermissionSystem.PermissionHandler;
 
 	[CommandHandler(typeof(ClientCommandHandler))]
-	public class ExplosiveSuicide
+	public class ExplosiveSuicide : ICommand
     {
         public string Command { get; } = "explosivesuicide";
 
