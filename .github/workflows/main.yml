@@ -50,8 +50,10 @@ jobs:
         run: |
           cd ScuutCore
           msbuild.exe ScuutPlugins.sln /p:Configuration="Release" /p:Platform="Any CPU"
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          files: "ScuutCore/bin/Release/ScuutCore.dll"
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          files: |
+            ScuutCore/bin/Release/ScuutCore.dll
