@@ -7,7 +7,6 @@ using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using PlayerRoles.PlayableScps.Scp079;
 using UnityEngine;
-using RemoteAdmin.Communication;
 
 namespace ScuutCore.Modules.Replacer
 {
