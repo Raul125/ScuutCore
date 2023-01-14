@@ -1,9 +1,9 @@
-﻿namespace ScuutCore.Main
+﻿namespace ScuutCore
 {
-    using PlayerRoles;
-    using PluginAPI.Helpers;
     using System.Collections.Generic;
     using System.IO;
+    using PlayerRoles;
+    using PluginAPI.Helpers;
 
     public class Config
     {

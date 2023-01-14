@@ -9,7 +9,6 @@
     {
         public EventHandlers()
         {
-
         }
 
         [PluginEvent(ServerEventType.RoundRestart)]

@@ -8,9 +8,6 @@
     using PluginAPI.Enums;
     using PluginAPI.Events;
     using ScuutCore.Main;
-    using PluginAPI.Loader.Features;
-    using System.IO;
-    using PluginAPI.Core;
 
     public class Plugin
     {
