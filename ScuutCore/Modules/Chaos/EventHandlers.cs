@@ -18,7 +18,7 @@ namespace ScuutCore.Modules.Chaos
         public void OnRespawningTeam(SpawnableTeamType team)
         {
             if (team == SpawnableTeamType.ChaosInsurgency)
-                Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.Message(chaos.Config.ChaosCassie, false, false, false)));
+                Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () => Cassie.Message(chaos.Config.ChaosCassie, false, false, true)));
         }
     }
 }
