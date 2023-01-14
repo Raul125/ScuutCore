@@ -10,7 +10,7 @@
 	[CommandHandler(typeof(ClientCommandHandler))]
 	public class VaporizeSuicide : ICommand
 	{
-		public string Command { get; } = "explosivesuicide";
+		public string Command { get; } = "vaporizesuicide";
 
 		public string[] Aliases { get; } = new[] { "vaporize" };
 
