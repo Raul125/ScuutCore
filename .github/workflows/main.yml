@@ -50,10 +50,6 @@ jobs:
         run: |
           cd ScuutCore
           msbuild.exe ScuutPlugins.sln /p:Configuration="Release" /p:Platform="Any CPU"
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: ncipollo/release-action@v1
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          files: |
-            ScuutCore/bin/Release/ScuutCore.dll
+          artifacts: "ScuutCore/bin/Release/ScuutCore.dll"
