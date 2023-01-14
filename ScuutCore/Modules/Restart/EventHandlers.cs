@@ -6,6 +6,7 @@
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using UnityEngine;
+    using RoundSummary = global::RoundSummary;
 
     public class EventHandlers
     {
@@ -24,7 +25,7 @@
         }
 
         [PluginEvent(ServerEventType.RoundEnd)]
-        public void OnRoundEnd()
+        public void OnRoundEnd(RoundSummary.LeadingTeam leadingTeam)
         {
             if (Rounds == restart.Config.RestartAfterRounds)
             {
