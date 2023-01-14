@@ -17,8 +17,6 @@ env:
 jobs:
   build-win:
     runs-on: windows-latest
-    # Prevent double running for push & pull_request events from the main repo
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != 'Raul125/ScuutCore'
     steps:
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1.1.3
