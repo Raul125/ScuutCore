@@ -53,3 +53,7 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           artifacts: "ScuutCore/bin/Release/ScuutCore.dll"
+          generateReleaseNotes: true
+          makeLatest: true
+          token: ${{ secret.GITHUB_TOKEN }}
+          commit: main
