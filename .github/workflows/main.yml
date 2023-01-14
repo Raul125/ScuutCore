@@ -55,5 +55,5 @@ jobs:
           artifacts: "ScuutCore/bin/Release/ScuutCore.dll"
           generateReleaseNotes: true
           makeLatest: true
-          token: ${{ secret.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit: main
