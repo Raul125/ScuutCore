@@ -51,7 +51,7 @@ jobs:
         shell: pwsh
         run: |
           cd ScuutCore
-          msbuild.exe Ferric.sln /p:Configuration="Release" /p:Platform="Any CPU"
+          msbuild.exe ScuutPlugins.sln /p:Configuration="Release" /p:Platform="Any CPU"
       - name: Automatic Releases
         # You may pin to the exact commit or the version.
         # uses: marvinpinto/action-automatic-releases@919008cf3f741b179569b7a6fb4d8860689ab7f0
