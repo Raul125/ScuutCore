@@ -5,8 +5,8 @@
     using System.Linq;
     using System.Reflection.Emit;
     using HarmonyLib;
-
     using MEC;
+
     [HarmonyPatch(typeof(Timing), nameof(Timing.RunCoroutine), new Type[] { typeof(IEnumerator<float>) })]
 	public static class FixDefaultSegmentPatch
 	{

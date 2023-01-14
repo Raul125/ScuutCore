@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -172,6 +172,9 @@
     <Compile Include="Modules\RoundSummary\RoundSummary.cs" />
     <Compile Include="Modules\RoundSummary\Config.cs" />
     <Compile Include="Modules\RoundSummary\EventHandlers.cs" />
+    <Compile Include="Modules\Restart\Config.cs" />
+    <Compile Include="Modules\Restart\EventHandlers.cs" />
+    <Compile Include="Modules\Restart\Restart.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Commands\WamtList.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\DisplayType.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Models\WamtBroadcast.cs" />
