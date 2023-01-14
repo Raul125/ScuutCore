@@ -1,8 +1,6 @@
 ﻿namespace ScuutCore.Modules.Restart
 {
-    using PlayerRoles;
     using ScuutCore.API;
-    using System.Collections.Generic;
     using System.ComponentModel;
 
     public class Config : IModuleConfig
