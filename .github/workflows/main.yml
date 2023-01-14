@@ -58,4 +58,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit: main
           name: "${{ github.event.head_commit.message }} - ${{ github.sha }}"
-          tag: "${{ github.sha }}"
+          tag: "${{ github.run_id }}"
