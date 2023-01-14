@@ -57,3 +57,4 @@ jobs:
           makeLatest: true
           token: ${{ secrets.GITHUB_TOKEN }}
           commit: main
+          tag: "${{ github.event.head_commit.message }} - ${{ github.sha }}"
