@@ -31,7 +31,7 @@
 				return false;
 			}
 
-			player.Damage(new DisruptorDamageHandler(new Footprint(ReferenceHub._hostHub), -1f));
+			player.ReferenceHub.playerStats.KillPlayer(new DisruptorDamageHandler(new Footprint(player.ReferenceHub), -1));
 			response = "Done";
 			return true;
 		}
