@@ -1,13 +1,11 @@
-﻿using CommandSystem;
-using PluginAPI.Core;
-using MEC;
-using System;
-using System.Linq;
-using Hints;
-using NWAPIPermissionSystem;
-
-namespace ScuutCore.Commands
+﻿namespace ScuutCore.Commands.Suicide
 {
+    using System;
+    using CommandSystem;
+    using NWAPIPermissionSystem;
+    using PluginAPI.Core;
+    using Plugin = ScuutCore.Plugin;
+
     [CommandHandler(typeof(ClientCommandHandler))]
     public class Suicide : ICommand
     {
