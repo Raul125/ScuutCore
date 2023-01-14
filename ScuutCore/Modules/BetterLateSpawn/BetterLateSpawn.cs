@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.BetterLateSpawn
 {
+    using ScuutCore.API.Features;
+
     public class BetterLateSpawn : Module<Config>
     {
         public override string Name { get; } = "BetterLateSpawn";

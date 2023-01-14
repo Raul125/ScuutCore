@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.Teslas
 {
+    using ScuutCore.API.Features;
+
     public class Teslas : Module<Config>
     {
         public override string Name { get; } = "Teslas";

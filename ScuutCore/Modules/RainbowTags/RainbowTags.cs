@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.RainbowTags
 {
+    using ScuutCore.API.Features;
+
     public class RainbowTags : Module<Config>
     {
         public override string Name { get; } = "RainbowTags";

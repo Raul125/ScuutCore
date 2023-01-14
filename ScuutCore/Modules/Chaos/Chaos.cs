@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.Chaos
 {
+    using ScuutCore.API.Features;
+
     public class Chaos : Module<Config>
     {
         public override string Name { get; } = "Chaos";

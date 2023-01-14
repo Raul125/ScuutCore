@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.AdminTools
 {
+    using ScuutCore.API.Features;
+
     public class AdminTools : Module<Config>
     {
         public override string Name { get; } = "AdminTools";

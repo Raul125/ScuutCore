@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 namespace ScuutCore.Modules.BetterLateSpawn
 {
+    using ScuutCore.API.Features;
+    using ScuutCore.API.Interfaces;
+
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using PluginAPI.Core;
-using MEC;
-using UnityEngine;
-
-namespace ScuutCore.Modules.RainbowTags
+﻿namespace ScuutCore.Modules.RainbowTags.Component
 {
+    using System;
+    using System.Collections.Generic;
+    using MEC;
+    using PluginAPI.Core;
+    using UnityEngine;
+
     public sealed class RainbowTagController : MonoBehaviour
     {
         private Player player;

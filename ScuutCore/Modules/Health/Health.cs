@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.Health
 {
+    using ScuutCore.API.Features;
+
     public class Health : Module<Config>
     {
         public override string Name { get; } = "Health";

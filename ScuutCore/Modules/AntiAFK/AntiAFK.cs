@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.AntiAFK
 {
+    using ScuutCore.API.Features;
+
     public class AntiAFK : Module<Config>
     {
         public override string Name { get; } = "AntiAFK";

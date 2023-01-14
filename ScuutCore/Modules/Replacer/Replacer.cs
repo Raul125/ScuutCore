@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.Replacer
 {
+    using ScuutCore.API.Features;
+
     public class Replacer : Module<Config>
     {
         public override string Name { get; } = "Replacer";

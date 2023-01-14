@@ -1,9 +1,9 @@
-﻿using System;
-using PluginAPI.Core;
-using UnityEngine;
-
-namespace ScuutCore.Modules.AntiAFK
+﻿namespace ScuutCore.Modules.AntiAFK.Models
 {
+    using System;
+    using PluginAPI.Core;
+    using UnityEngine;
+
     public readonly struct PositionInfo : IEquatable<PositionInfo>
     {
         private readonly Vector3 position;

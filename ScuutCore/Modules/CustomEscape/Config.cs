@@ -1,10 +1,9 @@
-﻿using PlayerRoles;
-using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.CustomEscape
+﻿namespace ScuutCore.Modules.CustomEscape
 {
+    using PlayerRoles;
+    using System.Collections.Generic;
+    using ScuutCore.API.Interfaces;
+
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;

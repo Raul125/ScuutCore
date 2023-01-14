@@ -5,6 +5,8 @@ using System.ComponentModel;
 
 namespace ScuutCore.Modules.Health
 {
+    using ScuutCore.API.Interfaces;
+
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;

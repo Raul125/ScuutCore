@@ -4,6 +4,8 @@ using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.AntiAFK
 {
+    using ScuutCore.Modules.AntiAFK.Components;
+
     public class EventHandlers
     {
         public EventHandlers()

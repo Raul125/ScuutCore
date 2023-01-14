@@ -3,12 +3,10 @@ using PluginAPI.Core.Items;
 using MEC;
 using PlayerRoles;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using InventorySystem.Disarming;
-using Mirror;
 
 namespace ScuutCore.Modules.CustomEscape
 {

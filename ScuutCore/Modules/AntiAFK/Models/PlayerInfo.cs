@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using PluginAPI.Core;
-using PluginAPI.Core.Items;
-using InventorySystem.Items.Usables.Scp330;
-using MEC;
-using PlayerRoles;
-using UnityEngine;
-using PlayerRoles.PlayableScps.Scp079;
-using YamlDotNet.Core.Tokens;
-
-namespace ScuutCore.Modules.AntiAFK
+﻿namespace ScuutCore.Modules.AntiAFK.Models
 {
+    using System.Collections.Generic;
+    using InventorySystem.Items.Usables.Scp330;
+    using MEC;
+    using PlayerRoles;
+    using PlayerRoles.PlayableScps.Scp079;
+    using PluginAPI.Core;
+    using UnityEngine;
+
     public class PlayerInfo
     {
         private readonly List<ItemType> items = new List<ItemType>();

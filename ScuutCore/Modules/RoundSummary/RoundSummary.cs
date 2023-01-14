@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.RoundSummary
 {
+    using ScuutCore.API.Features;
+
     public class RoundSummary : Module<Config>
     {
         public override string Name { get; } = "RoundSummary";

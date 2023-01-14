@@ -1,12 +1,11 @@
-﻿using CommandSystem;
-using PluginAPI.Core;
-using MEC;
-using System;
-using System.Linq;
-using Hints;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools.Commands.Jail
 {
+    using System;
+    using System.Linq;
+    using CommandSystem;
+    using MEC;
+    using PluginAPI.Core;
+
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     [CommandHandler(typeof(GameConsoleCommandHandler))]
     public class Jail : ParentCommand

@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.AutoNuke
 {
+    using ScuutCore.API.Features;
+
     public class AutoNuke : Module<Config>
     {
         public override string Name { get; } = "AutoNuke";

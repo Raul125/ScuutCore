@@ -7,8 +7,6 @@ using System.Linq;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using PlayerStatsSystem;
-using static ScuutCore.Modules.AdminTools.EventHandlers;
-using static System.Net.Mime.MediaTypeNames;
 using static RoundSummary;
 
 namespace ScuutCore.Modules.RoundSummary

@@ -7,6 +7,7 @@
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using PluginAPI.Events;
+    using ScuutCore.API.Loader;
     using ScuutCore.Main;
 
     public class Plugin
@@ -35,7 +36,7 @@
         public void LoadPlugin()
         {
             Singleton = this;
-            API.Loader.InitModules();
+            Loader.InitModules();
 
             Harmony = new Harmony("scuutcore.raul." + DateTime.Now.Ticks);
             Harmony.PatchAll();
@@ -46,7 +47,7 @@
         [PluginUnload]
         public void OnDisabled()
         {
-            API.Loader.StopModules();
+            Loader.StopModules();
 
             EventManager.UnregisterEvents<EventHandlers>(this);
 

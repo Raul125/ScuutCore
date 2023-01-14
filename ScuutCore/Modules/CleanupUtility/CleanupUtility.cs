@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.CleanupUtility
 {
+    using ScuutCore.API.Features;
+
     public class CleanupUtility : Module<Config>
     {
         public override string Name { get; } = "CleanupUtility";

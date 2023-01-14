@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.CuffedTK
 {
+    using ScuutCore.API.Features;
+
     public class CuffedTK : Module<Config>
     {
         public override string Name { get; } = "CuffedTK";

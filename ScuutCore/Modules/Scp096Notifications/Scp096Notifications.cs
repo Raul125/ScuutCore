@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.Scp096Notifications
 {
+    using ScuutCore.API.Features;
+
     public class Scp096Notifications : Module<Config>
     {
         public override string Name { get; } = "Scp096Notifications";

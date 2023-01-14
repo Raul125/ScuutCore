@@ -7,6 +7,8 @@ using System.Linq;
 
 namespace ScuutCore.Modules.RainbowTags
 {
+    using ScuutCore.Modules.RainbowTags.Component;
+
     public class EventHandlers
     {
         private RainbowTags rainbowTags;

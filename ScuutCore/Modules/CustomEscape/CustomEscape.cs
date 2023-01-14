@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.CustomEscape
 {
+    using ScuutCore.API.Features;
+
     public class CustomEscape : Module<Config>
     {
         public override string Name { get; } = "CustomEscape";

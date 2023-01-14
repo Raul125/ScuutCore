@@ -6,6 +6,8 @@ using PlayerRoles;
 
 namespace ScuutCore.Modules.CuffedTK
 {
+    using ScuutCore.API.Interfaces;
+
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;

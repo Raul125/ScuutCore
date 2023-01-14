@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.ScpSwap
 {
+    using ScuutCore.API.Features;
+
     public class ScpSwap : Module<Config>
     {
         public override string Name { get; } = "ScpSwap";

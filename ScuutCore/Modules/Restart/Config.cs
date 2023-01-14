@@ -2,6 +2,7 @@
 {
     using ScuutCore.API;
     using System.ComponentModel;
+    using ScuutCore.API.Interfaces;
 
     public class Config : IModuleConfig
     {

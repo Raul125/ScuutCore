@@ -5,6 +5,8 @@ using System.ComponentModel;
 
 namespace ScuutCore.Modules.RainbowTags
 {
+    using ScuutCore.API.Interfaces;
+
     public class Config : IModuleConfig
     {
         private float tagInterval = 0.5f;

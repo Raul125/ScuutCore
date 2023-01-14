@@ -1,10 +1,7 @@
-﻿using PluginAPI.Core;
-using ScuutCore.API;
-using System.ComponentModel;
-using System.IO;
-
-namespace ScuutCore.Modules.KillMessages
+﻿namespace ScuutCore.Modules.KillMessages
 {
+    using ScuutCore.API.Interfaces;
+
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;

@@ -1,8 +1,9 @@
 ﻿using PluginAPI.Events;
-using ScuutCore.API;
 
 namespace ScuutCore.Modules.KillMessages
 {
+    using ScuutCore.API.Features;
+
     public class KillMessages : Module<Config>
     {
         public override string Name { get; } = "KillMessages";

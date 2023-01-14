@@ -1,10 +1,10 @@
-﻿using CommandSystem;
-using PluginAPI.Core;
-using PlayerRoles;
-using System;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools.Commands.TeleportX
 {
+    using System;
+    using CommandSystem;
+    using PlayerRoles;
+    using PluginAPI.Core;
+
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     [CommandHandler(typeof(GameConsoleCommandHandler))]
     public class TeleportX : ParentCommand

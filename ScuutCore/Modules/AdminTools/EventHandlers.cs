@@ -1,5 +1,4 @@
 ﻿using PluginAPI.Core;
-using PluginAPI.Core.Items;
 using MEC;
 using PlayerRoles;
 using System;

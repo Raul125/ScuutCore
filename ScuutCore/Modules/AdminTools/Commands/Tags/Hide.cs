@@ -1,9 +1,9 @@
-﻿using CommandSystem;
-using PluginAPI.Core;
-using System;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools.Commands.Tags
 {
+    using System;
+    using CommandSystem;
+    using PluginAPI.Core;
+
     public class Hide : ICommand
     {
         public string Command { get; } = "hide";

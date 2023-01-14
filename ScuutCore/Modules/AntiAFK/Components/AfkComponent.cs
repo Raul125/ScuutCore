@@ -1,10 +1,12 @@
-﻿using System.Linq;
-using PluginAPI.Core;
-using PlayerRoles;
-using UnityEngine;
-
-namespace ScuutCore.Modules.AntiAFK
+﻿namespace ScuutCore.Modules.AntiAFK.Components
 {
+    using System.Linq;
+    using PlayerRoles;
+    using PluginAPI.Core;
+    using ScuutCore.Modules.AntiAFK.Models;
+    using UnityEngine;
+    using PlayerInfo = ScuutCore.Modules.AntiAFK.Models.PlayerInfo;
+
     public class AfkComponent : MonoBehaviour
     {
         private const float Interval = 1f;

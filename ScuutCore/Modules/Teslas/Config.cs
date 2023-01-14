@@ -5,6 +5,8 @@ using System.ComponentModel;
 
 namespace ScuutCore.Modules.Teslas
 {
+    using ScuutCore.API.Interfaces;
+
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;

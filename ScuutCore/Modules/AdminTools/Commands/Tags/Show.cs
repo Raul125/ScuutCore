@@ -1,9 +1,9 @@
-﻿using System;
-using CommandSystem;
-using PluginAPI.Core;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools.Commands.Tags
 {
+    using System;
+    using CommandSystem;
+    using PluginAPI.Core;
+
     public class Show : ICommand
     {
         public string Command { get; } = "show";

@@ -1,11 +1,13 @@
-﻿namespace ScuutCore.API
+﻿namespace ScuutCore.API.Loader
 {
-    using LiteNetLib.Utils;
-    using PluginAPI.Core;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using LiteNetLib.Utils;
+    using PluginAPI.Core;
+    using ScuutCore.API.Features;
+    using ScuutCore.API.Interfaces;
     using YamlDotNet.Serialization;
     using YamlDotNet.Serialization.NamingConventions;
 

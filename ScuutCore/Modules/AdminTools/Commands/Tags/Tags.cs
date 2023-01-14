@@ -1,8 +1,8 @@
-﻿using System;
-using CommandSystem;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools.Commands.Tags
 {
+    using System;
+    using CommandSystem;
+
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     [CommandHandler(typeof(GameConsoleCommandHandler))]
     public class Tags : ParentCommand

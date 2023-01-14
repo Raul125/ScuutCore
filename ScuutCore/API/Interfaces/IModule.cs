@@ -1,4 +1,4 @@
-﻿namespace ScuutCore.API
+﻿namespace ScuutCore.API.Interfaces
 {
     using System;
 

@@ -3,6 +3,8 @@ using ScuutCore.API;
 
 namespace ScuutCore.Modules.RemoteKeycard
 {
+    using ScuutCore.API.Features;
+
     public class RemoteKeycard : Module<Config>
     {
         public override string Name { get; } = "RemoteKeycard";
