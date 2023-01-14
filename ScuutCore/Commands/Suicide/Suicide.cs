@@ -13,7 +13,7 @@
 
         public string[] Aliases { get; } = new string[] { };
 
-        public string Description { get; } = "";
+        public string Description { get; } = "die";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {

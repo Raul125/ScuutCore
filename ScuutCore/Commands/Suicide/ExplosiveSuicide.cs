@@ -8,21 +8,18 @@
 	using InventorySystem.Items.ThrowableProjectiles;
 	using Mirror;
 	using PluginAPI.Core;
+	using UnityEngine;
 	using PermissionHandler = NWAPIPermissionSystem.PermissionHandler;
 
+	[CommandHandler(typeof(ClientCommandHandler))]
 	public class ExplosiveSuicide
     {
         public string Command { get; } = "explosivesuicide";
 
-		// Token: 0x170000C8 RID: 200
-		// (get) Token: 0x06000251 RID: 593 RVA: 0x0000716C File Offset: 0x0000536C
-		public string[] Aliases { get; } = new string[0];
+		public string[] Aliases { get; } = new []{"explode"};
 
-		// Token: 0x170000C9 RID: 201
-		// (get) Token: 0x06000252 RID: 594 RVA: 0x00007174 File Offset: 0x00005374
-		public string Description { get; } = "";
+		public string Description { get; } = "Explode";
 
-		// Token: 0x06000253 RID: 595 RVA: 0x0000717C File Offset: 0x0000537C
 		public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
 		{
 			Player player = Player.Get(sender);
@@ -48,7 +45,7 @@
 			thrownProjectile.PreviousOwner = new Footprint(throwableItem.Owner);
 			(thrownProjectile as ExplosionGrenade)._maxRadius = 0f;
 			(thrownProjectile as ExplosionGrenade)._scpDamageMultiplier = 0f;
-			NetworkServer.Spawn(thrownProjectile.gameObject, null);
+			NetworkServer.Spawn(thrownProjectile.gameObject);
 			ItemPickupBase itemPickupBase = thrownProjectile;
 			pickupSyncInfo2 = default(PickupSyncInfo);
 			ItemPickupBase itemPickupBase2 = itemPickupBase;
