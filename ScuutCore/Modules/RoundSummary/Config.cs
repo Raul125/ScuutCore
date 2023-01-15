@@ -32,5 +32,7 @@ namespace ScuutCore.Modules.RoundSummary
         public string ScpFirstKillMessage { get; set; } = "<size=30><color={killerColor}><b>{player}</color> as {killerRole} was the first person to contain a {killedScp}!</b></size>";
 
         public string NoScpKillMessage { get; set; } = "No one killed a SCP!";
+
+        public float DisplayDelay { get; set; } = 1f;
     }
 }

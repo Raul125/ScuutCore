@@ -97,41 +97,49 @@ namespace ScuutCore.Modules.RoundSummary
         [PluginEvent(ServerEventType.RoundEnd)]
         public void OnRoundEnd(LeadingTeam leadingTeam)
         {
-            string message = string.Empty;
-
-            if (roundSummary.Config.ShowKills && playerKills.Count > 0)
+            Timing.CallDelayed(roundSummary.Config.DisplayDelay, () =>
             {
-                var bestPlayer = playerKills.OrderByDescending(x => x.Value).ElementAt(0);
-                message += roundSummary.Config.KillsMessage.Replace("{player}", bestPlayer.Key.Nickname).Replace("{kills}", bestPlayer.Value.ToString()) + "\n";
-            }
-            else
-                message += roundSummary.Config.NoKillsMessage + "\n";
+                string message = string.Empty;
 
-            if (roundSummary.Config.ShowEscapee && firstEscaped != string.Empty)
-            {
-                Enum.TryParse<RoleTypeId>(escapedRole, out RoleTypeId eRole);
-                message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped).Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole).Replace("{roleColor}", ColorsDict[eRole]) + "\n";
-            }
-            else
-                message += roundSummary.Config.NoEscapeeMessage + "\n";
+                if (roundSummary.Config.ShowKills && playerKills.Count > 0)
+                {
+                    var bestPlayer = playerKills.OrderByDescending(x => x.Value).ElementAt(0);
+                    message += roundSummary.Config.KillsMessage.Replace("{player}", bestPlayer.Key.Nickname)
+                        .Replace("{kills}", bestPlayer.Value.ToString()) + "\n";
+                }
+                else
+                    message += roundSummary.Config.NoKillsMessage + "\n";
 
-            if (roundSummary.Config.ShowScpFirstKill && firstScpKiller != string.Empty)
-            {
-                Enum.TryParse<RoleTypeId>(killerRole, out RoleTypeId kRole);
-                message += roundSummary.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller).Replace("{killerRole}", killerRole).Replace("{killedScp}", killedScp).Replace("{killerColor}", ColorsDict[kRole]) + "\n";
-            }
-            else
-                message += roundSummary.Config.NoScpKillMessage + "\n";
+                if (roundSummary.Config.ShowEscapee && firstEscaped != string.Empty)
+                {
+                    Enum.TryParse<RoleTypeId>(escapedRole, out RoleTypeId eRole);
+                    message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped)
+                        .Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole)
+                        .Replace("{roleColor}", ColorsDict[eRole]) + "\n";
+                }
+                else
+                    message += roundSummary.Config.NoEscapeeMessage + "\n";
 
-            for (int i = 0; i < 30; i++)
-            {
-                message += "\n";
-            }
+                if (roundSummary.Config.ShowScpFirstKill && firstScpKiller != string.Empty)
+                {
+                    Enum.TryParse<RoleTypeId>(killerRole, out RoleTypeId kRole);
+                    message += roundSummary.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller)
+                        .Replace("{killerRole}", killerRole).Replace("{killedScp}", killedScp)
+                        .Replace("{killerColor}", ColorsDict[kRole]) + "\n";
+                }
+                else
+                    message += roundSummary.Config.NoScpKillMessage + "\n";
 
-            foreach (var ply in Player.GetPlayers())
-                ply.ReceiveHint(message, 30);
+                for (int i = 0; i < 30; i++)
+                {
+                    message += "\n";
+                }
 
-            Timing.CallDelayed(0.25f, () => PreventHints = true);
+                foreach (var ply in Player.GetPlayers())
+                    ply.ReceiveHint(message, 30);
+
+                Timing.CallDelayed(0.25f, () => PreventHints = true);
+            });
         }
 
         public static Dictionary<RoleTypeId, string> ColorsDict = new Dictionary<RoleTypeId, string>
