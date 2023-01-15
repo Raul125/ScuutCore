@@ -11,7 +11,7 @@
 
         public override void OnEnabled()
         {
-            EventHandlers = new EventHandlers();
+            EventHandlers = new EventHandlers(this);
             EventManager.RegisterEvents(this, EventHandlers);
 
             base.OnEnabled();

@@ -9,10 +9,13 @@
 
     public class EventHandlers
     {
+        private PFE pfe;
+        public EventHandlers(PFE plugin) => pfe = plugin;
+        
         [PluginEvent(ServerEventType.PlayerDeath)]
         public void OnDied(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (player is null || player.Role != RoleTypeId.Scp173)
+            if (player is null || !pfe.Config.ExplodingRoles.Contains(player.Role))
                 return;
 
             PlayerDeathEffects.PlayExplosionEffect(player);
