@@ -25,6 +25,12 @@
 				return false;
 			}
 
+			if (!Round.IsRoundStarted)
+			{
+				response = "You gotta wait for the round to start!";
+				return false;
+			}
+
 			if (Plugin.Singleton.Config.SuicideDisabledRoles.Contains(player.Role))
 			{
 				response = "Disabled for this role";

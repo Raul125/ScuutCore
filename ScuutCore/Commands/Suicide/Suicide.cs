@@ -26,6 +26,12 @@
                     return false;
                 }
 
+                if (!Round.IsRoundStarted)
+                {
+                    response = "You gotta wait for the round to start!";
+                    return false;
+                }
+
                 player.Kill();
                 response = "Done";
                 return true;
