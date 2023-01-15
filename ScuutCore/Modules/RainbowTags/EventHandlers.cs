@@ -20,7 +20,7 @@ namespace ScuutCore.Modules.RainbowTags
         [PluginEvent(ServerEventType.PlayerJoined)]
         public void OnJoined(Player player)
         {
-            if (player is null)
+            if (player is null || player.GameObject is null)
                 return;
 
             Timing.CallDelayed(2f, () =>

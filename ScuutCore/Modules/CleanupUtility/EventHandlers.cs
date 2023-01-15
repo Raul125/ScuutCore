@@ -7,10 +7,13 @@ using PluginAPI.Enums;
 using PluginAPI.Core.Items;
 using InventorySystem.Items.Pickups;
 using PlayerRoles.PlayableScps.Scp079;
-using UnityEngine;
 
 namespace ScuutCore.Modules.CleanupUtility
 {
+    using System;
+    using MapGeneration;
+    using Object = UnityEngine.Object;
+
     public class EventHandlers
     {
         private CleanupUtility cleanupUtility;
@@ -22,24 +25,49 @@ namespace ScuutCore.Modules.CleanupUtility
         /*public void OnRoundStart()
         {
             Plugin.Coroutines.Add(Timing.RunCoroutine(CleanupCoroutine()));
-        }
+        }*/
 
         [PluginEvent(ServerEventType.LczDecontaminationStart)]
         public void OnDecontaminating()
         {
-            foreach (var item in UnityEngine.Object.FindObjectsOfType<ItemPickupBase>())
+            int errorcount = 0;
+            foreach (var item in Object.FindObjectsOfType<ItemPickupBase>())
             {
                 if (item == null)
                     continue;
 
-                item.
-                var room = Map.FindParentRoom(item.GameObject);
-                if (room != null && room.Zone == Exiled.API.Enums.ZoneType.LightContainment)
-                    item.Destroy();
+                if (cleanupUtility.Config.UseFastZoneCheck)
+                {
+                    if (item._transform.position.y is < -200 or > 200)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    if(RoomIdUtils.RoomAtPosition(item._transform.position)?.Zone != FacilityZone.LightContainment)
+                    {
+                        continue;
+                    }
+                }
+                
+                try
+                {
+                    item.DestroySelf();
+                }
+                catch
+                {
+                    errorcount++;
+                }
+            }
+
+            if (errorcount > 0)
+            {
+                Log.Warning($"{errorcount} errors occured while trying to delete items.");
             }
         }
 
-        public void OnDetonated()
+        /*public void OnDetonated()
         {
             foreach (var item in Pickup.List)
             {
