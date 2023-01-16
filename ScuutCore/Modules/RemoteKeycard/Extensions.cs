@@ -53,14 +53,12 @@ namespace ScuutCore.Modules.RemoteKeycard
         }
 
         /// <summary>
-        /// Open or Close this <see cref="Locker"/> its need ColliderID
+        /// Open or Close this <see cref="Locker"/>
         /// </summary>
+        /// <param name="chamber"></param>
         /// <param name="locker"></param>
-        /// <param name="colliderId"></param>
-        public static void Toggle(this Locker locker, byte colliderId)
+        public static void Toggle(this LockerChamber chamber, Locker locker)
         {
-            var chamber = locker.Chambers[colliderId];
-
             chamber.SetDoor(!chamber.IsOpen, locker._grantedBeep);
             locker.RefreshOpenedSyncvar();
         }
