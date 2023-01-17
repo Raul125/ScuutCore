@@ -15,6 +15,7 @@
         public override string Name { get; } = "Subclasses";
 
         public static Subclasses Singleton;
+        public static Dictionary<string, string> SpawnTranslations = new Dictionary<string, string>();
 
         private EventHandlers EventHandlers;
 
@@ -61,6 +62,8 @@
                     var serializer = new Serializer();
                     File.WriteAllText(Path.Combine(Paths.Configs, yamlFile), serializer.Serialize(toWrite));
                 }
+
+                SpawnTranslations = deserialized;
             }
             catch (Exception e)
             {

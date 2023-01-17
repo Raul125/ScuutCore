@@ -3,6 +3,7 @@
     using MEC;
     using PluginAPI.Core;
     using ScuutCore.API.Features;
+    using ScuutCore.Modules.Subclasses;
 
     public static class SubclassExtensions
     {
@@ -30,6 +31,7 @@
                     player.AddItem(item);
                 }
                 subclass.OnReceived(player);
+                player.ReceiveHint(Subclasses.SpawnTranslations[subclass.Name], Subclasses.Singleton.Config.SpawnSubclassHintDuration);
             });
         }
         

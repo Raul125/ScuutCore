@@ -5,5 +5,6 @@
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
+        public float SpawnSubclassHintDuration { get; set; } = 5f;
     }
 }
