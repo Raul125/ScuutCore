@@ -41,10 +41,10 @@ namespace ScuutCore.Modules.RoundSummary
             PreventHints = false;
         }
 
-        [PluginEvent(ServerEventType.PlayerDeath)]
+        [PluginEvent(ServerEventType.PlayerDying)]
         public void OnDying(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (attacker != null && player != null && player.Role.GetTeam() is Team.SCPs && firstScpKiller == string.Empty)
+            if (attacker != null && player != null && player.IsSCP && firstScpKiller == string.Empty)
             {
                 firstScpKiller = attacker.Nickname;
                 killerRole = attacker.Role.ToString();
