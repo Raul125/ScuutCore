@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.CodeAnalysis.Analyzers.2.9.8\build\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('packages\Microsoft.CodeAnalysis.Analyzers.2.9.8\build\Microsoft.CodeAnalysis.Analyzers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -14,6 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,7 +102,10 @@
     <Compile Include="API\Features\CassieConfig.cs" />
     <Compile Include="API\Features\HintConfig.cs" />
     <Compile Include="API\Features\Module.cs" />
+    <Compile Include="API\Features\Subclass.cs" />
+    <Compile Include="API\Features\SubclassComponent.cs" />
     <Compile Include="API\Helpers\PlayerDeathEffects.cs" />
+    <Compile Include="API\Helpers\SubclassExtensions.cs" />
     <Compile Include="API\Interfaces\IModuleConfig.cs" />
     <Compile Include="API\Interfaces\IModule.cs" />
     <Compile Include="API\Loader\Loader.cs" />
@@ -178,6 +183,10 @@
     <Compile Include="Modules\Restart\Config.cs" />
     <Compile Include="Modules\Restart\EventHandlers.cs" />
     <Compile Include="Modules\Restart\Restart.cs" />
+    <Compile Include="Modules\Subclasses\Config.cs" />
+    <Compile Include="Modules\Subclasses\EventHandlers.cs" />
+    <Compile Include="Modules\Subclasses\Subclasses.cs" />
+    <Compile Include="Modules\Subclasses\DeclaredSubclasses\ClassD\Janitor.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Commands\WamtList.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\DisplayType.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Models\WamtBroadcast.cs" />

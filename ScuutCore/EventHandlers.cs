@@ -1,9 +1,9 @@
-﻿namespace ScuutCore.Main
+﻿namespace ScuutCore
 {
     using MEC;
+    using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
-    using PluginAPI.Core;
 
     public class EventHandlers
     {
