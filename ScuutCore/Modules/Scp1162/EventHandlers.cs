@@ -11,6 +11,7 @@
     using Mirror;
     using PluginAPI.Events;
     using InventorySystem.Items.Pickups;
+    using InventorySystem.Items.Usables.Scp330;
 
     public class EventHandlers
     {
@@ -46,7 +47,21 @@
 
             if (player.CurrentItem != null)
             {
-                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
+                if (player.CurrentItem.ItemTypeId == ItemType.SCP330)
+                {
+                    var bag = player.CurrentItem as Scp330Bag;
+                    if (bag == null || bag.Candies.Count < 1)
+                    {
+                        return false;
+                    }
+
+                    bag.SelectCandy(0);
+                    var removed = bag.TryRemove(0);
+                    if (removed == CandyKindID.None)
+                        return false;
+                }
+                else
+                    player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
 
                 ItemType newItem = ItemType.None;
 

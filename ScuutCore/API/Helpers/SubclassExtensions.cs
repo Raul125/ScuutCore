@@ -10,7 +10,8 @@
         public static Subclass? GetSubclass(this Player player)
         {
             var comp = player.GameObject.GetComponent<SubclassComponent>();
-            comp ??= player.GameObject.AddComponent<SubclassComponent>();
+            if(comp == null)
+                comp = player.GameObject.AddComponent<SubclassComponent>();
             return comp.CurrentSubclass;
         }
         
@@ -22,7 +23,8 @@
         public static void SetSubclass(this Player player, Subclass subclass)
         {
             var comp = player.GameObject.GetComponent<SubclassComponent>();
-            comp ??= player.GameObject.AddComponent<SubclassComponent>();
+            if(comp == null)
+                comp = player.GameObject.AddComponent<SubclassComponent>();
             comp.CurrentSubclass = subclass;
             Timing.CallDelayed(1f, () =>
             {
@@ -38,7 +40,8 @@
         public static void RemoveSubclass(this Player player)
         {
             var comp = player.GameObject.GetComponent<SubclassComponent>();
-            comp ??= player.GameObject.AddComponent<SubclassComponent>();
+            if(comp == null)
+                comp = player.GameObject.AddComponent<SubclassComponent>();
             comp.CurrentSubclass?.OnLost(player);
             comp.CurrentSubclass = null;
         }
