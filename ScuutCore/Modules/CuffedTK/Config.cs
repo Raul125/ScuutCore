@@ -43,5 +43,7 @@ namespace ScuutCore.Modules.CuffedTK
             Team.ClassD,
             Team.ChaosInsurgency
         };
+
+        public bool OnlyAllowCufferToRemoveHandcuffs { get; set; } = true;
     }
 }

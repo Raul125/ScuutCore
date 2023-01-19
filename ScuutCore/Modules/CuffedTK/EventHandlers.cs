@@ -30,5 +30,17 @@ namespace ScuutCore.Modules.CuffedTK
 
             return true;
         }
+
+        [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
+        public bool OnPlayerRemoveHandcuffs(Player player, Player target)
+        {
+            if (!cuffedTK.Config.OnlyAllowCufferToRemoveHandcuffs)
+                return true;
+
+            if (target.DisarmedBy != player)
+                return false;
+
+            return true;
+        }
     }
 }
