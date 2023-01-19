@@ -183,6 +183,7 @@
     <Compile Include="Modules\Restart\Restart.cs" />
     <Compile Include="Modules\Subclasses\Config.cs" />
     <Compile Include="Modules\Subclasses\EventHandlers.cs" />
+    <Compile Include="Modules\Subclasses\Models\SerializedSubclass.cs" />
     <Compile Include="Modules\Subclasses\Subclasses.cs" />
     <Compile Include="Modules\Subclasses\DeclaredSubclasses\ClassD\Janitor.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Commands\WamtList.cs" />

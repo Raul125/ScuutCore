@@ -26,6 +26,10 @@
             EventManager.RegisterEvents(this, EventHandlers);
 
             Log.Warning("Loading subclasses!");
+            foreach (var serializedSubclass in Config.Subclasses)
+            {
+                serializedSubclass.OnLoaded();
+            }
             foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if(type.Namespace != null && !type.Namespace.StartsWith("ScuutCore.Modules.Subclasses.DeclaredSubclasses"))
