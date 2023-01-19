@@ -185,7 +185,6 @@
     <Compile Include="Modules\Subclasses\EventHandlers.cs" />
     <Compile Include="Modules\Subclasses\Models\SerializedSubclass.cs" />
     <Compile Include="Modules\Subclasses\Subclasses.cs" />
-    <Compile Include="Modules\Subclasses\DeclaredSubclasses\ClassD\Janitor.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Commands\WamtList.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\DisplayType.cs" />
     <Compile Include="Modules\WhoAreMyTeammates\Models\WamtBroadcast.cs" />
@@ -224,6 +223,9 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="$(EXILED_REFERENCES)\PluginAPI.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modules\Subclasses\DeclaredSubclasses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

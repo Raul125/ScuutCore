@@ -24,6 +24,12 @@
         public virtual ItemType[]? GetSpawnLoadout(Player player) => null;
 
         /// <summary>
+        /// Gets the spawn ammo.
+        /// </summary>
+        /// <returns>Ammo dict.</returns>
+        public virtual Dictionary<ItemType, ushort>? GetAmmoLoadout(Player player) => null;
+
+        /// <summary>
         /// Gets the roles it can replace.
         /// </summary>
         public virtual RoleTypeId[] ToReplace => Array.Empty<RoleTypeId>();
