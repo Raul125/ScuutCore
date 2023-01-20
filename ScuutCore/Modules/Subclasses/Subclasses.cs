@@ -4,10 +4,12 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using PlayerRoles;
     using PluginAPI.Core;
     using PluginAPI.Events;
     using PluginAPI.Helpers;
     using ScuutCore.API.Features;
+    using ScuutCore.Modules.Subclasses.Models;
     using YamlDotNet.Serialization;
 
     public class Subclasses : Module<Config>
@@ -18,6 +20,24 @@
         public static Dictionary<string, string> SpawnTranslations = new Dictionary<string, string>();
 
         private EventHandlers EventHandlers;
+        
+        private SerializedSubclass[] defaultSubclassesValue = new SerializedSubclass[]
+        {
+            new SerializedSubclass()
+            {
+                SubclassName = "Janitor",
+                SubclassSpawnChance = 15f,
+                SubclassMaxAlive = 2,
+                SpawnLoadout = new []
+                {
+                    ItemType.KeycardJanitor
+                },
+                RolesToReplace = new []
+                {
+                    RoleTypeId.ClassD
+                }
+            }
+    };
 
         public override void OnEnabled()
         {
@@ -26,9 +46,41 @@
             EventManager.RegisterEvents(this, EventHandlers);
 
             Log.Warning("Loading subclasses!");
-            foreach (var serializedSubclass in Config.Subclasses)
+            var serializer = new Serializer();
+            var deserializer = new Deserializer();
+            List<SerializedSubclass> serializedSubclasses = new List<SerializedSubclass>();
+            foreach (var file in Directory.GetFiles(Config.SubclassFolder, ".yml", SearchOption.AllDirectories))
             {
-                serializedSubclass.OnLoaded();
+                if (file == null)
+                    continue;
+                try
+                {
+                    if (file.Contains("list"))
+                    {
+                        serializedSubclasses.AddRange(deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
+                    }
+                    else
+                    {
+                        serializedSubclasses.Add(deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.Error($"Error parsing file {file}: {e}");
+                }
+            }
+            if(serializedSubclasses.Count == 0)
+            {
+                File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclass.yml"),
+                    serializer.Serialize(defaultSubclassesValue[0]));
+                File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), serializer.Serialize(defaultSubclassesValue));
+            }
+            else
+            {
+                foreach (var serializedSubclass in serializedSubclasses)
+                {
+                    serializedSubclass.OnLoaded();
+                }
             }
             foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
             {
@@ -46,14 +98,13 @@
                 subclass.OnLoaded();
             }
             
-            string yamlFile = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, "subclasstranslations.yaml");
+            string yamlFile = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, "subclasstranslations.yml");
             Dictionary<string, string> deserialized = null;
             try
             {
                 if(File.Exists(yamlFile))
                 {
                     string subclassConfigs = File.ReadAllText(yamlFile);
-                    var deserializer = new Deserializer();
                     deserialized = deserializer.Deserialize<Dictionary<string, string>>(subclassConfigs);
                 }
                 if (deserialized == null)
@@ -63,7 +114,7 @@
                     {
                         toWrite.Add(subclass.Name, "Youre a " + subclass.Name);
                     }
-                    var serializer = new Serializer();
+
                     File.WriteAllText(Path.Combine(Paths.Configs, yamlFile), serializer.Serialize(toWrite));
                 }
 

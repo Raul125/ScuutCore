@@ -16,6 +16,11 @@
         /// The name of the subclass.
         /// </summary>
         public virtual string Name { get; }
+
+        /// <summary>
+        /// The subclasses health.
+        /// </summary>
+        public virtual float Health { get; } = 100f;
         
         /// <summary>
         /// Gets the spawn items.

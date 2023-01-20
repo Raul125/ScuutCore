@@ -28,6 +28,7 @@
             comp.CurrentSubclass = subclass;
             Timing.CallDelayed(1f, () =>
             {
+                player.Health = subclass.Health;
                 player.ClearInventory();
                 player.AmmoBag.Clear();
                 var itemLoadout = subclass.GetSpawnLoadout(player);

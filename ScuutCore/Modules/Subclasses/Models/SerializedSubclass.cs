@@ -9,6 +9,7 @@
     public class SerializedSubclass : Subclass
     {
         public string SubclassName { get; set; } = "Name";
+        public float SubclassHealth { get; set; } = 100f;
         public float SubclassSpawnChance { get; set; } = 0f;
         public int SubclassMaxAlive { get; set; } = 0;
         
@@ -29,6 +30,8 @@
 
         [YamlIgnore]
         public override string Name => SubclassName;
+        [YamlIgnore]
+        public override float Health => SubclassHealth;
         [YamlIgnore]
         public override float SpawnChance => SubclassSpawnChance;
         [YamlIgnore]

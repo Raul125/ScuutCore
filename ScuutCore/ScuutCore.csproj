@@ -182,6 +182,7 @@
     <Compile Include="Modules\Restart\EventHandlers.cs" />
     <Compile Include="Modules\Restart\Restart.cs" />
     <Compile Include="Modules\Subclasses\Config.cs" />
+    <Compile Include="Modules\Subclasses\DeclaredSubclasses\Scientist\HeadResearcher.cs" />
     <Compile Include="Modules\Subclasses\EventHandlers.cs" />
     <Compile Include="Modules\Subclasses\Models\SerializedSubclass.cs" />
     <Compile Include="Modules\Subclasses\Subclasses.cs" />
@@ -223,9 +224,6 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="$(EXILED_REFERENCES)\PluginAPI.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\Subclasses\DeclaredSubclasses" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,6 +5,8 @@ using PluginAPI.Enums;
 
 namespace ScuutCore.Modules.BetterCandy
 {
+    using InventorySystem.Items.Usables.Scp330;
+
     public class EventHandlers
     {
         private BetterCandy betterCandy;
@@ -13,19 +15,20 @@ namespace ScuutCore.Modules.BetterCandy
             betterCandy = btc;
         }
 
-        /*[PluginEvent(ServerEventType.PlayerPickupScp330)]
+        [PluginEvent(ServerEventType.PlayerPickupScp330)]
         public void OnInteractingWithScp330(Player player, ItemPickupBase item)
         {
-            ev.ShouldSever = false;
-
-            if (ev.UsageCount == betterCandy.Config.PickCandyTimes)
-                ev.ShouldSever = true;
-
             if (Plugin.Random.Next(1, betterCandy.Config.MaxRandomizer) == betterCandy.Config.ChoosenNumber)
             {
-                ev.IsAllowed = false;
-                ev.Player.TryAddCandy(InventorySystem.Items.Usables.Scp330.CandyKindID.Pink);
+                if (item is Scp330Pickup candypickup && Scp330Bag.TryGetBag(player.ReferenceHub, out Scp330Bag bag))
+                {
+                    var removed = bag.TryRemove(bag.Candies.FindIndex(x => x == candypickup.ExposedCandy));
+                    if (removed == CandyKindID.None)
+                        return;
+                    if (bag.TryAddSpecific(CandyKindID.Pink))
+                        bag.ServerRefreshBag();
+                }
             }
-        }*/
+        }
     }
 }
