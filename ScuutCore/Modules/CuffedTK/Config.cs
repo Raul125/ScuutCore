@@ -45,5 +45,6 @@ namespace ScuutCore.Modules.CuffedTK
         };
 
         public bool OnlyAllowCufferToRemoveHandcuffs { get; set; } = true;
+        public string YouCantUnCuffMessage { get; set; } = "You can't uncuff {player}";
     }
 }
