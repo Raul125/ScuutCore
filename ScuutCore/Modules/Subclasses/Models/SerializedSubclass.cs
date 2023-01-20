@@ -21,6 +21,11 @@
         {
             ItemType.Coin
         };
+        
+        public Dictionary<ItemType, ushort> SpawnAmmo { get; set; } = new Dictionary<ItemType, ushort>
+        {
+            { ItemType.Ammo9x19, 1 }
+        };
 
         [YamlIgnore]
         public override string Name => SubclassName;
@@ -35,6 +40,7 @@
         public override void OnLost(Player player) => _players.Remove(player);
 
         public override ItemType[]? GetSpawnLoadout(Player player) => SpawnLoadout;
+        public override Dictionary<ItemType, ushort>? GetAmmoLoadout(Player player) => SpawnAmmo;
 
         [YamlIgnore]
         public override RoleTypeId[] ToReplace => RolesToReplace;

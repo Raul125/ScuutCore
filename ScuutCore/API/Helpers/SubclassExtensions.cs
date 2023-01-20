@@ -28,9 +28,24 @@
             comp.CurrentSubclass = subclass;
             Timing.CallDelayed(1f, () =>
             {
-                foreach (var item in subclass.GetSpawnLoadout(player)!)
+                player.ClearInventory();
+                player.AmmoBag.Clear();
+                var itemLoadout = subclass.GetSpawnLoadout(player);
+                if(itemLoadout is { Length: > 0 })
                 {
-                    player.AddItem(item);
+                    foreach (var item in itemLoadout)
+                    {
+                        player.AddItem(item);
+                    }
+                }
+
+                var ammoLoadout = subclass.GetAmmoLoadout(player);
+                if(ammoLoadout is { Count: > 0 })
+                {
+                    foreach (var ammo in ammoLoadout)
+                    {
+                        player.SetAmmo(ammo.Key, ammo.Value);
+                    }
                 }
                 subclass.OnReceived(player);
                 player.ReceiveHint(Subclasses.SpawnTranslations[subclass.Name], Subclasses.Singleton.Config.SpawnSubclassHintDuration);
