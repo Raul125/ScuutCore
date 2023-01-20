@@ -49,28 +49,34 @@
             var serializer = new Serializer();
             var deserializer = new Deserializer();
             List<SerializedSubclass> serializedSubclasses = new List<SerializedSubclass>();
-            foreach (var file in Directory.GetFiles(Config.SubclassFolder, ".yml", SearchOption.AllDirectories))
+            if(Directory.Exists(Config.SubclassFolder))
             {
-                if (file == null)
-                    continue;
-                try
+                foreach (var file in Directory.GetFiles(Config.SubclassFolder, ".yml", SearchOption.AllDirectories))
                 {
-                    if (file.Contains("list"))
+                    if (file == null)
+                        continue;
+                    try
                     {
-                        serializedSubclasses.AddRange(deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
+                        if (file.Contains("list"))
+                        {
+                            serializedSubclasses.AddRange(
+                                deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
+                        }
+                        else
+                        {
+                            serializedSubclasses.Add(
+                                deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        serializedSubclasses.Add(deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
+                        Log.Error($"Error parsing file {file}: {e}");
                     }
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"Error parsing file {file}: {e}");
                 }
             }
             if(serializedSubclasses.Count == 0)
             {
+                Directory.CreateDirectory(Config.SubclassFolder);
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclass.yml"),
                     serializer.Serialize(defaultSubclassesValue[0]));
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), serializer.Serialize(defaultSubclassesValue));
