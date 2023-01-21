@@ -21,7 +21,7 @@
         /// The subclasses health.
         /// </summary>
         public virtual float Health { get; } = 100f;
-        
+
         /// <summary>
         /// Gets the spawn items.
         /// </summary>
@@ -45,9 +45,14 @@
         public virtual float SpawnChance => 0f;
         
         /// <summary>
-        /// Maximum amount of this role that can spawn.
+        /// Maximum amount of this role that can be alive at the same time.
         /// </summary>
-        public virtual int MaxAlive => 0;
+        public virtual int MaxAlive => -1;
+        
+        /// <summary>
+        /// Maximum amount of this role that can spawn per round.
+        /// </summary>
+        public virtual int MaxPerRound => -1;
 
         public virtual void OnLoaded() => Log.Debug($"Subclass {Name} loaded!");
         
