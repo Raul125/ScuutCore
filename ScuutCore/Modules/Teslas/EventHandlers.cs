@@ -8,6 +8,7 @@
             teslas = te;
         }
 
+        // see patches
         /*public void OnTriggeringTesla(TriggeringTeslaEventArgs ev)
         {
             if (teslas.Config.Roles.Contains(ev.Player.Role.Type))

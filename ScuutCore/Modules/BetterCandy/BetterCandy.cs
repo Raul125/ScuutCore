@@ -9,9 +9,11 @@ namespace ScuutCore.Modules.BetterCandy
         public override string Name { get; } = "BetterCandy";
 
         private EventHandlers EventHandlers;
+        public static BetterCandy Singleton;
 
         public override void OnEnabled()
         {
+            Singleton = this;
             EventHandlers = new EventHandlers(this);
 
             base.OnEnabled();
@@ -20,6 +22,7 @@ namespace ScuutCore.Modules.BetterCandy
         public override void OnDisabled()
         {
             EventHandlers = null;
+            Singleton = null;
 
             base.OnDisabled();
         }

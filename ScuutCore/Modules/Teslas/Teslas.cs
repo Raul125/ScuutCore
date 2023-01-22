@@ -9,9 +9,11 @@ namespace ScuutCore.Modules.Teslas
     {
         public override string Name { get; } = "Teslas";
         public EventHandlers EventHandlers;
+        public static Teslas Singleton;
 
         public override void OnEnabled()
         {
+            Singleton = this;
             EventHandlers = new EventHandlers(this);
             EventManager.RegisterEvents(this, EventHandlers);
             base.OnEnabled();
@@ -21,6 +23,7 @@ namespace ScuutCore.Modules.Teslas
         {
             EventManager.UnregisterEvents(this, EventHandlers);
             EventHandlers = null;
+            Singleton = null;
 
             base.OnDisabled();
         }

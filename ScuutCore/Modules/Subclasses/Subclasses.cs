@@ -51,7 +51,7 @@
             List<SerializedSubclass> serializedSubclasses = new List<SerializedSubclass>();
             if(Directory.Exists(Config.SubclassFolder))
             {
-                foreach (var file in Directory.GetFiles(Config.SubclassFolder, ".yml", SearchOption.AllDirectories))
+                foreach (var file in Directory.GetFiles(Config.SubclassFolder, "*.yml", SearchOption.AllDirectories))
                 {
                     if (file == null)
                         continue;

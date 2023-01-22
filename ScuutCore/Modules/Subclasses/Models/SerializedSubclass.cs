@@ -12,6 +12,7 @@
         public float SubclassHealth { get; set; } = 100f;
         public float SubclassSpawnChance { get; set; } = 0f;
         public int SubclassMaxAlive { get; set; } = 0;
+        public int SubclassMaxPerRound { get; set; } = 0;
         
         public RoleTypeId[] RolesToReplace { get; set; } = new[]
         {
@@ -36,6 +37,8 @@
         public override float SpawnChance => SubclassSpawnChance;
         [YamlIgnore]
         public override int MaxAlive => SubclassMaxAlive;
+        [YamlIgnore]
+        public override int MaxPerRound => -1;
 
         private List<Player> _players = new List<Player>();
         public override List<Player> GetPlayers() => _players;

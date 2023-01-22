@@ -15,7 +15,7 @@ namespace ScuutCore.Modules.BetterCandy
             betterCandy = btc;
         }
 
-        [PluginEvent(ServerEventType.PlayerPickupScp330)]
+        //[PluginEvent(ServerEventType.PlayerPickupScp330)] using patch
         public void OnInteractingWithScp330(Player player, ItemPickupBase item)
         {
             if (Plugin.Random.Next(1, betterCandy.Config.MaxRandomizer) == betterCandy.Config.ChoosenNumber)
