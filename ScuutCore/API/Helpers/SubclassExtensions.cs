@@ -19,7 +19,7 @@
         {
             return (subclass = GetSubclass(player)) == null;
         }
-        
+
         public static void SetSubclass(this Player player, Subclass subclass)
         {
             var comp = player.GameObject.GetComponent<SubclassComponent>();
@@ -50,7 +50,11 @@
                     }
                 }
                 subclass.OnReceived(player);
-                player.ReceiveHint(Subclasses.SpawnTranslations[subclass.Name], Subclasses.Singleton.Config.SpawnSubclassHintDuration);
+                Timing.CallDelayed(Subclasses.Singleton.Config.MessageDelay, () =>
+                {
+                    player.ReceiveHint(Subclasses.SpawnTranslations[subclass.Name],
+                        Subclasses.Singleton.Config.SpawnSubclassHintDuration);
+                });
             });
         }
         

@@ -6,14 +6,15 @@
     using PlayerRoles;
     using PluginAPI.Core;
     using ScuutCore.API.Features;
-    using YamlDotNet.Serialization;
+    using ScuutCore.Modules.Subclasses.Models;
 
-    public class HeadResearcher : Subclass
+    public class HeadResearcher : SerializedSubclass
     {
-        public override string Name => "Head Researcher";
-        public override float Health => 100f;
-        public override float SpawnChance => 1f;
-        public override int MaxAlive => 1;
+        public override string SubclassName => "Head Researcher";
+        public override float SubclassHealth => 100f;
+        public override float SubclassSpawnChance => 1f;
+        public override int SubclassMaxAlive => 1;
+        public override int SubclassMaxPerRound => 0;
 
         private List<Player> _players = new List<Player>();
         public override List<Player> GetPlayers() => _players;
@@ -27,20 +28,21 @@
                     8);
             });
         }
+
         public override void OnLost(Player player) => _players.Remove(player);
 
-        public override ItemType[]? GetSpawnLoadout(Player player) => new []
+        public override ItemType[] SpawnLoadout => new []
         {
             ItemType.KeycardScientist,
             ItemType.Medkit,
             ItemType.GunCOM15,
         };
-        public override Dictionary<ItemType, ushort>? GetAmmoLoadout(Player player) => new Dictionary<ItemType, ushort>()
+        public override Dictionary<ItemType, ushort> SpawnAmmo => new Dictionary<ItemType, ushort>()
         {
             [ItemType.Ammo9x19] = 30,
         };
         
-        public override RoleTypeId[] ToReplace => new []
+        public override RoleTypeId[] RolesToReplace => new []
         {
             RoleTypeId.Scientist
         };
