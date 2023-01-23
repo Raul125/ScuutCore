@@ -10,11 +10,11 @@
 
     public class HeadResearcher : SerializedSubclass
     {
-        public override string SubclassName => "Head Researcher";
-        public override float SubclassHealth => 100f;
-        public override float SubclassSpawnChance => 1f;
-        public override int SubclassMaxAlive => 1;
-        public override int SubclassMaxPerRound => 0;
+        public override string SubclassName { get; set; } = "Head Researcher";
+        public override float SubclassHealth { get; set; } = 100f;
+        public override float SubclassSpawnChance { get; set; } = 1f;
+        public override int SubclassMaxAlive { get; set; } = 1;
+        public override int SubclassMaxPerRound { get; set; } = 0;
 
         private List<Player> _players = new List<Player>();
         public override List<Player> GetPlayers() => _players;
@@ -31,18 +31,18 @@
 
         public override void OnLost(Player player) => _players.Remove(player);
 
-        public override ItemType[] SpawnLoadout => new []
+        public override ItemType[] SpawnLoadout { get; set; } = new []
         {
             ItemType.KeycardScientist,
             ItemType.Medkit,
             ItemType.GunCOM15,
         };
-        public override Dictionary<ItemType, ushort> SpawnAmmo => new Dictionary<ItemType, ushort>()
+        public override Dictionary<ItemType, ushort> SpawnAmmo { get; set; } = new Dictionary<ItemType, ushort>()
         {
             [ItemType.Ammo9x19] = 30,
         };
         
-        public override RoleTypeId[] RolesToReplace => new []
+        public override RoleTypeId[] RolesToReplace { get; set; } = new []
         {
             RoleTypeId.Scientist
         };
