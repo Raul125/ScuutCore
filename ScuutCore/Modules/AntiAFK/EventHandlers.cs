@@ -15,7 +15,8 @@ namespace ScuutCore.Modules.AntiAFK
         [PluginEvent(ServerEventType.PlayerJoined)]
         public void OnVerified(Player player)
         {
-            player.GameObject.AddComponent<AfkComponent>();
+            if(!PermissionsHandler.IsPermitted(player.ReferenceHub.serverRoles.Permissions, PlayerPermissions.AFKImmunity))
+                player.GameObject.AddComponent<AfkComponent>();
         }
     }
 }

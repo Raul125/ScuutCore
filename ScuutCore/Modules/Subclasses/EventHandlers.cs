@@ -1,6 +1,7 @@
 ﻿namespace ScuutCore.Modules.Subclasses
 {
     using System.Collections.Generic;
+    using System.Linq;
     using PlayerRoles;
     using PlayerStatsSystem;
     using PluginAPI.Core;
@@ -45,7 +46,10 @@
                     _subclassesSpawned[subclass]++;
                 }
                 if(UnityEngine.Random.Range(0f, 100f) <= subclass.SpawnChance)
+                {
                     player.SetSubclass(subclass);
+                    return;
+                }
             }
         }
 

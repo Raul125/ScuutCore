@@ -1,5 +1,7 @@
 ﻿namespace ScuutCore.API.Helpers
 {
+    using System;
+    using System.Collections.Generic;
     using MEC;
     using PluginAPI.Core;
     using ScuutCore.API.Features;
@@ -66,6 +68,28 @@
             comp.CurrentSubclass?.OnLost(player);
             comp.CurrentSubclass = null;
             player.CustomInfo = null;
+        }
+
+        /// <summary>
+        /// Adds the subclass object to a static list inside the object called _players.
+        /// </summary>
+        /// <param name="subclass">The subclass.</param>
+        [Obsolete("feel free to remove if you read this")]
+        public static void AddToList(Subclass subclass)
+        {
+            foreach (var field in subclass.GetType().GetFields())
+            {
+                if(field.Name != "_players" || field.FieldType != typeof(List<Subclass>) || !field.IsStatic)
+                    continue;
+                try
+                {
+                    ((List<Subclass>)field.GetValue(subclass)).Add(subclass);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("Subclass list could not be added to: " + e);
+                }
+            }
         }
     }
 }

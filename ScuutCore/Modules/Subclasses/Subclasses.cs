@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Reflection;
     using PlayerRoles;
     using PluginAPI.Core;
     using PluginAPI.Events;
@@ -28,6 +27,7 @@
                 SubclassName = "Janitor",
                 SubclassSpawnChance = 15f,
                 SubclassMaxAlive = 2,
+                SubclassMaxPerRound = 0,
                 SpawnLoadout = new []
                 {
                     ItemType.KeycardJanitor
@@ -85,6 +85,7 @@
             {
                 foreach (var serializedSubclass in serializedSubclasses)
                 {
+                    Subclass.List.Add(serializedSubclass);
                     serializedSubclass.OnLoaded();
                 }
             }
@@ -113,6 +114,7 @@
                 var subclass = property.GetValue(Config);
                 if (subclass is Subclass subclass2)
                 {
+                    Subclass.List.Add(subclass2);
                     subclass2.OnLoaded();
                 }
             }

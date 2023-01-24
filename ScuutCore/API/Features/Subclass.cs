@@ -11,7 +11,7 @@
     {
         public static List<Subclass> List = new List<Subclass>();
         public virtual List<Player> GetPlayers() => Player.GetPlayers().Where(x => x.GetSubclass() != null).ToList();
-        
+
         /// <summary>
         /// The name of the subclass.
         /// </summary>
@@ -43,27 +43,25 @@
         /// Gets the spawn chance.
         /// </summary>
         public virtual float SpawnChance => 0f;
-        
+
         /// <summary>
         /// Maximum amount of this role that can be alive at the same time.
         /// </summary>
         public virtual int MaxAlive => -1;
-        
+
         /// <summary>
         /// Maximum amount of this role that can spawn per round.
         /// </summary>
         public virtual int MaxPerRound => -1;
 
         public virtual void OnLoaded() => Log.Debug($"Subclass {Name} loaded!");
-        
-        public Subclass() => List.Add(this);
-        
+
         /// <summary>
         /// Called when someone receives this subclass.
         /// </summary>
         /// <param name="player">The player.</param>
         public virtual void OnReceived(Player player){}
-        
+
         /// <summary>
         /// Called when someone loses this subclass.
         /// </summary>
