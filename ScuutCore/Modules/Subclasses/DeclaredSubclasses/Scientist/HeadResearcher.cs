@@ -5,7 +5,6 @@
     using MEC;
     using PlayerRoles;
     using PluginAPI.Core;
-    using ScuutCore.API.Features;
     using ScuutCore.Modules.Subclasses.Models;
 
     public class HeadResearcher : SerializedSubclass

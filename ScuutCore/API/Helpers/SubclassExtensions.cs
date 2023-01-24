@@ -29,7 +29,7 @@
             Timing.CallDelayed(1f, () =>
             {
                 player.CustomInfo = $"Subclass: {subclass.Name}";
-                    player.Health = subclass.Health;
+                player.Health = subclass.Health;
                 player.ClearInventory();
                 player.AmmoBag.Clear();
                 var itemLoadout = subclass.GetSpawnLoadout(player);
@@ -65,6 +65,7 @@
                 comp = player.GameObject.AddComponent<SubclassComponent>();
             comp.CurrentSubclass?.OnLost(player);
             comp.CurrentSubclass = null;
+            player.CustomInfo = null;
         }
     }
 }

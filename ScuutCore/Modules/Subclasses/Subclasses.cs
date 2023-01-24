@@ -88,7 +88,7 @@
                     serializedSubclass.OnLoaded();
                 }
             }
-            foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
+            /*foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if(type.Namespace != null && !type.Namespace.StartsWith("ScuutCore.Modules.Subclasses.DeclaredSubclasses"))
                 {
@@ -102,6 +102,19 @@
                 
                 var subclass = (Subclass)Activator.CreateInstance(type);
                 subclass.OnLoaded();
+            }*/
+            foreach (var property in Config.GetType().GetProperties())
+            {
+                if(property.PropertyType.BaseType != typeof(Subclass) && property.PropertyType.BaseType != typeof(SerializedSubclass))
+                {
+                    continue;
+                }
+
+                var subclass = property.GetValue(Config);
+                if (subclass is Subclass subclass2)
+                {
+                    subclass2.OnLoaded();
+                }
             }
             
             string yamlFile = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, "subclasstranslations.yml");
