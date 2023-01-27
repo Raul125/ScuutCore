@@ -1,7 +1,6 @@
 ﻿namespace ScuutCore
 {
     using MEC;
-    using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
 
@@ -14,13 +13,14 @@
         [PluginEvent(ServerEventType.RoundRestart)]
         public void OnRoundRestarting()
         {
-            // This prevent us from having unwanted coroutines running
             foreach (CoroutineHandle cor in Plugin.Coroutines)
                 Timing.KillCoroutines(cor);
 
             Plugin.Coroutines.Clear();
         }
 
+        // This prevents but it may cause the bug
+        /*
         [PluginEvent(ServerEventType.LczDecontaminationStart)]
         public bool OnDecontaminating()
         {
@@ -28,6 +28,6 @@
                 return false;
 
             return true;
-        }
+        }*/
     }
 }

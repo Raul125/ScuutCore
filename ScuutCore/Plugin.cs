@@ -8,6 +8,9 @@
     using PluginAPI.Enums;
     using PluginAPI.Events;
     using ScuutCore.API.Loader;
+    using PluginAPI.Core.Factories;
+    using PluginAPI.Core;
+    using ScuutCore.API.Features;
 
     public class Plugin
     {
@@ -35,6 +38,9 @@
         public void LoadPlugin()
         {
             Singleton = this;
+
+            FactoryManager.RegisterPlayerFactory(this, new ScuutPlayerFactory());
+
             Loader.InitModules();
 
             Harmony = new Harmony("scuutcore.raul." + DateTime.Now.Ticks);

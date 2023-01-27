@@ -38,7 +38,7 @@
             if (broadcast.MaxPlayers > -1 && players.Count >= broadcast.MaxPlayers)
                 return;
 
-            if (players.Count == 1)
+            if (players.Count is 1)
             {
                 Timing.CallDelayed(broadcast.Delay, () => DisplayBroadcast(players[0], broadcast.AloneContents, broadcast.Time, broadcast.Type));
                 return;

@@ -35,17 +35,22 @@
             {
                 if(!subclass.ToReplace.Contains(roleTypeId))
                     continue;
+
                 if(subclass.MaxAlive != -1 && subclass.MaxAlive <= subclass.GetPlayers().Count)
                     continue;
+
                 if (subclass.MaxPerRound != -1)
                 {
-                    if(!_subclassesSpawned.ContainsKey(subclass))
+                    if (!_subclassesSpawned.ContainsKey(subclass))
                         _subclassesSpawned.Add(subclass, 0);
-                    if(subclass.MaxPerRound <= _subclassesSpawned[subclass])
+
+                    if (subclass.MaxPerRound <= _subclassesSpawned[subclass])
                         continue;
+
                     _subclassesSpawned[subclass]++;
                 }
-                if(UnityEngine.Random.Range(0f, 100f) <= subclass.SpawnChance)
+
+                if (UnityEngine.Random.Range(0f, 100f) <= subclass.SpawnChance)
                 {
                     player.SetSubclass(subclass);
                     return;
@@ -56,12 +61,11 @@
         [PluginEvent(ServerEventType.PlayerDeath)]
         public void OnDied(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if(player == null)
+            if (player == null)
                 return;
+
             if (player.TryGetSubclass(out _))
-            {
                 player.RemoveSubclass();
-            }
         }
     }
 }

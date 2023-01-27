@@ -96,6 +96,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Features\ScuutPlayerFactory.cs" />
+    <Compile Include="API\Features\ScuutPlayer.cs" />
     <Compile Include="API\Features\BroadcastConfig.cs" />
     <Compile Include="API\Features\CassieConfig.cs" />
     <Compile Include="API\Features\HintConfig.cs" />

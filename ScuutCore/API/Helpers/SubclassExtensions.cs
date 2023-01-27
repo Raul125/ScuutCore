@@ -14,6 +14,7 @@
             var comp = player.GameObject.GetComponent<SubclassComponent>();
             if(comp == null)
                 comp = player.GameObject.AddComponent<SubclassComponent>();
+
             return comp.CurrentSubclass;
         }
         

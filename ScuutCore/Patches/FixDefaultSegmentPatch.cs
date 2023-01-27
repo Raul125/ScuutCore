@@ -1,4 +1,5 @@
-﻿namespace ScuutCore.Patches
+﻿// Useless rn
+/*namespace ScuutCore.Patches
 {
     using System;
     using System.Collections.Generic;
@@ -20,4 +21,4 @@
 				yield return newInst[i];
 		}
 	}
-}
+}*/

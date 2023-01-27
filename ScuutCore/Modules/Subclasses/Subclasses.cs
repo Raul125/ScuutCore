@@ -16,7 +16,7 @@
         public override string Name { get; } = "Subclasses";
 
         public static Subclasses Singleton;
-        public static Dictionary<string, string> SpawnTranslations = new Dictionary<string, string>();
+        public static Dictionary<string, string> SpawnTranslations = new();
 
         private EventHandlers EventHandlers;
         
@@ -37,7 +37,7 @@
                     RoleTypeId.ClassD
                 }
             }
-    };
+        };
 
         public override void OnEnabled()
         {
@@ -49,24 +49,19 @@
             var serializer = new Serializer();
             var deserializer = new Deserializer();
             List<SerializedSubclass> serializedSubclasses = new List<SerializedSubclass>();
-            if(Directory.Exists(Config.SubclassFolder))
+            if (Directory.Exists(Config.SubclassFolder))
             {
                 foreach (var file in Directory.GetFiles(Config.SubclassFolder, "*.yml", SearchOption.AllDirectories))
                 {
-                    if (file == null)
+                    if (file is null)
                         continue;
+
                     try
                     {
                         if (file.Contains("list"))
-                        {
-                            serializedSubclasses.AddRange(
-                                deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
-                        }
+                            serializedSubclasses.AddRange(deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
                         else
-                        {
-                            serializedSubclasses.Add(
-                                deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
-                        }
+                            serializedSubclasses.Add(deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
                     }
                     catch (Exception e)
                     {
@@ -74,11 +69,12 @@
                     }
                 }
             }
-            if(serializedSubclasses.Count == 0)
+
+            if (serializedSubclasses.Count == 0)
             {
                 Directory.CreateDirectory(Config.SubclassFolder);
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclass.yml"),
-                    serializer.Serialize(defaultSubclassesValue[0]));
+                serializer.Serialize(defaultSubclassesValue[0]));
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), serializer.Serialize(defaultSubclassesValue));
             }
             else
@@ -106,10 +102,8 @@
             }*/
             foreach (var property in Config.GetType().GetProperties())
             {
-                if(property.PropertyType.BaseType != typeof(Subclass) && property.PropertyType.BaseType != typeof(SerializedSubclass))
-                {
+                if (property.PropertyType.BaseType != typeof(Subclass) && property.PropertyType.BaseType != typeof(SerializedSubclass))
                     continue;
-                }
 
                 var subclass = property.GetValue(Config);
                 if (subclass is Subclass subclass2)
@@ -123,18 +117,17 @@
             Dictionary<string, string> deserialized = null;
             try
             {
-                if(File.Exists(yamlFile))
+                if (File.Exists(yamlFile))
                 {
                     string subclassConfigs = File.ReadAllText(yamlFile);
                     deserialized = deserializer.Deserialize<Dictionary<string, string>>(subclassConfigs);
                 }
-                if (deserialized == null)
+
+                if (deserialized is null)
                 {
-                    Dictionary<string, string> toWrite = new Dictionary<string, string>();
+                    Dictionary<string, string> toWrite = new();
                     foreach (var subclass in Subclass.List)
-                    {
                         toWrite.Add(subclass.Name, "Youre a " + subclass.Name);
-                    }
 
                     File.WriteAllText(Path.Combine(Paths.Configs, yamlFile), serializer.Serialize(toWrite));
                 }
