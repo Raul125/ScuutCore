@@ -1,9 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.Chaos
+﻿namespace ScuutCore.Modules.Chaos
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class Chaos : Module<Config>
     {
