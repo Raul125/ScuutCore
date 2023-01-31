@@ -40,14 +40,14 @@
 
             if (players.Count is 1)
             {
-                Timing.CallDelayed(broadcast.Delay, () => DisplayBroadcast(players[0], broadcast.AloneContents, broadcast.Time, broadcast.Type));
+                Plugin.Coroutines.Add(Timing.CallDelayed(broadcast.Delay, () => DisplayBroadcast(players[0], broadcast.AloneContents, broadcast.Time, broadcast.Type)));
                 return;
             }
 
             string contentsFormatted = broadcast.Contents.Replace("%list%", GeneratePlayerList(players, broadcast));
             contentsFormatted = contentsFormatted.Replace("%count%", players.Count.ToString());
             foreach (Player player in players)
-                Timing.CallDelayed(broadcast.Delay, () => DisplayBroadcast(player, contentsFormatted, broadcast.Time, broadcast.Type));
+                Plugin.Coroutines.Add(Timing.CallDelayed(broadcast.Delay, () => DisplayBroadcast(player, contentsFormatted, broadcast.Time, broadcast.Type)));
         }
 
         private void DisplayBroadcast(Player player, string content, ushort duration, DisplayType displayType)

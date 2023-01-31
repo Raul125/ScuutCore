@@ -1,9 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.RainbowTags
+﻿namespace ScuutCore.Modules.RainbowTags
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class RainbowTags : Module<Config>
     {

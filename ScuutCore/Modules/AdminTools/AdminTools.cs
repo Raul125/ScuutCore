@@ -1,10 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools
 {
     using ScuutCore.API.Features;
-
+    using PluginAPI.Events;
     public class AdminTools : Module<Config>
     {
         public override string Name { get; } = "AdminTools";

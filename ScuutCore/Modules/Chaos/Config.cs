@@ -1,9 +1,7 @@
-﻿using ScuutCore.API;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.Chaos
+﻿namespace ScuutCore.Modules.Chaos
 {
     using ScuutCore.API.Interfaces;
+    using System.ComponentModel;
 
     public class Config : IModuleConfig
     {

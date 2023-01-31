@@ -23,7 +23,7 @@ namespace ScuutCore.Modules.RainbowTags
             if (player is null || player.GameObject is null)
                 return;
 
-            Timing.CallDelayed(2f, () =>
+            Plugin.Coroutines.Add(Timing.CallDelayed(2f, () =>
             {
                 bool hasColors = TryGetColors(GetKey(player.ReferenceHub.serverRoles.Group), out string[] colors);
                 if (player.ReferenceHub.serverRoles.Group != null && hasColors)
@@ -41,7 +41,7 @@ namespace ScuutCore.Modules.RainbowTags
                     rainbowTagController.Colors = colors;
                 else
                     Object.Destroy(rainbowTagController);
-            });
+            }));
         }
 
         private bool TryGetColors(string rank, out string[] availableColors)

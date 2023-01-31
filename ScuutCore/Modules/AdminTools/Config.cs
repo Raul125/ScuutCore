@@ -1,8 +1,7 @@
-﻿using ScuutCore.API;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools
 {
     using ScuutCore.API.Interfaces;
+    using ScuutCore.API;
 
     public class Config : IModuleConfig
     {

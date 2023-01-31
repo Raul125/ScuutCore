@@ -172,9 +172,6 @@
     <Compile Include="Modules\CleanupUtility\Config.cs" />
     <Compile Include="Modules\CleanupUtility\EventHandlers.cs" />
     <Compile Include="Modules\ScpSwap\ValidSwaps.cs" />
-    <Compile Include="Modules\BetterLateSpawn\BetterLateSpawn.cs" />
-    <Compile Include="Modules\BetterLateSpawn\Config.cs" />
-    <Compile Include="Modules\BetterLateSpawn\EventHandlers.cs" />
     <Compile Include="Modules\RoundSummary\RoundSummary.cs" />
     <Compile Include="Modules\RoundSummary\Config.cs" />
     <Compile Include="Modules\RoundSummary\EventHandlers.cs" />
@@ -210,11 +207,9 @@
     <Compile Include="Modules\CuffedTK\CuffedTK.cs" />
     <Compile Include="Modules\CuffedTK\Config.cs" />
     <Compile Include="Modules\CuffedTK\EventHandlers.cs" />
-    <Compile Include="Modules\BetterCandy\EventHandlers.cs" />
     <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
     <Compile Include="Modules\BetterCandy\Config.cs" />
     <Compile Include="Patches\CandyGetRandomPatch.cs" />
-    <Compile Include="Patches\FixDefaultSegmentPatch.cs" />
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\TeslaInRangePatch.cs" />
     <Compile Include="Plugin.cs" />

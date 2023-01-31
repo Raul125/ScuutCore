@@ -1,13 +1,13 @@
-﻿using Interactables.Interobjects.DoorUtils;
-using PluginAPI.Core;
-using System.Linq;
-using InventorySystem.Items.Keycards;
-using MapGeneration.Distributors;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-
-namespace ScuutCore.Modules.RemoteKeycard
+﻿namespace ScuutCore.Modules.RemoteKeycard
 {
+    using Interactables.Interobjects.DoorUtils;
+    using PluginAPI.Core;
+    using System.Linq;
+    using InventorySystem.Items.Keycards;
+    using MapGeneration.Distributors;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+
     public class EventHandlers
     {
         private RemoteKeycard remotekeycard;

@@ -30,19 +30,14 @@
         public static void InitModules()
         {
             Directory.CreateDirectory(Plugin.Singleton.Config.ConfigsFolder);
-
             foreach (var mod in Assembly.GetExecutingAssembly().GetTypes())
             {
                 if (mod.IsAbstract || mod.IsInterface)
-                {
                     continue;
-                }
 
                 if (!mod.BaseType.IsGenericType || (mod.BaseType.GetGenericTypeDefinition() != typeof(Module<>)))
-                {
                     continue;
-                }
-                    
+
                 IModule<IModuleConfig> module = null;
 
                 try

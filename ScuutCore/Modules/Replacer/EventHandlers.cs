@@ -21,8 +21,8 @@ namespace ScuutCore.Modules.Replacer
         [PluginEvent(ServerEventType.PlayerLeft)]
         public void OnDestroying(Player player)
         {
-            if (global::RoundSummary.singleton._roundEnded || !Round.IsRoundStarted || Round.Duration.TotalSeconds > replacer.Config.DontReplaceTime 
-                || replacer.Config.DisallowedRolesToReplace.Contains(player.Role))
+            if (global::RoundSummary.singleton._roundEnded || !Round.IsRoundStarted 
+                || Round.Duration.TotalSeconds > replacer.Config.DontReplaceTime || replacer.Config.DisallowedRolesToReplace.Contains(player.Role))
                 return;
 
             if (player.IsAlive)
@@ -37,6 +37,7 @@ namespace ScuutCore.Modules.Replacer
                 List<ItemType> oldItems = new List<ItemType>();
                 foreach (var item in player.Items)
                     oldItems.Add(item.ItemTypeId);
+
                 player.ClearInventory();
 
                 Player randomSpec = Player.GetPlayers().FirstOrDefault(x => x.Role is RoleTypeId.Spectator && !x.IsOverwatchEnabled);
@@ -44,7 +45,7 @@ namespace ScuutCore.Modules.Replacer
                 {
                     replacer.Config.BroadCast.Show(randomSpec);
                     randomSpec.SetRole(oldRole);
-                    Timing.CallDelayed(1f, () =>
+                    Plugin.Coroutines.Add(Timing.CallDelayed(1f, () =>
                     {
                         if (randomSpec.ReferenceHub.roleManager._curRole is Scp079Role scp079role)
                         {
@@ -59,7 +60,7 @@ namespace ScuutCore.Modules.Replacer
                         randomSpec.Health = oldHealth;
                         foreach (var item in oldItems)
                             randomSpec.AddItem(item);
-                    });
+                    }));
                 }
             }
         }

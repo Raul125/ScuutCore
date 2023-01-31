@@ -8,23 +8,21 @@
     using PluginAPI.Enums;
     using PluginAPI.Events;
     using ScuutCore.API.Loader;
-    using PluginAPI.Core.Factories;
     using PluginAPI.Core;
     using ScuutCore.API.Features;
 
     public class Plugin
     {
-        // Static Part
         public static Harmony Harmony { get; internal set; }
         public static Plugin Singleton { get; internal set; }
-        public static List<CoroutineHandle> Coroutines = new List<CoroutineHandle>();
+        public static List<CoroutineHandle> Coroutines = new();
 
         private static Random Rand;
         public static Random Random
         {
             get
             {
-                if (Rand == null)
+                if (Rand is null)
                     Rand = new Random();
 
                 return Rand;
@@ -57,7 +55,7 @@
             EventManager.UnregisterEvents<EventHandlers>(this);
 
             Singleton = null;
-            Harmony?.UnpatchAll();
+            Harmony.UnpatchAll();
         }
     }
 }

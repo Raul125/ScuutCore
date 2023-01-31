@@ -1,7 +1,6 @@
 ﻿namespace ScuutCore.Modules.Scp1162
 {
     using PluginAPI.Events;
-    using ScuutCore.API;
     using ScuutCore.API.Features;
 
     public class Scp1162 : Module<Config>

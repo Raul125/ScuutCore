@@ -1,11 +1,9 @@
-﻿using PlayerRoles;
-using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.Scp096Notifications
+﻿namespace ScuutCore.Modules.Scp096Notifications
 {
     using ScuutCore.API.Interfaces;
+    using PlayerRoles;
+    using System.Collections.Generic;
+    using System.ComponentModel;
 
     public class Config : IModuleConfig
     {

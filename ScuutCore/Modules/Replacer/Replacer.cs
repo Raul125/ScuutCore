@@ -1,9 +1,8 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.Replacer
+﻿namespace ScuutCore.Modules.Replacer
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
+    using ScuutCore.API;
 
     public class Replacer : Module<Config>
     {

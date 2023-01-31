@@ -1,9 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.Health
+﻿namespace ScuutCore.Modules.Health
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class Health : Module<Config>
     {

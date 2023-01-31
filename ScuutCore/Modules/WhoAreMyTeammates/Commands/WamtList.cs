@@ -36,7 +36,6 @@
                         scpNames.Append(", ");
                     else
                         scpNames.Append(".");
-
                 }
 
                 string NameString = String.Join(",", scpNames);

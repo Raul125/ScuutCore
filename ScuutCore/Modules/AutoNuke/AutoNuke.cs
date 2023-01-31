@@ -1,9 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.AutoNuke
+﻿namespace ScuutCore.Modules.AutoNuke
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class AutoNuke : Module<Config>
     {

@@ -37,17 +37,8 @@
 
             if (EventHandlers.JailedPlayers.Any(j => j.Userid == ply.UserId))
             {
-                try
-                {
-                    Plugin.Coroutines.Add(Timing.RunCoroutine(EventHandlers.DoUnJail(ply)));
-                    response = $"Player {ply.Nickname} has been unjailed now";
-                }
-                catch (Exception e)
-                {
-                    Log.Error($"{e}");
-                    response = "Command failed. Check server log.";
-                    return false;
-                }
+                Plugin.Coroutines.Add(Timing.RunCoroutine(EventHandlers.DoUnJail(ply)));
+                response = $"Player {ply.Nickname} has been unjailed now";
             }
             else
             {

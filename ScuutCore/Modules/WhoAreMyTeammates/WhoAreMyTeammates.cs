@@ -1,7 +1,6 @@
 ﻿namespace ScuutCore.Modules.WhoAreMyTeammates
 {
     using PluginAPI.Events;
-    using ScuutCore.API;
     using ScuutCore.API.Features;
 
     public class WhoAreMyTeammates : Module<Config>

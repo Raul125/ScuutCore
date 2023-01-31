@@ -17,7 +17,6 @@
         }
 
         public int Rounds = 0;
-
         [PluginEvent(ServerEventType.RoundRestart)]
         public void OnRoundRestarting()
         {
@@ -30,7 +29,7 @@
             if (Rounds == restart.Config.RestartAfterRounds)
             {
                 float time = Mathf.Clamp(ConfigFile.ServerConfig.GetInt("auto_round_restart_time", 10), 5, 1000) - 0.5f;
-                Timing.CallDelayed(time, () => Server.Restart());
+                Plugin.Coroutines.Add(Timing.CallDelayed(time, () => Server.Restart()));
             }
         }
     }

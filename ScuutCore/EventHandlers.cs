@@ -18,16 +18,5 @@
 
             Plugin.Coroutines.Clear();
         }
-
-        // This prevents but it may cause the bug
-        /*
-        [PluginEvent(ServerEventType.LczDecontaminationStart)]
-        public bool OnDecontaminating()
-        {
-            if (Round.Duration.TotalMinutes < 6)
-                return false;
-
-            return true;
-        }*/
     }
 }

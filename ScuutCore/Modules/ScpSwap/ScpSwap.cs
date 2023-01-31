@@ -1,9 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.ScpSwap
+﻿namespace ScuutCore.Modules.ScpSwap
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class ScpSwap : Module<Config>
     {
