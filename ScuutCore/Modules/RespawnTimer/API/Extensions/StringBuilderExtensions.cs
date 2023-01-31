@@ -90,11 +90,12 @@
 
         private static StringBuilder SetWarheadStatus(this StringBuilder builder)
         {
-            /*
-            WarheadStatus warheadStatus = Warhead.Status;
-            builder.Replace("{warhead_status}", TimerView.Current.Properties.WarheadStatus[warheadStatus]);
-            builder.Replace("{detonation_time}", warheadStatus == WarheadStatus.InProgress ? Mathf.Round(Warhead.DetonationTimer).ToString(CultureInfo.InvariantCulture) : string.Empty);
-            */
+            // The autonuke things
+            var time = Mathf.Round((float)(AutoNuke.AutoNuke.Instance.Config.AutoNukeStartTime - Round.Duration.TotalSeconds));
+            if (time <= 0)
+                builder.Replace("{auto_nuke_rem}", "Activated");
+            else
+                builder.Replace("{auto_nuke_rem}", time.ToString());
 
             return builder;
         }
