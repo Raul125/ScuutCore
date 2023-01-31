@@ -103,9 +103,7 @@
     <Compile Include="API\Features\HintConfig.cs" />
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\Subclass.cs" />
-    <Compile Include="API\Features\SubclassComponent.cs" />
     <Compile Include="API\Helpers\PlayerDeathEffects.cs" />
-    <Compile Include="API\Helpers\SubclassExtensions.cs" />
     <Compile Include="API\Interfaces\IModuleConfig.cs" />
     <Compile Include="API\Interfaces\IModule.cs" />
     <Compile Include="API\Loader\Loader.cs" />

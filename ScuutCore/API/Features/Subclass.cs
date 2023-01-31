@@ -5,12 +5,15 @@
     using System.Linq;
     using PlayerRoles;
     using PluginAPI.Core;
+    using PluginAPI.Core.Interfaces;
     using ScuutCore.API.Helpers;
 
     public abstract class Subclass
     {
         public static List<Subclass> List = new List<Subclass>();
-        public virtual List<Player> GetPlayers() => Player.GetPlayers().Where(x => x.GetSubclass() != null).ToList();
+
+        // Changed later in SerializedSubclass
+        public virtual List<Player> GetPlayers() => null;
 
         /// <summary>
         /// The name of the subclass.
