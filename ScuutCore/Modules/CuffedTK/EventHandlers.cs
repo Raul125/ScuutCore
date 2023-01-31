@@ -37,12 +37,11 @@ namespace ScuutCore.Modules.CuffedTK
             if (!cuffedTK.Config.OnlyAllowCufferToRemoveHandcuffs || player.Role.GetFaction() == target.Role.GetFaction())
                 return true;
 
-            if (target.DisarmedBy != player)
+            if (target.DisarmedBy != player || target.DisarmedBy.Role.GetFaction() != player.Role.GetFaction())
             {
                 player.ReceiveHint(cuffedTK.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
                 return false;
             }
-                
 
             return true;
         }
