@@ -5,6 +5,7 @@
     using System.Text;
     using PluginAPI.Core;
     using Respawning;
+    using ScuutCore.API.Loader;
     using Serialization;
     using UnityEngine;
 
@@ -54,7 +55,7 @@
             Current = new(
                 File.ReadAllText(timerBeforePath),
                 File.ReadAllText(timerDuringPath),
-                YamlParser.Deserializer.Deserialize<Properties>(File.ReadAllText(propertiesPath)),
+                Loader.Deserializer.Deserialize<Properties>(File.ReadAllText(propertiesPath)),
                 hints);
 
             Log.Debug($"{name} has been successfully loaded!", RespawnTimer.Instance.Config.Debug);

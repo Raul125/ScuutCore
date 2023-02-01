@@ -32,7 +32,7 @@ namespace ScuutCore.Modules.ScpSwap
             SendRequestMessages();
             coroutine = Timing.RunCoroutine(RunTimeout());
             Coroutines.Add(coroutine);
-            EventManager.RegisterEvents(this);
+            EventManager.RegisterEvents(Plugin.Singleton);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace ScuutCore.Modules.ScpSwap
             if (coroutine.IsRunning)
                 Timing.KillCoroutines(coroutine);
 
-            EventManager.UnregisterEvents(this);
+            EventManager.UnregisterEvents(Plugin.Singleton);
         }
 
         private void Destroy()

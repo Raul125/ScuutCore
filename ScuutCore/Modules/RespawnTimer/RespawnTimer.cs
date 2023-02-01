@@ -5,6 +5,7 @@
     using PluginAPI.Core;
     using System.IO;
     using Serialization;
+    using ScuutCore.API.Loader;
 
     public class RespawnTimer : Module<Config>
     {
@@ -18,7 +19,7 @@
         public override void OnEnabled()
         {
             Instance = this;
-            RespawnTimerDirectoryPath = PluginHandler.Get(this).PluginDirectoryPath;
+            RespawnTimerDirectoryPath = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, Name);
 
             if (!Directory.Exists(RespawnTimerDirectoryPath))
             {
@@ -33,21 +34,22 @@
 
                 File.Create(Path.Combine(templateDirectory, "TimerBeforeSpawn.txt"));
                 File.Create(Path.Combine(templateDirectory, "TimerDuringSpawn.txt"));
-                File.WriteAllText(Path.Combine(templateDirectory, "Properties.yml"), YamlParser.Serializer.Serialize(new Properties()));
+                File.WriteAllText(Path.Combine(templateDirectory, "Properties.yml"), Loader.Serializer.Serialize(new Properties()));
 
                 string hintsPath = Path.Combine(templateDirectory, "Hints.txt");
                 File.WriteAllText(hintsPath, "This is an example hint. You can add as much as you want.");
             }
 
             EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
+
             EventHandlers = null;
             Instance = null;
 

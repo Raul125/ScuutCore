@@ -14,7 +14,7 @@
         [Description("List of timer names that will be used:")]
         public List<string> Timers { get; private set; } = new()
         {
-            "ExampleTimer"
+            "Template"
         };
 
         [Description("Whether the timer should be reloaded each round. Useful if you have many different timers designed.")]

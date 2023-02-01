@@ -44,7 +44,7 @@
             Singleton = this;
 
             EventHandlers = new EventHandlers();
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             Log.Warning("Loading subclasses!");
             var serializer = new Serializer();
@@ -118,7 +118,7 @@
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
 
             EventHandlers = null;
             Singleton = null;
