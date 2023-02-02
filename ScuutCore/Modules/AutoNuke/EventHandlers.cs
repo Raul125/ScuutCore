@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
+    using System;
 
     public class EventHandlers
     {
@@ -15,10 +16,12 @@
         }
 
         public bool IsAutoNuke = false;
+        public DateTime WarheadTime { get; set; }
 
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
         {
+            WarheadTime = DateTime.Now.AddSeconds(autoNuke.Config.AutoNukeStartTime);
             IsAutoNuke = false;
             Plugin.Coroutines.Add(Timing.RunCoroutine(AutoNukeCoroutine()));
         }

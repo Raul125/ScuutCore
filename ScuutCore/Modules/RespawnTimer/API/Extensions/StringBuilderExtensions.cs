@@ -10,6 +10,7 @@
     using PlayerRoles;
     using PlayerRoles.PlayableScps.Scp079;
     using Respawning;
+    using ScuutCore.Modules.AutoNuke;
 
     public static class StringBuilderExtensions
     {
@@ -90,12 +91,29 @@
 
         private static StringBuilder SetWarheadStatus(this StringBuilder builder)
         {
-            // The autonuke things
-            var time = Mathf.Round((float)(AutoNuke.AutoNuke.Instance.Config.AutoNukeStartTime - Round.Duration.TotalSeconds));
-            if (time <= 0)
+            TimeSpan time = AutoNuke.Instance.EventHandlers.WarheadTime - DateTime.Now;
+            if (Warhead.IsDetonationInProgress)
+            {
+                builder.Replace("{auto_nuke_rem}", "In Progress");
+                return builder;
+            }
+
+            if (Warhead.IsDetonated)
+            {
+                builder.Replace("{auto_nuke_rem}", "Detonated");
+                return builder;
+            }
+
+            if (AutoNuke.Instance.EventHandlers.IsAutoNuke)
+            {
                 builder.Replace("{auto_nuke_rem}", "Activated");
+                return builder;
+            }
+
+            if (time.Minutes > 0)
+                builder.Replace("{auto_nuke_rem}", $"{time.Minutes}m {time.Seconds}s");
             else
-                builder.Replace("{auto_nuke_rem}", time.ToString());
+                builder.Replace("{auto_nuke_rem}", $"<color=red>{time.Seconds}s</color>");
 
             return builder;
         }
