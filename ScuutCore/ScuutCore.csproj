@@ -96,14 +96,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Features\ScuutPlayerFactory.cs" />
+    <Compile Include="API\Features\ScuutPlayer.cs" />
     <Compile Include="API\Features\BroadcastConfig.cs" />
     <Compile Include="API\Features\CassieConfig.cs" />
     <Compile Include="API\Features\HintConfig.cs" />
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\Subclass.cs" />
-    <Compile Include="API\Features\SubclassComponent.cs" />
     <Compile Include="API\Helpers\PlayerDeathEffects.cs" />
-    <Compile Include="API\Helpers\SubclassExtensions.cs" />
     <Compile Include="API\Interfaces\IModuleConfig.cs" />
     <Compile Include="API\Interfaces\IModule.cs" />
     <Compile Include="API\Loader\Loader.cs" />
@@ -135,6 +135,14 @@
     <Compile Include="Modules\AutoNuke\AutoNuke.cs" />
     <Compile Include="Modules\AutoNuke\Config.cs" />
     <Compile Include="Modules\AutoNuke\EventHandlers.cs" />
+    <Compile Include="Modules\RespawnTimer\API\API.cs" />
+    <Compile Include="Modules\RespawnTimer\API\Extensions\StringBuilderExtensions.cs" />
+    <Compile Include="Modules\RespawnTimer\API\Features\TimerView.cs" />
+    <Compile Include="Modules\RespawnTimer\Commands\Timer.cs" />
+    <Compile Include="Modules\RespawnTimer\Configs\Properties.cs" />
+    <Compile Include="Modules\RespawnTimer\RespawnTimer.cs" />
+    <Compile Include="Modules\RespawnTimer\Config.cs" />
+    <Compile Include="Modules\RespawnTimer\EventHandlers.cs" />
     <Compile Include="Modules\PFE\Config.cs" />
     <Compile Include="Modules\PFE\EventHandlers.cs" />
     <Compile Include="Modules\PFE\PFE.cs" />
@@ -172,9 +180,6 @@
     <Compile Include="Modules\CleanupUtility\Config.cs" />
     <Compile Include="Modules\CleanupUtility\EventHandlers.cs" />
     <Compile Include="Modules\ScpSwap\ValidSwaps.cs" />
-    <Compile Include="Modules\BetterLateSpawn\BetterLateSpawn.cs" />
-    <Compile Include="Modules\BetterLateSpawn\Config.cs" />
-    <Compile Include="Modules\BetterLateSpawn\EventHandlers.cs" />
     <Compile Include="Modules\RoundSummary\RoundSummary.cs" />
     <Compile Include="Modules\RoundSummary\Config.cs" />
     <Compile Include="Modules\RoundSummary\EventHandlers.cs" />
@@ -210,11 +215,9 @@
     <Compile Include="Modules\CuffedTK\CuffedTK.cs" />
     <Compile Include="Modules\CuffedTK\Config.cs" />
     <Compile Include="Modules\CuffedTK\EventHandlers.cs" />
-    <Compile Include="Modules\BetterCandy\EventHandlers.cs" />
     <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
     <Compile Include="Modules\BetterCandy\Config.cs" />
     <Compile Include="Patches\CandyGetRandomPatch.cs" />
-    <Compile Include="Patches\FixDefaultSegmentPatch.cs" />
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\TeslaInRangePatch.cs" />
     <Compile Include="Plugin.cs" />

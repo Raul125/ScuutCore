@@ -1,9 +1,7 @@
-﻿using ScuutCore.API;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.BetterCandy
+﻿namespace ScuutCore.Modules.BetterCandy
 {
     using ScuutCore.API.Interfaces;
+    using System.ComponentModel;
 
     public class Config : IModuleConfig
     {
@@ -14,8 +12,5 @@ namespace ScuutCore.Modules.BetterCandy
 
         [Description("The number that has to be choosen when the plugin randomizes for the player to receive the pink candy")]
         public int ChoosenNumber { get; set; } = 5;
-
-        // [Description("The number of times someone can pick the candy before the hands get severed.")]
-        // public float PickCandyTimes { get; set; } = 2;
     }
 }

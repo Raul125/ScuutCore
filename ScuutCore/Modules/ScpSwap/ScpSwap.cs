@@ -1,9 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.ScpSwap
+﻿namespace ScuutCore.Modules.ScpSwap
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class ScpSwap : Module<Config>
     {
@@ -17,14 +15,14 @@ namespace ScuutCore.Modules.ScpSwap
         {
             Singleton = this;
             EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
             EventHandlers = null;
             Singleton = null;
 

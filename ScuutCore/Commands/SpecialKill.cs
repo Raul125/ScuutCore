@@ -17,7 +17,7 @@
         
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            if(!sender.CheckPermission("scuutcore.specialkill"))
+            if (!sender.CheckPermission("scuutcore.specialkill"))
             {
                 response = "Missing perm: scuutcore.specialkill!";
                 return false;
@@ -29,21 +29,22 @@
                 return false;
             }
 
-            if(arguments.Count < 2)
+            if (arguments.Count < 2)
             {
                 response = "Usage: specialkill <player> <effect>";
                 return false;
             }
 
-            string plyQuery = arguments.At(0);
-            Player player = Player.Get(plyQuery);
-            if(int.TryParse(plyQuery, out var plyId))
-                player ??= Player.Get(plyId);
-            player ??= Player.GetByName(plyQuery);
+            Player player = Player.Get(arguments.At(0));
+            if (player is null && int.TryParse(arguments.At(0), out var plyId))
+                player = Player.Get(plyId);
+
+            if (player is null)
+                player = Player.GetByName(arguments.At(0));
 
             if (player == null)
             {
-                response = "Cannot find player: " + plyQuery;
+                response = "Cannot find player: " + arguments.At(0);
                 return false;
             }
 

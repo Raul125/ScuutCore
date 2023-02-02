@@ -16,7 +16,7 @@
         public override string Name { get; } = "Subclasses";
 
         public static Subclasses Singleton;
-        public static Dictionary<string, string> SpawnTranslations = new Dictionary<string, string>();
+        public static Dictionary<string, string> SpawnTranslations = new();
 
         private EventHandlers EventHandlers;
         
@@ -37,36 +37,32 @@
                     RoleTypeId.ClassD
                 }
             }
-    };
+        };
 
         public override void OnEnabled()
         {
             Singleton = this;
+
             EventHandlers = new EventHandlers();
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             Log.Warning("Loading subclasses!");
             var serializer = new Serializer();
             var deserializer = new Deserializer();
-            List<SerializedSubclass> serializedSubclasses = new List<SerializedSubclass>();
-            if(Directory.Exists(Config.SubclassFolder))
+            List<SerializedSubclass> serializedSubclasses = new();
+            if (Directory.Exists(Config.SubclassFolder))
             {
                 foreach (var file in Directory.GetFiles(Config.SubclassFolder, "*.yml", SearchOption.AllDirectories))
                 {
-                    if (file == null)
+                    if (file is null)
                         continue;
+
                     try
                     {
                         if (file.Contains("list"))
-                        {
-                            serializedSubclasses.AddRange(
-                                deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
-                        }
+                            serializedSubclasses.AddRange(deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
                         else
-                        {
-                            serializedSubclasses.Add(
-                                deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
-                        }
+                            serializedSubclasses.Add(deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
                     }
                     catch (Exception e)
                     {
@@ -74,11 +70,12 @@
                     }
                 }
             }
-            if(serializedSubclasses.Count == 0)
+
+            if (serializedSubclasses.Count == 0)
             {
                 Directory.CreateDirectory(Config.SubclassFolder);
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclass.yml"),
-                    serializer.Serialize(defaultSubclassesValue[0]));
+                serializer.Serialize(defaultSubclassesValue[0]));
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), serializer.Serialize(defaultSubclassesValue));
             }
             else
@@ -89,52 +86,22 @@
                     serializedSubclass.OnLoaded();
                 }
             }
-            /*foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                if(type.Namespace != null && !type.Namespace.StartsWith("ScuutCore.Modules.Subclasses.DeclaredSubclasses"))
-                {
-                    continue;
-                }
-
-                if (type.BaseType != typeof(Subclass))
-                {
-                    continue;
-                }
-                
-                var subclass = (Subclass)Activator.CreateInstance(type);
-                subclass.OnLoaded();
-            }*/
-            foreach (var property in Config.GetType().GetProperties())
-            {
-                if(property.PropertyType.BaseType != typeof(Subclass) && property.PropertyType.BaseType != typeof(SerializedSubclass))
-                {
-                    continue;
-                }
-
-                var subclass = property.GetValue(Config);
-                if (subclass is Subclass subclass2)
-                {
-                    Subclass.List.Add(subclass2);
-                    subclass2.OnLoaded();
-                }
-            }
             
             string yamlFile = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, "subclasstranslations.yml");
             Dictionary<string, string> deserialized = null;
             try
             {
-                if(File.Exists(yamlFile))
+                if (File.Exists(yamlFile))
                 {
                     string subclassConfigs = File.ReadAllText(yamlFile);
                     deserialized = deserializer.Deserialize<Dictionary<string, string>>(subclassConfigs);
                 }
-                if (deserialized == null)
+
+                if (deserialized is null)
                 {
-                    Dictionary<string, string> toWrite = new Dictionary<string, string>();
+                    Dictionary<string, string> toWrite = new();
                     foreach (var subclass in Subclass.List)
-                    {
                         toWrite.Add(subclass.Name, "Youre a " + subclass.Name);
-                    }
 
                     File.WriteAllText(Path.Combine(Paths.Configs, yamlFile), serializer.Serialize(toWrite));
                 }
@@ -151,10 +118,10 @@
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
+
             EventHandlers = null;
             Singleton = null;
-
             base.OnDisabled();
         }
     }

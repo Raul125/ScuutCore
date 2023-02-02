@@ -8,20 +8,21 @@
     using PluginAPI.Enums;
     using PluginAPI.Events;
     using ScuutCore.API.Loader;
+    using PluginAPI.Core;
+    using ScuutCore.API.Features;
 
     public class Plugin
     {
-        // Static Part
         public static Harmony Harmony { get; internal set; }
         public static Plugin Singleton { get; internal set; }
-        public static List<CoroutineHandle> Coroutines = new List<CoroutineHandle>();
+        public static List<CoroutineHandle> Coroutines = new();
 
         private static Random Rand;
         public static Random Random
         {
             get
             {
-                if (Rand == null)
+                if (Rand is null)
                     Rand = new Random();
 
                 return Rand;
@@ -31,10 +32,13 @@
         [PluginConfig] public Config Config;
 
         [PluginPriority(LoadPriority.Highest)]
-        [PluginEntryPoint("ScuutCore", "1.0.5", "ScuutCore", "Raul125")]
+        [PluginEntryPoint("ScuutCore", "1.0.6", "ScuutCore", "Raul125")]
         public void LoadPlugin()
         {
             Singleton = this;
+
+            FactoryManager.RegisterPlayerFactory(this, new ScuutPlayerFactory());
+
             Loader.InitModules();
 
             Harmony = new Harmony("scuutcore.raul." + DateTime.Now.Ticks);
@@ -51,7 +55,7 @@
             EventManager.UnregisterEvents<EventHandlers>(this);
 
             Singleton = null;
-            Harmony?.UnpatchAll();
+            Harmony.UnpatchAll();
         }
     }
 }

@@ -1,9 +1,7 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.Chaos
+﻿namespace ScuutCore.Modules.Chaos
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class Chaos : Module<Config>
     {
@@ -14,14 +12,14 @@ namespace ScuutCore.Modules.Chaos
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

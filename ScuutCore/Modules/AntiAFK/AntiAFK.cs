@@ -17,14 +17,14 @@ namespace ScuutCore.Modules.AntiAFK
         {
             Singleton = this;
             EventHandlers = new EventHandlers();
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
             EventHandlers = null;
             Singleton = null;
 

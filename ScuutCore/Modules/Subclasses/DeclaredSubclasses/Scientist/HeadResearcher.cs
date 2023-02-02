@@ -20,12 +20,12 @@
         public override void OnReceived(Player player)
         {
             _players.Add(player);
-            Timing.CallDelayed(3f, () =>
+            Plugin.Coroutines.Add(Timing.CallDelayed(3f, () =>
             {
                 player.SendBroadcast(
                     $"Scps alive this round: {string.Join(", ", Player.GetPlayers().Where(x => x.IsSCP).Select(x => x.Role.ToString().Replace("SCP", "")))}",
                     8);
-            });
+            }));
         }
 
         public override void OnLost(Player player) => _players.Remove(player);

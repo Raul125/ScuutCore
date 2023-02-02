@@ -1,16 +1,15 @@
-﻿using PluginAPI.Core;
-using MEC;
-using PlayerRoles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-using PlayerStatsSystem;
-using static RoundSummary;
-
-namespace ScuutCore.Modules.RoundSummary
+﻿namespace ScuutCore.Modules.RoundSummary
 {
+    using PluginAPI.Core;
+    using MEC;
+    using PlayerRoles;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using PlayerStatsSystem;
+
     public class EventHandlers
     {
         private RoundSummary roundSummary;
@@ -19,7 +18,7 @@ namespace ScuutCore.Modules.RoundSummary
             roundSummary = rs;
         }
 
-        private Dictionary<Player, int> playerKills = new Dictionary<Player, int>();
+        private Dictionary<Player, int> playerKills = new ();
         private string firstEscaped = string.Empty;
         private uint escapeTime = 0;
         private string firstScpKiller = string.Empty;
@@ -51,36 +50,25 @@ namespace ScuutCore.Modules.RoundSummary
                 killedScp = player.Role.ToString();
             }
 
-            if (damageHandler is UniversalDamageHandler universal)
+            if (damageHandler is UniversalDamageHandler universal 
+                && universal.TranslationId == DeathTranslations.PocketDecay.Id)
             {
-                if (universal.TranslationId == DeathTranslations.PocketDecay.Id)
+                foreach (var ply in Player.GetPlayers().Where(x => x.Role is RoleTypeId.Scp106))
                 {
-                    foreach (var ply in Player.GetPlayers().Where(x => x.Role is RoleTypeId.Scp106))
-                    {
-                        if (!playerKills.ContainsKey(ply))
-                        {
-                            playerKills.Add(ply, 1);
-                        }
-                        else
-                        {
-                            playerKills[ply]++;
-                        }
-                    }
+                    if (!playerKills.ContainsKey(ply))
+                        playerKills.Add(ply, 1);
+                    else
+                        playerKills[ply]++;
                 }
             }
             
-
-            if (attacker == null)
+            if (attacker is null)
                 return;
 
             if (!playerKills.ContainsKey(attacker))
-            {
                 playerKills.Add(attacker, 1);
-            }
             else
-            {
                 playerKills[attacker]++;
-            }
         }
 
         [PluginEvent(ServerEventType.PlayerEscape)]
@@ -95,7 +83,7 @@ namespace ScuutCore.Modules.RoundSummary
         }
 
         [PluginEvent(ServerEventType.RoundEnd)]
-        public void OnRoundEnd(LeadingTeam leadingTeam)
+        public void OnRoundEnd(global::RoundSummary.LeadingTeam leadingTeam)
         {
             Timing.CallDelayed(roundSummary.Config.DisplayDelay, () =>
             {
@@ -112,7 +100,7 @@ namespace ScuutCore.Modules.RoundSummary
 
                 if (roundSummary.Config.ShowEscapee && firstEscaped != string.Empty)
                 {
-                    Enum.TryParse<RoleTypeId>(escapedRole, out RoleTypeId eRole);
+                    Enum.TryParse(escapedRole, out RoleTypeId eRole);
                     message += roundSummary.Config.EscapeeMessage.Replace("{player}", firstEscaped)
                         .Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole)
                         .Replace("{roleColor}", ColorsDict[eRole]) + "\n";
@@ -131,18 +119,16 @@ namespace ScuutCore.Modules.RoundSummary
                     message += roundSummary.Config.NoScpKillMessage + "\n";
 
                 for (int i = 0; i < 30; i++)
-                {
                     message += "\n";
-                }
 
                 foreach (var ply in Player.GetPlayers())
                     ply.ReceiveHint(message, 30);
 
-                Timing.CallDelayed(0.25f, () => PreventHints = true);
+                Plugin.Coroutines.Add(Timing.CallDelayed(0.25f, () => PreventHints = true));
             });
         }
 
-        public static Dictionary<RoleTypeId, string> ColorsDict = new Dictionary<RoleTypeId, string>
+        public static Dictionary<RoleTypeId, string> ColorsDict = new()
         {
             {RoleTypeId.Scp173, "#FF0000FF"},
             {RoleTypeId.ClassD, "#FF8000FF"},

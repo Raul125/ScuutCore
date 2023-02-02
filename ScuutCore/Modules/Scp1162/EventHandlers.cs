@@ -23,7 +23,6 @@
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStarted()
         {
-            Scp1162gameObject = null;
             var item = PluginAPI.Core.Items.ItemPickup.Create(ItemType.SCP500, Vector3.zero, default);
             Scp1162gameObject = item.GameObject;
             NetworkServer.UnSpawn(item.GameObject);
@@ -64,7 +63,6 @@
                     player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
 
                 ItemType newItem = ItemType.None;
-
                 getItem:
                 foreach (var itemd in Scp1162.Instance.Config.Chances)
                 {
@@ -79,7 +77,6 @@
                     goto getItem;
 
                 player.AddItem(newItem);
-
                 if (Scp1162.Instance.Config.UseHints)
                     player.ReceiveHint(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
                 else

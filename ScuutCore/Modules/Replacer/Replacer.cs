@@ -1,9 +1,8 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.Replacer
+﻿namespace ScuutCore.Modules.Replacer
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
+    using ScuutCore.API;
 
     public class Replacer : Module<Config>
     {
@@ -14,14 +13,14 @@ namespace ScuutCore.Modules.Replacer
         public override void OnEnabled()
         {
             EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
             EventHandlers = null;
 
             base.OnDisabled();

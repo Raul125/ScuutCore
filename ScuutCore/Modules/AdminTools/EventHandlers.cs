@@ -1,15 +1,15 @@
-﻿using PluginAPI.Core;
-using MEC;
-using PlayerRoles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-
-namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools
 {
+    using PluginAPI.Core;
+    using MEC;
+    using PlayerRoles;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using UnityEngine;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+
     public class EventHandlers
     {
         private AdminTools admintools;

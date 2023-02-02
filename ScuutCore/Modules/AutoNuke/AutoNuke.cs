@@ -1,28 +1,30 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.AutoNuke
+﻿namespace ScuutCore.Modules.AutoNuke
 {
     using ScuutCore.API.Features;
+    using PluginAPI.Events;
 
     public class AutoNuke : Module<Config>
     {
         public override string Name { get; } = "AutoNuke";
 
-        private EventHandlers EventHandlers;
+        public static AutoNuke Instance;
+        public EventHandlers EventHandlers;
 
         public override void OnEnabled()
         {
+            Instance = this;
+
             EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(this, EventHandlers);
+            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
+            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
             EventHandlers = null;
+            Instance = null;
 
             base.OnDisabled();
         }

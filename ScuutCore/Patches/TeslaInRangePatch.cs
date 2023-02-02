@@ -8,8 +8,9 @@
     {
         public static bool Prefix(TeslaGate __instance, ref bool __result, ReferenceHub player)
         {
-            if(Teslas.Singleton == null || !Teslas.Singleton.Config.IsEnabled)
+            if (Teslas.Singleton is null || Teslas.Singleton.Config.IsEnabled is false)
                 return true;
+
             if (Teslas.Singleton.Config.Roles.Contains(player.roleManager.CurrentRole.RoleTypeId))
             {
                 __result = false;

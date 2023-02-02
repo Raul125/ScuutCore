@@ -14,15 +14,15 @@ namespace ScuutCore.Modules.Teslas
         public override void OnEnabled()
         {
             Singleton = this;
-            EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(this, EventHandlers);
+            // EventHandlers = new EventHandlers(this);
+            // EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(this, EventHandlers);
-            EventHandlers = null;
+            //EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
+            // EventHandlers = null;
             Singleton = null;
 
             base.OnDisabled();

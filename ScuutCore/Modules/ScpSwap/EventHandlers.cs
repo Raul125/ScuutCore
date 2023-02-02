@@ -20,12 +20,12 @@
             if (player.Role.GetTeam() is Team.SCPs || ValidSwaps.GetCustom(player) != null)
                 return;
 
-            Timing.CallDelayed(0.1f, () =>
+            Plugin.Coroutines.Add(Timing.CallDelayed(0.1f, () =>
             {
                 if ((player.Role.GetTeam() is Team.SCPs || ValidSwaps.GetCustom(player) != null) &&
                     Round.Duration.TotalSeconds < scpSwap.Config.SwapTimeout)
                     scpSwap.Config.StartMessage.Show(player);
-            });
+            }));
         }
 
         [PluginEvent(ServerEventType.RoundRestart)]

@@ -1,9 +1,7 @@
-﻿using ScuutCore.API;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.RoundSummary
+﻿namespace ScuutCore.Modules.RoundSummary
 {
     using ScuutCore.API.Interfaces;
+    using System.ComponentModel;
 
     public class Config : IModuleConfig
     {

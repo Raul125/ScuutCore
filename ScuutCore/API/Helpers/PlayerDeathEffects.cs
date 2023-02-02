@@ -10,6 +10,7 @@
 
     public static class PlayerDeathEffects
     {
+        // wtf
         public static void PlayExplosionEffect(Player ply)
         {
             ThrowableItem throwableItem = (ThrowableItem)ReferenceHub._hostHub.inventory.ServerAddItem(ItemType.GrenadeHE, 0, null);

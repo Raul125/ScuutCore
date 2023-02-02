@@ -22,14 +22,12 @@ namespace ScuutCore.Commands
             Player player = Player.Get(sender);
             if (PermissionHandler.CheckPermission(player.UserId, "scuutcore.nick"))
             {
-                string nombreMsg = string.Empty;
+                string name = string.Empty;
                 foreach (string str in arguments)
-                {
-                    nombreMsg += str + " ";
-                }
+                    name += str + " ";
 
                 response = "<b><color=#00FFAE>Nickname changed!</color></b>";
-                player.DisplayNickname = nombreMsg.Trim();
+                player.DisplayNickname = name.Trim();
             }
             else
             {

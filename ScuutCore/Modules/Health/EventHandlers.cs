@@ -1,12 +1,12 @@
-﻿using MEC;
-using PlayerRoles;
-using PlayerStatsSystem;
-using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-
-namespace ScuutCore.Modules.Health
+﻿namespace ScuutCore.Modules.Health
 {
+    using MEC;
+    using PlayerRoles;
+    using PlayerStatsSystem;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+
     public class EventHandlers
     {
         private Health health;

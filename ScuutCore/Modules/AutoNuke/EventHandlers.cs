@@ -1,11 +1,12 @@
-﻿using MEC;
-using PluginAPI.Core;
-using System.Collections.Generic;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-
-namespace ScuutCore.Modules.AutoNuke
+﻿namespace ScuutCore.Modules.AutoNuke
 {
+    using MEC;
+    using PluginAPI.Core;
+    using System.Collections.Generic;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using System;
+
     public class EventHandlers
     {
         private AutoNuke autoNuke;
@@ -15,10 +16,12 @@ namespace ScuutCore.Modules.AutoNuke
         }
 
         public bool IsAutoNuke = false;
+        public DateTime WarheadTime { get; set; }
 
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
         {
+            WarheadTime = DateTime.Now.AddSeconds(autoNuke.Config.AutoNukeStartTime);
             IsAutoNuke = false;
             Plugin.Coroutines.Add(Timing.RunCoroutine(AutoNukeCoroutine()));
         }
@@ -43,12 +46,10 @@ namespace ScuutCore.Modules.AutoNuke
                 yield break;
 
             autoNuke.Config.AutoNukeCassieWarn.Play();
-
             foreach (var ply in Player.GetPlayers())
                 autoNuke.Config.AutoNukeWarnBroadcast.Show(ply);
 
             autoNuke.Config.AutoNukeWarnHint.Show();
-
             yield return Timing.WaitForSeconds(autoNuke.Config.AutoNukeStartTime - autoNuke.Config.AutoNukeWarn);
 
             IsAutoNuke = true;
