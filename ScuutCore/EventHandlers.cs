@@ -21,13 +21,13 @@
             Plugin.Coroutines.Clear();
         }
 
-        [PluginEvent(ServerEventType.LczDecontaminationStart)]
-        public bool OnDecontaminating()
-        {
-            if (Round.Duration.TotalMinutes < 6)
-                return false;
-
-            return true;
-        }
+        // [PluginEvent(ServerEventType.LczDecontaminationStart)]
+        // public bool OnDecontaminating()
+        // {
+        //     if (Round.Duration.TotalMinutes < 6)
+        //         return false;
+        //
+        //     return true;
+        // }
     }
 }

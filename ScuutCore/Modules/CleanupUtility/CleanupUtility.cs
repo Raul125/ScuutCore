@@ -1,7 +1,4 @@
-﻿using PluginAPI.Events;
-using ScuutCore.API;
-
-namespace ScuutCore.Modules.CleanupUtility
+﻿namespace ScuutCore.Modules.CleanupUtility
 {
     using ScuutCore.API.Features;
 
