@@ -4,13 +4,21 @@ namespace ScuutCore.Modules.AutoNuke
 {
     using ScuutCore.API.Features;
     using ScuutCore.API.Interfaces;
+    using YamlDotNet.Serialization;
 
     public class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 
-        public float AutoNukeStartTime { get; set; } = 1080f;
-        public float AutoNukeWarn { get; set; } = 780f;
+        public float AutoNukeStartTimeMinutes { get; set; } = 18f;
+        public float AutoNukeEndTimeSeconds { get; set; } = 0f;
+        public float AutoNukeWarnMinutes { get; set; } = 13f;
+        public float AutoNukeWarnSeconds { get; set; } = 0f;
+
+        [YamlIgnore]
+        public float AutoNukeStartTime => AutoNukeStartTimeMinutes * 60f + AutoNukeEndTimeSeconds;
+        [YamlIgnore]
+        public float AutoNukeWarn => AutoNukeWarnMinutes * 60f + AutoNukeWarnSeconds;
 
         // Nuke Warn
         public BroadcastConfig AutoNukeWarnBroadcast { get; set; } = new BroadcastConfig
