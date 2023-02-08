@@ -11,7 +11,7 @@
 
         public override void OnEnabled()
         {
-            EventHandlers = new EventHandlers(this);
+            EventHandlers = new EventHandlers();
             EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
             base.OnEnabled();
         }
