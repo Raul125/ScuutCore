@@ -1,9 +1,10 @@
 ﻿namespace ScuutCore.API.Features
 {
+    using Hints;
     using MEC;
+    using Modules.Subclasses;
     using PluginAPI.Core;
     using PluginAPI.Core.Interfaces;
-    using ScuutCore.Modules.Subclasses;
 
     public class ScuutPlayer : Player
     {
@@ -11,47 +12,65 @@
         {
         }
 
-        public Subclass SubClass 
+        private Subclass subClass;
+        private int setSubclassProc; // ensure that the delayed action does not execute if another subclass is set or destroyed
+
+        public Subclass SubClass
         {
-            get => SubClass;
+            get => subClass;
             set
             {
                 if (value == null)
                 {
-                    SubClass?.OnLost(this);
-                    SubClass = null;
-                    this.CustomInfo = null;
+                    subClass?.OnLost(this);
+                    subClass = null;
+                    CustomInfo = null;
+                    setSubclassProc++;
                     return;
                 }
 
-                SubClass = value;
+                subClass = value;
+                int id = ++setSubclassProc;
                 Plugin.Coroutines.Add(Timing.CallDelayed(1f, () =>
                 {
-                    this.CustomInfo = $"Subclass: {SubClass.Name}";
-                    this.Health = value.Health;
-                    this.ClearInventory();
-                    this.AmmoBag.Clear();
-                    var itemLoadout = SubClass.GetSpawnLoadout(this);
-                    if (itemLoadout is { Length: > 0 })
-                    {
-                        foreach (var item in itemLoadout)
-                            this.AddItem(item);
-                    }
-
-                    var ammoLoadout = SubClass.GetAmmoLoadout(this);
-                    if (ammoLoadout is { Count: > 0 })
-                    {
-                        foreach (var ammo in ammoLoadout)
-                            this.SetAmmo(ammo.Key, ammo.Value);
-                    }
+                    if (id != setSubclassProc)
+                        return;
+                    CustomInfo = $"Subclass: {SubClass.Name}";
+                    Health = value.Health;
+                    ClearInventory();
+                    AmmoBag.Clear();
+                    GrantLoadout();
 
                     SubClass.OnReceived(this);
                     Plugin.Coroutines.Add(Timing.CallDelayed(Subclasses.Singleton.Config.MessageDelay, () =>
                     {
-                        this.ReceiveHint(Subclasses.SpawnTranslations[SubClass.Name],
-                            Subclasses.Singleton.Config.SpawnSubclassHintDuration);
+                        float duration = Subclasses.Singleton.Config.SpawnSubclassHintDuration;
+                        ReceiveHint(Subclasses.SpawnTranslations[SubClass.Name],
+                            new HintEffect[]
+                            {
+                                HintEffectPresets.FadeIn(0.05f),
+                                HintEffectPresets.FadeOut(0.05f, 0.95f)
+                            },
+                            duration);
                     }));
                 }));
+            }
+        }
+        private void GrantLoadout()
+        {
+
+            var itemLoadout = SubClass.GetSpawnLoadout(this);
+            if (itemLoadout is { Length: > 0 })
+            {
+                foreach (var item in itemLoadout)
+                    AddItem(item);
+            }
+
+            var ammoLoadout = SubClass.GetAmmoLoadout(this);
+            if (SubClass.GetAmmoLoadout(this) is { Count: > 0 })
+            {
+                foreach (var ammo in ammoLoadout)
+                    SetAmmo(ammo.Key, ammo.Value);
             }
         }
 

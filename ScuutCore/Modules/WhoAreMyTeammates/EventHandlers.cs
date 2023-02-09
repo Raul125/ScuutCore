@@ -1,15 +1,17 @@
 ﻿namespace ScuutCore.Modules.WhoAreMyTeammates
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using Hints;
     using MEC;
     using NorthwoodLib.Pools;
     using PlayerRoles;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
-    using ScuutCore.Modules.RemoteKeycard;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using RemoteKeycard;
+    using UnityEngine;
 
     public class EventHandlers
     {
@@ -58,7 +60,13 @@
                     player.SendBroadcast(content, duration);
                     return;
                 case DisplayType.Hint:
-                    player.ReceiveHint(content, duration);
+                    var curve = HintEffectPresets.CreateTrailingBumpCurve(0.5f, 1, count: 3, 0.5f, duration);
+                    curve.postWrapMode = WrapMode.Clamp;
+                    player.ReceiveHint(new string('\n', whoAreMyTeammates.Config.HintLowering) + content, new HintEffect[]
+                    {
+                        HintEffectPresets.FadeIn(0.05f),
+                        HintEffectPresets.FadeOut(0.05f, 0.95f)
+                    }, duration);
                     return;
                 case DisplayType.ConsoleMessage:
                     player.SendConsoleMessage(content, "cyan");

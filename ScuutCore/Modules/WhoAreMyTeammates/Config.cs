@@ -1,10 +1,9 @@
 ﻿namespace ScuutCore.Modules.WhoAreMyTeammates
 {
-    using PlayerRoles;
-    using ScuutCore.API;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using ScuutCore.API.Interfaces;
+    using API.Interfaces;
+    using PlayerRoles;
 
     public class Config : IModuleConfig
     {
@@ -12,6 +11,9 @@
 
         [Description("The delay after the round starts before broadcasts will be displayed.")]
         public float DelayTime { get; set; } = 0;
+
+        [Description("Amount of lines to prepend the hint width to make it easier to read.")]
+        public int HintLowering { get; set; } = 0;
 
         [Description("Sets broadcasts for each class. Use %list% for the player names/SCP names and %count% for number of teammates")]
         public List<WamtBroadcast> WamtBroadcasts { get; set; } = new List<WamtBroadcast>
