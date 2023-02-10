@@ -1,9 +1,9 @@
 ﻿namespace ScuutCore.Modules.BetterCandy
 {
-    using ScuutCore.API.Interfaces;
     using System.ComponentModel;
+    using API.Interfaces;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 

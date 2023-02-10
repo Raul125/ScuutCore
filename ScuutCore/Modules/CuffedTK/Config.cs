@@ -1,14 +1,11 @@
-﻿using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-using PluginAPI.Core;
-using PlayerRoles;
-
-namespace ScuutCore.Modules.CuffedTK
+﻿namespace ScuutCore.Modules.CuffedTK
 {
-    using ScuutCore.API.Interfaces;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using API.Interfaces;
+    using PlayerRoles;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 

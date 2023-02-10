@@ -1,10 +1,8 @@
-﻿using ScuutCore.API;
-
-namespace ScuutCore.Modules.AutoFFToggle
+﻿namespace ScuutCore.Modules.AutoFFToggle
 {
-    using ScuutCore.API.Interfaces;
+    using API.Interfaces;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
     }

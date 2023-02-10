@@ -1,27 +1,22 @@
 ﻿namespace ScuutCore.Modules.AutoNuke
 {
+    using System;
+    using System.Collections.Generic;
+    using API.Features;
     using MEC;
     using PluginAPI.Core;
-    using System.Collections.Generic;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
-    using System;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<AutoNuke>
     {
-        private AutoNuke autoNuke;
-        public EventHandlers(AutoNuke at)
-        {
-            autoNuke = at;
-        }
-
-        public bool IsAutoNuke = false;
+        public bool IsAutoNuke;
         public DateTime WarheadTime { get; set; }
 
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
         {
-            WarheadTime = DateTime.Now.AddSeconds(autoNuke.Config.AutoNukeStartTime);
+            WarheadTime = DateTime.Now.AddSeconds(Module.Config.AutoNukeStartTime);
             IsAutoNuke = false;
             Plugin.Coroutines.Add(Timing.RunCoroutine(AutoNukeCoroutine()));
         }
@@ -29,37 +24,35 @@
         [PluginEvent(ServerEventType.WarheadStop)]
         public bool OnWarheadStopping(Player player)
         {
-            if (IsAutoNuke)
-            {
-                autoNuke.Config.CantDisableHint.Show(player);
-                return false;
-            }
-
-            return true;
+            if (!IsAutoNuke)
+                return true;
+            Module.Config.CantDisableHint.Show(player);
+            return false;
         }
 
         public IEnumerator<float> AutoNukeCoroutine()
         {
-            yield return Timing.WaitForSeconds(autoNuke.Config.AutoNukeWarn);
+            yield return Timing.WaitForSeconds(Module.Config.AutoNukeWarn);
 
             if (Warhead.IsDetonated)
                 yield break;
 
-            autoNuke.Config.AutoNukeCassieWarn.Play();
+            Module.Config.AutoNukeCassieWarn.Play();
             foreach (var ply in Player.GetPlayers())
-                autoNuke.Config.AutoNukeWarnBroadcast.Show(ply);
+                Module.Config.AutoNukeWarnBroadcast.Show(ply);
 
-            autoNuke.Config.AutoNukeWarnHint.Show();
-            yield return Timing.WaitForSeconds(autoNuke.Config.AutoNukeStartTime - autoNuke.Config.AutoNukeWarn);
+            Module.Config.AutoNukeWarnHint.Show();
+            yield return Timing.WaitForSeconds(Module.Config.AutoNukeStartTime - Module.Config.AutoNukeWarn);
 
             IsAutoNuke = true;
-            if (!Warhead.IsDetonated && !Warhead.IsDetonationInProgress)
+            if (Warhead.IsDetonated || Warhead.IsDetonationInProgress)
+                yield break;
             {
-                autoNuke.Config.AutoNukeCassieStart.Play();
+                Module.Config.AutoNukeCassieStart.Play();
                 foreach (var ply in Player.GetPlayers())
-                    autoNuke.Config.AutoNukeStartBroadcast.Show(ply);
+                    Module.Config.AutoNukeStartBroadcast.Show(ply);
 
-                autoNuke.Config.AutoNukeStartHint.Show();
+                Module.Config.AutoNukeStartHint.Show();
                 Warhead.Start();
             }
         }

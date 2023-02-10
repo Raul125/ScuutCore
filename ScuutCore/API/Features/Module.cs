@@ -5,8 +5,12 @@
 
     public abstract class Module<TModuleConfig> : IModule<TModuleConfig> where TModuleConfig : IModuleConfig, new()
     {
+        protected Module()
+        {
+            Name = GetType().Name;
+        }
 
-        public abstract string Name { get; }
+        public virtual string Name { get; }
 
         public TModuleConfig Config { get; set; } = new TModuleConfig();
 

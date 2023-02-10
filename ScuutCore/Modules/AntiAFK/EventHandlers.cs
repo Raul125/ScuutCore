@@ -1,21 +1,18 @@
-﻿using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-
-namespace ScuutCore.Modules.AntiAFK
+﻿namespace ScuutCore.Modules.AntiAFK
 {
-    using ScuutCore.Modules.AntiAFK.Components;
+    using API.Features;
+    using Components;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
 
-    public class EventHandlers
+    public sealed class EventHandlers : IEventHandler
     {
-        public EventHandlers()
-        {
-        }
 
         [PluginEvent(ServerEventType.PlayerJoined)]
         public void OnVerified(Player player)
         {
-            if(!PermissionsHandler.IsPermitted(player.ReferenceHub.serverRoles.Permissions, PlayerPermissions.AFKImmunity))
+            if (!PermissionsHandler.IsPermitted(player.ReferenceHub.serverRoles.Permissions, PlayerPermissions.AFKImmunity))
                 player.GameObject.AddComponent<AfkComponent>();
         }
     }

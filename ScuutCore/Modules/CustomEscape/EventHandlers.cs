@@ -1,23 +1,17 @@
-﻿using PluginAPI.Core;
-using PluginAPI.Core.Items;
-using MEC;
-using PlayerRoles;
-using System.Collections.Generic;
-using UnityEngine;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-using InventorySystem.Disarming;
-
-namespace ScuutCore.Modules.CustomEscape
+﻿namespace ScuutCore.Modules.CustomEscape
 {
-    public class EventHandlers
+    using System.Collections.Generic;
+    using API.Features;
+    using InventorySystem.Disarming;
+    using MEC;
+    using PlayerRoles;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Core.Items;
+    using PluginAPI.Enums;
+    using UnityEngine;
+    public sealed class EventHandlers : InstanceBasedEventHandler<CustomEscape>
     {
-        private CustomEscape customEscape;
-        public EventHandlers(CustomEscape c)
-        {
-            customEscape = c;
-        }
-
         public Vector3 EscapeZone = Vector3.zero;
 
         [PluginEvent(ServerEventType.RoundStart)]
@@ -27,17 +21,11 @@ namespace ScuutCore.Modules.CustomEscape
         }
 
         [PluginEvent(ServerEventType.PlayerEscape)]
-        public bool OnEscaping(Player player, RoleTypeId newRole)
-        {
-            if (customEscape.Config.CuffedRoleConversions.ContainsKey(player.Role))
-                return false;
-
-            return true;
-        }
+        public bool OnEscaping(Player player, RoleTypeId newRole) => !Module.Config.CuffedRoleConversions.ContainsKey(player.Role);
 
         private IEnumerator<float> BetterDisarm()
         {
-            for (; ; )
+            for (;;)
             {
                 yield return Timing.WaitForSeconds(1.5f);
 
@@ -49,24 +37,22 @@ namespace ScuutCore.Modules.CustomEscape
                     if (!player.ReferenceHub.inventory.IsDisarmed() || (player.Role.GetTeam() != Team.ChaosInsurgency && player.Role.GetTeam() != Team.FoundationForces) || (EscapeZone - player.Position).sqrMagnitude > 400f)
                         continue;
 
-                    if (customEscape.Config.CuffedRoleConversions.TryGetValue(player.Role, out var role))
-                    {
-                        var itemList = new List<ItemType>();
-                        foreach (var item in player.Items)
-                            itemList.Add(item.ItemTypeId);
+                    if (!Module.Config.CuffedRoleConversions.TryGetValue(player.Role, out var role))
+                        continue;
+                    var itemList = new List<ItemType>();
+                    foreach (var item in player.Items)
+                        itemList.Add(item.ItemTypeId);
 
-                        Plugin.Coroutines.Add(Timing.RunCoroutine(DropItems(player, itemList)));
-                        player.SetRole(role);
-                    }
+                    Plugin.Coroutines.Add(Timing.RunCoroutine(DropItems(player, itemList)));
+                    player.SetRole(role);
                 }
             }
         }
 
-        private IEnumerator<float> DropItems(Player player, List<ItemType> items)
+        private static IEnumerator<float> DropItems(Player player, List<ItemType> items)
         {
             yield return Timing.WaitForSeconds(1f);
-
-            foreach (ItemType item in items)
+            foreach (var item in items)
                 ItemPickup.Create(item, player.Position, default);
         }
     }

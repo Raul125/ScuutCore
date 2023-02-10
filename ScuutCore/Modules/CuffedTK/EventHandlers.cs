@@ -1,49 +1,37 @@
-﻿using PlayerRoles;
-using PlayerStatsSystem;
-using PluginAPI.Core;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-
-namespace ScuutCore.Modules.CuffedTK
+﻿namespace ScuutCore.Modules.CuffedTK
 {
-    public class EventHandlers
+    using API.Features;
+    using PlayerRoles;
+    using PlayerStatsSystem;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    public sealed class EventHandlers : InstanceBasedEventHandler<CuffedTK>
     {
-        private CuffedTK cuffedTK;
-        public EventHandlers(CuffedTK btc)
-        {
-            cuffedTK = btc;
-        }
-
         [PluginEvent(ServerEventType.PlayerDamage)]
         public bool OnHurting(Player target, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (!target.IsDisarmed || target is null || attacker is null || target.DisarmedBy == attacker || target.Role is RoleTypeId.Tutorial) 
+            if (!target.IsDisarmed || target is null || attacker is null || target.DisarmedBy == attacker || target.Role is RoleTypeId.Tutorial)
                 return true;
+            if (attacker.Role.GetFaction() == Faction.SCP)
+                return true;
+            if (Module.Config.AttackerHintTime > 0)
+                attacker.ReceiveHint(Module.Config.AttackerHint.Replace("%PLAYER%", target.Nickname), Module.Config.AttackerHintTime);
 
-            if (attacker.Role.GetFaction() != Faction.SCP)
-            {
-                if (cuffedTK.Config.AttackerHintTime > 0)
-                    attacker.ReceiveHint(cuffedTK.Config.AttackerHint.Replace("%PLAYER%", target.Nickname), cuffedTK.Config.AttackerHintTime);
+            return false;
 
-                return false;
-            }
-
-            return true;
         }
 
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
         public bool OnPlayerRemoveHandcuffs(Player player, Player target)
         {
-            if (!cuffedTK.Config.OnlyAllowCufferToRemoveHandcuffs || player.Role.GetFaction() == target.Role.GetFaction())
+            if (!Module.Config.OnlyAllowCufferToRemoveHandcuffs || player.Role.GetFaction() == target.Role.GetFaction())
                 return true;
+            if (target.DisarmedBy == player && target.DisarmedBy.Role.GetFaction() == player.Role.GetFaction())
+                return true;
+            player.ReceiveHint(Module.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
+            return false;
 
-            if (target.DisarmedBy != player || target.DisarmedBy.Role.GetFaction() != player.Role.GetFaction())
-            {
-                player.ReceiveHint(cuffedTK.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
-                return false;
-            }
-
-            return true;
         }
     }
 }

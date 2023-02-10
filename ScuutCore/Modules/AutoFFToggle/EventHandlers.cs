@@ -1,14 +1,12 @@
 ﻿namespace ScuutCore.Modules.AutoFFToggle
 {
+    using API.Features;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
 
-    public class EventHandlers
+    public sealed class EventHandlers : IEventHandler
     {
-        public EventHandlers()
-        {
-        }
 
         [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void OnWaitingForPlayers()

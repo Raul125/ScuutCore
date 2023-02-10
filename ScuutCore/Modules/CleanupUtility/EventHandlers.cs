@@ -1,21 +1,15 @@
-﻿
-namespace ScuutCore.Modules.CleanupUtility
+﻿namespace ScuutCore.Modules.CleanupUtility
 {
+    using API.Features;
+    using InventorySystem.Items.Pickups;
     using MapGeneration;
-    using Object = UnityEngine.Object;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
-    using InventorySystem.Items.Pickups;
+    using UnityEngine;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<CleanupUtility>
     {
-        private CleanupUtility cleanupUtility;
-        public EventHandlers(CleanupUtility cln)
-        {
-            cleanupUtility = cln;
-        }
-
         [PluginEvent(ServerEventType.LczDecontaminationStart)]
         public void OnDecontaminating()
         {
@@ -25,7 +19,7 @@ namespace ScuutCore.Modules.CleanupUtility
                 if (item == null)
                     continue;
 
-                if (cleanupUtility.Config.UseFastZoneCheck)
+                if (Module.Config.UseFastZoneCheck)
                 {
                     if (item._transform.position.y is < -200 or > 200)
                         continue;
@@ -35,7 +29,7 @@ namespace ScuutCore.Modules.CleanupUtility
                     if (RoomIdUtils.RoomAtPosition(item._transform.position)?.Zone != FacilityZone.LightContainment)
                         continue;
                 }
-                
+
                 try
                 {
                     item.DestroySelf();

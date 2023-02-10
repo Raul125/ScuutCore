@@ -6,7 +6,7 @@
     public abstract class EventControllerModule<TModuleConfig, THandler> : Module<TModuleConfig>
     where TModuleConfig : IModuleConfig, new() where THandler : IEventHandler, new()
     {
-        protected THandler EventHandlers;
+        public THandler EventHandlers { get; protected set; }
 
         public override void OnEnabled()
         {

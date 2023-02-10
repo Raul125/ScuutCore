@@ -1,11 +1,10 @@
-﻿using PlayerRoles;
-using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.Health
+﻿namespace ScuutCore.Modules.Health
 {
-    using ScuutCore.API.Interfaces;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using API.Interfaces;
+    using Modules;
+    using PlayerRoles;
 
     public class Config : IModuleConfig
     {
@@ -15,20 +14,17 @@ namespace ScuutCore.Modules.Health
         public Dictionary<RoleTypeId, int> HealthValues { get; set; } = new Dictionary<RoleTypeId, int>()
         {
             {
-                RoleTypeId.Scp173,
-                3200
+                RoleTypeId.Scp173, 3200
             },
             {
-                RoleTypeId.NtfCaptain,
-                150
+                RoleTypeId.NtfCaptain, 150
             }
         };
 
         public Dictionary<RoleTypeId, AhpRole> AhpValues { get; set; } = new Dictionary<RoleTypeId, AhpRole>()
         {
             {
-                RoleTypeId.Scp173,
-                new AhpRole
+                RoleTypeId.Scp173, new AhpRole
                 {
                     Amount = 760,
                     Decay = 0,
@@ -42,9 +38,8 @@ namespace ScuutCore.Modules.Health
 
         public Dictionary<RoleTypeId, float> AhpOnKill { get; set; } = new Dictionary<RoleTypeId, float>()
         {
-             {
-                RoleTypeId.Scp173,
-                5
+            {
+                RoleTypeId.Scp173, 5
             },
         };
 
@@ -52,12 +47,10 @@ namespace ScuutCore.Modules.Health
         public Dictionary<RoleTypeId, float> HealthOnKill { get; set; } = new Dictionary<RoleTypeId, float>()
         {
             {
-                RoleTypeId.Scp173,
-                0
+                RoleTypeId.Scp173, 0
             },
             {
-                RoleTypeId.Scp939,
-                10
+                RoleTypeId.Scp939, 10
             }
         };
     }

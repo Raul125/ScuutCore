@@ -4,7 +4,5 @@
 
     public sealed class Chaos : EventControllerModule<Config, EventHandlers>
     {
-        public override string Name => "Chaos";
-
     }
 }
