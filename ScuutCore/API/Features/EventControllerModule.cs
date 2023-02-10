@@ -3,6 +3,12 @@
     using Interfaces;
     using PluginAPI.Events;
 
+    /// <summary>
+    /// A module that handles events.
+    /// </summary>
+    /// <typeparam name="TModuleConfig">The module config type.</typeparam>
+    /// <typeparam name="THandler">The event handler type.</typeparam>
+    /// <remarks>If this instance is required to be used by the event handler it should inherit the <see cref="InstanceBasedEventHandler{TModule}"/> class.</remarks>
     public abstract class EventControllerModule<TModuleConfig, THandler> : Module<TModuleConfig>
     where TModuleConfig : IModuleConfig, new() where THandler : IEventHandler, new()
     {

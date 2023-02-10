@@ -1,12 +1,10 @@
-﻿using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.Scp1162
+﻿namespace ScuutCore.Modules.Scp1162
 {
-    using ScuutCore.API.Interfaces;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using API.Interfaces;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 
@@ -20,12 +18,24 @@ namespace ScuutCore.Modules.Scp1162
         [Description("The list of item chances.")]
         public Dictionary<ItemType, int> Chances { get; set; } = new Dictionary<ItemType, int>
         {
-            { ItemType.GrenadeFlash, 20 },
-            { ItemType.ArmorLight, 10 },
-            { ItemType.MicroHID, 10 },
-            { ItemType.KeycardO5, 10 },
-            { ItemType.Flashlight, 20 },
-            { ItemType.Coin, 30 }
+            {
+                ItemType.GrenadeFlash, 20
+            },
+            {
+                ItemType.ArmorLight, 10
+            },
+            {
+                ItemType.MicroHID, 10
+            },
+            {
+                ItemType.KeycardO5, 10
+            },
+            {
+                ItemType.Flashlight, 20
+            },
+            {
+                ItemType.Coin, 30
+            }
         };
     }
 }

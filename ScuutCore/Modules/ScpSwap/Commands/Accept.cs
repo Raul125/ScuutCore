@@ -5,22 +5,27 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Commands
 {
     using System;
     using CommandSystem;
+    using Models;
     using PluginAPI.Core;
 
     /// <summary>
     /// Accepts an active swap request.
     /// </summary>
-    public class Accept : ICommand
+    public sealed class Accept : ICommand
     {
         /// <inheritdoc />
         public string Command { get; set; } = "accept";
 
         /// <inheritdoc />
-        public string[] Aliases { get; set; } = { "yes", "y" };
+        public string[] Aliases { get; set; } =
+        {
+            "yes",
+            "y"
+        };
 
         /// <inheritdoc />
         public string Description { get; set; } = "Accepts an active swap request.";

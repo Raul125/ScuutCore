@@ -2,9 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
+    using API.Features;
     using Hints;
     using MEC;
+    using Models;
     using NorthwoodLib.Pools;
     using PlayerRoles;
     using PluginAPI.Core;
@@ -13,20 +14,14 @@
     using RemoteKeycard;
     using UnityEngine;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<WhoAreMyTeammates>
     {
-        private WhoAreMyTeammates whoAreMyTeammates;
-        public EventHandlers(WhoAreMyTeammates wamt)
-        {
-            whoAreMyTeammates = wamt;
-        }
-
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStarted()
         {
-            Plugin.Coroutines.Add(Timing.CallDelayed(whoAreMyTeammates.Config.DelayTime, () =>
+            Plugin.Coroutines.Add(Timing.CallDelayed(Module.Config.DelayTime, () =>
             {
-                foreach (WamtBroadcast broadcast in whoAreMyTeammates.Config.WamtBroadcasts)
+                foreach (var broadcast in Module.Config.WamtBroadcasts)
                     RunBroadcast(broadcast);
             }));
         }
@@ -62,7 +57,7 @@
                 case DisplayType.Hint:
                     var curve = HintEffectPresets.CreateTrailingBumpCurve(0.5f, 1, count: 3, 0.5f, duration);
                     curve.postWrapMode = WrapMode.Clamp;
-                    player.ReceiveHint(new string('\n', whoAreMyTeammates.Config.HintLowering) + content, new HintEffect[]
+                    player.ReceiveHint(new string('\n', Module.Config.HintLowering) + content, new HintEffect[]
                     {
                         HintEffectPresets.FadeIn(0.05f),
                         HintEffectPresets.FadeOut(0.05f, 0.95f)
@@ -74,16 +69,16 @@
             }
         }
 
-        private string GeneratePlayerList(IList<Player> players, WamtBroadcast broadcast)
+        private static string GeneratePlayerList(IList<Player> players, WamtBroadcast broadcast)
         {
-            StringBuilder stringBuilder = StringBuilderPool.Shared.Rent();
+            var stringBuilder = StringBuilderPool.Shared.Rent();
             if (!broadcast.Contents.Contains("%list%"))
                 return string.Empty;
 
             int cutOff = players.Count - 1;
             for (int i = 0; i < players.Count; i++)
             {
-                Player player = players[i];
+                var player = players[i];
 
                 stringBuilder.Append(' ').Append(player.Nickname);
                 if (player.IsSCP())

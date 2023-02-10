@@ -5,13 +5,14 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Commands
 {
     using System;
     using System.Linq;
     using CommandSystem;
-    using PluginAPI.Core;
+    using Models;
     using PlayerRoles;
+    using PluginAPI.Core;
 
     /// <summary>
     /// The base command for ScpSwapParent.
@@ -28,7 +29,10 @@ namespace ScuutCore.Modules.ScpSwap
         public override string Command => "scpswap";
 
         /// <inheritdoc />
-        public override string[] Aliases { get; } = { "swap" };
+        public override string[] Aliases { get; } =
+        {
+            "swap"
+        };
 
         /// <inheritdoc />
         public override string Description => "Base command for ScpSwap.";

@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Models
 {
     using PlayerRoles;
     using PluginAPI.Core;

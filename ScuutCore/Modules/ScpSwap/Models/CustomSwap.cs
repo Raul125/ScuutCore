@@ -5,11 +5,11 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Models
 {
-    using PluginAPI.Core;
     using System;
     using System.Collections.Generic;
+    using PluginAPI.Core;
 
     /// <summary>
     /// A container to aid in the swapping of custom classes.

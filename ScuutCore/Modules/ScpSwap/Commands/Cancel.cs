@@ -5,22 +5,26 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Commands
 {
     using System;
     using CommandSystem;
+    using Models;
     using PluginAPI.Core;
 
     /// <summary>
     /// Cancels an active swap request.
     /// </summary>
-    public class Cancel : ICommand
+    public sealed class Cancel : ICommand
     {
         /// <inheritdoc />
         public string Command { get; set; } = "cancel";
 
         /// <inheritdoc />
-        public string[] Aliases { get; set; } = { "c" };
+        public string[] Aliases { get; set; } =
+        {
+            "c"
+        };
 
         /// <inheritdoc />
         public string Description { get; set; } = "Cancels an active swap request.";

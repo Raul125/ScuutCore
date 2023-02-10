@@ -1,4 +1,4 @@
-﻿namespace ScuutCore.Modules.RespawnTimer
+﻿namespace ScuutCore.Modules.RespawnTimer.API
 {
     using System.Collections.Generic;
 

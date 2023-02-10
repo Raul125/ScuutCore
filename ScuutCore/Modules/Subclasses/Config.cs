@@ -1,11 +1,11 @@
 ﻿namespace ScuutCore.Modules.Subclasses
 {
     using System.IO;
+    using API.Interfaces;
+    using DeclaredSubclasses.Scientist;
     using PluginAPI.Helpers;
-    using ScuutCore.API.Interfaces;
-    using ScuutCore.Modules.Subclasses.DeclaredSubclasses.Scientist;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
         public float SpawnSubclassHintDuration { get; set; } = 5f;

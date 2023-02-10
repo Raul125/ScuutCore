@@ -1,10 +1,10 @@
 ﻿namespace ScuutCore.Modules.RespawnTimer
 {
-    using ScuutCore.API.Interfaces;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using ScuutCore.API.Interfaces;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 

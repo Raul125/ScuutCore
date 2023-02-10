@@ -1,27 +1,8 @@
 ﻿namespace ScuutCore.Modules.Scp096Notifications
 {
-    using ScuutCore.API.Features;
-    using PluginAPI.Events;
+    using API.Features;
 
-    public class Scp096Notifications : Module<Config>
+    public sealed class Scp096Notifications : EventControllerModule<Config, EventHandlers>
     {
-        public override string Name { get; } = "Scp096Notifications";
-        public EventHandlers EventHandlers;
-
-        public override void OnEnabled()
-        {
-            // EventHandlers = new EventHandlers(this);
-            // EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
-
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            // EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
-            // EventHandlers = null;
-
-            base.OnDisabled();
-        }
     }
 }

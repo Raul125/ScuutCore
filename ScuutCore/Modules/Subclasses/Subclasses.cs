@@ -3,36 +3,31 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using API.Features;
+    using Models;
     using PlayerRoles;
     using PluginAPI.Core;
-    using PluginAPI.Events;
     using PluginAPI.Helpers;
-    using ScuutCore.API.Features;
-    using ScuutCore.Modules.Subclasses.Models;
     using YamlDotNet.Serialization;
 
-    public class Subclasses : Module<Config>
+    public sealed class Subclasses : EventControllerModule<Config, EventHandlers>
     {
-        public override string Name { get; } = "Subclasses";
-
         public static Subclasses Singleton;
         public static Dictionary<string, string> SpawnTranslations = new();
 
-        private EventHandlers EventHandlers;
-        
-        private SerializedSubclass[] defaultSubclassesValue = new SerializedSubclass[]
+        private SerializedSubclass[] defaultSubclassesValue =
         {
-            new SerializedSubclass()
+            new SerializedSubclass
             {
                 SubclassName = "Janitor",
                 SubclassSpawnChance = 15f,
                 SubclassMaxAlive = 2,
                 SubclassMaxPerRound = 0,
-                SpawnLoadout = new []
+                SpawnLoadout = new[]
                 {
                     ItemType.KeycardJanitor
                 },
-                RolesToReplace = new []
+                RolesToReplace = new[]
                 {
                     RoleTypeId.ClassD
                 }
@@ -42,9 +37,6 @@
         public override void OnEnabled()
         {
             Singleton = this;
-
-            EventHandlers = new EventHandlers();
-            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
 
             Log.Warning("Loading subclasses!");
             var serializer = new Serializer();
@@ -75,7 +67,7 @@
             {
                 Directory.CreateDirectory(Config.SubclassFolder);
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclass.yml"),
-                serializer.Serialize(defaultSubclassesValue[0]));
+                    serializer.Serialize(defaultSubclassesValue[0]));
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), serializer.Serialize(defaultSubclassesValue));
             }
             else
@@ -86,7 +78,7 @@
                     serializedSubclass.OnLoaded();
                 }
             }
-            
+
             string yamlFile = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, "subclasstranslations.yml");
             Dictionary<string, string> deserialized = null;
             try
@@ -118,9 +110,6 @@
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
-
-            EventHandlers = null;
             Singleton = null;
             base.OnDisabled();
         }

@@ -1,7 +1,6 @@
-﻿using PlayerRoles;
-
-namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates.Models
 {
+    using PlayerRoles;
     public class WamtBroadcast
     {
         public bool IsEnabled { get; set; }

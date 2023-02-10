@@ -5,22 +5,27 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Commands
 {
     using System;
     using CommandSystem;
+    using Models;
     using PluginAPI.Core;
 
     /// <summary>
     /// Rejects an active swap request.
     /// </summary>
-    public class Decline : ICommand
+    public sealed class Decline : ICommand
     {
         /// <inheritdoc />
         public string Command { get; set; } = "decline";
 
         /// <inheritdoc />
-        public string[] Aliases { get; set; } = { "no", "d" };
+        public string[] Aliases { get; set; } =
+        {
+            "no",
+            "d"
+        };
 
         /// <inheritdoc />
         public string Description { get; set; } = "Rejects an active swap request.";

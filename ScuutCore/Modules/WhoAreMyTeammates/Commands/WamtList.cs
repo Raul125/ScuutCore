@@ -1,8 +1,8 @@
-﻿namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates.Commands
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using CommandSystem;
     using PlayerRoles;
     using PluginAPI.Core;
@@ -11,11 +11,16 @@
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     [CommandHandler(typeof(GameConsoleCommandHandler))]
     [CommandHandler(typeof(ClientCommandHandler))]
-    public class WamtList : ICommand
+    public sealed class WamtList : ICommand
     {
-        public string Command { get; } = "WamtList";
-        public string[] Aliases { get; } = { "WL", "SCPList", "ListSCPs" };
-        public string Description { get; } = "Lists SCPs in the current round";
+        public string Command => "WamtList";
+        public string[] Aliases { get; } =
+        {
+            "WL",
+            "SCPList",
+            "ListSCPs"
+        };
+        public string Description => "Lists SCPs in the current round";
 
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
@@ -27,33 +32,29 @@
                     return false;
                 }
 
-                var scps = Player.GetPlayers().Where(x => x.Role.GetTeam() is Team.SCPs);
-                var scpNames = new List<string>();
-                foreach (var scp in scps)
+                var scpList = Player.GetPlayers().Where(x => x.Role.GetTeam() is Team.SCPs).ToArray();
+                var scpNames = new StringBuilder();
+                for (int i = 0; i < scpList.Length; i++)
                 {
-                    scpNames.Add(scp.ReferenceHub.roleManager._curRole.RoleName);                  
-                    if (scp != scps.Last())
-                        scpNames.Append(", ");
-                    else
-                        scpNames.Append(".");
+                    var scp = scpList[i];
+                    scpNames.Append(scp.ReferenceHub.roleManager._curRole.RoleName);
+                    scpNames.Append(i != scpList.Length - 1 ? ", " : ".");
                 }
 
-                string NameString = String.Join(",", scpNames);
-                Player.Get(sender).SendBroadcast($"<color=red>The Following SCPs are ingame: {NameString}</color>", 10);
-                response = $"The Following SCPs are ingame: {NameString}";
+                var combined = scpNames.ToString();
+                Player.Get(sender).SendBroadcast($"<color=red>The Following SCPs are ingame: {combined}</color>", 10);
+                response = $"The Following SCPs are ingame: {combined}";
                 return true;
             }
             else
             {
-                var scps = Player.GetPlayers().Where(x => x.Role.GetTeam() is Team.SCPs);
-                var scpNames = new List<string>();
-                foreach (var scp in scps)
+                var scpList = Player.GetPlayers().Where(x => x.Role.GetTeam() is Team.SCPs).ToArray();
+                var scpNames = new StringBuilder();
+                for (int i = 0; i < scpList.Length; i++)
                 {
-                    scpNames.Add(scp.ReferenceHub.roleManager._curRole.RoleName);
-                    if (scp != scps.Last())
-                        scpNames.Append(", ");
-                    else
-                        scpNames.Append(".");
+                    var scp = scpList[i];
+                    scpNames.Append(scp.ReferenceHub.roleManager._curRole.RoleName);
+                    scpNames.Append(i != scpList.Length - 1 ? ", " : ".");
                 }
 
                 response = $"The Following SCPs are ingame: {scpNames}";
