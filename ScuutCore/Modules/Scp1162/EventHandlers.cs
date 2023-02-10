@@ -10,9 +10,9 @@
     using PluginAPI.Enums;
     using UnityEngine;
 
-    public sealed class EventHandlers : IEventHandler
+    public sealed class EventHandlers : InstanceBasedEventHandler<Scp1162>
     {
-        private GameObject Scp1162gameObject = null;
+        private GameObject Scp1162gameObject;
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStarted()
         {
@@ -55,13 +55,13 @@
             else
                 player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
 
-            ItemType newItem = ItemType.None;
+            var newItem = ItemType.None;
             getItem:
-            foreach (var itemd in Scp1162.Instance.Config.Chances)
+            foreach (var pair in Module.Config.Chances)
             {
-                if (Plugin.Random.Next(0, 100) > itemd.Value)
+                if (Plugin.Random.Next(0, 100) > pair.Value)
                     continue;
-                newItem = itemd.Key;
+                newItem = pair.Key;
                 break;
             }
 
@@ -69,10 +69,10 @@
                 goto getItem;
 
             player.AddItem(newItem);
-            if (Scp1162.Instance.Config.UseHints)
-                player.ReceiveHint(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
+            if (Module.Config.UseHints)
+                player.ReceiveHint(Module.Config.ItemDropMessage, Module.Config.ItemDropMessageDuration);
             else
-                player.SendBroadcast(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
+                player.SendBroadcast(Module.Config.ItemDropMessage, Module.Config.ItemDropMessageDuration);
 
             return false;
         }

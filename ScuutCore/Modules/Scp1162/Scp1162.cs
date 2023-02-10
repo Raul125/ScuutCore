@@ -4,17 +4,5 @@
 
     public sealed class Scp1162 : EventControllerModule<Scp1162, Config, EventHandlers>
     {
-        public static Scp1162 Instance { get; set; }
-        public override void OnEnabled()
-        {
-            Instance = this;
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            Instance = null;
-            base.OnDisabled();
-        }
     }
 }
