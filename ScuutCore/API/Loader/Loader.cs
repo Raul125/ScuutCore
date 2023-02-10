@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
-    using Features;
     using Interfaces;
     using LiteNetLib.Utils;
     using PluginAPI.Core;
@@ -32,10 +32,7 @@
             Directory.CreateDirectory(Plugin.Singleton.Config.ConfigsFolder);
             foreach (var mod in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (mod.IsAbstract || mod.IsInterface)
-                    continue;
-
-                if (!mod.BaseType.IsGenericType || mod.BaseType.GetGenericTypeDefinition() != typeof(Module<>))
+                if (mod.IsAbstract || mod.IsInterface || !mod.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IModule<>)))
                     continue;
 
                 IModule<IModuleConfig> module;
@@ -44,8 +41,9 @@
                 {
                     module = CreateModule(mod);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Log.Error($"Failed loading module {mod.FullName}:\n" + e);
                     continue;
                 }
 

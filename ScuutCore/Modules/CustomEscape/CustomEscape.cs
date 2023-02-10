@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class CustomEscape : EventControllerModule<Config, EventHandlers>
+    public sealed class CustomEscape : EventControllerModule<CustomEscape, Config, EventHandlers>
     {
     }
 }

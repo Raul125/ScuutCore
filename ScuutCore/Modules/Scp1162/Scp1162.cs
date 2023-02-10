@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class Scp1162 : EventControllerModule<Config, EventHandlers>
+    public sealed class Scp1162 : EventControllerModule<Scp1162, Config, EventHandlers>
     {
         public static Scp1162 Instance { get; set; }
         public override void OnEnabled()

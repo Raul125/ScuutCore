@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class ScpSwap : EventControllerModule<Config, EventHandlers>
+    public sealed class ScpSwap : EventControllerModule<ScpSwap, Config, EventHandlers>
     {
         public static ScpSwap Singleton;
 

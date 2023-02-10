@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class AutoFFToggle : EventControllerModule<Config, EventHandlers>
+    public sealed class AutoFFToggle : EventControllerModule<AutoFFToggle, Config, EventHandlers>
     {
     }
 }

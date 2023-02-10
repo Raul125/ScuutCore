@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public class WhoAreMyTeammates : EventControllerModule<Config, EventHandlers>
+    public class WhoAreMyTeammates : EventControllerModule<WhoAreMyTeammates, Config, EventHandlers>
     {
     }
 }

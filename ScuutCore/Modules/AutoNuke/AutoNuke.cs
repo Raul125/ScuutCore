@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class AutoNuke : EventControllerModule<Config, EventHandlers>
+    public sealed class AutoNuke : EventControllerModule<AutoNuke, Config, EventHandlers>
     {
         public static AutoNuke Instance;
 

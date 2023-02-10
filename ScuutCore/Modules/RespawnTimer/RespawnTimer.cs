@@ -6,7 +6,7 @@
     using ScuutCore.API.Features;
     using ScuutCore.API.Loader;
 
-    public sealed class RespawnTimer : EventControllerModule<Config, EventHandlers>
+    public sealed class RespawnTimer : EventControllerModule<RespawnTimer, Config, EventHandlers>
     {
         public static RespawnTimer Instance;
         public static string RespawnTimerDirectoryPath { get; private set; }

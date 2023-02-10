@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class Health : EventControllerModule<Config, EventHandlers>
+    public sealed class Health : EventControllerModule<Health, Config, EventHandlers>
     {
     }
 }

@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class CleanupUtility : EventControllerModule<Config, EventHandlers>
+    public sealed class CleanupUtility : EventControllerModule<CleanupUtility, Config, EventHandlers>
     {
     }
 }

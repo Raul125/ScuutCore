@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class Scp096Notifications : EventControllerModule<Config, EventHandlers>
+    public sealed class Scp096Notifications : EventControllerModule<Scp096Notifications, Config, EventHandlers>
     {
     }
 }

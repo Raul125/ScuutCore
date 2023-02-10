@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class RoundSummary : EventControllerModule<Config, EventHandlers>
+    public sealed class RoundSummary : EventControllerModule<RoundSummary, Config, EventHandlers>
     {
     }
 }

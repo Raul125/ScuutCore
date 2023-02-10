@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class RainbowTags : EventControllerModule<Config, EventHandlers>
+    public sealed class RainbowTags : EventControllerModule<RainbowTags, Config, EventHandlers>
     {
     }
 }

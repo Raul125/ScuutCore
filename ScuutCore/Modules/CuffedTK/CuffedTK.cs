@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class CuffedTK : EventControllerModule<Config, EventHandlers>
+    public sealed class CuffedTK : EventControllerModule<CuffedTK, Config, EventHandlers>
     {
     }
 }

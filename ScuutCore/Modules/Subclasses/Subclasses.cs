@@ -10,7 +10,7 @@
     using PluginAPI.Helpers;
     using YamlDotNet.Serialization;
 
-    public sealed class Subclasses : EventControllerModule<Config, EventHandlers>
+    public sealed class Subclasses : EventControllerModule<Subclasses, Config, EventHandlers>
     {
         public static Subclasses Singleton;
         public static Dictionary<string, string> SpawnTranslations = new();

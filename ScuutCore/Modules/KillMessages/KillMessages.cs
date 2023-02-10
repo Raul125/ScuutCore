@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class KillMessages : EventControllerModule<Config, EventHandlers>
+    public sealed class KillMessages : EventControllerModule<KillMessages, Config, EventHandlers>
     {
     }
 }

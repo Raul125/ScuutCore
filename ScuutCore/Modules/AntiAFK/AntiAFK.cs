@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class AntiAFK : EventControllerModule<Config, EventHandlers>
+    public sealed class AntiAFK : EventControllerModule<AntiAFK, Config, EventHandlers>
     {
         public static AntiAFK Singleton;
 

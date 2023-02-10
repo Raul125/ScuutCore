@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class RemoteKeycard : EventControllerModule<Config, EventHandlers>
+    public sealed class RemoteKeycard : EventControllerModule<RemoteKeycard, Config, EventHandlers>
     {
     }
 }

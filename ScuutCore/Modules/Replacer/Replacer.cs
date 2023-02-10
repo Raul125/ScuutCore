@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class Replacer : EventControllerModule<Config, EventHandlers>
+    public sealed class Replacer : EventControllerModule<Replacer, Config, EventHandlers>
     {
     }
 }

@@ -2,7 +2,7 @@
 {
     using API.Features;
 
-    public sealed class Chaos : EventControllerModule<Config, EventHandlers>
+    public sealed class Chaos : EventControllerModule<Chaos, Config, EventHandlers>
     {
     }
 }
