@@ -210,6 +210,7 @@
     <Compile Include="Modules\Health\Health.cs" />
     <Compile Include="Modules\Health\Config.cs" />
     <Compile Include="Modules\Health\EventHandlers.cs" />
+      <Compile Include="Modules\Health\Modules\AhpRole.cs"/>
     <Compile Include="Modules\Scp096Notifications\Scp096Notifications.cs" />
     <Compile Include="Modules\Scp096Notifications\Config.cs" />
     <Compile Include="Modules\Scp096Notifications\EventHandlers.cs" />
