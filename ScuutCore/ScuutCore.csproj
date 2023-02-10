@@ -96,16 +96,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Features\ScuutPlayerFactory.cs" />
-    <Compile Include="API\Features\ScuutPlayer.cs" />
-    <Compile Include="API\Features\BroadcastConfig.cs" />
-    <Compile Include="API\Features\CassieConfig.cs" />
-    <Compile Include="API\Features\HintConfig.cs" />
-    <Compile Include="API\Features\Module.cs" />
-    <Compile Include="API\Features\Subclass.cs" />
-    <Compile Include="API\Helpers\PlayerDeathEffects.cs" />
-    <Compile Include="API\Interfaces\IModuleConfig.cs" />
-    <Compile Include="API\Interfaces\IModule.cs" />
+      <Compile Include="API\Features\EventControllerModule.cs"/>
+      <Compile Include="API\Features\IEventHandler.cs"/>
+      <Compile Include="API\Features\IInstanceBasedEventHandler.cs"/>
+      <Compile Include="API\Features\ScuutPlayerFactory.cs"/>
+      <Compile Include="API\Features\ScuutPlayer.cs"/>
+      <Compile Include="API\Features\BroadcastConfig.cs"/>
+      <Compile Include="API\Features\CassieConfig.cs"/>
+      <Compile Include="API\Features\HintConfig.cs"/>
+      <Compile Include="API\Features\Module.cs"/>
+      <Compile Include="API\Features\Subclass.cs"/>
+      <Compile Include="API\Helpers\PlayerDeathEffects.cs"/>
+      <Compile Include="API\Interfaces\IModuleConfig.cs"/>
+      <Compile Include="API\Interfaces\IModule.cs"/>
     <Compile Include="API\Loader\Loader.cs" />
     <Compile Include="Commands\Server.cs" />
     <Compile Include="Commands\Nick.cs" />
