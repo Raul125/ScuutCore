@@ -1,12 +1,11 @@
-﻿using Interactables.Interobjects.DoorUtils;
-using InventorySystem.Items.Keycards;
-using MapGeneration.Distributors;
-using PlayerRoles;
-using PluginAPI.Core;
-using PluginAPI.Core.Interfaces;
-
-namespace ScuutCore.Modules.RemoteKeycard
+﻿namespace ScuutCore.Modules.RemoteKeycard
 {
+    using Interactables.Interobjects.DoorUtils;
+    using InventorySystem.Items.Keycards;
+    using MapGeneration.Distributors;
+    using PlayerRoles;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Interfaces;
     public static class Extension
     {
         /// <summary>
@@ -27,7 +26,7 @@ namespace ScuutCore.Modules.RemoteKeycard
 
                 foreach (var item in player.ReferenceHub.inventory.UserInventory.Items.Values)
                 {
-                    if (!(item is KeycardItem)) 
+                    if (item is not KeycardItem)
                         continue;
 
                     var keycard = item as KeycardItem;

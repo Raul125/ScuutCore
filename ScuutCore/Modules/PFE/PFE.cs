@@ -1,28 +1,10 @@
 ﻿namespace ScuutCore.Modules.PFE
 {
-    using PluginAPI.Events;
-    using ScuutCore.API.Features;
+    using API.Features;
 
-    public class PFE : Module<Config>
+    public sealed class PFE : EventControllerModule<Config, EventHandlers>
     {
-        public override string Name { get; } = "Peanut fucking explodes";
+        public override string Name => "Peanut fucking explodes";
 
-        private EventHandlers EventHandlers;
-
-        public override void OnEnabled()
-        {
-            EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
-
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
-            EventHandlers = null;
-
-            base.OnDisabled();
-        }
     }
 }
