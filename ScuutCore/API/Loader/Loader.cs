@@ -4,21 +4,21 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
+    using Features;
+    using Interfaces;
     using LiteNetLib.Utils;
     using PluginAPI.Core;
-    using ScuutCore.API.Features;
-    using ScuutCore.API.Interfaces;
     using YamlDotNet.Serialization;
     using YamlDotNet.Serialization.NamingConventions;
 
     public static class Loader
     {
-        public static ISerializer Serializer { get; set; } = new SerializerBuilder()
+        public static ISerializer Serializer { get; } = new SerializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .IgnoreFields()
             .Build();
 
-        public static IDeserializer Deserializer { get; set; } = new DeserializerBuilder()
+        public static IDeserializer Deserializer { get; } = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .IgnoreFields()
             .IgnoreUnmatchedProperties()
@@ -26,7 +26,7 @@
 
         public static SortedSet<IModule<IModuleConfig>> Modules { get; } = new SortedSet<IModule<IModuleConfig>>();
         public static SortedSet<IModule<IModuleConfig>> ActiveModules { get; } = new SortedSet<IModule<IModuleConfig>>();
-        
+
         public static void InitModules()
         {
             Directory.CreateDirectory(Plugin.Singleton.Config.ConfigsFolder);
@@ -35,10 +35,10 @@
                 if (mod.IsAbstract || mod.IsInterface)
                     continue;
 
-                if (!mod.BaseType.IsGenericType || (mod.BaseType.GetGenericTypeDefinition() != typeof(Module<>)))
+                if (!mod.BaseType.IsGenericType || mod.BaseType.GetGenericTypeDefinition() != typeof(Module<>))
                     continue;
 
-                IModule<IModuleConfig> module = null;
+                IModule<IModuleConfig> module;
 
                 try
                 {

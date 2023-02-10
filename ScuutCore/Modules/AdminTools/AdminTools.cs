@@ -1,27 +1,9 @@
 ﻿namespace ScuutCore.Modules.AdminTools
 {
-    using ScuutCore.API.Features;
-    using PluginAPI.Events;
-    public class AdminTools : Module<Config>
+    using API.Features;
+    public sealed class AdminTools : EventControllerModule<Config, EventHandlers>
     {
-        public override string Name { get; } = "AdminTools";
+        public override string Name => "AdminTools";
 
-        private EventHandlers EventHandlers;
-
-        public override void OnEnabled()
-        {
-            EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
-
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
-            EventHandlers = null;
-
-            base.OnDisabled();
-        }
     }
 }

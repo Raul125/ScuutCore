@@ -7,31 +7,27 @@
     using PluginAPI.Enums;
     using Respawning;
 
-    public sealed class EventHandlers : IInstanceBasedEventHandler<Chaos>
+    public sealed class EventHandlers : InstanceBasedEventHandler<Chaos>
     {
-        private Chaos chaos;
-
-        public void AssignModule(Chaos module)
-        {
-            chaos = module;
-        }
 
         [PluginEvent(ServerEventType.TeamRespawn)]
         public void OnRespawningTeam(SpawnableTeamType team)
         {
             if (team is not SpawnableTeamType.ChaosInsurgency)
                 return;
-            Plugin.Coroutines.Add(Timing.CallDelayed(chaos.Config.CassieDelay, () =>
-            {
-                var announcement = StringBuilderPool.Shared.Rent();
-                string[] cassies = chaos.Config.ChaosCassie.Split('\n');
-                string[] translations = chaos.Config.CustomSubtitle.Split('\n');
-                for (int i = 0; i < cassies.Length; i++)
-                    announcement.Append($"{translations[i].Replace(' ', ' ')}<size=0> {cassies[i]} </size><split>");
+            Plugin.Coroutines.Add(Timing.CallDelayed(Module.Config.CassieDelay, PlayAnnouncement));
+        }
 
-                RespawnEffectsController.PlayCassieAnnouncement(announcement.ToString(), false, false, true);
-                StringBuilderPool.Shared.Return(announcement);
-            }));
+        private void PlayAnnouncement()
+        {
+            var announcement = StringBuilderPool.Shared.Rent();
+            string[] cassie = Module.Config.ChaosCassie.Split('\n');
+            string[] translations = Module.Config.CustomSubtitle.Split('\n');
+            for (int i = 0; i < cassie.Length; i++)
+                announcement.Append($"{translations[i].Replace(' ', ' ')}<size=0> {cassie[i]} </size><split>");
+
+            RespawnEffectsController.PlayCassieAnnouncement(announcement.ToString(), false, false, true);
+            StringBuilderPool.Shared.Return(announcement);
         }
     }
 }

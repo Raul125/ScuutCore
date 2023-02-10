@@ -3,16 +3,16 @@
     using Interfaces;
     using PluginAPI.Events;
 
-    public abstract class EventControllerModule<TModuleConfig, TEventHandler> : Module<TModuleConfig>
-    where TModuleConfig : IModuleConfig, new() where TEventHandler : IEventHandler, new()
+    public abstract class EventControllerModule<TModuleConfig, THandler> : Module<TModuleConfig>
+    where TModuleConfig : IModuleConfig, new() where THandler : IEventHandler, new()
     {
-        protected TEventHandler EventHandlers;
+        protected THandler EventHandlers;
 
         public override void OnEnabled()
         {
-            EventHandlers = new TEventHandler();
-            if (EventHandlers is IInstanceBasedEventHandler<EventControllerModule<TModuleConfig, TEventHandler>> handler)
-                handler.AssignModule(this);
+            EventHandlers = new THandler();
+            if (EventHandlers is InstanceBasedEventHandler<EventControllerModule<TModuleConfig, THandler>> handler)
+                handler.Module = this;
             EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
             base.OnEnabled();
         }
