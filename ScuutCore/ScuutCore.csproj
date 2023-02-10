@@ -156,7 +156,9 @@
     <Compile Include="Modules\CustomEscape\Config.cs" />
     <Compile Include="Modules\CustomEscape\EventHandlers.cs" />
     <Compile Include="Modules\CustomEscape\CustomEscape.cs" />
-      <Compile Include="Modules\Health\Modules\AhpRole.cs"/>
+    <Compile Include="Modules\Scp008\Config.cs" />
+    <Compile Include="Modules\Scp008\EventHandlers.cs" />
+    <Compile Include="Modules\Scp008\Scp008.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Cancel.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Decline.cs" />
