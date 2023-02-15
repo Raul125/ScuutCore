@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using API.Features;
+    using ScuutCore.API.Features;
     using MEC;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;

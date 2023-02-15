@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.Restart
 {
-    using API.Features;
+    using ScuutCore.API.Features;
 
     public sealed class Restart : Module<Config>
     {

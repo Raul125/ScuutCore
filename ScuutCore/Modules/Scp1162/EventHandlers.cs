@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.Scp1162
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using InventorySystem;
     using InventorySystem.Items.Pickups;
     using InventorySystem.Items.Usables.Scp330;

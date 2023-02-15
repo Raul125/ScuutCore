@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.ScpSwap
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using MEC;
     using Models;
     using PlayerRoles;

@@ -5,7 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using Interfaces;
+    using ScuutCore.API.Interfaces;
     using LiteNetLib.Utils;
     using PluginAPI.Core;
     using YamlDotNet.Serialization;

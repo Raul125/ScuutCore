@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.AutoFFToggle
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;

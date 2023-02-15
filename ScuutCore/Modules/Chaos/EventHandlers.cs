@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.Chaos
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using MEC;
     using NorthwoodLib.Pools;
     using PluginAPI.Core.Attributes;

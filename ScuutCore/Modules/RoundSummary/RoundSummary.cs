@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.RoundSummary
 {
-    using API.Features;
+    using ScuutCore.API.Features;
 
     public sealed class RoundSummary : EventControllerModule<RoundSummary, Config, EventHandlers>
     {

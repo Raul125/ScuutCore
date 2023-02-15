@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.PFE
 {
-    using API.Features;
+    using ScuutCore.API.Features;
 
     public sealed class PFE : EventControllerModule<PFE, Config, EventHandlers>
     {

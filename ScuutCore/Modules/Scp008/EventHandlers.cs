@@ -1,5 +1,6 @@
 ﻿namespace ScuutCore.Modules.Scp008
 {
+    using ScuutCore.API.Features;
     using PluginAPI.Core;
     using PlayerRoles;
     using UnityEngine;
@@ -9,11 +10,8 @@
     using CustomPlayerEffects;
     using PlayerStatsSystem;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
     {
-        private readonly Scp008 instance;
-        public EventHandlers(Scp008 instance) => this.instance = instance;
-
         [PluginEvent(ServerEventType.PlayerDamage)]
         public void OnHurt(Player target, Player attacker, DamageHandlerBase damageHandler)
         {
@@ -26,11 +24,10 @@
             if (attacker.Role is not RoleTypeId.Scp0492 || poisonedEffect.IsEnabled)
                 return;
 
-            if (Random.Range(0, 100) <= instance.Config.InfectionChance)
-            {
-                target.EffectsManager.EnableEffect<Poisoned>();
-                instance.Config.InfectedHint.Show(target);
-            }
+            if (Random.Range(0, 100) > Module.Config.InfectionChance)
+                return;
+            target.EffectsManager.EnableEffect<Poisoned>();
+            Module.Config.InfectedHint.Show(target);
         }
 
         [PluginEvent(ServerEventType.PlayerUsedItem)]
@@ -39,14 +36,13 @@
             if (player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) && poisonedEffect.IsEnabled is false)
                 return;
 
-            if (!instance.Config.CureChance.TryGetValue(item.ItemTypeId, out int chance))
+            if (!Module.Config.CureChance.TryGetValue(item.ItemTypeId, out int chance))
                 return;
 
-            if (Random.Range(0, 100) <= chance)
-            {
-                poisonedEffect.DisableEffect();
-                instance.Config.CuredHint.Show(player);
-            }
+            if (Random.Range(0, 100) > chance)
+                return;
+            poisonedEffect.DisableEffect();
+            Module.Config.CuredHint.Show(player);
         }
 
         [PluginEvent(ServerEventType.PlayerDying)]
@@ -58,7 +54,7 @@
             if (poisonedEffect.IsEnabled is false)
                 return true;
 
-            if (instance.Config.DropInventory)
+            if (Module.Config.DropInventory)
                 player.DropEverything();
 
             player.ReferenceHub.roleManager.ServerSetRole(RoleTypeId.Scp0492, RoleChangeReason.Revived, RoleSpawnFlags.None);

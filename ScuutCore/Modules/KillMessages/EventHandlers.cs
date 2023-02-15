@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.KillMessages
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using PlayerStatsSystem;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;

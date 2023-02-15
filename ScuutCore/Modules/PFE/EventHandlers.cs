@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.PFE
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using API.Helpers;
     using PlayerStatsSystem;
     using PluginAPI.Core;

@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.API.Features
 {
-    using Interfaces;
+    using ScuutCore.API.Interfaces;
     using PluginAPI.Core;
 
     public abstract class Module<TModuleConfig> : IModule<TModuleConfig> where TModuleConfig : IModuleConfig, new()

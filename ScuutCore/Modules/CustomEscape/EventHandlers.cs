@@ -1,7 +1,7 @@
 ﻿namespace ScuutCore.Modules.CustomEscape
 {
     using System.Collections.Generic;
-    using API.Features;
+    using ScuutCore.API.Features;
     using InventorySystem.Disarming;
     using MEC;
     using PlayerRoles;

@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.CuffedTK
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using PlayerRoles;
     using PlayerStatsSystem;
     using PluginAPI.Core;

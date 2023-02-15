@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.AntiAFK
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     using Components;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;

@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.Teslas
 {
-    using API.Features;
+    using ScuutCore.API.Features;
 
     public sealed class Teslas : Module<Config>
     {

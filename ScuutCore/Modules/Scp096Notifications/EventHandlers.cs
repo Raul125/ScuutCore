@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.Scp096Notifications
 {
-    using API.Features;
+    using ScuutCore.API.Features;
     public sealed class EventHandlers : InstanceBasedEventHandler<Scp096Notifications>
     {
         /*public void OnAddingTarget(AddingTargetEventArgs ev)

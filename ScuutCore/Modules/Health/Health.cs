@@ -1,6 +1,6 @@
 ﻿namespace ScuutCore.Modules.Health
 {
-    using API.Features;
+    using ScuutCore.API.Features;
 
     public sealed class Health : EventControllerModule<Health, Config, EventHandlers>
     {
