@@ -1,28 +1,8 @@
 ﻿namespace ScuutCore.Modules.Chaos
 {
-    using ScuutCore.API.Features;
-    using PluginAPI.Events;
+    using API.Features;
 
-    public class Chaos : Module<Config>
+    public sealed class Chaos : EventControllerModule<Chaos, Config, EventHandlers>
     {
-        public override string Name { get; } = "Chaos";
-
-        private EventHandlers EventHandlers;
-
-        public override void OnEnabled()
-        {
-            EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
-
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
-            EventHandlers = null;
-
-            base.OnDisabled();
-        }
     }
 }

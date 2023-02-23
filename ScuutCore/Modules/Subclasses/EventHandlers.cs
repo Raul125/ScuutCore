@@ -2,15 +2,15 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using ScuutCore.API.Features;
     using PlayerRoles;
     using PlayerStatsSystem;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
-    using ScuutCore.API.Features;
     using RoundSummary = global::RoundSummary;
 
-    public class EventHandlers
+    public sealed class EventHandlers : IEventHandler
     {
         private Dictionary<Subclass, int> _subclassesSpawned = new Dictionary<Subclass, int>();
 
@@ -42,11 +42,10 @@
                     _subclassesSpawned[subclass]++;
                 }
 
-                if (UnityEngine.Random.Range(0f, 100f) <= subclass.SpawnChance)
-                {
-                    player.SubClass = subclass;
-                    return;
-                }
+                if (!(UnityEngine.Random.Range(0f, 100f) <= subclass.SpawnChance))
+                    continue;
+                player.SubClass = subclass;
+                return;
             }
         }
 

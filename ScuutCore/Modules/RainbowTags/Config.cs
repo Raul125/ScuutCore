@@ -1,13 +1,11 @@
-﻿using PluginAPI.Core;
-using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.RainbowTags
+﻿namespace ScuutCore.Modules.RainbowTags
 {
-    using ScuutCore.API.Interfaces;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using API.Interfaces;
+    using PluginAPI.Core;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         private float tagInterval = 0.5f;
 

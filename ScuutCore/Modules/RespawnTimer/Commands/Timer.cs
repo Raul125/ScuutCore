@@ -1,10 +1,11 @@
-﻿namespace ScuutCore.Modules.RespawnTimer
+﻿namespace ScuutCore.Modules.RespawnTimer.Commands
 {
     using System;
+    using API;
     using CommandSystem;
 
     [CommandHandler(typeof(ClientCommandHandler))]
-    public class Timer : ICommand
+    public sealed class Timer : ICommand
     {
         public string Command => "timer";
 

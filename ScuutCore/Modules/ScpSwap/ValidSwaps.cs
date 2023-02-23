@@ -10,6 +10,7 @@ namespace ScuutCore.Modules.ScpSwap
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using Models;
     using PlayerRoles;
     using PluginAPI.Core;
 

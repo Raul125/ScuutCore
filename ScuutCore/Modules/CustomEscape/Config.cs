@@ -1,20 +1,30 @@
 ﻿namespace ScuutCore.Modules.CustomEscape
 {
-    using PlayerRoles;
     using System.Collections.Generic;
-    using ScuutCore.API.Interfaces;
+    using API.Interfaces;
+    using PlayerRoles;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 
         public Dictionary<RoleTypeId, RoleTypeId> CuffedRoleConversions { get; set; } = new Dictionary<RoleTypeId, RoleTypeId>
         {
-            { RoleTypeId.FacilityGuard, RoleTypeId.ChaosRifleman },
-            { RoleTypeId.ChaosRifleman, RoleTypeId.NtfPrivate },
-            { RoleTypeId.ChaosRepressor, RoleTypeId.NtfPrivate },
-            { RoleTypeId.ChaosMarauder, RoleTypeId.NtfPrivate },
-            { RoleTypeId.ChaosConscript, RoleTypeId.NtfPrivate }
+            {
+                RoleTypeId.FacilityGuard, RoleTypeId.ChaosRifleman
+            },
+            {
+                RoleTypeId.ChaosRifleman, RoleTypeId.NtfPrivate
+            },
+            {
+                RoleTypeId.ChaosRepressor, RoleTypeId.NtfPrivate
+            },
+            {
+                RoleTypeId.ChaosMarauder, RoleTypeId.NtfPrivate
+            },
+            {
+                RoleTypeId.ChaosConscript, RoleTypeId.NtfPrivate
+            }
         };
 
         public bool Debug { get; set; } = false;

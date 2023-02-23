@@ -5,12 +5,12 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Models
 {
     using System.Collections.Generic;
-    using PluginAPI.Core;
     using MEC;
     using PlayerRoles;
+    using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using PluginAPI.Events;
@@ -121,7 +121,7 @@ namespace ScuutCore.Modules.ScpSwap
         /// </summary>
         public void Cancel()
         {
-            Sender.SendBroadcast("Swap request cancelled!",5, shouldClearPrevious: true);
+            Sender.SendBroadcast("Swap request cancelled!", 5, shouldClearPrevious: true);
             Destroy();
         }
 
@@ -130,7 +130,7 @@ namespace ScuutCore.Modules.ScpSwap
         /// </summary>
         public void Decline()
         {
-            Sender.SendBroadcast($"{Receiver.DisplayNickname ?? Receiver.Nickname} has declined your swap request.",5, shouldClearPrevious: true);
+            Sender.SendBroadcast($"{Receiver.DisplayNickname ?? Receiver.Nickname} has declined your swap request.", 5, shouldClearPrevious: true);
             Destroy();
         }
 

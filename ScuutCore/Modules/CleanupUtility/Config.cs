@@ -1,8 +1,8 @@
 ﻿namespace ScuutCore.Modules.CleanupUtility
 {
-    using ScuutCore.API.Interfaces;
+    using API.Interfaces;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
         // public float CleanDelay { get; set; } = 300f;

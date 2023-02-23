@@ -1,13 +1,11 @@
-﻿using PlayerRoles;
-using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace ScuutCore.Modules.Teslas
+﻿namespace ScuutCore.Modules.Teslas
 {
-    using ScuutCore.API.Interfaces;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using API.Interfaces;
+    using PlayerRoles;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 

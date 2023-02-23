@@ -1,15 +1,16 @@
-﻿namespace ScuutCore.Modules.RespawnTimer
+﻿namespace ScuutCore.Modules.RespawnTimer.API.Features
 {
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using Configs;
+    using Extensions;
     using PluginAPI.Core;
     using Respawning;
     using ScuutCore.API.Loader;
-    using Serialization;
     using UnityEngine;
 
-    public class TimerView
+    public sealed class TimerView
     {
         public static TimerView Current { get; private set; }
 
@@ -74,12 +75,10 @@
             StringBuilder.Replace('{', '[').Replace('}', ']');
 
             HintInterval++;
-            if (HintInterval == Properties.HintInterval)
-            {
-                HintInterval = 0;
-                IncrementHintIndex();
-            }
-
+            if (HintInterval != Properties.HintInterval)
+                return StringBuilder.ToString();
+            HintInterval = 0;
+            IncrementHintIndex();
             return StringBuilder.ToString();
         }
 

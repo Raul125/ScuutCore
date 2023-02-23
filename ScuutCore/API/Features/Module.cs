@@ -1,13 +1,13 @@
 ﻿namespace ScuutCore.API.Features
 {
-    using PluginAPI.Core;
     using ScuutCore.API.Interfaces;
+    using PluginAPI.Core;
 
     public abstract class Module<TModuleConfig> : IModule<TModuleConfig> where TModuleConfig : IModuleConfig, new()
     {
-        public Module()
+        protected Module()
         {
-
+            Name = GetType().Name;
         }
 
         public virtual string Name { get; }

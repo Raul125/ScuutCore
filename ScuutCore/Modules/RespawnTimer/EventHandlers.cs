@@ -1,38 +1,30 @@
 ﻿namespace ScuutCore.Modules.RespawnTimer
 {
-    using MEC;
-    using PluginAPI.Core.Attributes;
-    using PluginAPI.Enums;
-    using Respawning;
-    using NorthwoodLib.Pools;
-    using System.Text;
-    using Hints;
-    using PlayerRoles;
-    using PluginAPI.Core;
     using System.Collections.Generic;
     using System.Linq;
+    using API.Features;
+    using MEC;
+    using PlayerRoles;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using ScuutCore.API.Features;
     using UnityEngine;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<RespawnTimer>
     {
-        private RespawnTimer rt;
-        public EventHandlers(RespawnTimer rt)
-        {
-            this.rt = rt;
-        }
-
         private CoroutineHandle _timerCoroutine;
 
         [PluginEvent(ServerEventType.WaitingForPlayers)]
         internal void OnWaitingForPlayers()
         {
-            if (rt.Config.Timers.IsEmpty())
+            if (Module.Config.Timers.IsEmpty())
             {
                 Log.Error("Timer list is empty!");
                 return;
             }
 
-            string chosenTimerName = rt.Config.Timers[Random.Range(0, rt.Config.Timers.Count)];
+            string chosenTimerName = Module.Config.Timers[Random.Range(0, Module.Config.Timers.Count)];
             TimerView.GetNew(chosenTimerName);
         }
 
@@ -44,7 +36,7 @@
 
             _timerCoroutine = Timing.RunCoroutine(TimerCoroutine());
 
-            Log.Debug($"RespawnTimer coroutine started successfully!", rt.Config.Debug);
+            Log.Debug($"RespawnTimer coroutine started successfully!", Module.Config.Debug);
         }
 
         private IEnumerator<float> TimerCoroutine()
@@ -59,23 +51,13 @@
 
                 foreach (Player player in Spectators)
                 {
-                    if (player.Role == RoleTypeId.Overwatch && rt.Config.HideTimerForOverwatch || API.TimerHidden.Contains(player.UserId))
+                    if (player.Role == RoleTypeId.Overwatch && Module.Config.HideTimerForOverwatch || API.API.TimerHidden.Contains(player.UserId))
                         continue;
 
-                    ShowHint(player, text, 1.25f);
+                    player.ReceiveHint(text, 1.25f);
                 }
 
             } while (!global::RoundSummary.singleton._roundEnded);
-        }
-
-        public void ShowHint(Player player, string message, float duration = 3f)
-        {
-            HintParameter[] parameters =
-            {
-                new StringHintParameter(message)
-            };
-
-            player.ReferenceHub.networkIdentity.connectionToClient.Send(new HintMessage(new TextHint(message, parameters, durationScalar: duration)));
         }
 
         private static readonly List<Player> Spectators = new(25);

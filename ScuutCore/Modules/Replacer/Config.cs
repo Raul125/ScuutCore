@@ -1,15 +1,11 @@
-﻿using ScuutCore.API;
-using System.Collections.Generic;
-using System.ComponentModel;
-using PluginAPI.Core;
-using PlayerRoles;
-
-namespace ScuutCore.Modules.Replacer
+﻿namespace ScuutCore.Modules.Replacer
 {
-    using ScuutCore.API.Features;
-    using ScuutCore.API.Interfaces;
+    using System.Collections.Generic;
+    using API.Features;
+    using API.Interfaces;
+    using PlayerRoles;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 

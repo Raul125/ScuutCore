@@ -3,9 +3,10 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using API.Interfaces;
+    using Models;
     using PlayerRoles;
 
-    public class Config : IModuleConfig
+    public sealed class Config : IModuleConfig
     {
         public bool IsEnabled { get; set; } = true;
 

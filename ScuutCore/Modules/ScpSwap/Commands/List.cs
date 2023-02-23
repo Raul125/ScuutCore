@@ -5,7 +5,7 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Commands
 {
     using System;
     using System.Text;
@@ -15,13 +15,16 @@ namespace ScuutCore.Modules.ScpSwap
     /// <summary>
     /// Lists all valid swappable roles.
     /// </summary>
-    public class List : ICommand
+    public sealed class List : ICommand
     {
         /// <inheritdoc />
         public string Command { get; set; } = "list";
 
         /// <inheritdoc />
-        public string[] Aliases { get; set; } = { "l" };
+        public string[] Aliases { get; set; } =
+        {
+            "l"
+        };
 
         /// <inheritdoc />
         public string Description { get; set; } = "Lists all valid swappable roles.";

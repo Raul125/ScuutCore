@@ -5,10 +5,10 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap
+namespace ScuutCore.Modules.ScpSwap.Models
 {
-    using PluginAPI.Core;
     using System;
+    using PluginAPI.Core;
 
     /// <summary>
     /// Container to make translations for console messages more fun.

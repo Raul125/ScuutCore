@@ -3,22 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
+    using ScuutCore.API.Interfaces;
     using LiteNetLib.Utils;
     using PluginAPI.Core;
-    using ScuutCore.API.Features;
-    using ScuutCore.API.Interfaces;
     using YamlDotNet.Serialization;
     using YamlDotNet.Serialization.NamingConventions;
 
     public static class Loader
     {
-        public static ISerializer Serializer { get; set; } = new SerializerBuilder()
+        public static ISerializer Serializer { get; } = new SerializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .IgnoreFields()
             .Build();
 
-        public static IDeserializer Deserializer { get; set; } = new DeserializerBuilder()
+        public static IDeserializer Deserializer { get; } = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)
             .IgnoreFields()
             .IgnoreUnmatchedProperties()
@@ -26,26 +26,24 @@
 
         public static SortedSet<IModule<IModuleConfig>> Modules { get; } = new SortedSet<IModule<IModuleConfig>>();
         public static SortedSet<IModule<IModuleConfig>> ActiveModules { get; } = new SortedSet<IModule<IModuleConfig>>();
-        
+
         public static void InitModules()
         {
             Directory.CreateDirectory(Plugin.Singleton.Config.ConfigsFolder);
             foreach (var mod in Assembly.GetExecutingAssembly().GetTypes())
             {
-                if (mod.IsAbstract || mod.IsInterface)
+                if (mod.IsAbstract || mod.IsInterface || !mod.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IModule<>)))
                     continue;
 
-                if (!mod.BaseType.IsGenericType || (mod.BaseType.GetGenericTypeDefinition() != typeof(Module<>)))
-                    continue;
-
-                IModule<IModuleConfig> module = null;
+                IModule<IModuleConfig> module;
 
                 try
                 {
                     module = CreateModule(mod);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Log.Error($"Failed loading module {mod.FullName}:\n" + e);
                     continue;
                 }
 

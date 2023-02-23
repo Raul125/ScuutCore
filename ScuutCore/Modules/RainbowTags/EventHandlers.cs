@@ -1,26 +1,20 @@
-﻿using PluginAPI.Core;
-using UnityEngine;
-using PluginAPI.Core.Attributes;
-using PluginAPI.Enums;
-using MEC;
-using System.Linq;
-
-namespace ScuutCore.Modules.RainbowTags
+﻿namespace ScuutCore.Modules.RainbowTags
 {
-    using ScuutCore.Modules.RainbowTags.Component;
+    using System.Linq;
+    using ScuutCore.API.Features;
+    using Component;
+    using MEC;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using UnityEngine;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<RainbowTags>
     {
-        private RainbowTags rainbowTags;
-        public EventHandlers(RainbowTags rb)
-        {
-            rainbowTags = rb;
-        }
-
         [PluginEvent(ServerEventType.PlayerJoined)]
         public void OnJoined(Player player)
         {
-            if (player is null || player.GameObject is null)
+            if (player?.GameObject == null)
                 return;
 
             Plugin.Coroutines.Add(Timing.CallDelayed(2f, () =>
@@ -28,9 +22,9 @@ namespace ScuutCore.Modules.RainbowTags
                 bool hasColors = TryGetColors(GetKey(player.ReferenceHub.serverRoles.Group), out string[] colors);
                 if (player.ReferenceHub.serverRoles.Group != null && hasColors)
                 {
-                    RainbowTagController controller = player.GameObject.AddComponent<RainbowTagController>();
+                    var controller = player.GameObject.AddComponent<RainbowTagController>();
                     controller.Colors = colors;
-                    controller.Interval = rainbowTags.Config.TagInterval;
+                    controller.Interval = Module.Config.TagInterval;
                     return;
                 }
 
@@ -47,10 +41,10 @@ namespace ScuutCore.Modules.RainbowTags
         private bool TryGetColors(string rank, out string[] availableColors)
         {
             availableColors = null;
-            return !string.IsNullOrEmpty(rank) && rainbowTags.Config.Sequences.TryGetValue(rank, out availableColors);
+            return !string.IsNullOrEmpty(rank) && Module.Config.Sequences.TryGetValue(rank, out availableColors);
         }
 
-        public string GetKey(UserGroup @this) => ServerStatic.PermissionsHandler._groups
-            .FirstOrDefault(pair => pair.Value.Equals(@this)).Key;
+        public static string GetKey(UserGroup group) => ServerStatic.PermissionsHandler._groups
+            .FirstOrDefault(pair => pair.Value.Equals(group)).Key;
     }
 }

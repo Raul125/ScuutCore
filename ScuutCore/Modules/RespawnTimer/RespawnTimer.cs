@@ -1,18 +1,13 @@
 ﻿namespace ScuutCore.Modules.RespawnTimer
 {
-    using ScuutCore.API.Features;
-    using PluginAPI.Events;
-    using PluginAPI.Core;
     using System.IO;
-    using Serialization;
+    using Configs;
+    using PluginAPI.Core;
+    using ScuutCore.API.Features;
     using ScuutCore.API.Loader;
 
-    public class RespawnTimer : Module<Config>
+    public sealed class RespawnTimer : EventControllerModule<RespawnTimer, Config, EventHandlers>
     {
-        public override string Name { get; } = "RespawnTimer";
-
-        private EventHandlers EventHandlers;
-
         public static RespawnTimer Instance;
         public static string RespawnTimerDirectoryPath { get; private set; }
 
@@ -40,19 +35,12 @@
                 File.WriteAllText(hintsPath, "This is an example hint. You can add as much as you want.");
             }
 
-            EventHandlers = new EventHandlers(this);
-            EventManager.RegisterEvents(Plugin.Singleton, EventHandlers);
-
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            EventManager.UnregisterEvents(Plugin.Singleton, EventHandlers);
-
-            EventHandlers = null;
             Instance = null;
-
             base.OnDisabled();
         }
     }

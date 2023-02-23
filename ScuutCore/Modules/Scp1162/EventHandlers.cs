@@ -1,25 +1,18 @@
 ﻿namespace ScuutCore.Modules.Scp1162
 {
-    using PluginAPI.Core;
-    using PlayerRoles;
-    using UnityEngine;
-    using InventorySystem.Items;
+    using ScuutCore.API.Features;
     using InventorySystem;
-    using PluginAPI.Core.Attributes;
-    using PluginAPI.Enums;
-    using PlayerRoles.FirstPersonControl.Spawnpoints;
-    using Mirror;
-    using PluginAPI.Events;
     using InventorySystem.Items.Pickups;
     using InventorySystem.Items.Usables.Scp330;
+    using Mirror;
+    using PluginAPI.Core;
+    using PluginAPI.Core.Attributes;
+    using PluginAPI.Enums;
+    using UnityEngine;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<Scp1162>
     {
-        public EventHandlers()
-        {
-        }
-
-        private GameObject Scp1162gameObject = null;
+        private GameObject Scp1162gameObject;
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStarted()
         {
@@ -44,44 +37,42 @@
             if (item.gameObject != Scp1162gameObject)
                 return true;
 
-            if (player.CurrentItem != null)
+            if (player.CurrentItem == null)
+                return false;
+            if (player.CurrentItem.ItemTypeId == ItemType.SCP330)
             {
-                if (player.CurrentItem.ItemTypeId == ItemType.SCP330)
+                var bag = player.CurrentItem as Scp330Bag;
+                if (bag == null || bag.Candies.Count < 1)
                 {
-                    var bag = player.CurrentItem as Scp330Bag;
-                    if (bag == null || bag.Candies.Count < 1)
-                    {
-                        return false;
-                    }
-
-                    bag.SelectCandy(0);
-                    var removed = bag.TryRemove(0);
-                    if (removed == CandyKindID.None)
-                        return false;
-                }
-                else
-                    player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
-
-                ItemType newItem = ItemType.None;
-                getItem:
-                foreach (var itemd in Scp1162.Instance.Config.Chances)
-                {
-                    if (Plugin.Random.Next(0, 100) <= itemd.Value)
-                    {
-                        newItem = itemd.Key;
-                        break;
-                    }
+                    return false;
                 }
 
-                if (newItem == ItemType.None)
-                    goto getItem;
-
-                player.AddItem(newItem);
-                if (Scp1162.Instance.Config.UseHints)
-                    player.ReceiveHint(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
-                else
-                    player.SendBroadcast(Scp1162.Instance.Config.ItemDropMessage, Scp1162.Instance.Config.ItemDropMessageDuration);
+                bag.SelectCandy(0);
+                var removed = bag.TryRemove(0);
+                if (removed == CandyKindID.None)
+                    return false;
             }
+            else
+                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
+
+            var newItem = ItemType.None;
+            getItem:
+            foreach (var pair in Module.Config.Chances)
+            {
+                if (Plugin.Random.Next(0, 100) > pair.Value)
+                    continue;
+                newItem = pair.Key;
+                break;
+            }
+
+            if (newItem == ItemType.None)
+                goto getItem;
+
+            player.AddItem(newItem);
+            if (Module.Config.UseHints)
+                player.ReceiveHint(Module.Config.ItemDropMessage, Module.Config.ItemDropMessageDuration);
+            else
+                player.SendBroadcast(Module.Config.ItemDropMessage, Module.Config.ItemDropMessageDuration);
 
             return false;
         }

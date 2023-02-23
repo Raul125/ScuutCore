@@ -1,30 +1,27 @@
 ﻿namespace ScuutCore.Modules.ScpSwap
 {
+    using ScuutCore.API.Features;
     using MEC;
+    using Models;
     using PlayerRoles;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
 
-    public class EventHandlers
+    public sealed class EventHandlers : InstanceBasedEventHandler<ScpSwap>
     {
-        private ScpSwap scpSwap;
-        public EventHandlers(ScpSwap sc)
-        {
-            scpSwap = sc;
-        }
-
         [PluginEvent(ServerEventType.PlayerChangeRole)]
         public void OnChangingRole(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
         {
-            if (player.Role.GetTeam() is Team.SCPs || ValidSwaps.GetCustom(player) != null)
+            var customSwap = ValidSwaps.GetCustom(player);
+            if (player.Role.GetTeam() is Team.SCPs || customSwap != null)
                 return;
 
             Plugin.Coroutines.Add(Timing.CallDelayed(0.1f, () =>
             {
-                if ((player.Role.GetTeam() is Team.SCPs || ValidSwaps.GetCustom(player) != null) &&
-                    Round.Duration.TotalSeconds < scpSwap.Config.SwapTimeout)
-                    scpSwap.Config.StartMessage.Show(player);
+                if ((player.Role.GetTeam() is Team.SCPs || customSwap != null) &&
+                    Round.Duration.TotalSeconds < Module.Config.SwapTimeout)
+                    Module.Config.StartMessage.Show(player);
             }));
         }
 

@@ -14,7 +14,9 @@
 
         public override string Command { get; } = "scjail";
 
-        public override string[] Aliases { get; } = new string[] { };
+        public override string[] Aliases { get; } = new string[]
+        {
+        };
 
         public override string Description { get; } = "Jails or unjails a user";
 
@@ -35,7 +37,7 @@
                 return false;
             }
 
-            if (EventHandlers.JailedPlayers.Any(j => j.Userid == ply.UserId))
+            if (EventHandlers.JailedPlayers.Any(j => j.UserId == ply.UserId))
             {
                 Plugin.Coroutines.Add(Timing.RunCoroutine(EventHandlers.DoUnJail(ply)));
                 response = $"Player {ply.Nickname} has been unjailed now";
