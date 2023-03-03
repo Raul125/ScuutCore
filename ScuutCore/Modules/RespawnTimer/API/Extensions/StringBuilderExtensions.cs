@@ -87,19 +87,21 @@
             TimeSpan time = AutoNuke.Instance.EventHandlers.WarheadTime - DateTime.Now;
             if (Warhead.IsDetonationInProgress)
             {
-                builder.Replace("{auto_nuke_rem}", "In Progress");
+                if (AutoNuke.Instance.EventHandlers.IsAutoNuke)
+                    builder.Replace("{auto_nuke_rem}", $"<color=red>In Progress {(uint)Warhead.DetonationTime}</color>");
+                else
+                    builder.Replace("{auto_nuke_rem}", "Stand-By");
+
                 return builder;
             }
 
             if (Warhead.IsDetonated)
             {
-                builder.Replace("{auto_nuke_rem}", "Detonated");
-                return builder;
-            }
+                if (AutoNuke.Instance.EventHandlers.IsAutoNuke)
+                    builder.Replace("{auto_nuke_rem}", "Detonated");
+                else
+                    builder.Replace("{auto_nuke_rem}", "Failed");
 
-            if (AutoNuke.Instance.EventHandlers.IsAutoNuke)
-            {
-                builder.Replace("{auto_nuke_rem}", "Activated");
                 return builder;
             }
 
@@ -128,7 +130,6 @@
                 return builder;
 
             builder.Replace("{hint}", TimerView.Current.Hints[TimerView.Current.HintIndex]);
-
             return builder;
         }
     }
