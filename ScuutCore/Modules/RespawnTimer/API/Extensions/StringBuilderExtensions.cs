@@ -85,7 +85,7 @@
         private static StringBuilder SetWarheadStatus(this StringBuilder builder)
         {
             TimeSpan time = AutoNuke.Instance.EventHandlers.WarheadTime - DateTime.Now;
-            if (Warhead.IsDetonationInProgress)
+            if (Warhead.IsDetonationInProgress && !Warhead.IsDetonated)
             {
                 if (AutoNuke.Instance.EventHandlers.IsAutoNuke)
                     builder.Replace("{auto_nuke_rem}", $"<color=red>In Progress {(uint)Warhead.DetonationTime}</color>");
