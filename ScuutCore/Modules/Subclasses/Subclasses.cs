@@ -67,7 +67,7 @@
             {
                 Directory.CreateDirectory(Config.SubclassFolder);
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclass.yml"),
-                    serializer.Serialize(defaultSubclassesValue[0]));
+                serializer.Serialize(defaultSubclassesValue[0]));
                 File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), serializer.Serialize(defaultSubclassesValue));
             }
             else

@@ -25,13 +25,13 @@
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
         public bool OnPlayerRemoveHandcuffs(Player player, Player target)
         {
-            if (!Module.Config.OnlyAllowCufferToRemoveHandcuffs || player.Role.GetFaction() == target.Role.GetFaction())
-                return true;
-            if (target.DisarmedBy == player && target.DisarmedBy.Role.GetFaction() == player.Role.GetFaction())
-                return true;
-            player.ReceiveHint(Module.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
-            return false;
-
+            if (Module.Config.OnlyAllowCufferToRemoveHandcuffs && target.DisarmedBy != player && player.Role.GetFaction() != target.Role.GetFaction())
+            {
+                player.ReceiveHint(Module.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
+                return false;
+            }
+                
+            return true;
         }
     }
 }
