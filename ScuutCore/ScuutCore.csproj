@@ -91,6 +91,9 @@
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>$(EXILED_REFERENCES)\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>$(EXILED_REFERENCES)\UnityEngine.UnityWebRequestModule.dll</HintPath>
+    </Reference>
     <Reference Include="YamlDotNet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
       <HintPath>packages\YamlDotNet.12.3.1\lib\net47\YamlDotNet.dll</HintPath>
     </Reference>
@@ -171,7 +174,7 @@
     <Compile Include="Modules\ScpSwap\ScpSwap.cs" />
     <Compile Include="Modules\ScpSwap\Config.cs" />
     <Compile Include="Modules\ScpSwap\EventHandlers.cs" />
-      <Compile Include="Modules\RainbowTags\Components\RainbowTagController.cs"/>
+    <Compile Include="Modules\RainbowTags\Components\RainbowTagController.cs"/>
     <Compile Include="Modules\RainbowTags\RainbowTags.cs" />
     <Compile Include="Modules\RainbowTags\Config.cs" />
     <Compile Include="Modules\RainbowTags\EventHandlers.cs" />
@@ -210,7 +213,7 @@
     <Compile Include="Modules\Health\Health.cs" />
     <Compile Include="Modules\Health\Config.cs" />
     <Compile Include="Modules\Health\EventHandlers.cs" />
-      <Compile Include="Modules\Health\Modules\AhpRole.cs"/>
+    <Compile Include="Modules\Health\Modules\AhpRole.cs"/>
     <Compile Include="Modules\Scp096Notifications\Scp096Notifications.cs" />
     <Compile Include="Modules\Scp096Notifications\Config.cs" />
     <Compile Include="Modules\Scp096Notifications\EventHandlers.cs" />
