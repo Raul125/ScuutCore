@@ -62,7 +62,7 @@
                 return;
             }
 
-            Log.Debug($"{player} has been detected as AFK.");
+            Log.Debug($"{player.Nickname} has been detected as AFK.");
             afkTime = 0;
 
             if (AntiAFK.Singleton.Config.TryReplace)
