@@ -2,7 +2,7 @@
 {
     using ScuutCore.API.Features;
 
-    public sealed class Restart : Module<Config>
+    public sealed class Restart : EventControllerModule<Restart, Config, EventHandlers>
     {
     }
 }
