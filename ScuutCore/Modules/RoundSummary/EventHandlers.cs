@@ -38,7 +38,7 @@
         [PluginEvent(ServerEventType.PlayerDying)]
         public void OnDying(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (attacker != null && player is { IsSCP: true } && firstScpKiller == string.Empty)
+            if (attacker != null && attacker is { IsSCP: false } && player is { IsSCP: true } && firstScpKiller == string.Empty)
             {
                 firstScpKiller = attacker.Nickname;
                 killerRole = attacker.Role.ToString();

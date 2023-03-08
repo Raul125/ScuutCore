@@ -1,16 +1,15 @@
 ﻿namespace ScuutCore.Modules.ErrorLogs
 {
-    using System.Reflection;
     using HarmonyLib;
     using PluginAPI.Core;
 
-    [HarmonyPatch(typeof(Log), nameof(Log.Error), typeof(object))]
+    [HarmonyPatch(typeof(Log), nameof(Log.Error))]
     public static class ErrorPatch
     {
         private static void Postfix(object message)
         {
             if (ErrorLogs.Singleton.Config.IsEnabled)
-                WebhookSender.AddMessage($"**{Assembly.GetCallingAssembly().GetName().Name}**\n```{message}```");
+                WebhookSender.AddMessage($"**ScuutCore**\n```{message}```");
         }
     }
 }
