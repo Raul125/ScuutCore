@@ -167,6 +167,7 @@
     <Compile Include="Modules\Scp008\Config.cs" />
     <Compile Include="Modules\Scp008\EventHandlers.cs" />
     <Compile Include="Modules\Scp008\Scp008.cs" />
+    <Compile Include="Modules\Scp1162\SimplifiedToy.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Cancel.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Decline.cs" />

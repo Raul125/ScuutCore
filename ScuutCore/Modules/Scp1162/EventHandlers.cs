@@ -1,80 +1,102 @@
 ﻿namespace ScuutCore.Modules.Scp1162
 {
     using ScuutCore.API.Features;
-    using InventorySystem;
-    using InventorySystem.Items.Pickups;
-    using InventorySystem.Items.Usables.Scp330;
-    using Mirror;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using UnityEngine;
+    using CustomPlayerEffects;
+    using InventorySystem.Items;
+    using PluginAPI.Core.Items;
+    using PluginAPI.Core.Zones;
+    using System.Linq;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<Scp1162>
     {
-        private GameObject Scp1162gameObject;
-        [PluginEvent(ServerEventType.RoundStart)]
-        public void OnRoundStarted()
-        {
-            var item = PluginAPI.Core.Items.ItemPickup.Create(ItemType.SCP500, Vector3.zero, default);
-            Scp1162gameObject = item.GameObject;
-            NetworkServer.UnSpawn(item.GameObject);
+        private Vector3 SCP1162Position;
 
-            item.Rigidbody.transform.parent = GameObject.Find("LCZ_173").transform;
-            item.Rigidbody.useGravity = false;
-            item.Rigidbody.drag = 0f;
-            item.Rigidbody.freezeRotation = true;
-            item.Rigidbody.isKinematic = true;
-            item.GameObject.transform.localPosition = new Vector3(17f, 13.1f, 3f);
-            item.GameObject.transform.localRotation = Quaternion.Euler(90, 1, 0);
-            item.GameObject.transform.localScale = new Vector3(10, 10, 10);
-            NetworkServer.Spawn(item.GameObject);
+        [PluginEvent(ServerEventType.MapGenerated)]
+        public void OnGenerationMap()
+        {
+            var Room = LightZone.Rooms.FirstOrDefault(x => x.GameObject.name == "LCZ_173");
+            var scp1162 = new SimplifiedToy(PrimitiveType.Cylinder, new Vector3(17f, 13f, 3.59f), new Vector3(90f, 0f, 0f),
+                new Vector3(1.3f, 0.1f, 1.3f), Color.black, Room.Transform, 0.95f).Spawn();
+
+            SCP1162Position = scp1162.transform.position;
         }
 
-        [PluginEvent(ServerEventType.PlayerSearchPickup)]
-        public bool OnPlayerPickup(Player player, ItemPickupBase item)
+        [PluginEvent(ServerEventType.PlayerDropItem)]
+        public bool OnPlayerDroppedItem(Player player, ItemBase item)
         {
-            if (item.gameObject != Scp1162gameObject)
-                return true;
-
-            if (player.CurrentItem == null)
-                return false;
-            if (player.CurrentItem.ItemTypeId == ItemType.SCP330)
+            if (!Round.IsRoundStarted) return true;
+            if (Vector3.Distance(SCP1162Position, player.Position) <= Module.Config.SCP1162Distance)
             {
-                var bag = player.CurrentItem as Scp330Bag;
-                if (bag == null || bag.Candies.Count < 1)
+                if (Module.Config.CuttingHands)
                 {
-                    return false;
+                    if (Module.Config.OnlyThrow)
+                    {
+                        player.EffectsManager.EnableEffect<SeveredHands>(1000);
+                        return true;
+                    }
+
+                    if (player.CurrentItem != item)
+                    {
+                        if (Module.Config.ChanceCutting >= Random.Range(0, 101))
+                        {
+                            player.EffectsManager.EnableEffect<SeveredHands>(1000);
+                            return true;
+                        }
+                    }
                 }
 
-                bag.SelectCandy(0);
-                var removed = bag.TryRemove(0);
-                if (removed == CandyKindID.None)
-                    return false;
+                OnUseSCP1162(player, item);
+                return false;
             }
-            else
-                player.ReferenceHub.inventory.ServerRemoveItem(player.CurrentItem.ItemSerial, player.CurrentItem.PickupDropModel);
 
-            var newItem = ItemType.None;
+            return true;
+        }
+
+        [PluginEvent(ServerEventType.PlayerThrowItem)]
+        public bool OnThrowItem(Player player, ItemBase item, Rigidbody rb)
+        {
+            if (!Round.IsRoundStarted) 
+                return true;
+
+            if (Vector3.Distance(SCP1162Position, player.Position) <= Module.Config.SCP1162Distance)
+            {
+                OnUseSCP1162(player, item);
+                return false;
+            }
+
+            return true;
+        }
+
+        private void OnUseSCP1162(Player player, ItemBase item)
+        {
+            var newItemType = ItemType.None;
+
             getItem:
             foreach (var pair in Module.Config.Chances)
             {
                 if (Plugin.Random.Next(0, 100) > pair.Value)
                     continue;
-                newItem = pair.Key;
+
+                newItemType = pair.Key;
                 break;
             }
 
-            if (newItem == ItemType.None)
+            if (newItemType == ItemType.None)
                 goto getItem;
 
-            player.AddItem(newItem);
+            var message = Module.Config.ItemDropMessage.Replace("{dropitem}", item.ItemTypeId.ToString())
+                    .Replace("{giveitem}", newItemType.ToString());
             if (Module.Config.UseHints)
-                player.ReceiveHint(Module.Config.ItemDropMessage, Module.Config.ItemDropMessageDuration);
+                player.ReceiveHint(message, 4);
             else
-                player.SendBroadcast(Module.Config.ItemDropMessage, Module.Config.ItemDropMessageDuration);
+                player.SendBroadcast(message, 4);
 
-            return false;
+            player.RemoveItem(new Item(item));
+            player.AddItem(newItemType);
         }
     }
 }

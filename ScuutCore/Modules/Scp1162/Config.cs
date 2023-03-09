@@ -11,9 +11,20 @@
         [Description("Use Hints instead of Broadcast?")]
         public bool UseHints { get; set; } = true;
 
-        [Description("Change the message that displays when you drop an item through SCP-1162.")]
-        public string ItemDropMessage { get; set; } = "<i>You try to drop the item through <color=yellow>SCP-1162</color> to get another...</i>";
-        public ushort ItemDropMessageDuration { get; set; } = 5;
+        [Description("What message will be displayed when using SCP-1162?")]
+        public string ItemDropMessage { get; set; } = "<b>You dropped a <color=green>{dropitem}</color> through <color=yellow>SCP-1162</color>, and received a <color=red>{giveitem}</color></b>";
+
+        [Description("From what distance can SCP-1162 be used?")]
+        public float SCP1162Distance { get; set; } = 2f;
+
+        [Description("Will the hands be cut off if the item is not in the hands?")]
+        public bool CuttingHands { get; set; } = true;
+
+        [Description("What is the chance that the hands will be cut off if the item is not in the hands")]
+        public int ChanceCutting { get; set; } = 40;
+
+        [Description("If this item is enabled, the hands will not be cut off only when the player threw item")]
+        public bool OnlyThrow { get; set; } = false;
 
         [Description("The list of item chances.")]
         public Dictionary<ItemType, int> Chances { get; set; } = new Dictionary<ItemType, int>
