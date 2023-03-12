@@ -232,6 +232,7 @@
     <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
     <Compile Include="Modules\BetterCandy\Config.cs" />
     <Compile Include="Patches\CandyGetRandomPatch.cs" />
+    <Compile Include="Patches\DropItemPatch.cs"/>
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\TeslaInRangePatch.cs" />
     <Compile Include="Plugin.cs" />
