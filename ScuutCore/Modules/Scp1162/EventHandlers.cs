@@ -10,6 +10,7 @@
     using PluginAPI.Core.Items;
     using PluginAPI.Core.Zones;
     using System.Linq;
+    using InventorySystem.Items.Usables.Scp330;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<Scp1162>
     {
@@ -95,7 +96,19 @@
             else
                 player.SendBroadcast(message, 4);
 
-            player.RemoveItem(new Item(item));
+            if (player.CurrentItem.ItemTypeId == ItemType.SCP330)
+            {
+                if (item is not Scp330Bag bag || bag.Candies.Count < 1)
+                    return;
+
+                bag.SelectCandy(0);
+                var removed = bag.TryRemove(0);
+                if (removed == CandyKindID.None)
+                    return;
+            }
+            else
+                player.RemoveItem(new Item(item));
+
             player.AddItem(newItemType);
         }
     }
