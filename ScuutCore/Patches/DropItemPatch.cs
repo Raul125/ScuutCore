@@ -9,10 +9,10 @@
     {
         public static bool Prefix(ItemBase __instance)
         {
-            Debug.Log($"drop item of type {__instance.ItemTypeId}");
-            string trace = new StackTrace().ToString();
-            if (trace.Contains("ScuutCore"))
-                Debug.Log(trace);
+            if (__instance.PickupDropModel != null)
+                return true;
+            Debug.Log($"drop item null pickup: {__instance.ItemTypeId}");
+            Debug.Log(new StackTrace().ToString());
             return true;
         }
     }
