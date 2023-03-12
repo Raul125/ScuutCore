@@ -29,7 +29,9 @@
         [PluginEvent(ServerEventType.PlayerDropItem)]
         public bool OnPlayerDroppedItem(Player player, ItemBase item)
         {
-            if (!Round.IsRoundStarted) return true;
+            if (!Round.IsRoundStarted) 
+                return true;
+
             if (Vector3.Distance(SCP1162Position, player.Position) <= Module.Config.SCP1162Distance)
             {
                 if (Module.Config.CuttingHands)
@@ -74,6 +76,9 @@
 
         private void OnUseSCP1162(Player player, ItemBase item)
         {
+            if (item.ItemTypeId is ItemType.SCP330 || item is ICandy)
+                return;
+
             var newItemType = ItemType.None;
 
             getItem:
@@ -96,19 +101,7 @@
             else
                 player.SendBroadcast(message, 4);
 
-            if (player.CurrentItem.ItemTypeId == ItemType.SCP330)
-            {
-                if (item is not Scp330Bag bag || bag.Candies.Count < 1)
-                    return;
-
-                bag.SelectCandy(0);
-                var removed = bag.TryRemove(0);
-                if (removed == CandyKindID.None)
-                    return;
-            }
-            else
-                player.RemoveItem(new Item(item));
-
+            player.RemoveItem(new Item(item));
             player.AddItem(newItemType);
         }
     }
