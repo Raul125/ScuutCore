@@ -11,7 +11,8 @@
         {
             if (__instance.PickupDropModel != null)
                 return true;
-            Debug.Log($"drop item null pickup: {__instance.ItemTypeId}");
+            var owner = __instance.Owner;
+            Debug.Log($"drop item null pickup: {__instance.ItemTypeId}, serial: {__instance.ItemSerial}, owner: {(owner == null ? "<null>" : owner.nicknameSync.MyNick)}");
             Debug.Log(new StackTrace().ToString());
             return true;
         }
