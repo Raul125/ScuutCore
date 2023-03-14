@@ -12,9 +12,12 @@
             if (__instance.PickupDropModel != null)
                 return true;
             var owner = __instance.Owner;
-            Debug.Log($"drop item null pickup: {__instance.ItemTypeId}, serial: {__instance.ItemSerial}, owner: {(owner == null ? "<null>" : owner.nicknameSync.MyNick)}");
+            var msg = $"drop item null pickup: {__instance.ItemTypeId}, serial: {__instance.ItemSerial}, owner: {(owner == null ? "<null>" : owner.nicknameSync.MyNick)}";
+            Modules.ErrorLogs.WebhookSender.AddMessage(msg);
+            Debug.Log(msg);
             if (ItemCreationCache.Cache.ContainsKey(__instance))
             {
+                Modules.ErrorLogs.WebhookSender.AddMessage("Cache contains key");
                 Debug.Log("Cache contains key");
                 Debug.Log(ItemCreationCache.Cache[__instance]);
             }
