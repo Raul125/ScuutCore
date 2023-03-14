@@ -30,7 +30,7 @@
                 player.ReceiveHint(Module.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
                 return false;
             }
-                
+
             return true;
         }
     }
