@@ -14,13 +14,7 @@
         public List<Badge> BadgeOptions { get; set; }
 
         [YamlIgnore]
-        public string CustomBadge { get; set; }
-
-        [YamlIgnore]
-        public string CustomColor { get; set; }
-
-        [YamlIgnore]
-        public int ChosenBadge { get; set; }
+        public bool IsValid => !string.IsNullOrEmpty(Id) && Perks != null && BadgeOptions != null;
 
     }
 }
