@@ -2,6 +2,7 @@
 {
     using System;
     using CommandSystem;
+    [CommandHandler(typeof(ClientCommandHandler))]
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public sealed class MainPatreonCommand : ParentCommand
     {
@@ -12,6 +13,7 @@
 
         public override void LoadGeneratedCommands()
         {
+            RegisterCommand(new SetBadgeIndex());
             // TODO
         }
 

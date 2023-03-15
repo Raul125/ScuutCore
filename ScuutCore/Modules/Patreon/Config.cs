@@ -34,7 +34,7 @@
             }
         };
 
-        public List<UserRankAssociation> UserRanks = new List<UserRankAssociation>
+        public List<UserRankAssociation> UserRanks { get; set; } = new List<UserRankAssociation>
         {
             new UserRankAssociation
             {

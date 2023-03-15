@@ -24,7 +24,6 @@
             return false;
         }
 
-
         protected abstract bool ExecuteInternal(ArraySegment<string> arguments, ICommandSender sender, out string response);
     }
 }

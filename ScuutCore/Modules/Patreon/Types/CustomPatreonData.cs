@@ -9,7 +9,7 @@
 
         public string CustomBadgeColor { get; set; }
 
-        public int BadgeIndex { get; set; }
+        public int BadgeIndex { get; set; } = -1;
 
     }
 }
