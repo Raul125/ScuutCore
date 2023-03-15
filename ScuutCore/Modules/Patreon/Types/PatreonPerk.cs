@@ -1,4 +1,4 @@
-﻿namespace ScuutCore.Modules.Patreon
+﻿namespace ScuutCore.Modules.Patreon.Types
 {
     public enum PatreonPerk
     {
