@@ -23,7 +23,7 @@
                 {
                     pluginInfo = string.Join(", ", value.Select(x => x.Value.PluginName + " v" + x.Value.PluginVersion));
                 }
-                string caller = method != null ? $"{method.DeclaringType?.Assembly.FullName} {method.DeclaringType?.FullName ?? "null"}::{method!.Name} Plugin: {pluginInfo}" : "Unknown";
+                string caller = method != null ? $"{method.DeclaringType?.Assembly.GetName().Name} {method.DeclaringType?.FullName ?? "null"}::{method!.Name} Plugin: {pluginInfo}" : "Unknown";
                 WebhookSender.AddMessage($"**{caller}**\n```{message}```");
             }
         }
