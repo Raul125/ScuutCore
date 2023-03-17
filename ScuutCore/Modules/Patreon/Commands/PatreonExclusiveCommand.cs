@@ -18,12 +18,12 @@
             }
 
             if (PatreonExtensions.IsSupporter(ps.ReferenceHub))
-                return ExecuteInternal(arguments, sender, out response);
+                return ExecuteInternal(arguments, ps.ReferenceHub, out response);
 
             response = "You are not a Patreon supporter.";
             return false;
         }
 
-        protected abstract bool ExecuteInternal(ArraySegment<string> arguments, ICommandSender sender, out string response);
+        protected abstract bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, out string response);
     }
 }

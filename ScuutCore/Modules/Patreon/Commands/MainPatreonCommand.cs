@@ -14,6 +14,8 @@
         public override void LoadGeneratedCommands()
         {
             RegisterCommand(new SetBadgeIndex());
+            RegisterCommand(new SetCustomBadge());
+            RegisterCommand(new SetCustomColor());
             // TODO
         }
 

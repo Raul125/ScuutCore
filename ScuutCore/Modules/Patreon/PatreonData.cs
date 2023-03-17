@@ -41,27 +41,47 @@
             if (time < switchTime)
                 return;
             time = 0;
-            if (++cycleIndex >= Rank.BadgeOptions.Count)
-                cycleIndex = -1;
-            string badge = cycleIndex < 0 && Custom.CustomBadge != null ? Custom.CustomBadge : Rank.BadgeOptions[cycleIndex].Content;
-            string color = cycleIndex < 0 && Custom.CustomBadgeColor != null ? Custom.CustomBadgeColor : Rank.BadgeOptions[cycleIndex].Color;
+            GetBadge(out string badge, out string color);
             PatreonExtensions.SetRank(hub, badge, color);
         }
 
         public static PatreonData Get(ReferenceHub hub) => hub.TryGetComponent(out PatreonData data) ? data : hub.gameObject.AddComponent<PatreonData>();
 
+        private void GetBadge(out string text, out string color)
+        {
+            if (Custom.BadgeIndex < 0)
+            {
+                if (Custom.CustomBadge == null)
+                    Custom.BadgeIndex = Badge.Cycle;
+                else
+                {
+                    text = Custom.CustomBadge;
+                    color = Custom.CustomBadgeColor ?? "white";
+                    return;
+                }
+            }
+
+            if (Custom.BadgeIndex == Badge.Cycle)
+            {
+                if (++cycleIndex >= Rank.BadgeOptions.Count)
+                    cycleIndex = 0;
+                text = Rank.BadgeOptions[cycleIndex].Content;
+                color = Rank.BadgeOptions[cycleIndex].Color;
+                return;
+            }
+
+            if (Custom.BadgeIndex > Rank.BadgeOptions.Count)
+                Custom.BadgeIndex = 1;
+            text = Rank.BadgeOptions[Custom.BadgeIndex - 1].Content;
+            color = Rank.BadgeOptions[Custom.BadgeIndex - 1].Color;
+        }
+
         public void SetIndex(int result)
         {
             Custom.BadgeIndex = result + 1;
             cycleIndex = result;
-            if (result == Badge.Custom)
-            {
-                PatreonExtensions.SetRank(hub, Custom.CustomBadge, Custom.CustomBadgeColor);
-                return;
-            }
-            if (result < 0)
-                return;
-            PatreonExtensions.SetRank(hub, Rank.BadgeOptions[result].Content, Rank.BadgeOptions[result].Color);
+            GetBadge(out string badge, out string color);
+            PatreonExtensions.SetRank(hub, badge, color);
         }
     }
 }

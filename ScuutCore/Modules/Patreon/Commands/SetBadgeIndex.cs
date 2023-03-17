@@ -1,8 +1,6 @@
 ﻿namespace ScuutCore.Modules.Patreon.Commands
 {
     using System;
-    using CommandSystem;
-    using RemoteAdmin;
     using Types;
     public sealed class SetBadgeIndex : PatreonExclusiveCommand
     {
@@ -12,26 +10,27 @@
         {
         };
         public override string Description => "Selects the badge at the given index.";
-        protected override bool ExecuteInternal(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        protected override bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, out string response)
         {
-            if (sender is not PlayerCommandSender ps)
-            {
-                response = "You must be a player to use this command.";
-                return false;
-            }
             if (arguments.Count < 1)
             {
                 response = "Usage: patreon selectBadge <index>";
                 return false;
             }
 
-            if (!int.TryParse(arguments.At(0), out int index))
+            int index = arguments.At(0).ToLower() switch
+            {
+                "cycle" => Badge.Cycle,
+                "custom" => Badge.Custom,
+                _ => -2
+            };
+            if (index == -2 && !int.TryParse(arguments.At(0), out index))
             {
                 response = "Invalid index.";
                 return false;
             }
 
-            PatreonData.Get(ps.ReferenceHub).SetIndex(index);
+            PatreonData.Get(sender).SetIndex(index);
             response = index switch
             {
                 Badge.Cycle => "Your badge will now be cycled through.",
