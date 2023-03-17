@@ -1,6 +1,10 @@
 ﻿namespace ScuutCore.Modules.Patreon
 {
+    using System;
     using System.Collections.Generic;
+    using System.IO;
+    using API.Loader;
+    using PluginAPI.Core;
     using Types;
     using UnityEngine;
 
@@ -9,9 +13,19 @@
 
         private static readonly Dictionary<string, CustomPatreonData> CustomData = new Dictionary<string, CustomPatreonData>();
 
-        private ReferenceHub hub;
+        public ReferenceHub Hub { get; private set; }
 
-        public PatreonRank Rank { get; set; }
+        private PatreonRank rank;
+
+        public PatreonRank Rank
+        {
+            get => rank;
+            set
+            {
+                rank = value;
+                UpdateBadge();
+            }
+        }
 
         public CustomPatreonData Custom { get; set; }
 
@@ -21,14 +35,11 @@
 
         private void Awake()
         {
-            hub = GetComponent<ReferenceHub>();
-            Custom = CustomData.TryGetValue(hub.characterClassManager.UserId, out var data) ? data : new CustomPatreonData();
+            Hub = GetComponent<ReferenceHub>();
+            Custom = CustomData.TryGetValue(Hub.characterClassManager.UserId, out var data) ? data : new CustomPatreonData();
         }
 
-        private void OnDestroy()
-        {
-            CustomData[hub.characterClassManager.UserId] = Custom;
-        }
+        private void OnDestroy() => CustomData[Hub.characterClassManager.UserId] = Custom;
 
         private void Update()
         {
@@ -41,8 +52,7 @@
             if (time < switchTime)
                 return;
             time = 0;
-            GetBadge(out string badge, out string color);
-            PatreonExtensions.SetRank(hub, badge, color);
+            UpdateBadge();
         }
 
         public static PatreonData Get(ReferenceHub hub) => hub.TryGetComponent(out PatreonData data) ? data : hub.gameObject.AddComponent<PatreonData>();
@@ -78,10 +88,47 @@
 
         public void SetIndex(int result)
         {
-            Custom.BadgeIndex = result + 1;
-            cycleIndex = result;
+            cycleIndex = Custom.BadgeIndex = result;
+            UpdateBadge();
+        }
+        public static void WriteAll()
+        {
+            try
+            {
+                foreach (var component in FindObjectsOfType<PatreonData>())
+                    component.OnDestroy();
+                string data = Loader.Serializer.Serialize(CustomData);
+                File.WriteAllText(DataPath, data);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Failed writing data preferences: " + e);
+            }
+        }
+
+        public static void ReadAll()
+        {
+            try
+            {
+                if (!File.Exists(DataPath))
+                    return;
+                string text = File.ReadAllText(DataPath);
+                var dictionary = Loader.Deserializer.Deserialize<Dictionary<string, CustomPatreonData>>(text);
+                CustomData.Clear();
+                foreach (var pair in dictionary)
+                    CustomData.Add(pair.Key, pair.Value);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Failed reading data preferences: " + e);
+            }
+        }
+
+        private static string DataPath => Path.Combine(Plugin.Singleton.Config.ConfigsFolder, PatreonPerksModule.Singleton.Name, "data.yml");
+        public void UpdateBadge()
+        {
             GetBadge(out string badge, out string color);
-            PatreonExtensions.SetRank(hub, badge, color);
+            PatreonExtensions.SetRank(Hub, badge, color);
         }
     }
 }

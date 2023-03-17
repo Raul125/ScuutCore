@@ -24,19 +24,39 @@
                 "custom" => Badge.Custom,
                 _ => -2
             };
-            if (index == -2 && !int.TryParse(arguments.At(0), out index))
-            {
-                response = "Invalid index.";
-                return false;
-            }
+            if (index != -2 || int.TryParse(arguments.At(0), out index))
+                return DoSelect(sender, out response, index);
+            response = "Invalid index.";
+            return false;
 
-            PatreonData.Get(sender).SetIndex(index);
-            response = index switch
+        }
+        private static bool DoSelect(ReferenceHub sender, out string response, int index)
+        {
+
+            var data = PatreonData.Get(sender);
+            data.SetIndex(index);
+            switch (index)
             {
-                Badge.Cycle => "Your badge will now be cycled through.",
-                Badge.Custom => "Your badge will now be set to your custom badge.",
-                _ => $"Selected badge at index {index + 1}."
-            };
+                case Badge.Cycle:
+                    response = "Your badges will now be cycled through.";
+                    break;
+                case Badge.Custom:
+                    if (!data.Rank.Perks.Contains(PatreonPerk.CustomBadge) || data.Custom.CustomBadge == null)
+                    {
+                        response = "You don't have a custom badge set.";
+                        return false;
+                    }
+                    response = "Your badge will now be set to your custom badge.";
+                    break;
+                default:
+                    if (data.Rank.BadgeOptions.Count <= index)
+                    {
+                        response = "You don't have a badge at that index.";
+                        return false;
+                    }
+                    response = $"Selected badge at index {index}.";
+                    break;
+            }
             return true;
         }
     }

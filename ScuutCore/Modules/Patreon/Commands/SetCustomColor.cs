@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Types;
     public sealed class SetCustomColor : PatreonExclusiveCommand
     {
@@ -78,9 +79,6 @@
             },
             {
                 "pumpkin", "#EE7600"
-            },
-            {
-                "black", "#000000"
             }
         };
 
@@ -94,7 +92,7 @@
         protected override bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, out string response)
         {
             var data = PatreonData.Get(sender);
-            if (!data.Rank.Perks.Contains(PatreonPerk.CustomBadge))
+            if (!data.Rank.Perks.Contains(PatreonPerk.CustomColor))
             {
                 response = "You do not have permission to use this command.";
                 return false;
@@ -102,18 +100,20 @@
 
             if (arguments.Count < 1)
             {
-                response = "Usage: patreon customColor <color>";
+                response = "Usage: patreon customColor color";
                 return false;
             }
 
             string color = string.Join(" ", arguments).Trim();
             if (!Colors.TryGetValue(color, out string? code))
             {
-                response = "Invalid color. Available colors: " + string.Join(", ", Colors.Keys);
+                response = "Invalid color. Available ones: " + string.Join(" ", Colors.Select(e => $"<color={e.Value}>{e.Key}</color>"));
                 return false;
             }
 
-            data.Custom.CustomBadgeColor = Colors[color];
+            data.Custom.CustomBadgeColor = color;
+            if (data.Custom.BadgeIndex == Badge.Custom)
+                data.Hub.serverRoles.Network_myColor = color;
             response = $"Your badge color has been set to <color={code}>{color}</color>. Use the \"patreon selectBadge custom\" command to select it.";
             return true;
         }

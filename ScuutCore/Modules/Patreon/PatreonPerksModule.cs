@@ -3,6 +3,7 @@
     using API.Features;
     public sealed class PatreonPerksModule : EventControllerModule<PatreonPerksModule, Config, EventHandlers>
     {
+        public override string Name => "Patreon Perks";
         public static PatreonPerksModule Singleton { get; private set; }
 
         public override void OnEnabled()
