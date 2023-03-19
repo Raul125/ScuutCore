@@ -23,6 +23,11 @@
             }
 
             string text = string.Join(" ", arguments).Trim();
+            if (text.Length > 16)
+            {
+                response = "That badge text is too long.";
+                return false;
+            }
             foreach (string phrase in PatreonPerksModule.Singleton.Config.BlacklistedBadgePhrases)
             {
                 if (text.IndexOf(phrase, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -32,7 +37,7 @@
                 }
             }
 
-            data.Prefs.CustomBadge = text;
+            data.Prefs.CustomBadge = text + "- Custom Patreon";
             response = $"Your badge text has been set to \"{text}\". Use the \"patreon selectBadge custom\" command to select it.";
             return true;
         }
