@@ -5,12 +5,17 @@
     using Modules.Subclasses;
     using PluginAPI.Core;
     using PluginAPI.Core.Interfaces;
+    using UnityEngine;
 
     public class ScuutPlayer : Player
     {
         public ScuutPlayer(IGameComponent component) : base(component)
         {
         }
+
+        public void SendToPocketDimension() => Position = new(0, -1999f, 0);
+
+        public bool EnteringPocket { get; set; } = false;
 
         private Subclass subClass;
         private int setSubclassProc; // ensure that the delayed action does not execute if another subclass is set or destroyed
@@ -56,9 +61,9 @@
                 }));
             }
         }
+
         private void GrantLoadout()
         {
-
             var itemLoadout = SubClass.GetSpawnLoadout(this);
             if (itemLoadout is { Length: > 0 })
             {

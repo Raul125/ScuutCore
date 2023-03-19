@@ -11,7 +11,7 @@
     {
         public static void Postfix(ItemBase __result)
         {
-            if(__result == null)
+            if (__result == null)
                 return;
 
             ItemCreationCache.Cache.Add(__result, $"stacktrace: {new StackTrace()}, itemtype: {__result.ItemTypeId}, serial: {__result.ItemSerial}, owner: {__result.Owner}");
