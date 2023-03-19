@@ -12,5 +12,9 @@
 
         public int BadgeIndex { get; set; } = Badge.Cycle;
 
+        public bool FlyingRagdollSelf { get; set; }
+
+        public bool FlyingRagdollKills { get; set; }
+
     }
 }

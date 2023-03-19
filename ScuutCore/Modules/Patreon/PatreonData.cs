@@ -4,9 +4,11 @@
     using System.Collections.Generic;
     using System.IO;
     using API.Loader;
+    using Commands;
     using PluginAPI.Core;
     using Types;
     using UnityEngine;
+    using PermissionHandler = NWAPIPermissionSystem.PermissionHandler;
 
     public sealed class PatreonData : MonoBehaviour
     {
@@ -16,6 +18,8 @@
         public ReferenceHub Hub { get; private set; }
 
         private PatreonRank rank;
+
+        private PatreonPreferences prefs = new PatreonPreferences();
 
         public PatreonRank Rank
         {
@@ -29,7 +33,23 @@
             }
         }
 
-        public PatreonPreferences Prefs { get; set; } = new PatreonPreferences();
+        public PatreonPreferences Prefs
+        {
+            get => prefs;
+            set
+            {
+                prefs = value;
+                var sender = Hub.queryProcessor._sender;
+                if (!PermissionHandler.CheckPermission(sender, SetCustomBadge.BadgePermissions))
+                    prefs.CustomBadge = null;
+                if (!PermissionHandler.CheckPermission(sender, SetCustomColor.ColorPermissions))
+                    prefs.CustomBadgeColor = null;
+                if (!PermissionHandler.CheckPermission(sender, FlyingRagdollKills.RagdollPermissions))
+                    prefs.FlyingRagdollKills = false;
+                if (!PermissionHandler.CheckPermission(sender, FlyingRagdollSelf.RagdollPermissions))
+                    prefs.FlyingRagdollSelf = false;
+            }
+        }
 
         private int cycleIndex;
 

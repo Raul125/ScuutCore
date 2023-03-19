@@ -31,12 +31,16 @@
             }
         };
 
+        [Description("Permissions that specify the exact Patreon rank to use")]
         public Dictionary<string, string> PatreonPermissionIds { get; set; } = new Dictionary<string, string>
         {
             {
                 "example.permission", "ExampleRank"
             }
         };
+
+        [Description("The multiplier for ragdoll velocity when flying ragdoll is enabled")]
+        public float RagdollFlyMultiplier { get; set; } = 3f;
 
     }
 }

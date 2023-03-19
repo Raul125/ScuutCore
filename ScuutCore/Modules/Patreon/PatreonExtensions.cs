@@ -1,6 +1,7 @@
 ﻿namespace ScuutCore.Modules.Patreon
 {
     using NWAPIPermissionSystem;
+    using PlayerStatsSystem;
     using Types;
     public static class PatreonExtensions
     {
@@ -43,6 +44,22 @@
             roles.Network_myText = content;
             roles.Network_myColor = color;
         }
+
+        public static float GetRagdollVelocityMultiplier(DamageHandlerBase handler, ReferenceHub owner)
+        {
+            if (owner == null)
+                return 1f;
+            float value = PatreonPerksModule.Singleton.Config.RagdollFlyMultiplier;
+            if (owner.TryGetComponent(out PatreonData data) && data.Prefs.FlyingRagdollSelf)
+                return value;
+            if (handler is not AttackerDamageHandler { Attacker: { Hub: var attacker } } || attacker == null)
+                return 1f;
+            if (attacker.TryGetComponent(out PatreonData attackerData) && attackerData.Prefs.FlyingRagdollKills)
+                return value;
+            return 1f;
+        }
+
+        public static sbyte Multiply(sbyte value, float multiplier) => (sbyte)(value * multiplier);
 
     }
 }

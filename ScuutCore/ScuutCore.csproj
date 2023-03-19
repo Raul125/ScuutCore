@@ -146,6 +146,8 @@
       <Compile Include="Modules\AutoNuke\EventHandlers.cs"/>
       <Compile Include="Modules\ErrorLogs\Message.cs"/>
       <Compile Include="Modules\ErrorLogs\WebhookSender.cs"/>
+      <Compile Include="Modules\Patreon\Commands\FlyingRagdollKills.cs"/>
+      <Compile Include="Modules\Patreon\Commands\FlyingRagdollSelf.cs"/>
       <Compile Include="Modules\Patreon\Commands\MainPatreonCommand.cs"/>
       <Compile Include="Modules\Patreon\Commands\PatreonExclusiveCommand.cs"/>
       <Compile Include="Modules\Patreon\Commands\SetBadgeIndex.cs"/>
@@ -248,6 +250,7 @@
     <Compile Include="Patches\CandyGetRandomPatch.cs" />
     <Compile Include="Patches\CreateItemPatch.cs" />
     <Compile Include="Patches\DropItemPatch.cs" />
+      <Compile Include="Patches\KillPlayerPatch.cs"/>
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\TeslaInRangePatch.cs" />
     <Compile Include="Plugin.cs" />

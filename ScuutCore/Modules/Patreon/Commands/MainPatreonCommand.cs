@@ -1,6 +1,7 @@
 ﻿namespace ScuutCore.Modules.Patreon.Commands
 {
     using System;
+    using System.Linq;
     using CommandSystem;
     [CommandHandler(typeof(ClientCommandHandler))]
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
@@ -16,7 +17,8 @@
             RegisterCommand(new SetBadgeIndex());
             RegisterCommand(new SetCustomBadge());
             RegisterCommand(new SetCustomColor());
-            // TODO
+            RegisterCommand(new FlyingRagdollSelf());
+            RegisterCommand(new FlyingRagdollKills());
         }
 
         public override string Command => "patreon";
@@ -27,7 +29,7 @@
 
         protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
-            response = "Patreon commands:\n" + string.Join("\n", Commands.Keys);
+            response = "Patreon commands:\n" + string.Join("\n", Commands.Values.Select(e => $"{e.Command} - {e.Description}"));
             return true;
         }
     }

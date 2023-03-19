@@ -6,6 +6,7 @@
     using Types;
     public sealed class SetCustomColor : PatreonExclusiveCommand
     {
+        public const string ColorPermissions = "scuutcore.patreon.customcolor";
 
         #region Color Dictionary
 
@@ -84,7 +85,7 @@
 
         #endregion
 
-        protected override string Permission => "scuutcore.patreon.customcolor";
+        protected override string Permission => ColorPermissions;
         public override string Command => "customColor";
         public override string[] Aliases { get; } =
         {
