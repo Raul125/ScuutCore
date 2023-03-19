@@ -160,6 +160,8 @@
 
         public void UpdateBadge()
         {
+            if (PermissionHandler.CheckPermission(Hub.queryProcessor._sender, "scuutcore.patreon.disabled"))
+                return;
             GetBadge(out string badge, out string color);
             PatreonExtensions.SetRank(Hub, badge, color);
         }
