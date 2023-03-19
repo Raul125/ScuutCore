@@ -10,9 +10,16 @@
         {
             var cfg = PatreonPerksModule.Singleton.Config;
             string id = null;
+            var sender = hub.queryProcessor._sender;
+            if (sender.CheckPermission("scuutcore.patreon.disabled"))
+            {
+                rank = default;
+                return false;
+            }
+
             foreach (var pair in cfg.PatreonPermissionIds)
             {
-                if (hub.queryProcessor._sender.CheckPermission(pair.Key))
+                if (sender.CheckPermission(pair.Key))
                 {
                     id = pair.Value;
                     break;
