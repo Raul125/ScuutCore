@@ -252,6 +252,7 @@
     <Compile Include="Patches\DropItemPatch.cs" />
       <Compile Include="Patches\KillPlayerPatch.cs"/>
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
+      <Compile Include="Patches\PocketItemUpdatePatch.cs"/>
     <Compile Include="Patches\TeslaInRangePatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
