@@ -22,9 +22,9 @@
             {
                 if (value == null)
                 {
+                    CustomInfo = "";
                     subClass?.OnLost(this);
                     subClass = null;
-                    CustomInfo = null;
                     setSubclassProc++;
                     return;
                 }
