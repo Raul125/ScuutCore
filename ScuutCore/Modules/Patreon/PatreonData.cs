@@ -88,7 +88,7 @@
                 else
                 {
                     text = Prefs.CustomBadge;
-                    color = Prefs.CustomBadgeColor ?? "white";
+                    color = Prefs.CustomBadgeColor ?? Rank.DefaultCustomColor;
                     return;
                 }
             }
@@ -101,7 +101,7 @@
                     if (Prefs.CustomBadge != null)
                     {
                         text = Prefs.CustomBadge;
-                        color = Prefs.CustomBadgeColor ?? "white";
+                        color = Prefs.CustomBadgeColor ?? Rank.DefaultCustomColor;
                         return;
                     }
                     cycleIndex = 0;

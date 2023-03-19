@@ -11,6 +11,8 @@
 
         public List<Badge> BadgeOptions { get; set; }
 
+        public string DefaultCustomColor { get; set; }
+
         [YamlIgnore]
         public bool IsValid => !string.IsNullOrEmpty(Id) && BadgeOptions != null;
 

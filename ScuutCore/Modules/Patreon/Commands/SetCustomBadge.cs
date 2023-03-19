@@ -23,7 +23,7 @@
             }
 
             string text = string.Join(" ", arguments).Trim();
-            if (text.Length > 16)
+            if (text.Length > 15)
             {
                 response = "That badge text is too long.";
                 return false;
@@ -37,7 +37,7 @@
                 }
             }
 
-            data.Prefs.CustomBadge = text + "- Custom Patreon";
+            data.Prefs.CustomBadge = text + " - Custom Patreon";
             response = $"Your badge text has been set to \"{text}\". Use the \"patreon selectBadge custom\" command to select it.";
             return true;
         }

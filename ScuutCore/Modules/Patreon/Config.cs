@@ -27,7 +27,8 @@
                 {
                     new Badge("Example Badge", "lime"),
                     new Badge("Other Badge", "red")
-                }
+                },
+                DefaultCustomColor = "tomato"
             }
         };
 
