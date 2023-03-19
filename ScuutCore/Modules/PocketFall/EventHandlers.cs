@@ -43,7 +43,10 @@
                 yield return Timing.WaitForOneFrame;
             }
 
-            player.SendToPocketDimension();
+            if (Warhead.IsDetonated)
+                player.Kill();
+            else
+                player.SendToPocketDimension();
 
             yield return Timing.WaitForSeconds(0.1f);
             player.EnteringPocket = false;
