@@ -2,9 +2,12 @@
 {
     using System;
     using CommandSystem;
+    using NWAPIPermissionSystem;
     using RemoteAdmin;
     public abstract class PatreonExclusiveCommand : ICommand
     {
+        protected abstract string Permission { get; }
+
         public abstract string Command { get; }
         public abstract string[] Aliases { get; }
         public abstract string Description { get; }
@@ -17,13 +20,20 @@
                 return false;
             }
 
-            if (PatreonExtensions.IsSupporter(ps.ReferenceHub))
-                return ExecuteInternal(arguments, ps.ReferenceHub, out response);
+            var data = PatreonData.Get(ps.ReferenceHub);
+            if (!data.Rank.IsValid)
+            {
+                response = "You don't have a valid Patreon rank.";
+                return false;
+            }
 
-            response = "You are not a Patreon supporter.";
+            if (sender.CheckPermission(Permission))
+                return ExecuteInternal(arguments, ps.ReferenceHub, data, out response);
+
+            response = "You don't have permissions to use this command.";
             return false;
         }
 
-        protected abstract bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, out string response);
+        protected abstract bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, PatreonData data, out string response);
     }
 }

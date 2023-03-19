@@ -12,20 +12,17 @@
         [Description("Amount of time in seconds before swapping to another Patreon badge")]
         public float AutoSwitchBadge { get; set; } = 10f;
 
-        public List<string> BlacklistedBadgePhrases { get; set; } = new List<string>();
+        public List<string> BlacklistedBadgePhrases { get; set; } = new List<string>
+        {
+            "admin",
+            "moderator"
+        };
 
         public List<PatreonRank> RankList { get; set; } = new List<PatreonRank>
         {
             new PatreonRank
             {
                 Id = "ExampleRank",
-                Perks = new List<PatreonPerk>
-                {
-                    PatreonPerk.CustomBadge,
-                    PatreonPerk.CustomColor,
-                    PatreonPerk.FlyingRagdollOthers,
-                    PatreonPerk.FlyingRagdollSelf
-                },
                 BadgeOptions = new List<Badge>
                 {
                     new Badge("Example Badge", "lime"),
@@ -34,13 +31,12 @@
             }
         };
 
-        public List<UserRankAssociation> UserRanks { get; set; } = new List<UserRankAssociation>
+        public Dictionary<string, string> PatreonPermissionIds { get; set; } = new Dictionary<string, string>
         {
-            new UserRankAssociation
             {
-                UserId = "ExampleUser@steam",
-                RankId = "ExampleRank"
+                "example.permission", "ExampleRank"
             }
         };
+
     }
 }

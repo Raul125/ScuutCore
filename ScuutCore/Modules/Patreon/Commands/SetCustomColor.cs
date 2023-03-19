@@ -84,20 +84,14 @@
 
         #endregion
 
+        protected override string Permission => "scuutcore.patreon.customcolor";
         public override string Command => "customColor";
         public override string[] Aliases { get; } =
         {
         };
         public override string Description => "Sets your custom badge color.";
-        protected override bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, out string response)
+        protected override bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, PatreonData data, out string response)
         {
-            var data = PatreonData.Get(sender);
-            if (!data.Rank.Perks.Contains(PatreonPerk.CustomColor))
-            {
-                response = "You do not have permission to use this command.";
-                return false;
-            }
-
             if (arguments.Count < 1)
             {
                 response = "Usage: patreon customColor color";
@@ -105,14 +99,14 @@
             }
 
             string color = string.Join(" ", arguments).Trim();
-            if (!Colors.TryGetValue(color, out string? code))
+            if (!Colors.TryGetValue(color, out string code))
             {
                 response = "Invalid color. Available ones: " + string.Join(" ", Colors.Select(e => $"<color={e.Value}>{e.Key}</color>"));
                 return false;
             }
 
-            data.Custom.CustomBadgeColor = color;
-            if (data.Custom.BadgeIndex == Badge.Custom)
+            data.Prefs.CustomBadgeColor = color;
+            if (data.Prefs.BadgeIndex == Badge.Custom)
                 data.Hub.serverRoles.Network_myColor = color;
             response = $"Your badge color has been set to <color={code}>{color}</color>. Use the \"patreon selectBadge custom\" command to select it.";
             return true;

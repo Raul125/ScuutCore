@@ -9,12 +9,10 @@
     {
         public string Id { get; set; }
 
-        public List<PatreonPerk> Perks { get; set; }
-
         public List<Badge> BadgeOptions { get; set; }
 
         [YamlIgnore]
-        public bool IsValid => !string.IsNullOrEmpty(Id) && Perks != null && BadgeOptions != null;
+        public bool IsValid => !string.IsNullOrEmpty(Id) && BadgeOptions != null;
 
     }
 }

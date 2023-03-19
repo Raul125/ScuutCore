@@ -11,7 +11,7 @@
         [PluginEvent(ServerEventType.PlayerJoined)]
         private void OnPlayerJoined(Player player)
         {
-            if (!PatreonExtensions.TryGetRankFromUser(player.UserId, out var rank))
+            if (!PatreonExtensions.TryGetRankFromUser(player.ReferenceHub, out var rank))
                 return;
             MEC.Timing.CallDelayed(1, () => PatreonData.Get(player.ReferenceHub).Rank = rank);
         }

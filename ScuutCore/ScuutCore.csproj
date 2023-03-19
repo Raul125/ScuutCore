@@ -157,8 +157,7 @@
       <Compile Include="Modules\Patreon\PatreonExtensions.cs"/>
       <Compile Include="Modules\Patreon\PatreonPerksModule.cs"/>
       <Compile Include="Modules\Patreon\Types\Badge.cs"/>
-      <Compile Include="Modules\Patreon\Types\CustomPatreonData.cs"/>
-      <Compile Include="Modules\Patreon\Types\PatreonPerk.cs"/>
+      <Compile Include="Modules\Patreon\Types\PatreonPreferences.cs"/>
       <Compile Include="Modules\Patreon\Types\PatreonRank.cs"/>
       <Compile Include="Modules\Patreon\Types\UserRankAssociation.cs"/>
       <Compile Include="Modules\RespawnTimer\API\API.cs"/>

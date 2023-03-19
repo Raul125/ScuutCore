@@ -3,7 +3,7 @@
     using System;
 
     [Serializable]
-    public class CustomPatreonData
+    public class PatreonPreferences
     {
 
         public string CustomBadge { get; set; }
