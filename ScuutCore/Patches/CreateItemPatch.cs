@@ -13,12 +13,13 @@
         {
             if(__result == null)
                 return;
+
             ItemCreationCache.Cache.Add(__result, $"stacktrace: {new StackTrace()}, itemtype: {__result.ItemTypeId}, serial: {__result.ItemSerial}, owner: {__result.Owner}");
         }
     }
 
     public static class ItemCreationCache
     {
-        public static Dictionary<ItemBase, string> Cache = new Dictionary<ItemBase, string>();
+        public static Dictionary<ItemBase, string> Cache = new();
     }
 }
