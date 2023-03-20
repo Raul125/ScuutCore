@@ -10,6 +10,7 @@
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
+    using RelativePositioning;
     using UnityEngine;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<PocketFall>
@@ -49,6 +50,7 @@
         private IEnumerator<float> SendToPocket(ScuutPlayer player)
         {
             yield return Timing.WaitForSeconds(Module.Config.Delay);
+            var pos = new RelativePosition(player.Position);
 
             for (int i = 0; i < Module.Config.Ticks; i++)
             {
@@ -61,7 +63,9 @@
             else
             {
                 player.SendToPocketDimension();
-                player.EffectsManager.EnableEffect<Corroding>();
+                var effect = player.EffectsManager.GetEffect<Corroding>();
+                effect.ServerSetState(1);
+                effect.CapturePosition = pos;
             }
 
             yield return Timing.WaitForSeconds(0.1f);
