@@ -134,7 +134,7 @@
             }
             catch (Exception e)
             {
-                Log.Error("Failed writing data preferences: " + e);
+                Log.Error("Failed writing Patreon data preferences: " + e);
             }
         }
 
@@ -146,6 +146,11 @@
                     return;
                 string text = File.ReadAllText(DataPath);
                 var dictionary = Loader.Deserializer.Deserialize<Dictionary<string, PatreonPreferences>>(text);
+                if (dictionary == null)
+                {
+                    Log.Warning("Failed reading Patreon data preferences: deserializer returned null");
+                    return;
+                }
                 Preferences.Clear();
                 foreach (var pair in dictionary)
                     Preferences.Add(pair.Key, pair.Value);

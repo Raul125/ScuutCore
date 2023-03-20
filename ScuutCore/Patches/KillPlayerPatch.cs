@@ -12,6 +12,8 @@
 
         private static bool Prefix(PlayerStats __instance, DamageHandlerBase handler)
         {
+            if (handler is UniversalDamageHandler udh && udh.TranslationId == DeathTranslations.PocketDecay.Id)
+                return true;
             float multiplier = PatreonExtensions.GetRagdollVelocityMultiplier(handler, __instance._hub);
             if (multiplier <= 1f)
                 return true;

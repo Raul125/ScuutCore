@@ -48,7 +48,7 @@
 
         public static float GetRagdollVelocityMultiplier(DamageHandlerBase handler, ReferenceHub owner)
         {
-            if (owner == null)
+            if (owner == null || handler == null || PatreonPerksModule.Singleton?.Config == null)
                 return 1f;
             float value = PatreonPerksModule.Singleton.Config.RagdollFlyMultiplier;
             if (owner.TryGetComponent(out PatreonData data) && data.Prefs.FlyingRagdollSelf)
