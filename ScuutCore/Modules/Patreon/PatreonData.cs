@@ -6,6 +6,7 @@
     using API.Loader;
     using Commands;
     using PluginAPI.Core;
+    using RainbowTags;
     using Types;
     using UnityEngine;
     using PermissionHandler = NWAPIPermissionSystem.PermissionHandler;
@@ -65,9 +66,12 @@
 
         private void Update()
         {
-            if (Prefs.BadgeIndex != Badge.Cycle)
+            if (Prefs is not { BadgeIndex: Badge.Cycle })
                 return;
-            float switchTime = PatreonPerksModule.Singleton.Config.AutoSwitchBadge;
+            var module = PatreonPerksModule.Singleton;
+            if (module == null)
+                return;
+            float switchTime = module.Config.AutoSwitchBadge;
             if (switchTime < 0)
                 return;
             time += Time.deltaTime;
@@ -79,7 +83,7 @@
 
         public static PatreonData Get(ReferenceHub hub) => hub.TryGetComponent(out PatreonData data) ? data : hub.gameObject.AddComponent<PatreonData>();
 
-        private void GetBadge(out string text, out string color)
+        private void GetBadge(out string text, out string color, out string[] rainbow)
         {
             if (Prefs.BadgeIndex < 0)
             {
@@ -89,6 +93,7 @@
                 {
                     text = Prefs.CustomBadge;
                     color = Prefs.CustomBadgeColor ?? Rank.DefaultCustomColor;
+                    rainbow = null;
                     return;
                 }
             }
@@ -102,6 +107,7 @@
                     {
                         text = Prefs.CustomBadge;
                         color = Prefs.CustomBadgeColor ?? Rank.DefaultCustomColor;
+                        rainbow = null;
                         return;
                     }
                     cycleIndex = 0;
@@ -109,6 +115,7 @@
 
                 text = Rank.BadgeOptions[cycleIndex].Content;
                 color = Rank.BadgeOptions[cycleIndex].Color;
+                rainbow = Rank.BadgeOptions[cycleIndex].RainbowColors;
                 return;
             }
 
@@ -116,6 +123,7 @@
                 Prefs.BadgeIndex = 1;
             text = Rank.BadgeOptions[Prefs.BadgeIndex - 1].Content;
             color = Rank.BadgeOptions[Prefs.BadgeIndex - 1].Color;
+            rainbow = Rank.BadgeOptions[Prefs.BadgeIndex - 1].RainbowColors;
         }
 
         public void SetIndex(int result)
@@ -167,8 +175,20 @@
         {
             if (PermissionHandler.CheckPermission(Hub.queryProcessor._sender, "scuutcore.patreon.disabled"))
                 return;
-            GetBadge(out string badge, out string color);
-            PatreonExtensions.SetRank(Hub, badge, color);
+            GetBadge(out string badge, out string color, out string[] rainbow);
+            bool hasRainbow = rainbow is { Length: not 0 };
+            PatreonExtensions.SetRank(Hub, badge, hasRainbow ? null : color);
+            bool hasController = TryGetComponent(out RainbowTagController controller);
+            if (!hasRainbow)
+            {
+                if (hasController)
+                    controller.Colors = null;
+                return;
+            }
+            if (!hasController)
+                controller = gameObject.AddComponent<RainbowTagController>();
+            controller.Colors = rainbow;
+            controller.Interval = RainbowTags.Instance.Config.TagInterval;
         }
     }
 }

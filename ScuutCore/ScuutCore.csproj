@@ -162,6 +162,7 @@
     <Compile Include="Modules\Patreon\Types\PatreonPreferences.cs" />
     <Compile Include="Modules\Patreon\Types\PatreonRank.cs" />
     <Compile Include="Modules\Patreon\Types\UserRankAssociation.cs" />
+    <Compile Include="Modules\RainbowTags\RainbowTagController.cs"/>
     <Compile Include="Modules\RespawnTimer\API\API.cs" />
     <Compile Include="Modules\RespawnTimer\API\Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Modules\RespawnTimer\API\Features\TimerView.cs" />
@@ -199,7 +200,6 @@
     <Compile Include="Modules\ScpSwap\ScpSwap.cs" />
     <Compile Include="Modules\ScpSwap\Config.cs" />
     <Compile Include="Modules\ScpSwap\EventHandlers.cs" />
-    <Compile Include="Modules\RainbowTags\Components\RainbowTagController.cs" />
     <Compile Include="Modules\RainbowTags\RainbowTags.cs" />
     <Compile Include="Modules\RainbowTags\Config.cs" />
     <Compile Include="Modules\RainbowTags\EventHandlers.cs" />

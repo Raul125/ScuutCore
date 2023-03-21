@@ -1,8 +1,7 @@
 ﻿namespace ScuutCore.Modules.RainbowTags
 {
     using System.Linq;
-    using ScuutCore.API.Features;
-    using Component;
+    using API.Features;
     using MEC;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;

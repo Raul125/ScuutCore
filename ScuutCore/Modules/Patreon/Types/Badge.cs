@@ -13,10 +13,13 @@
 
         public string Color { get; set; }
 
-        public Badge(string content, string color)
+        public string[] RainbowColors { get; set; }
+
+        public Badge(string content, string color, string[] rainbowColors = null)
         {
             Content = content;
             Color = color;
+            RainbowColors = rainbowColors;
         }
 
     }

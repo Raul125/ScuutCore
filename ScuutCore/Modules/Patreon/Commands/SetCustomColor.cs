@@ -100,7 +100,7 @@
             }
 
             string color = string.Join(" ", arguments).Trim();
-            if (!Colors.TryGetValue(color, out string code))
+            if (!TryGetColor(color, out string code))
             {
                 response = "Invalid color. Available ones: " + string.Join(" ", Colors.Select(e => $"<color={e.Value}>{e.Key}</color>"));
                 return false;
@@ -112,5 +112,7 @@
             response = $"Your badge color has been set to <color={code}>{color}</color>. Use the \"patreon selectBadge custom\" command to select it.";
             return true;
         }
+
+        public static bool TryGetColor(string color, out string code) => Colors.TryGetValue(color, out code);
     }
 }

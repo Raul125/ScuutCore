@@ -27,7 +27,11 @@
                 BadgeOptions = new List<Badge>
                 {
                     new Badge("Example Badge", "lime"),
-                    new Badge("Other Badge", "red")
+                    new Badge("Other Badge", "red", new[]
+                    {
+                        "pink",
+                        "silver"
+                    })
                 },
                 DefaultCustomColor = "tomato"
             }

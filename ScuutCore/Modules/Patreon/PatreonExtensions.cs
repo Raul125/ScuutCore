@@ -43,7 +43,8 @@
         {
             var roles = hub.serverRoles;
             roles.Network_myText = content;
-            roles.Network_myColor = color;
+            if (color != null)
+                roles.SetColor(color);
         }
 
         public static float GetRagdollVelocityMultiplier(DamageHandlerBase handler, ReferenceHub owner)
