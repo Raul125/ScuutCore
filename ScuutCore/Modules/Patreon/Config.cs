@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using API.Interfaces;
+    using Commands;
     using Types;
     public sealed class Config : IModuleConfig
     {
@@ -42,6 +43,9 @@
 
         [Description("The multiplier for ragdoll velocity when flying ragdoll is enabled")]
         public float RagdollFlyMultiplier { get; set; } = 3f;
+
+        [Description("Whether to add the suffix:" + SetCustomBadge.CustomPatreon)]
+        public bool CustomPatreonSuffix { get; set; } = true;
 
     }
 }
