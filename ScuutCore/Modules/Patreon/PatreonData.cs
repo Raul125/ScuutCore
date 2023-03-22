@@ -13,7 +13,6 @@
 
     public sealed class PatreonData : MonoBehaviour
     {
-
         private static readonly Dictionary<string, PatreonPreferences> Preferences = new Dictionary<string, PatreonPreferences>();
 
         public ReferenceHub Hub { get; private set; }

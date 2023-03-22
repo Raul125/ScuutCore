@@ -146,6 +146,9 @@
     <Compile Include="Modules\AutoNuke\EventHandlers.cs" />
     <Compile Include="Modules\ErrorLogs\Message.cs" />
     <Compile Include="Modules\ErrorLogs\WebhookSender.cs" />
+    <Compile Include="Modules\KeepCola\Config.cs" />
+    <Compile Include="Modules\KeepCola\EventHandlers.cs" />
+    <Compile Include="Modules\KeepCola\KeepCola.cs" />
     <Compile Include="Modules\Patreon\Commands\FlyingRagdollKills.cs" />
     <Compile Include="Modules\Patreon\Commands\FlyingRagdollSelf.cs" />
     <Compile Include="Modules\Patreon\Commands\MainPatreonCommand.cs" />
@@ -162,7 +165,7 @@
     <Compile Include="Modules\Patreon\Types\PatreonPreferences.cs" />
     <Compile Include="Modules\Patreon\Types\PatreonRank.cs" />
     <Compile Include="Modules\Patreon\Types\UserRankAssociation.cs" />
-    <Compile Include="Modules\RainbowTags\RainbowTagController.cs"/>
+    <Compile Include="Modules\RainbowTags\RainbowTagController.cs" />
     <Compile Include="Modules\RespawnTimer\API\API.cs" />
     <Compile Include="Modules\RespawnTimer\API\Extensions\StringBuilderExtensions.cs" />
     <Compile Include="Modules\RespawnTimer\API\Features\TimerView.cs" />

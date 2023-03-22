@@ -11,7 +11,7 @@
         [PluginEvent(ServerEventType.PlayerDamage)]
         public bool OnHurting(Player target, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (!target.IsDisarmed || target is null || attacker is null || target.DisarmedBy == attacker || target.Role is RoleTypeId.Tutorial)
+            if (!target.IsDisarmed || target is null || attacker is null || target.DisarmedBy == attacker || attacker.Role is RoleTypeId.Tutorial)
                 return true;
             if (attacker.Role.GetFaction() == Faction.SCP)
                 return true;

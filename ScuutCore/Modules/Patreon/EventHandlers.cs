@@ -7,7 +7,6 @@
     using RoundSummary = global::RoundSummary;
     public sealed class EventHandlers : IEventHandler
     {
-
         [PluginEvent(ServerEventType.PlayerJoined)]
         private void OnPlayerJoined(Player player)
         {
