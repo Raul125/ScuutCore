@@ -3,6 +3,7 @@
     using CustomPlayerEffects;
     using MEC;
     using PlayerRoles;
+    using PlayerStatsSystem;
     using ScuutCore.API.Features;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
@@ -20,7 +21,8 @@
                 var strength = effect.Intensity;
                 Timing.CallDelayed(2f, () =>
                 {
-                    player.EffectsManager.EnableEffect<Scp207>(strength);
+                    player.GetStatModule<StaminaStat>().CurValue = 1f;
+                    player.EffectsManager.ChangeState<Scp207>(strength, 0f, false);
                 });
             }
         }
