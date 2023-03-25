@@ -17,10 +17,10 @@
 
         public bool EnteringPocket { get; set; } = false;
 
-        private Subclass subClass;
+        private Subclass? subClass;
         private int setSubclassProc; // ensure that the delayed action does not execute if another subclass is set or destroyed
 
-        public Subclass SubClass
+        public Subclass? SubClass
         {
             get => subClass;
             set

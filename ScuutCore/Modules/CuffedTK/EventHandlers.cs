@@ -25,6 +25,19 @@
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
         public bool OnPlayerRemoveHandcuffs(Player player, Player target)
         {
+            int num = 0;
+            if (target == null)
+                num ++;
+            if (player == null)
+                num += 2;
+            if (target.DisarmedBy == null)
+                num += 4;
+            if (num > 0)
+            {
+                player.ReceiveHint("You are allowed to uncuff this player since something was null, report plz. Code: " + num, 5);
+                Log.Debug("CuffedTK null: " + num);
+                return true;
+            }
             if (Module.Config.OnlyAllowCufferToRemoveHandcuffs && target.DisarmedBy != player && player.Role.GetFaction() != target.Role.GetFaction())
             {
                 player.ReceiveHint(Module.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
