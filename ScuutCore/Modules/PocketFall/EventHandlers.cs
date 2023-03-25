@@ -49,7 +49,9 @@
 
         private IEnumerator<float> SendToPocket(ScuutPlayer player)
         {
-            yield return Timing.WaitForSeconds(Module.Config.Delay);
+            float delay = Module.Config.Delay;
+            player.EffectsManager.EnableEffect<Ensnared>(delay + 0.2f);
+            yield return Timing.WaitForSeconds(delay);
             var pos = new RelativePosition(player.Position);
 
             for (int i = 0; i < Module.Config.Ticks; i++)
