@@ -1,6 +1,8 @@
 ﻿namespace ScuutCore.API.Features
 {
     using Hints;
+    using InventorySystem.Items.Firearms;
+    using InventorySystem.Items.Firearms.Attachments;
     using MEC;
     using Modules.Subclasses;
     using PluginAPI.Core;
@@ -68,7 +70,22 @@
             if (itemLoadout is { Length: > 0 })
             {
                 foreach (var item in itemLoadout)
-                    AddItem(item);
+                {
+                    var itemObj = AddItem(item);
+                    if (itemObj is Firearm firearm)
+                    {
+                        if (AttachmentsServerHandler.PlayerPreferences.TryGetValue(ReferenceHub, out var dictionary) && dictionary.TryGetValue(itemObj.ItemTypeId, out var code))
+                        {
+                            firearm.ApplyAttachmentsCode(code, true);
+                            if (Subclasses.Singleton?.Config.LoadGuns ?? false)
+                            {
+                                firearm.Status = new FirearmStatus(firearm.AmmoManagerModule.MaxAmmo, FirearmStatusFlags.Chambered | FirearmStatusFlags.Cocked | FirearmStatusFlags.MagazineInserted, firearm.GetCurrentAttachmentsCode());
+                            }
+                            else
+                                firearm.Status = new FirearmStatus(0, firearm.Status.Flags, firearm.GetCurrentAttachmentsCode());
+                        }
+                    }
+                }
             }
 
             var ammoLoadout = SubClass.GetAmmoLoadout(this);
