@@ -39,7 +39,7 @@
                 Log.Debug("CuffedTK null: " + num);
                 return true;
             }
-            if (Module.Config.OnlyAllowCufferToRemoveHandcuffs && target.DisarmedBy != player && target.DisarmedBy.Team != Team.Dead && player.Role.GetFaction() != target.Role.GetFaction())
+            if (Module.Config.OnlyAllowCufferToRemoveHandcuffs && target.DisarmedBy!.PlayerId != player!.PlayerId && target.DisarmedBy.Team != Team.Dead && player.Role.GetFaction() != target.Role.GetFaction())
             {
                 player.ReceiveHint(Module.Config.YouCantUnCuffMessage.Replace("{player}", player.Nickname), 5);
                 return false;
