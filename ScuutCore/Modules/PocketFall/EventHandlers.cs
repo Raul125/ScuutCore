@@ -51,6 +51,7 @@
         {
             float delay = Module.Config.Delay;
             player.EffectsManager.EnableEffect<Ensnared>(delay + 0.2f);
+            player.EffectsManager.DisableEffect<Poisoned>();
             yield return Timing.WaitForSeconds(delay);
             var pos = new RelativePosition(player.Position);
 

@@ -1,6 +1,7 @@
 ﻿namespace ScuutCore
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.IO;
     using PlayerRoles;
     using PluginAPI.Helpers;
@@ -12,8 +13,12 @@
 
         public Dictionary<string, ushort> ServerCommand { get; set; } = new Dictionary<string, ushort>()
         {
-            { "sv1", 25570 },
-            { "sv2", 25571 }
+            {
+                "sv1", 25570
+            },
+            {
+                "sv2", 25571
+            }
         };
 
         public List<RoleTypeId> SuicideDisabledRoles { get; set; } = new List<RoleTypeId>()
@@ -26,5 +31,8 @@
             RoleTypeId.Scp079,
             RoleTypeId.Scp939
         };
+
+        [Description("Percentage change of spawning a 1576 instead of a 2176 in the pedestal (max 1 per round).")]
+        public float Scp1576SpawnChance { get; set; } = 50f;
     }
 }

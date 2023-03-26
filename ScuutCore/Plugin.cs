@@ -1,15 +1,16 @@
 ﻿namespace ScuutCore
 {
     using System;
-    using MEC;
     using System.Collections.Generic;
+    using API.Features;
+    using API.Loader;
     using HarmonyLib;
+    using MEC;
+    using Patches;
+    using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using PluginAPI.Events;
-    using ScuutCore.API.Loader;
-    using PluginAPI.Core;
-    using ScuutCore.API.Features;
 
     public class Plugin
     {
@@ -45,6 +46,8 @@
             Harmony.PatchAll();
 
             EventManager.RegisterEvents<EventHandlers>(this);
+
+            LockerPatch.ResetChance();
         }
 
         [PluginUnload]
