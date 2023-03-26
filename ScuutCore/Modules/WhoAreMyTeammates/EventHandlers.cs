@@ -55,13 +55,20 @@
                     player.SendBroadcast(content, duration);
                     return;
                 case DisplayType.Hint:
-                    var curve = HintEffectPresets.CreateTrailingBumpCurve(0.5f, 1, count: 3, 0.5f, duration);
-                    curve.postWrapMode = WrapMode.Clamp;
-                    player.ReceiveHint(new string('\n', Module.Config.HintLowering) + content, new HintEffect[]
+                    if (Module.Config.HintEffects)
                     {
-                        HintEffectPresets.FadeIn(0.05f),
-                        HintEffectPresets.FadeOut(0.05f, 0.95f)
-                    }, duration);
+                        var curve = HintEffectPresets.CreateTrailingBumpCurve(0.5f, 1, count: 3, 0.5f, duration);
+                        curve.postWrapMode = WrapMode.Clamp;
+                        player.ReceiveHint(new string('\n', Module.Config.HintLowering) + content, new HintEffect[]
+                        {
+                            HintEffectPresets.FadeIn(0.05f),
+                            HintEffectPresets.FadeOut(0.05f, 0.95f)
+                        }, duration);
+                    }
+                    else
+                    {
+                        player.ReceiveHint(new string('\n', Module.Config.HintLowering) + content, duration);
+                    }
                     return;
                 case DisplayType.ConsoleMessage:
                     player.SendConsoleMessage(content, "cyan");

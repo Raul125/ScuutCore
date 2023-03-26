@@ -15,6 +15,7 @@
 
         [Description("Amount of lines to prepend the hint width to make it easier to read.")]
         public int HintLowering { get; set; } = 0;
+        public bool HintEffects { get; set; } = false;
 
         [Description("Sets broadcasts for each class. Use %list% for the player names/SCP names and %count% for number of teammates")]
         public List<WamtBroadcast> WamtBroadcasts { get; set; } = new List<WamtBroadcast>
