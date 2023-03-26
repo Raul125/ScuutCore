@@ -49,8 +49,8 @@
             }
         }
 
-        [PluginEvent(ServerEventType.PlayerDeath)]
-        public void OnDied(ScuutPlayer player, Player attacker, DamageHandlerBase damageHandler)
+        [PluginEvent(ServerEventType.PlayerChangeRole)]
+        public void OnDiedOnChangingRole(ScuutPlayer player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
         {
             if (player == null)
                 return;
