@@ -25,7 +25,6 @@
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
         public bool OnPlayerRemoveHandcuffs(Player player, Player target)
         {
-            Log.Debug("Player uncuffing: " + player.Nickname + " on " + target.Nickname + " with disarmedby: " + target.DisarmedBy.Nickname);
             int num = 0;
             if (target == null)
                 num ++;
