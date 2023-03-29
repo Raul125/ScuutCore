@@ -1,5 +1,6 @@
 ﻿namespace ScuutCore.Modules.NukeRadiation.Components
 {
+    using CustomPlayerEffects;
     using PluginAPI.Core;
     using UnityEngine;
 
@@ -9,7 +10,7 @@
         private float Time = 0f;
         private float MessageTimeLeft = 0f;
         private float DamageTimeLeft = 0f;
-        private bool IsInNukeZone = false;
+        public bool IsInNukeZone = false;
         private void Start()
         {
             player = Player.Get(gameObject);
@@ -19,6 +20,7 @@
         {
             if (player.Position.y is < -700 and > -720)
             {
+                bool hasEffect = player.EffectsManager.GetEffect<Decontaminating>().IsEnabled;
                 Time += UnityEngine.Time.fixedDeltaTime;
                 bool dealDamage = NukeRadiation.Singleton.Config.RadiationTime - Time <= 0f;
                 if (DamageTimeLeft >= 0f)
@@ -29,7 +31,9 @@
                 {
                     if (dealDamage)
                     {
-                        player.Damage(NukeRadiation.Singleton.Config.RadiationDamage, "Radiation");
+                        if (!hasEffect)
+                            player.EffectsManager.EnableEffect<Decontaminating>();
+                        player.Damage(player.MaxHealth*(NukeRadiation.Singleton.Config.RadiationDamagePercent/100), "Radiation");
                         DamageTimeLeft = NukeRadiation.Singleton.Config.RadiationInterval;
                     }
                 }
@@ -51,8 +55,9 @@
                     }
                     else if (NukeRadiation.Singleton.Config.EnableTimeLeftCountdown)
                     {
+                        var diff = (int)NukeRadiation.Singleton.Config.RadiationTime - Time;
                         player.ReceiveHint(NukeRadiation.Singleton.Config.TimeLeftCountdownMessage.Replace("%time%",
-                            ((int)Time).ToString()), 1);
+                            (diff < 0 ? 0 : diff).ToString()), 1);
                         MessageTimeLeft = 1f;
                     }
                 }
@@ -62,6 +67,7 @@
             {
                 Time = 0f;
                 IsInNukeZone = false;
+                player.EffectsManager.DisableEffect<Decontaminating>();
             }
         }
     }

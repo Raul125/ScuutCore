@@ -153,6 +153,7 @@
     <Compile Include="Modules\NukeRadiation\Config.cs" />
     <Compile Include="Modules\NukeRadiation\EventHandlers.cs" />
     <Compile Include="Modules\NukeRadiation\NukeRadiation.cs" />
+    <Compile Include="Modules\NukeRadiation\Patches\DecontaminationEffectPatch.cs" />
     <Compile Include="Modules\Patreon\Commands\FlyingRagdollKills.cs" />
     <Compile Include="Modules\Patreon\Commands\FlyingRagdollSelf.cs" />
     <Compile Include="Modules\Patreon\Commands\MainPatreonCommand.cs" />
