@@ -45,6 +45,7 @@
                 {
                     if (!IsInNukeZone)
                     {
+                        Log.Info("Entered");
                         player.ReceiveHint(NukeRadiation.Singleton.Config.EnterRadiationMessage, 5f);
                         MessageTimeLeft = 5f;
                     }
@@ -55,7 +56,7 @@
                     }
                     else if (NukeRadiation.Singleton.Config.EnableTimeLeftCountdown)
                     {
-                        var diff = (int)NukeRadiation.Singleton.Config.RadiationTime - Time;
+                        var diff = (int)(NukeRadiation.Singleton.Config.RadiationTime - Time);
                         player.ReceiveHint(NukeRadiation.Singleton.Config.TimeLeftCountdownMessage.Replace("%time%",
                             (diff < 0 ? 0 : diff).ToString()), 1);
                         MessageTimeLeft = 1f;
