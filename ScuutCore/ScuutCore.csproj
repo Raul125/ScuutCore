@@ -149,6 +149,9 @@
     <Compile Include="Modules\KeepCola\Config.cs" />
     <Compile Include="Modules\KeepCola\EventHandlers.cs" />
     <Compile Include="Modules\KeepCola\KeepCola.cs" />
+    <Compile Include="Modules\LastPerson\Config.cs" />
+    <Compile Include="Modules\LastPerson\EventHandlers.cs" />
+    <Compile Include="Modules\LastPerson\LastPerson.cs" />
     <Compile Include="Modules\NukeRadiation\Components\NukeRadiationComponent.cs" />
     <Compile Include="Modules\NukeRadiation\Config.cs" />
     <Compile Include="Modules\NukeRadiation\EventHandlers.cs" />
