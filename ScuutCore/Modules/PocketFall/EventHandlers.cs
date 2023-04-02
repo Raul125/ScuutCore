@@ -18,13 +18,13 @@
         [PluginEvent(ServerEventType.PlayerDamage)]
         public bool OnPlayerDamage(ScuutPlayer target, Player attacker, DamageHandlerBase damageHandler) => !target.EnteringPocket;
 
-        [PluginEvent(ServerEventType.PlayerEnterPocketDimension)]
-        public bool OnPlayerEnterPocketDimension(ScuutPlayer player)
+        [PluginEvent(ServerEventType.Scp106TeleportPlayer)]
+        public bool OnPlayerEnterPocketDimension(ScuutPlayer scp106, ScuutPlayer target)
         {
-            if (player.EnteringPocket)
+            if (target.EnteringPocket || !target.ReferenceHub.playerStats.DealDamage(new ScpDamageHandler(scp106.ReferenceHub, 40, DeathTranslations.PocketDecay)))
                 return false;
-            player.EnteringPocket = true;
-            Plugin.Coroutines.Add(Timing.RunCoroutine(SendToPocket(player)));
+            target.EnteringPocket = true;
+            Plugin.Coroutines.Add(Timing.RunCoroutine(SendToPocket(target)));
             return false;
         }
 
