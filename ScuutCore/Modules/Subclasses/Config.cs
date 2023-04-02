@@ -4,6 +4,7 @@
     using System.IO;
     using API.Interfaces;
     using DeclaredSubclasses.Scientist;
+    using PlayerRoles;
     using PluginAPI.Helpers;
 
     public sealed class Config : IModuleConfig
@@ -18,6 +19,12 @@
         public List<ItemType> Items { get; set; } = new()
         {
             ItemType.Flashlight
+        };
+        public List<RoleTypeId> RoleBlacklist { get; set; } = new()
+        {
+            RoleTypeId.Spectator,
+            RoleTypeId.Tutorial,
+            RoleTypeId.None
         };
         public HeadResearcher HeadResearcher { get; set; } = new HeadResearcher();
     }
