@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using MEC;
     using ScuutCore.API.Features;
     using PlayerRoles;
     using PlayerStatsSystem;
@@ -46,6 +47,16 @@
                     continue;
                 player.SubClass = subclass;
                 return;
+            }
+            if (Subclasses.Singleton.Config.GiveItemsToNonSubclasses && Subclasses.Singleton.Config.ChanceForItems >= UnityEngine.Random.Range(1, 100))
+            {
+                Timing.CallDelayed(1f, () =>
+                {
+                    foreach (var item in Subclasses.Singleton.Config.Items)
+                    {
+                        player.AddItem(item);
+                    }
+                });
             }
         }
 
