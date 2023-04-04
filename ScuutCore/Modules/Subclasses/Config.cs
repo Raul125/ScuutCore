@@ -24,7 +24,17 @@
         {
             RoleTypeId.Spectator,
             RoleTypeId.Tutorial,
-            RoleTypeId.None
+            RoleTypeId.None,
+            RoleTypeId.Overwatch
+        };
+
+        public List<RoleChangeReason> SubclassSpawnReasonBlacklist { get; set; } = new List<RoleChangeReason>()
+        {
+            RoleChangeReason.Escaped,
+            RoleChangeReason.RemoteAdmin,
+            RoleChangeReason.None,
+            RoleChangeReason.Destroyed,
+            RoleChangeReason.Died,
         };
         public HeadResearcher HeadResearcher { get; set; } = new HeadResearcher();
     }

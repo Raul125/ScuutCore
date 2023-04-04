@@ -21,7 +21,7 @@
             _subclassesSpawned.Clear();
         }
 
-        [PluginEvent(ServerEventType.PlayerSpawn)]
+        // scroll down
         public void OnSpawn(ScuutPlayer player, RoleTypeId roleTypeId)
         {
             foreach (var subclass in Subclass.List)
@@ -48,7 +48,7 @@
                 player.SubClass = subclass;
                 return;
             }
-            if (Subclasses.Singleton.Config.GiveItemsToNonSubclasses && !Subclasses.Singleton.Config.RoleBlacklist.Contains(player.Role) &&Subclasses.Singleton.Config.ChanceForItems >= UnityEngine.Random.Range(1, 100))
+            if (Subclasses.Singleton.Config.GiveItemsToNonSubclasses && Subclasses.Singleton.Config.ChanceForItems >= UnityEngine.Random.Range(1, 100))
             {
                 Timing.CallDelayed(1f, () =>
                 {
@@ -65,9 +65,14 @@
         {
             if (player == null)
                 return;
+            if (Subclasses.Singleton.Config.RoleBlacklist.Contains(newRole) || Subclasses.Singleton.Config.SubclassSpawnReasonBlacklist.Contains(changeReason))
+            {
+                if (player.SubClass is not null)
+                    player.SubClass = null;
+                return;
+            }
 
-            if (player.SubClass is not null)
-                player.SubClass = null;
+            OnSpawn(player, newRole);
         }
     }
 }
