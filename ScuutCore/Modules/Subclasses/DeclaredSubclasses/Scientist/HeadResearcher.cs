@@ -14,6 +14,7 @@
         public override float SubclassSpawnChance { get; set; } = 1f;
         public override int SubclassMaxAlive { get; set; } = 1;
         public override int SubclassMaxPerRound { get; set; } = 0;
+        public string SpawnHint { get; set; } = "Scps alive this round: %scps%";
 
         private List<Player> _players = new List<Player>();
         public override List<Player> GetPlayers() => _players;
@@ -23,7 +24,7 @@
             Plugin.Coroutines.Add(Timing.CallDelayed(3f, () =>
             {
                 player.SendBroadcast(
-                    $"Scps alive this round: {string.Join(", ", Player.GetPlayers().Where(x => x.IsSCP).Select(x => x.Role.ToString().Replace("SCP", "")))}",
+                    SpawnHint.Replace("%scps%", string.Join(", ", Player.GetPlayers().Where(x => x.IsSCP).Select(x => x.Role.ToString()))),
                     8);
             }));
         }

@@ -48,7 +48,7 @@
                 player.SubClass = subclass;
                 return;
             }
-            if (Subclasses.Singleton.Config.GiveItemsToNonSubclasses && Subclasses.Singleton.Config.ChanceForItems >= UnityEngine.Random.Range(1, 100))
+            if (Subclasses.Singleton.Config.GiveItemsToNonSubclasses && !Subclasses.Singleton.Config.RoleBlacklist.Contains(player.Role) &&Subclasses.Singleton.Config.ChanceForItems >= UnityEngine.Random.Range(1, 100))
             {
                 Timing.CallDelayed(1f, () =>
                 {

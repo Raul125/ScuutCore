@@ -78,6 +78,8 @@
                     serializedSubclass.OnLoaded();
                 }
             }
+            Subclass.List.Add(Config.HeadResearcher);
+            Config.HeadResearcher.OnLoaded();
 
             string yamlFile = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, "subclasstranslations.yml");
             Dictionary<string, string> deserialized = null;
