@@ -5,7 +5,8 @@
     using HarmonyLib;
     using Modules.ScpSpeech;
     using NorthwoodLib.Pools;
-    //[HarmonyPatch(typeof(VoiceTransceiver), nameof(VoiceTransceiver.ServerReceiveMessage))]
+    using VoiceChat.Networking;
+    [HarmonyPatch(typeof(VoiceTransceiver), nameof(VoiceTransceiver.ServerReceiveMessage))]
     internal static class TransmitPatch
     {
 

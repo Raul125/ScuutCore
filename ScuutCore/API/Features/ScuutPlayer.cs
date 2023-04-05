@@ -4,12 +4,14 @@
     using InventorySystem.Items.Firearms;
     using InventorySystem.Items.Firearms.Attachments;
     using MEC;
+    using Modules.ScpSpeech;
     using Modules.Subclasses;
+    using PlayerRoles.Voice;
     using PluginAPI.Core;
     using PluginAPI.Core.Interfaces;
     using UnityEngine;
 
-    public class ScuutPlayer : Player
+    public sealed class ScuutPlayer : Player
     {
         public ScuutPlayer(IGameComponent component) : base(component)
         {
@@ -98,6 +100,19 @@
 
         public override void OnDestroy()
         {
+        }
+
+        public float SpeechUpdateTime;
+
+        public override void OnUpdate()
+        {
+            SpeechUpdateTime += Time.deltaTime;
+            if (SpeechUpdateTime < 0.5f)
+                return;
+            SpeechUpdateTime = 0;
+            if (RoleBase is not IVoiceRole vcRole || !vcRole.VoiceModule.ServerIsSending || !SpeechHelper.IsUsingProximityChat(ReferenceHub))
+                return;
+            ReceiveHint("\n\n\n\n\n\n\n\n\n\n\n\n<size=18>You are using Proximity Chat</size>", 0.6f);
         }
     }
 }
