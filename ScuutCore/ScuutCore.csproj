@@ -121,6 +121,11 @@
     <Compile Include="Commands\Suicide\VaporizeSuicide.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="EventHandlers.cs" />
+    <Compile Include="Modules\Pets\API\FakeConnection.cs" />
+    <Compile Include="Modules\Pets\API\Pet.cs" />
+    <Compile Include="Modules\Pets\Config.cs" />
+    <Compile Include="Modules\Pets\EventHandlers.cs" />
+    <Compile Include="Modules\Pets\Pets.cs" />
     <Compile Include="Modules\RespawnFix\RespawnFix.cs" />
     <Compile Include="Modules\RespawnFix\Config.cs" />
     <Compile Include="Modules\RespawnFix\EventHandlers.cs" />
@@ -285,6 +290,9 @@
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="$(EXILED_REFERENCES)\PluginAPI.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modules\Pets\Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
