@@ -3,9 +3,13 @@
     using System.Collections.Generic;
     using Hints;
     using PlayerRoles;
+    using PlayerRoles.PlayableScps;
+    using PlayerRoles.PlayableScps.Scp079;
+    using PlayerRoles.Voice;
+    using VoiceChat;
     public static class SpeechHelper
     {
-        private static Config Cfg => ScpSpeechModule.Instance.Config;
+        public static Config Cfg => ScpSpeechModule.Instance.Config;
 
         private static readonly HashSet<uint> ProximityChatNetIDs = new HashSet<uint>();
 
@@ -37,5 +41,13 @@
             }));
         }
 
+        public static bool SendCheck(VoiceChatChannel channel, IVoiceRole sender, IVoiceRole receiver)
+        {
+            if (sender.VoiceModule is not (StandardScpVoiceModule module and not Scp079VoiceModule) || !IsUsingProximityChat(module.Owner))
+                return channel != VoiceChatChannel.None;
+            float distanceSqr = (receiver.VoiceModule.Owner.PlayerCameraReference.position - module.Owner.PlayerCameraReference.position).sqrMagnitude;
+            float range = Cfg.ProximityChatRange;
+            return distanceSqr <= range * range;
+        }
     }
 }
