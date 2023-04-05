@@ -1,15 +1,21 @@
 ﻿namespace ScuutCore.Modules.ScpSpeech
 {
     using System.Collections.Generic;
+    using API.Features;
     using Hints;
     using PlayerRoles;
+    using PlayerRoles.PlayableScps;
+    using PlayerRoles.PlayableScps.Scp079;
+    using PlayerRoles.Voice;
+    using PluginAPI.Core;
+    using VoiceChat;
     public static class SpeechHelper
     {
-        private static Config Cfg => ScpSpeechModule.Instance.Config;
+        public static Config Cfg => ScpSpeechModule.Instance?.Config;
 
         private static readonly HashSet<uint> ProximityChatNetIDs = new HashSet<uint>();
 
-        public static bool CanSwitchVoiceChannels(ReferenceHub hub) => Cfg.PermittedRoles.Contains(hub.GetRoleId());
+        public static bool CanSwitchVoiceChannels(ReferenceHub hub) => Cfg?.PermittedRoles.Contains(hub.GetRoleId()) ?? false;
 
         public static bool IsUsingProximityChat(ReferenceHub hub) => ProximityChatNetIDs.Contains(hub.characterClassManager.netId);
 
@@ -22,6 +28,8 @@
                 return false;
             }
             ProximityChatNetIDs.Add(id);
+            if (Player.TryGet(hub, out ScuutPlayer p))
+                p.SpeechUpdateTime = -2.5f;
             return true;
         }
 
@@ -37,5 +45,15 @@
             }));
         }
 
+        public static bool SendCheck(VoiceChatChannel channel, IVoiceRole sender, IVoiceRole receiver)
+        {
+            if (sender == receiver)
+                return false;
+            if (sender.VoiceModule is not (StandardScpVoiceModule module and not Scp079VoiceModule) || !IsUsingProximityChat(module.Owner))
+                return channel != VoiceChatChannel.None;
+            float distanceSqr = (receiver.VoiceModule.Owner.PlayerCameraReference.position - module.Owner.PlayerCameraReference.position).sqrMagnitude;
+            float range = Cfg.ProximityChatRange;
+            return distanceSqr <= range * range;
+        }
     }
 }

@@ -18,5 +18,7 @@
             RoleTypeId.Scp939
         };
 
+        public float ProximityChatRange { get; set; } = 16f;
+
     }
 }
