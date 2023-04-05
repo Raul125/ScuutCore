@@ -203,6 +203,7 @@
     <Compile Include="Modules\Scp008\Scp008.cs" />
     <Compile Include="Modules\Scp1162\SimplifiedToy.cs" />
     <Compile Include="Modules\ScpSpeech\Config.cs" />
+    <Compile Include="Modules\ScpSpeech\EventHandlers.cs"/>
     <Compile Include="Modules\ScpSpeech\ScpSpeechModule.cs" />
     <Compile Include="Modules\ScpSpeech\SpeechHelper.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
