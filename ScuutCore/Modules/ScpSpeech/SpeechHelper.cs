@@ -1,6 +1,7 @@
 ﻿namespace ScuutCore.Modules.ScpSpeech
 {
     using System.Collections.Generic;
+    using Hints;
     using PlayerRoles;
     public static class SpeechHelper
     {
@@ -22,6 +23,18 @@
             }
             ProximityChatNetIDs.Add(id);
             return true;
+        }
+
+        public static void ProcessAltToggle(ReferenceHub hub)
+        {
+            if (!CanSwitchVoiceChannels(hub))
+                return;
+            bool result = ToggleProximityChat(hub);
+            string text = result ? "\n\n\nProximity chat <mark=#00ff0055>enabled</mark>" : "\n\n\nProximity chat <mark=#ff000055>disabled</mark>";
+            hub.hints.Show(new TextHint(text, new HintParameter[]
+            {
+                new StringHintParameter(text)
+            }));
         }
 
     }

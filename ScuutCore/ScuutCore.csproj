@@ -271,6 +271,7 @@
     <Compile Include="Patches\LockerPatch.cs" />
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\PocketItemUpdatePatch.cs" />
+    <Compile Include="Patches\ScpSpeech\ToggleNoclipPatch.cs"/>
     <Compile Include="Patches\TeslaInRangePatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
