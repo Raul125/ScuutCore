@@ -7,8 +7,7 @@
     using Modules.ScpSpeech;
     using NorthwoodLib.Pools;
     using PlayerRoles.FirstPersonControl;
-    using PlayerRoles.FirstPersonControl.NetworkMessages;
-    [HarmonyPatch(typeof(FpcNoclipToggleMessage), nameof(FpcNoclipToggleMessage.ProcessMessage))]
+    //[HarmonyPatch(typeof(FpcNoclipToggleMessage), nameof(FpcNoclipToggleMessage.ProcessMessage))]
     internal static class ToggleNoclipPatch
     {
 
