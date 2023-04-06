@@ -1,5 +1,6 @@
 ﻿namespace ScuutCore.Modules.Patreon.Types
 {
+    using ScuutCore.Modules.Pets;
     using System;
 
     [Serializable]
@@ -15,6 +16,8 @@
         public bool FlyingRagdollSelf { get; set; }
 
         public bool FlyingRagdollKills { get; set; }
+
+        public PetData PetData { get; set; } = new PetData();
 
     }
 }

@@ -9,6 +9,7 @@
     using PlayerRoles.Voice;
     using PluginAPI.Core;
     using PluginAPI.Core.Interfaces;
+    using ScuutCore.Modules.Pets;
     using UnityEngine;
 
     public sealed class ScuutPlayer : Player
@@ -113,6 +114,13 @@
             if (RoleBase is not IVoiceRole vcRole || !vcRole.VoiceModule.ServerIsSending || !SpeechHelper.IsUsingProximityChat(ReferenceHub))
                 return;
             ReceiveHint("\n\n\n\n\n\n\n\n\n\n\n\n<size=18>You are using Proximity Chat</size>", 0.6f);
+        }
+
+        public Pet Pet { get; set; }
+
+        public static ScuutPlayer Get(ReferenceHub refhub)
+        {
+            return Get<ScuutPlayer>(refhub);
         }
     }
 }

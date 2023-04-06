@@ -51,8 +51,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(EXILED_REFERENCES)\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Mirror">
-      <HintPath>$(EXILED_REFERENCES)\Mirror.dll</HintPath>
+    <Reference Include="Mirror_publicized">
+      <HintPath>..\..\..\ScpSl\Referencias\publicized_assemblies\Mirror_publicized.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -121,8 +121,16 @@
     <Compile Include="Commands\Suicide\VaporizeSuicide.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="EventHandlers.cs" />
+    <Compile Include="Modules\Pets\API\PetData.cs" />
     <Compile Include="Modules\Pets\API\FakeConnection.cs" />
+    <Compile Include="Modules\Pets\API\Methods.cs" />
     <Compile Include="Modules\Pets\API\Pet.cs" />
+    <Compile Include="Modules\Pets\Commands\Item.cs" />
+    <Compile Include="Modules\Pets\Commands\Name.cs" />
+    <Compile Include="Modules\Pets\Commands\Reset.cs" />
+    <Compile Include="Modules\Pets\Commands\Show.cs" />
+    <Compile Include="Modules\Pets\Commands\Hide.cs" />
+    <Compile Include="Modules\Pets\Commands\PetParentCommand.cs" />
     <Compile Include="Modules\Pets\Config.cs" />
     <Compile Include="Modules\Pets\EventHandlers.cs" />
     <Compile Include="Modules\Pets\Pets.cs" />
@@ -280,7 +288,7 @@
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\PocketItemUpdatePatch.cs" />
     <Compile Include="Patches\ScpSpeech\ToggleNoclipPatch.cs" />
-    <Compile Include="Patches\ScpSpeech\TransmitPatch.cs"/>
+    <Compile Include="Patches\ScpSpeech\TransmitPatch.cs" />
     <Compile Include="Patches\TeslaInRangePatch.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -292,8 +300,6 @@
   <ItemGroup>
     <Analyzer Include="$(EXILED_REFERENCES)\PluginAPI.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\Pets\Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

