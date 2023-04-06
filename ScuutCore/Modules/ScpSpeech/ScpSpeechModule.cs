@@ -1,7 +1,7 @@
 ﻿namespace ScuutCore.Modules.ScpSpeech
 {
     using API.Features;
-    public sealed class ScpSpeechModule : Module<Config>
+    public sealed class ScpSpeechModule : EventControllerModule<ScpSpeechModule, Config, EventHandlers>
     {
 
         public static ScpSpeechModule Instance { get; private set; }

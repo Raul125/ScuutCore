@@ -7,14 +7,19 @@
     using PlayerStatsSystem;
     using PluginAPI.Core;
     using ScuutCore.API.Helpers;
+    using Suicide;
 
     [CommandHandler(typeof(RemoteAdminCommandHandler))]
     public class SpecialKill : ICommand
     {
         public string Command { get; } = "specialkill";
-        public string[] Aliases { get; } = new string[] { "sk", "skill" };
+        public string[] Aliases { get; } = new string[]
+        {
+            "sk",
+            "skill"
+        };
         public string Description { get; } = "Kills a player with a special effect.";
-        
+
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             if (!sender.CheckPermission("scuutcore.specialkill"))
@@ -22,7 +27,7 @@
                 response = "Missing perm: scuutcore.specialkill!";
                 return false;
             }
-            
+
             if (!Round.IsRoundStarted)
             {
                 response = "You gotta wait for the round to start!";
@@ -55,7 +60,7 @@
                 case "explosion":
                 case "explosive":
                     PlayerDeathEffects.PlayExplosionEffect(player);
-                    player.Kill("Ate taco bell");
+                    player.Kill(ExplosiveSuicide.DeathReason);
                     break;
                 case "vaporize":
                 case "dust":
@@ -66,7 +71,7 @@
                     response = "Invalid effect: " + arguments.At(1).ToLower();
                     return false;
             }
-            
+
             response = "Killed " + player.Nickname + " with " + arguments.At(1).ToLower() + " effect!";
             return true;
         }

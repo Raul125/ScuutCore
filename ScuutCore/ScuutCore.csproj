@@ -216,6 +216,7 @@
     <Compile Include="Modules\Scp008\Scp008.cs" />
     <Compile Include="Modules\Scp1162\SimplifiedToy.cs" />
     <Compile Include="Modules\ScpSpeech\Config.cs" />
+    <Compile Include="Modules\ScpSpeech\EventHandlers.cs"/>
     <Compile Include="Modules\ScpSpeech\ScpSpeechModule.cs" />
     <Compile Include="Modules\ScpSpeech\SpeechHelper.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
@@ -287,6 +288,7 @@
     <Compile Include="Patches\LockerPatch.cs" />
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\PocketItemUpdatePatch.cs" />
+    <Compile Include="Patches\RagdollPatch.cs"/>
     <Compile Include="Patches\ScpSpeech\ToggleNoclipPatch.cs" />
     <Compile Include="Patches\ScpSpeech\TransmitPatch.cs" />
     <Compile Include="Patches\TeslaInRangePatch.cs" />
