@@ -18,16 +18,6 @@
         [PluginEvent(ServerEventType.PlayerDamage)]
         public bool OnPlayerDamage(ScuutPlayer target, Player attacker, DamageHandlerBase damageHandler) => !target.EnteringPocket;
 
-        [PluginEvent(ServerEventType.Scp106TeleportPlayer)]
-        public bool OnPlayerEnterPocketDimension(ScuutPlayer scp106, ScuutPlayer target)
-        {
-            if (target.EnteringPocket || !target.ReferenceHub.playerStats.DealDamage(new ScpDamageHandler(scp106.ReferenceHub, 40, DeathTranslations.PocketDecay)))
-                return false;
-            target.EnteringPocket = true;
-            Plugin.Coroutines.Add(Timing.RunCoroutine(SendToPocket(target)));
-            return false;
-        }
-
         [PluginEvent(ServerEventType.PlayerChangeItem)]
         public void ChangeItem(ScuutPlayer target, ushort prev, ushort next)
         {
@@ -47,7 +37,7 @@
         [PluginEvent(ServerEventType.PlayerUseItem)]
         public bool UseItem(ScuutPlayer target, UsableItem item) => !target.EnteringPocket;
 
-        private IEnumerator<float> SendToPocket(ScuutPlayer player)
+        public IEnumerator<float> SendToPocket(ScuutPlayer player)
         {
             float delay = Module.Config.Delay;
             player.EffectsManager.EnableEffect<Ensnared>(delay + 0.2f);
@@ -73,6 +63,13 @@
 
             yield return Timing.WaitForSeconds(0.1f);
             player.EnteringPocket = false;
+        }
+
+        public static void Send(ReferenceHub hub)
+        {
+            if (!Player.TryGet(hub, out ScuutPlayer player) || PocketFall.Instance == null)
+                return;
+            Plugin.Coroutines.Add(Timing.RunCoroutine(PocketFall.Instance.EventHandlers.SendToPocket(player)));
         }
     }
 }
