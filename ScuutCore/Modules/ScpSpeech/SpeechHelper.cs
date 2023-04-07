@@ -33,6 +33,8 @@
             return true;
         }
 
+        public static void RemoveProximityChat(ReferenceHub hub) => ProximityChatNetIDs.Remove(hub.characterClassManager.netId);
+
         public static void ProcessAltToggle(ReferenceHub hub)
         {
             if (!CanSwitchVoiceChannels(hub))
