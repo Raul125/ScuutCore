@@ -13,14 +13,17 @@
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var list = ListPool<CodeInstruction>.Shared.Rent(instructions);
-            int index = list.Count - 5;
-            list.RemoveRange(index, 3);
-            list.InsertRange(index, new[]
+            if (PocketFall.Instance.Config.IsEnabled)
             {
-                new CodeInstruction(OpCodes.Ldarg_0),
-                CodeInstruction.LoadField(typeof(Scp106Attack), nameof(Scp106Attack._targetHub)),
-                CodeInstruction.Call(typeof(EventHandlers), nameof(EventHandlers.Send)),
-            });
+                int index = list.Count - 5;
+                list.RemoveRange(index, 3);
+                list.InsertRange(index, new[]
+                {
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    CodeInstruction.LoadField(typeof(Scp106Attack), nameof(Scp106Attack._targetHub)),
+                    CodeInstruction.Call(typeof(EventHandlers), nameof(EventHandlers.Send)),
+                });
+            }
             foreach (var codeInstruction in list)
                 yield return codeInstruction;
             ListPool<CodeInstruction>.Shared.Return(list);

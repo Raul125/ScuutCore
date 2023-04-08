@@ -16,11 +16,12 @@
         {
             var list = ListPool<CodeInstruction>.Shared.Rent(instructions);
             int permittedCheck = list.FindIndex(i => i.operand is MethodInfo { Name: nameof(FpcNoclip.IsPermitted) });
-            list.InsertRange(list.FindIndex(permittedCheck, i => i.opcode == OpCodes.Ret), new[]
-            {
-                new CodeInstruction(OpCodes.Ldloc_0),
-                CodeInstruction.Call(typeof(SpeechHelper), nameof(SpeechHelper.ProcessAltToggle))
-            });
+            if (ScpSpeechModule.Instance.Config.IsEnabled)
+                list.InsertRange(list.FindIndex(permittedCheck, i => i.opcode == OpCodes.Ret), new[]
+                {
+                    new CodeInstruction(OpCodes.Ldloc_0),
+                    CodeInstruction.Call(typeof(SpeechHelper), nameof(SpeechHelper.ProcessAltToggle))
+                });
             foreach (var codeInstruction in list)
                 yield return codeInstruction;
             ListPool<CodeInstruction>.Shared.Return(list);
