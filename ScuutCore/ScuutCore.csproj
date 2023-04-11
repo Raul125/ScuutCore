@@ -121,6 +121,7 @@
     <Compile Include="Commands\Suicide\VaporizeSuicide.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="EventHandlers.cs" />
+    <Compile Include="Modules\CleanupUtility\Components\AutoClearComponent.cs" />
     <Compile Include="Modules\RespawnFix\RespawnFix.cs" />
     <Compile Include="Modules\RespawnFix\Config.cs" />
     <Compile Include="Modules\RespawnFix\EventHandlers.cs" />
@@ -203,7 +204,7 @@
     <Compile Include="Modules\Scp008\Scp008.cs" />
     <Compile Include="Modules\Scp1162\SimplifiedToy.cs" />
     <Compile Include="Modules\ScpSpeech\Config.cs" />
-    <Compile Include="Modules\ScpSpeech\EventHandlers.cs"/>
+    <Compile Include="Modules\ScpSpeech\EventHandlers.cs" />
     <Compile Include="Modules\ScpSpeech\ScpSpeechModule.cs" />
     <Compile Include="Modules\ScpSpeech\SpeechHelper.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
@@ -265,23 +266,23 @@
     <Compile Include="Modules\KillMessages\EventHandlers.cs" />
     <Compile Include="Modules\CuffedTK\CuffedTK.cs" />
     <Compile Include="Modules\CuffedTK\Config.cs" />
-      <Compile Include="Modules\CuffedTK\EventHandlers.cs"/>
-      <Compile Include="Modules\BetterCandy\BetterCandy.cs"/>
-      <Compile Include="Modules\BetterCandy\Config.cs"/>
-      <Compile Include="Patches\CandyGetRandomPatch.cs"/>
-      <Compile Include="Patches\CreateItemPatch.cs"/>
-      <Compile Include="Patches\DropItemPatch.cs"/>
-      <Compile Include="Patches\KillPlayerPatch.cs"/>
-      <Compile Include="Patches\LockerPatch.cs"/>
-      <Compile Include="Patches\OverrideSegmentPatch.cs"/>
-      <Compile Include="Patches\PocketItemUpdatePatch.cs"/>
-      <Compile Include="Patches\RagdollPatch.cs"/>
-      <Compile Include="Patches\Scp106Teleport.cs"/>
-      <Compile Include="Patches\ScpSpeech\ToggleNoclipPatch.cs"/>
-      <Compile Include="Patches\ScpSpeech\TransmitPatch.cs"/>
-      <Compile Include="Patches\TeslaInRangePatch.cs"/>
-      <Compile Include="Plugin.cs"/>
-      <Compile Include="Properties\AssemblyInfo.cs"/>
+      <Compile Include="Modules\CuffedTK\EventHandlers.cs" />
+      <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
+      <Compile Include="Modules\BetterCandy\Config.cs" />
+      <Compile Include="Patches\CandyGetRandomPatch.cs" />
+      <Compile Include="Patches\CreateItemPatch.cs" />
+      <Compile Include="Patches\DropItemPatch.cs" />
+      <Compile Include="Patches\KillPlayerPatch.cs" />
+      <Compile Include="Patches\LockerPatch.cs" />
+      <Compile Include="Patches\OverrideSegmentPatch.cs" />
+      <Compile Include="Patches\PocketItemUpdatePatch.cs" />
+      <Compile Include="Patches\RagdollPatch.cs" />
+      <Compile Include="Patches\Scp106Teleport.cs" />
+      <Compile Include="Patches\ScpSpeech\ToggleNoclipPatch.cs" />
+      <Compile Include="Patches\ScpSpeech\TransmitPatch.cs" />
+      <Compile Include="Patches\TeslaInRangePatch.cs" />
+      <Compile Include="Plugin.cs" />
+      <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
