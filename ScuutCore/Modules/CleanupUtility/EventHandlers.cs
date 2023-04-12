@@ -35,7 +35,13 @@
         public void OnPlayerDroppedItem(Player player, ItemBase item)
         {
             if (Module.Config.ClearItems)
+            {
                 item.gameObject.AddComponent<AutoClearComponent>();
+                var time = Module.Config.CleanDelay.TryGetValue(item.ItemTypeId, out var value) ? value : Module.Config.DefaultDelay;
+                var comp = item.gameObject.GetComponent<AutoClearComponent>();
+                comp.TimeLeft = time;
+                comp.Enabled = true;
+            }
         }
 
         private void ClearItems(int ymin, int ymax, FacilityZone[] zones)
