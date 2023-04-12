@@ -26,9 +26,9 @@
         public void OnWarheadDetonated()
         {
             if (Module.Config.ClearItems)
-                ClearItems(0, 0, new[] { FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance });
+                ClearItems(-1500, 500, new[] { FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance });
             if (Module.Config.ClearRagdolls)
-                ClearRagdolls(0, 0, new[] { FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance });
+                ClearRagdolls(-1500, 500, new[] { FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance });
         }
 
         [PluginEvent(ServerEventType.PlayerDropItem)]
