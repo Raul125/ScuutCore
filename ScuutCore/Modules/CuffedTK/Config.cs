@@ -15,7 +15,13 @@
         [Description("What hint should the Attacker be displayed when trying to damage a Cuffed D-Class? %PLAYER% will be replaced with the Target Username. Time, 0 to disable")]
         public string AttackerHint { get; set; } = "You cannot damage %PLAYER% because he is cuffed!";
 
-        [Description("What Team should not be allowed to damage an Cuffed D-Class! CDP = Class-D, CHI = Chaos, MTF = Nine-Tailed Fox, RSC = Scientists, TUT = Tutorial")]
+        public List<RoleTypeId> RolesToAffected { get; set; } = new List<RoleTypeId>
+        {
+            RoleTypeId.ClassD,
+            RoleTypeId.Scientist,
+        };
+
+        /*[Description("What Team should not be allowed to damage an Cuffed D-Class! CDP = Class-D, CHI = Chaos, MTF = Nine-Tailed Fox, RSC = Scientists, TUT = Tutorial")]
         public HashSet<Team> DisallowDamagetoClassD { get; set; } = new HashSet<Team>
         {
             Team.FoundationForces,
@@ -39,7 +45,7 @@
         {
             Team.ClassD,
             Team.ChaosInsurgency
-        };
+        };*/
 
         public bool OnlyAllowCufferToRemoveHandcuffs { get; set; } = true;
         public string YouCantUnCuffMessage { get; set; } = "You can't uncuff {player}";

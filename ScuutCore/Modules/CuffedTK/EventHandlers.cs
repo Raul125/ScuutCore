@@ -11,6 +11,8 @@
         [PluginEvent(ServerEventType.PlayerDamage)]
         public bool OnHurting(Player target, Player attacker, DamageHandlerBase damageHandler)
         {
+            if (!Module.Config.RolesToAffected.Contains(target.Role))
+                return true;
             if (!target.IsDisarmed || target is null || attacker is null || target.DisarmedBy.ReferenceHub == attacker.ReferenceHub || attacker.Role is RoleTypeId.Tutorial)
                 return true;
             if (attacker.Role.GetFaction() == Faction.SCP)
@@ -25,6 +27,8 @@
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
         public bool OnPlayerRemoveHandcuffs(Player player, Player target)
         {
+            if (!Module.Config.RolesToAffected.Contains(target.Role))
+                return true;
             int num = 0;
             if (target == null)
                 num ++;
