@@ -5,8 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using ScuutCore.API.Interfaces;
-    using LiteNetLib.Utils;
+    using Interfaces;
     using PluginAPI.Core;
     using YamlDotNet.Serialization;
     using YamlDotNet.Serialization.NamingConventions;
@@ -89,7 +88,7 @@
         {
             Type type = target.GetType();
             if (type != source.GetType())
-                throw new InvalidTypeException("Target and source type mismatch!");
+                throw new InvalidOperationException("Target and source type mismatch!");
 
             foreach (PropertyInfo sourceProperty in type.GetProperties())
                 type.GetProperty(sourceProperty.Name)?.SetValue(target, sourceProperty.GetValue(source, null), null);
