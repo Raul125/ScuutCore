@@ -16,7 +16,7 @@
         {
             var list = ListPool<CodeInstruction>.Shared.Rent(instructions);
             int permittedCheck = list.FindIndex(i => i.operand is MethodInfo { Name: nameof(FpcNoclip.IsPermitted) });
-            if (ScpSpeechModule.Instance.Config.IsEnabled)
+            if (ScpSpeechModule.Instance is { Config: { IsEnabled: true } })
                 list.InsertRange(list.FindIndex(permittedCheck, i => i.opcode == OpCodes.Ret), new[]
                 {
                     new CodeInstruction(OpCodes.Ldloc_0),

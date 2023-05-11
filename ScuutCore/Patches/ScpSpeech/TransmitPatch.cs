@@ -13,7 +13,7 @@
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
         {
             var list = ListPool<CodeInstruction>.Shared.Rent(instructions);
-            if (ScpSpeechModule.Instance.Config.IsEnabled)
+            if (ScpSpeechModule.Instance is { Config: { IsEnabled: true } })
             {
                 var isProximity = generator.DeclareLocal(typeof(bool));
                 var setChannelLabel = generator.DefineLabel();

@@ -13,7 +13,7 @@
         private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
             var list = ListPool<CodeInstruction>.Shared.Rent(instructions);
-            if (PocketFall.Instance.Config.IsEnabled)
+            if (PocketFall.Instance is { Config: { IsEnabled: true } })
             {
                 int index = list.Count - 5;
                 list.RemoveRange(index, 3);
