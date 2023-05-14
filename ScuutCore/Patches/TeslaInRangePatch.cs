@@ -16,7 +16,7 @@
             yield return AccessTools.Method(typeof(TeslaGate), nameof(TeslaGate.PlayerInIdleRange));
         }
 
-        public static bool DisableTriggering(ReferenceHub hub) => Teslas.Singleton.Config.Roles.Contains(hub.roleManager.CurrentRole.RoleTypeId);
+        public static bool DisableTriggering(ReferenceHub hub) => Teslas.Singleton?.Config?.Roles.Contains(hub.roleManager.CurrentRole.RoleTypeId) ?? false;
 
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
         {

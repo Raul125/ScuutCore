@@ -22,7 +22,7 @@
 
             foreach (Player player in Player.GetPlayers())
                 if (player.ReferenceHub.serverRoles.RemoteAdmin && !player.ReferenceHub.serverRoles.RaEverywhere)
-                    player.ReferenceHub.characterClassManager.UserCode_CmdRequestShowTag(false);
+                    player.ReferenceHub.characterClassManager.UserCode_CmdRequestShowTag__Boolean(false);
 
             response = "All staff tags are now visible";
             return true;
