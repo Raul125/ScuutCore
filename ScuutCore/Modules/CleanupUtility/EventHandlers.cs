@@ -1,9 +1,11 @@
 ﻿namespace ScuutCore.Modules.CleanupUtility
 {
+    using System.Linq;
     using InventorySystem.Items;
     using ScuutCore.API.Features;
     using InventorySystem.Items.Pickups;
     using MapGeneration;
+    using MEC;
     using Mirror;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
@@ -36,11 +38,21 @@
         {
             if (Module.Config.ClearItems)
             {
-                item.gameObject.AddComponent<AutoClearComponent>();
-                var time = Module.Config.CleanDelay.TryGetValue(item.ItemTypeId, out var value) ? value : Module.Config.DefaultDelay;
-                var comp = item.gameObject.GetComponent<AutoClearComponent>();
-                comp.TimeLeft = time;
-                comp.Enabled = true;
+                var serial = item.ItemSerial;
+                var type = item.ItemTypeId;
+                Timing.CallDelayed(1f, () =>
+                {
+                    var pickups = Object.FindObjectsOfType<ItemPickupBase>();
+                    var dropped = pickups.FirstOrDefault(x => x.Info.Serial == serial);
+                    if (dropped == null)
+                        return;
+                    var go = dropped.gameObject;
+                    go.AddComponent<AutoClearComponent>();
+                    var time = Module.Config.CleanDelay.TryGetValue(type, out var value) ? value : Module.Config.DefaultDelay;
+                    var comp = go.GetComponent<AutoClearComponent>();
+                    comp.TimeLeft = time-1f; //calldelayed
+                    comp.Enabled = true;
+                });
             }
         }
 
