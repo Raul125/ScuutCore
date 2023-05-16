@@ -1,7 +1,7 @@
 ﻿namespace ScuutCore.Modules.RemoteKeycard
 {
     using System.Linq;
-    using ScuutCore.API.Features;
+    using API.Features;
     using Interactables.Interobjects.DoorUtils;
     using InventorySystem.Items.Keycards;
     using MapGeneration.Distributors;
@@ -16,9 +16,9 @@
         {
             if (!Module.Config.IsEnabled || ply.IsSCP() || Module.Config.BlackListRole.Contains(ply.Role) || ply.IsWithoutItems() ||
                 Module.Config.BlacklistedDoors.Any(d => door.name.StartsWith(d))
-                || ply.CurrentItem is KeycardItem) return true;
-
-            if (!ply.HasKeycardPermission(door.RequiredPermissions.RequiredPermissions))
+                || ply.CurrentItem is KeycardItem)
+                return true;
+            if (!ply.HasKeycardPermission(door.RequiredPermissions.RequiredPermissions) || door.NetworkActiveLocks > 0)
                 return true;
             canOpen = true;
             door.Toggle();

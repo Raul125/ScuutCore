@@ -26,12 +26,9 @@
 
                 foreach (var item in player.ReferenceHub.inventory.UserInventory.Items.Values)
                 {
-                    if (item is not KeycardItem)
+                    if (item is not KeycardItem keycard)
                         continue;
-
-                    var keycard = item as KeycardItem;
-
-                    return requiresAllPermissions ? keycard.Permissions.HasFlag(permissions) : (keycard.Permissions & permissions) != 0;
+                    return requiresAllPermissions ? keycard.Permissions.HasFlagFast(permissions) : (keycard.Permissions & permissions) != 0;
                 }
                 return false;
             }
