@@ -18,11 +18,11 @@
 
         private void FixedUpdate()
         {
-            if (player.Position.y is < -700 and > -720)
+            if (player.Position.y is < -700 and > -720 && player.IsAlive)
             {
                 bool hasEffect = player.EffectsManager.GetEffect<Decontaminating>().IsEnabled;
                 Time += UnityEngine.Time.fixedDeltaTime;
-                bool dealDamage = NukeRadiation.Singleton.Config.RadiationTime - Time <= 0f;
+                bool dealDamage = NukeRadiation.Singleton!.Config.RadiationTime - Time <= 0f;
                 if (DamageTimeLeft >= 0f)
                 {
                     DamageTimeLeft -= UnityEngine.Time.fixedDeltaTime;
