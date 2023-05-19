@@ -40,9 +40,11 @@
         public IEnumerator<float> SendToPocket(ScuutPlayer player)
         {
             float delay = Module.Config.Delay;
-            player.EffectsManager.EnableEffect<Ensnared>(delay + 0.2f);
-            player.EffectsManager.DisableEffect<Poisoned>();
+            var effects = player.EffectsManager;
+            effects.EnableEffect<Ensnared>(delay + 0.2f);
+            effects.DisableEffect<Poisoned>();
             yield return Timing.WaitForSeconds(delay);
+            effects.DisableEffect<Poisoned>();
             var pos = new RelativePosition(player.Position);
 
             for (int i = 0; i < Module.Config.Ticks; i++)
@@ -56,12 +58,13 @@
             else
             {
                 player.SendToPocketDimension();
-                var effect = player.EffectsManager.GetEffect<Corroding>();
+                var effect = effects.GetEffect<Corroding>();
                 effect.ServerSetState(1);
                 effect.CapturePosition = pos;
             }
 
             yield return Timing.WaitForSeconds(0.1f);
+            player.EffectsManager.DisableEffect<Poisoned>();
             player.EnteringPocket = false;
         }
 
