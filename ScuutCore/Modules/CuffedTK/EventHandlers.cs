@@ -21,7 +21,6 @@
                 attacker.ReceiveHint(Module.Config.AttackerHint.Replace("%PLAYER%", target.Nickname), Module.Config.AttackerHintTime);
 
             return false;
-
         }
 
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
