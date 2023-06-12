@@ -282,6 +282,7 @@
     <Compile Include="Patches\LockerPatch.cs" />
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
     <Compile Include="Patches\PocketItemUpdatePatch.cs" />
+    <Compile Include="Patches\PreventRandomSpawning.cs" />
     <Compile Include="Patches\RagdollPatch.cs" />
     <Compile Include="Patches\Scp106Teleport.cs" />
     <Compile Include="Patches\ScpSpeech\ToggleNoclipPatch.cs" />

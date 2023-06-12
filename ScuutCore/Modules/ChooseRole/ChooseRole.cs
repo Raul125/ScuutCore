@@ -4,7 +4,7 @@
 
     public sealed class ChooseRole : EventControllerModule<ChooseRole, Config, EventHandlers>
     {
-        public static ChooseRole Singleton;
+        public static ChooseRole? Singleton;
 
         public override void OnEnabled()
         {
