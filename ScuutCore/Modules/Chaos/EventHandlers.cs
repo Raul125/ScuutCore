@@ -5,15 +5,16 @@
     using NorthwoodLib.Pools;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
+    using PluginAPI.Events;
     using Respawning;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<Chaos>
     {
 
         [PluginEvent(ServerEventType.TeamRespawn)]
-        public void OnRespawningTeam(SpawnableTeamType team)
+        public void OnRespawningTeam(TeamRespawnEvent e)
         {
-            if (team is not SpawnableTeamType.ChaosInsurgency)
+            if (e.Team is not SpawnableTeamType.ChaosInsurgency)
                 return;
             Plugin.Coroutines.Add(Timing.CallDelayed(Module.Config.CassieDelay, PlayAnnouncement));
         }

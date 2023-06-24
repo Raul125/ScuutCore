@@ -6,7 +6,7 @@
     using HarmonyLib;
     using Modules.Teslas;
 
-    [HarmonyPatch]
+    // [HarmonyPatch]
     public static class TeslaInRangePatch
     {
 

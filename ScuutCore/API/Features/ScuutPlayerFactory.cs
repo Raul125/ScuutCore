@@ -1,6 +1,7 @@
 ﻿namespace ScuutCore.API.Features
 {
     using System;
+    using PluginAPI.Core;
     using PluginAPI.Core.Factories;
     using PluginAPI.Core.Interfaces;
 
@@ -8,6 +9,6 @@
     {
         public override Type BaseType { get; } = typeof(ScuutPlayer);
 
-        public override IPlayer Create(IGameComponent component) => new ScuutPlayer(component);
+        public override Player Create(IGameComponent component) => new ScuutPlayer(component);
     }
 }
