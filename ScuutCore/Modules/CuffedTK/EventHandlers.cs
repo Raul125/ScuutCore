@@ -24,13 +24,13 @@
         }
 
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
-        public bool OnPlayerRemoveHandcuffs(Player player, Player target)
+        public bool OnPlayerRemoveHandcuffs(Player player, Player target, bool idk)
         {
             if (!Module.Config.RolesToAffected.Contains(target.Role))
                 return true;
             int num = 0;
             if (target == null)
-                num ++;
+                num++;
             if (player == null)
                 num += 2;
             if (target.DisarmedBy == null)

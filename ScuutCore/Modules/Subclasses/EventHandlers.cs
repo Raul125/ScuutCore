@@ -61,9 +61,9 @@
         }
 
         [PluginEvent(ServerEventType.PlayerChangeRole)]
-        public void OnDiedOnChangingRole(ScuutPlayer player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
+        public void OnDiedOnChangingRole(Player p, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
         {
-            if (player == null)
+            if (p == null || !ScuutPlayer.TryGet(p.ReferenceHub, out ScuutPlayer player))
                 return;
             if (Subclasses.Singleton.Config.RoleBlacklist.Contains(newRole) || Subclasses.Singleton.Config.SubclassSpawnReasonBlacklist.Contains(changeReason))
             {

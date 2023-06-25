@@ -5,7 +5,7 @@
     using PluginAPI.Core.Factories;
     using PluginAPI.Core.Interfaces;
 
-    public class ScuutPlayerFactory : PlayerFactory
+    public sealed class ScuutPlayerFactory : PlayerFactory
     {
         public override Type BaseType { get; } = typeof(ScuutPlayer);
 
