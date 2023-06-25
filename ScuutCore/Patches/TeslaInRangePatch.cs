@@ -1,20 +1,13 @@
 ﻿namespace ScuutCore.Patches
 {
     using System.Collections.Generic;
-    using System.Reflection;
     using System.Reflection.Emit;
     using HarmonyLib;
     using Modules.Teslas;
 
-    // [HarmonyPatch]
+    [HarmonyPatch(typeof(TeslaGate), nameof(TeslaGate.PlayerInRange))]
     public static class TeslaInRangePatch
     {
-
-        public static IEnumerable<MethodInfo> TargetMethods()
-        {
-            yield return AccessTools.Method(typeof(TeslaGate), nameof(TeslaGate.PlayerInRange));
-            yield return AccessTools.Method(typeof(TeslaGate), nameof(TeslaGate.PlayerInIdleRange));
-        }
 
         public static bool DisableTriggering(ReferenceHub hub) => Teslas.Singleton?.Config?.Roles.Contains(hub.roleManager.CurrentRole.RoleTypeId) ?? false;
 
