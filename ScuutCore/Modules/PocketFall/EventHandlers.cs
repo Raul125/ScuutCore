@@ -58,7 +58,7 @@
             else
             {
                 player.SendToPocketDimension();
-                var effect = effects.GetEffect<Corroding>();
+                var effect = effects.GetEffect<PocketCorroding>();
                 effect.ServerSetState(1);
                 effect.CapturePosition = pos;
             }

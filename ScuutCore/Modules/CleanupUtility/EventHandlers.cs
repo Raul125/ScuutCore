@@ -19,18 +19,34 @@
         public void OnDecontaminating()
         {
             if (Module.Config.ClearItems)
-                ClearItems(-200, 200, new[] { FacilityZone.LightContainment });
+                ClearItems(-200, 200, new[]
+                {
+                    FacilityZone.LightContainment
+                });
             if (Module.Config.ClearRagdolls)
-                ClearRagdolls(-200, 200, new[] { FacilityZone.LightContainment });
+                ClearRagdolls(-200, 200, new[]
+                {
+                    FacilityZone.LightContainment
+                });
         }
 
         [PluginEvent(ServerEventType.WarheadDetonation)]
         public void OnWarheadDetonated()
         {
             if (Module.Config.ClearItems)
-                ClearItems(-1500, 500, new[] { FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance });
+                ClearItems(-1500, 500, new[]
+                {
+                    FacilityZone.LightContainment,
+                    FacilityZone.HeavyContainment,
+                    FacilityZone.Entrance
+                });
             if (Module.Config.ClearRagdolls)
-                ClearRagdolls(-1500, 500, new[] { FacilityZone.LightContainment, FacilityZone.HeavyContainment, FacilityZone.Entrance });
+                ClearRagdolls(-1500, 500, new[]
+                {
+                    FacilityZone.LightContainment,
+                    FacilityZone.HeavyContainment,
+                    FacilityZone.Entrance
+                });
         }
 
         [PluginEvent(ServerEventType.PlayerDropItem)]
@@ -50,7 +66,7 @@
                     go.AddComponent<AutoClearComponent>();
                     var time = Module.Config.CleanDelay.TryGetValue(type, out var value) ? value : Module.Config.DefaultDelay;
                     var comp = go.GetComponent<AutoClearComponent>();
-                    comp.TimeLeft = time-1f; //calldelayed
+                    comp.TimeLeft = time - 1f; //calldelayed
                     comp.Enabled = true;
                 });
             }
@@ -94,7 +110,7 @@
             int errorcount = 0;
             foreach (var item in Object.FindObjectsOfType<BasicRagdoll>())
             {
-                if (item == null || item._cleanedUp)
+                if (item == null)
                     continue;
 
                 if (Module.Config.UseFastZoneCheck)
