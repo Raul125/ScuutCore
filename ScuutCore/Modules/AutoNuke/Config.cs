@@ -1,5 +1,6 @@
 ﻿namespace ScuutCore.Modules.AutoNuke
 {
+    using System.ComponentModel;
     using API.Features;
     using API.Interfaces;
 
@@ -56,5 +57,8 @@
             Duration = 10,
             Text = "<color=#FF0000><b>WARNING - Automatic Warhead has been activated. You cannot cancel this. </b></color>"
         };
+
+        [Description("Idk what this parameter does, but it sounds fun so have it as config -modded")]
+        public bool IsVanillaAutomaticNuke { get; set; } = false;
     }
 }

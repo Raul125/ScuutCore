@@ -47,14 +47,14 @@
             IsAutoNuke = true;
             if (Warhead.IsDetonated || Warhead.IsDetonationInProgress)
                 yield break;
-            {
-                Module.Config.AutoNukeCassieStart.Play();
-                foreach (var ply in Player.GetPlayers())
-                    Module.Config.AutoNukeStartBroadcast.Show(ply);
+            Module.Config.AutoNukeCassieStart.Play();
+            foreach (var ply in Player.GetPlayers())
+                Module.Config.AutoNukeStartBroadcast.Show(ply);
 
-                Module.Config.AutoNukeStartHint.Show();
-                Warhead.Start();
-            }
+            Module.Config.AutoNukeStartHint.Show();
+            AlphaWarheadController.Singleton.IsLocked = false;
+            AlphaWarheadController.Singleton.CooldownEndTime = 0;
+            AlphaWarheadController.Singleton.StartDetonation(Module.Config.IsVanillaAutomaticNuke);
         }
     }
 }

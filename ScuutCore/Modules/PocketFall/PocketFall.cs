@@ -4,7 +4,7 @@
 
     public sealed class PocketFall : EventControllerModule<PocketFall, Config, EventHandlers>
     {
-        public static PocketFall Instance { get; private set; }
+        public static PocketFall? Instance { get; private set; }
         public override void OnEnabled()
         {
             base.OnEnabled();
