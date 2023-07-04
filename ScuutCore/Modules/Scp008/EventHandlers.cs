@@ -8,16 +8,18 @@
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
+    using PluginAPI.Events;
     using UnityEngine;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
     {
         [PluginEvent(ServerEventType.PlayerDamage)]
-        public void OnHurt(Player target, Player attacker, DamageHandlerBase damageHandler)
+        public void OnHurt(PlayerDamageEvent e)
         {
+            var target = e.Target;
             if (!target.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect))
                 return;
-            if (poisonedEffect.IsEnabled || damageHandler is not AttackerDamageHandler { Attacker: { Role: RoleTypeId.Scp0492 } })
+            if (poisonedEffect.IsEnabled || e.DamageHandler is not AttackerDamageHandler { Attacker: { Role: RoleTypeId.Scp0492 } })
                 return;
 
             if (Random.Range(0, 100) > Module.Config.InfectionChance)
@@ -39,8 +41,9 @@
         }
 
         [PluginEvent(ServerEventType.PlayerDying)]
-        public bool OnDying(Player player, Player attacker, DamageHandlerBase damageHandler)
+        public bool OnDying(PlayerDyingEvent e)
         {
+            var player = e.Player;
             if (!player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) || !poisonedEffect.IsEnabled)
                 return true;
 

@@ -2,18 +2,20 @@
 {
     using ScuutCore.API.Features;
     using PlayerRoles;
-    using PlayerStatsSystem;
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
+    using PluginAPI.Events;
     public sealed class EventHandlers : InstanceBasedEventHandler<CuffedTK>
     {
         [PluginEvent(ServerEventType.PlayerDamage)]
-        public bool OnHurting(Player target, Player attacker, DamageHandlerBase damageHandler)
+        public bool OnHurting(PlayerDamageEvent e)
         {
-            if (!Module.Config.RolesToAffected.Contains(target.Role))
+            var target = e.Target;
+            var attacker = e.Player;
+            if (target is null || !Module.Config.RolesToAffected.Contains(target.Role))
                 return true;
-            if (!target.IsDisarmed || target is null || attacker is null || target.DisarmedBy.ReferenceHub == attacker.ReferenceHub || attacker.Role is RoleTypeId.Tutorial)
+            if (!target.IsDisarmed || attacker is null || target.DisarmedBy.ReferenceHub == attacker.ReferenceHub || attacker.Role is RoleTypeId.Tutorial)
                 return true;
             if (attacker.Role.GetFaction() == Faction.SCP)
                 return true;
@@ -24,8 +26,10 @@
         }
 
         [PluginEvent(ServerEventType.PlayerRemoveHandcuffs)]
-        public bool OnPlayerRemoveHandcuffs(Player player, Player target, bool idk)
+        public bool OnPlayerRemoveHandcuffs(PlayerRemoveHandcuffsEvent e)
         {
+            var target = e.Target;
+            var player = e.Player;
             if (!Module.Config.RolesToAffected.Contains(target.Role))
                 return true;
             int num = 0;
