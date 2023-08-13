@@ -14,6 +14,7 @@
     using AdminToys;
     using Mirror;
     using ScuutCore.API.Extensions;
+    using PluginAPI.Events;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<ChooseRole>
     {
@@ -347,6 +348,15 @@
 
             GameObject.Find("StartRound").transform.localScale = Vector3.zero;
             SpawnMap();
+        }
+
+        [PluginEvent(ServerEventType.RoundEndConditionsCheck)]
+        public RoundEndConditionsCheckCancellationData OnRoundEndConditionsCheck(bool baseGameConditionsSatisfied)
+        {
+            if (Round.Duration.Seconds < 15)
+                return RoundEndConditionsCheckCancellationData.Override(false);
+
+            return RoundEndConditionsCheckCancellationData.LeaveUnchanged();
         }
 
         private void SpawnMap()
