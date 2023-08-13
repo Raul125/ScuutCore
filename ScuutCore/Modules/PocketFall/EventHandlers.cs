@@ -16,26 +16,54 @@
     public sealed class EventHandlers : InstanceBasedEventHandler<PocketFall>
     {
         [PluginEvent(ServerEventType.PlayerDamage)]
-        public bool OnPlayerDamage(ScuutPlayer target, Player attacker, DamageHandlerBase damageHandler) => !target.EnteringPocket;
+        public bool OnPlayerDamage(Player target, Player attacker, DamageHandlerBase damageHandler)
+        {
+            if (Player.TryGet(target.ReferenceHub, out ScuutPlayer scuutPlayer))
+                return !scuutPlayer.EnteringPocket;
+
+            return true;
+        }
 
         [PluginEvent(ServerEventType.PlayerChangeItem)]
-        public void ChangeItem(ScuutPlayer target, ushort prev, ushort next)
+        public void ChangeItem(Player target, ushort prev, ushort next)
         {
-            if (!target.EnteringPocket)
+            if (target.ReferenceHub.isLocalPlayer)
                 return;
-            var inv = target.ReferenceHub.inventory;
-            if (inv.CurInstance is not UsableItem { IsUsing: true })
-                inv.NetworkCurItem = ItemIdentifier.None;
+
+            if (Player.TryGet(target.ReferenceHub, out ScuutPlayer scuutPlayer) && scuutPlayer.EnteringPocket)
+            {
+                var inv = target.ReferenceHub.inventory;
+                if (inv.CurInstance is not UsableItem { IsUsing: true })
+                    inv.NetworkCurItem = ItemIdentifier.None;
+            }
         }
 
         [PluginEvent(ServerEventType.PlayerDropItem)]
-        public bool DropItem(ScuutPlayer target, ItemBase item) => !target.EnteringPocket;
+        public bool DropItem(Player target, ItemBase item)
+        {
+            if (Player.TryGet(target.ReferenceHub, out ScuutPlayer scuutPlayer))
+                return !scuutPlayer.EnteringPocket;
+
+            return true;
+        }
 
         [PluginEvent(ServerEventType.PlayerThrowItem)]
-        public bool ThrowItem(ScuutPlayer target, ItemBase item, Rigidbody rigidbody) => !target.EnteringPocket;
+        public bool ThrowItem(Player target, ItemBase item, Rigidbody rigidbody)
+        {
+            if (Player.TryGet(target.ReferenceHub, out ScuutPlayer scuutPlayer))
+                return !scuutPlayer.EnteringPocket;
 
+            return true;
+        }
+        
         [PluginEvent(ServerEventType.PlayerUseItem)]
-        public bool UseItem(ScuutPlayer target, UsableItem item) => !target.EnteringPocket;
+        public bool UseItem(Player target, UsableItem item)
+        {
+            if (Player.TryGet(target.ReferenceHub, out ScuutPlayer scuutPlayer))
+                return !scuutPlayer.EnteringPocket;
+
+            return true;
+        }
 
         public IEnumerator<float> SendToPocket(ScuutPlayer player)
         {

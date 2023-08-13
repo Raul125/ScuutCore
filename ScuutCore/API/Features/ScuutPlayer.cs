@@ -100,6 +100,7 @@
 
         public override void OnDestroy()
         {
+            base.OnDestroy();
         }
 
         public float SpeechUpdateTime;
@@ -113,6 +114,7 @@
             if (RoleBase is not IVoiceRole vcRole || !vcRole.VoiceModule.ServerIsSending || !SpeechHelper.IsUsingProximityChat(ReferenceHub))
                 return;
             ReceiveHint("\n\n\n\n\n\n\n\n\n\n\n\n<size=18>You are using Proximity Chat\nPress <mark=#adadad33>Left Alt</mark> to switch to SCP Chat</size>", 0.6f);
+            base.OnUpdate();
         }
     }
 }

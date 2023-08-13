@@ -11,6 +11,9 @@
     using System.Linq;
     using UnityEngine;
     using PlayerStatsSystem;
+    using AdminToys;
+    using Mirror;
+    using ScuutCore.API.Extensions;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<ChooseRole>
     {
@@ -28,13 +31,35 @@
 
         private Vector3 lobbyPos = new(0.82f, 995.38f, -7.92f);
 
+        public List<PrimitiveObjectToy> Primitives = new();
+        private static PrimitiveObjectToy primitiveBaseObject;
+        private static PrimitiveObjectToy PrimitiveBaseObject
+        {
+            get
+            {
+                if (primitiveBaseObject is null)
+                {
+                    foreach (GameObject gameObject in NetworkClient.prefabs.Values)
+                    {
+                        if (gameObject.TryGetComponent(out PrimitiveObjectToy component))
+                        {
+                            primitiveBaseObject = component;
+                            break;
+                        }
+                    }
+                }
+
+                return primitiveBaseObject;
+            }
+        }
+
         [PluginEvent(ServerEventType.PlayerJoined)]
         public void OnPlayerJoin(Player player)
         {
             if (Round.IsRoundStarted)
                 return;
 
-            player.GameObject.AddComponent<HudComponent>();
+            player.GameObject.AddComponent<HudComponent>().Init(player.ReferenceHub);
             player.Role = RoleTypeId.Tutorial;
             player.Position = lobbyPos;
             player.ClearInventory();
@@ -249,7 +274,7 @@
             foreach (Player ply in PlayersToSpawnAsScientist)
                 ply.SetRole(RoleTypeId.Scientist, RoleChangeReason.RoundStart);
 
-            bool isChaos = UnityEngine.Random.Range(0, 100) < Module.Config.ChaosProb;
+            bool isChaos = Random.Range(0, 100) < Module.Config.ChaosProb;
             Queue<RoleTypeId> chaosQueue = new();
             SpawnableTeamHandlerBase chaosSpawnHandler = RespawnManager.SpawnableTeams[SpawnableTeamType.ChaosInsurgency];
             chaosSpawnHandler.GenerateQueue(chaosQueue, chaosSpawnHandler.MaxWaveSize);
@@ -293,7 +318,12 @@
                 RoleAssigner.AlreadySpawnedPlayers.Add(ply.ReferenceHub.characterClassManager.UserId);
 
             foreach (var prim in _triggers)
+            {
+                NetworkServer.UnSpawn(prim.gameObject);
                 Object.Destroy(prim);
+            }
+
+            _triggers.Clear();
         }
 
         [PluginEvent(ServerEventType.RoundEndConditionsCheck)]
@@ -317,6 +347,7 @@
             ScientistPlayers.Clear();
             GuardPlayers.Clear();
             ClassDPlayers.Clear();
+            _triggers.Clear();
 
             GameObject.Find("StartRound").transform.localScale = Vector3.zero;
             SpawnMap();
@@ -330,20 +361,36 @@
             _triggers.Add(SpawnTrigger(Team.Scientists, new Vector3(4.7f, 994.6f, -10.85f)));
         }
 
-        private static TeamTrigger SpawnTrigger(Team team, Vector3 pos)
+        private TeamTrigger SpawnTrigger(Team team, Vector3 pos)
         {
-            GameObject trigger = new($"{team}-trigger")
-            {
-                transform =
-                {
-                   position = pos,
-                   localScale = Vector3.one * 5.25f
-                }
-            };
+            PrimitiveObjectToy primitiveObjectToy = Object.Instantiate(PrimitiveBaseObject);
 
-            TeamTrigger tt = trigger.AddComponent<TeamTrigger>();
+            primitiveObjectToy.transform.position = pos;
+            primitiveObjectToy.transform.eulerAngles = Vector3.zero;
+            primitiveObjectToy.transform.localScale = new Vector3(3, 0.1f, 3);
+            primitiveObjectToy.NetworkScale = primitiveObjectToy.transform.localScale;
+            primitiveObjectToy.NetworkPrimitiveType = PrimitiveType.Cylinder;
+            primitiveObjectToy.NetworkMaterialColor = getColor(team);
+
+            NetworkServer.Spawn(primitiveObjectToy.gameObject);
+
+            TeamTrigger tt = primitiveObjectToy.gameObject.AddComponent<TeamTrigger>();
             tt.Team = team;
             return tt;
+        }
+
+        private static Color getColor(Team team)
+        {
+            switch (team)
+            {
+                case Team.FoundationForces:
+                    return RoleTypeId.FacilityGuard.GetColor();
+                case Team.SCPs:
+                    return RoleTypeId.Scp049.GetColor();
+                case Team.Scientists:
+                    return RoleTypeId.Scientist.GetColor();
+                default: return RoleTypeId.ClassD.GetColor();
+            }
         }
     }
 }

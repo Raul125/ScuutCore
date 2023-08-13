@@ -65,7 +65,7 @@
     <Reference Include="NWAPIPermissionSystem">
       <HintPath>..\Refs\NWAPIPermissionSystem.dll</HintPath>
     </Reference>
-    <Reference Include="PluginAPI, Version=13.1.0.0, Culture=neutral, processorArchitecture=Amd64">
+    <Reference Include="PluginAPI, Version=13.1.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>packages\Northwood.PluginAPI.13.1.0\lib\net48\PluginAPI.dll</HintPath>
     </Reference>
     <Reference Include="Pooling">
@@ -102,6 +102,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Extensions\RoleExtensions.cs" />
     <Compile Include="API\Features\EventControllerModule.cs" />
     <Compile Include="API\Features\IEventHandler.cs" />
     <Compile Include="API\Features\InstanceBasedEventHandler.cs" />
