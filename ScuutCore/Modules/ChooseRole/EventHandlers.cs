@@ -116,6 +116,11 @@
             ScientistPlayers = _triggers.First(x => x.Team is Team.Scientists).Players.Where(x => x != null && x.GameObject != null).ToList();
             SCPPlayers = _triggers.First(x => x.Team is Team.SCPs).Players.Where(x => x != null && x.GameObject != null).ToList();
 
+            ClassDPlayers.ShuffleList();
+            GuardPlayers.ShuffleList();
+            ScientistPlayers.ShuffleList();
+            SCPPlayers.ShuffleList();
+
             // ---------------------------------------------------------------------------------------\\
             // ClassD
             if (ClassDsToSpawn != 0)
