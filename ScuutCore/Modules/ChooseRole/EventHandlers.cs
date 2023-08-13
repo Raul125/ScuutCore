@@ -326,15 +326,6 @@
             _triggers.Clear();
         }
 
-        [PluginEvent(ServerEventType.RoundEndConditionsCheck)]
-        public bool OnRoundEndConditionsCheck(bool baseGameConditionsSatisfied)
-        {
-            if (Round.Duration.Seconds < 15)
-                return false;
-
-            return true;
-        }
-
         [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void OnWaitingForPlayers()
         {
