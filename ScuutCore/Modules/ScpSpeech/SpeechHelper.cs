@@ -6,10 +6,10 @@
     using PlayerRoles;
     using PlayerRoles.PlayableScps;
     using PlayerRoles.PlayableScps.Scp079;
-    using PlayerRoles.PlayableScps.Scp939;
     using PlayerRoles.Voice;
     using PluginAPI.Core;
     using VoiceChat;
+
     public static class SpeechHelper
     {
         public static Config? Cfg => ScpSpeechModule.Instance?.Config;

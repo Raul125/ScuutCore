@@ -10,11 +10,12 @@
     using PluginAPI.Core;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
+    using PluginAPI.Events;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<RoundSummary>
     {
         private readonly Dictionary<Player, int> playerKills = new();
-        private readonly Dictionary<ReferenceHub, float> playerDamage = new();
+        private readonly Dictionary<Player, float> playerDamage = new();
         private string firstDied = string.Empty;
         private uint firstDiedTime;
         private string firstEscaped = string.Empty;
@@ -41,21 +42,22 @@
             PreventHints = false;
         }
 
-        public void OnAnyDamage(ReferenceHub player, DamageHandlerBase damageHandlerBase)
+        [PluginEvent(ServerEventType.PlayerDamage)]
+        public void OnAnyDamage(PlayerDamageEvent ev)
         {
-            if (player == null)
+            if (ev.Player == null || ev.Target == null)
                 return;
-            if (damageHandlerBase is not AttackerDamageHandler attackerDamageHandler)
+            if (ev.DamageHandler is not AttackerDamageHandler attackerDamageHandler)
                 return;
             if (attackerDamageHandler.Attacker.Hub == null
                 || attackerDamageHandler.Damage == 0
                 || attackerDamageHandler.IsSuicide
                 || attackerDamageHandler.IsFriendlyFire)
                 return;
-            if (!playerDamage.TryGetValue(player, out var damage))
-                playerDamage.Add(player, attackerDamageHandler.Damage);
+            if (!playerDamage.TryGetValue(ev.Player, out var damage))
+                playerDamage.Add(ev.Player, attackerDamageHandler.Damage);
             else
-                playerDamage[player] += attackerDamageHandler.Damage;
+                playerDamage[ev.Player] += attackerDamageHandler.Damage;
         }
 
         [PluginEvent(ServerEventType.PlayerDying)]
@@ -120,7 +122,7 @@
                     if (playerDamage.Count > 0)
                     {
                         var bestPlayer = playerDamage.OrderByDescending(x => x.Value).First();
-                        message += Module.Config.MostDamageMessage.Replace("{player}", bestPlayer.Key.nicknameSync.DisplayName)
+                        message += Module.Config.MostDamageMessage.Replace("{player}", bestPlayer.Key.Nickname)
                             .Replace("{damage}", bestPlayer.Value.ToString()) + "\n";
                     }
                     else
