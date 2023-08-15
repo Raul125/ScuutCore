@@ -18,7 +18,7 @@
     {
         public static void ProcessRagdoll(ReferenceHub player, DamageHandlerBase handler)
         {
-            if (player == null || !player.queryProcessor._sender.CheckPermission(FlyingRagdollSelf.RagdollPermissions))
+            if (player == null || string.IsNullOrWhiteSpace(player.characterClassManager.UserId) || !player.queryProcessor._sender.CheckPermission(FlyingRagdollSelf.RagdollPermissions))
                 return;
             if (!player.TryGetComponent(out PatreonData data) || !data.Prefs.FlyingRagdollSelf)
                 return;

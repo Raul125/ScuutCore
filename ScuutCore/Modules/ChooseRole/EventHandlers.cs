@@ -32,8 +32,7 @@
 
         private Vector3 lobbyPos = new(0.82f, 995.38f, -7.92f);
 
-        public List<PrimitiveObjectToy> Primitives = new();
-        private static PrimitiveObjectToy primitiveBaseObject;
+        private static PrimitiveObjectToy? primitiveBaseObject;
         private static PrimitiveObjectToy PrimitiveBaseObject
         {
             get
@@ -50,7 +49,7 @@
                     }
                 }
 
-                return primitiveBaseObject;
+                return primitiveBaseObject!;
             }
         }
 
@@ -371,10 +370,11 @@
         {
             PrimitiveObjectToy primitiveObjectToy = Object.Instantiate(PrimitiveBaseObject);
 
-            primitiveObjectToy.transform.position = pos;
-            primitiveObjectToy.transform.eulerAngles = Vector3.zero;
-            primitiveObjectToy.transform.localScale = new Vector3(3, 0.1f, 3);
-            primitiveObjectToy.NetworkScale = primitiveObjectToy.transform.localScale;
+            var transform = primitiveObjectToy.transform;
+            transform.position = pos;
+            transform.eulerAngles = Vector3.zero;
+            transform.localScale = new Vector3(3, 0.1f, 3);
+            primitiveObjectToy.NetworkScale = transform.localScale;
             primitiveObjectToy.NetworkPrimitiveType = PrimitiveType.Cylinder;
             primitiveObjectToy.NetworkMaterialColor = getColor(team);
 

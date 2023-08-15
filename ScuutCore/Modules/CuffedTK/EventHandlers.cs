@@ -6,6 +6,7 @@
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using PluginAPI.Events;
+
     public sealed class EventHandlers : InstanceBasedEventHandler<CuffedTK>
     {
         [PluginEvent(ServerEventType.PlayerDamage)]

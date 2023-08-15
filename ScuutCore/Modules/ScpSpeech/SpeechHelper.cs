@@ -11,7 +11,7 @@
     using VoiceChat;
     public static class SpeechHelper
     {
-        public static Config Cfg => ScpSpeechModule.Instance?.Config;
+        public static Config? Cfg => ScpSpeechModule.Instance?.Config;
 
         private static readonly HashSet<uint> ProximityChatNetIDs = new HashSet<uint>();
 

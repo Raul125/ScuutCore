@@ -4,7 +4,7 @@
 
     public sealed class Teslas : Module<Config>
     {
-        public static Teslas Singleton;
+        public static Teslas? Singleton;
 
         public override void OnEnabled()
         {

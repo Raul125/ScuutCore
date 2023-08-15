@@ -9,6 +9,7 @@ namespace ScuutCore.Modules.ChooseRole
     {
         public Team Team;
         public readonly List<Player> Players = new();
+
         public void Start()
         {
             CapsuleCollider col = gameObject.AddComponent<CapsuleCollider>();
@@ -18,7 +19,7 @@ namespace ScuutCore.Modules.ChooseRole
         private void OnTriggerEnter(Collider other)
         {
             Player ply = Player.Get(other.gameObject);
-            if (ply is null || Players.Contains(ply))
+            if (ply is null || ContainsPlayer(ply))
                 return;
 
             if (ply.TryGetComponent<HudComponent>(out var comp))
@@ -30,7 +31,7 @@ namespace ScuutCore.Modules.ChooseRole
         private void OnTriggerExit(Collider other)
         {
             Player ply = Player.Get(other.gameObject);
-            if (ply is null || !Players.Contains(ply))
+            if (ply is null || !ContainsPlayer(ply))
                 return;
 
             if (ply.TryGetComponent<HudComponent>(out var comp))
