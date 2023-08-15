@@ -10,6 +10,7 @@
     using PluginAPI.Core;
     using VoiceChat;
     using VoiceChat.Networking;
+
     [HarmonyPatch(typeof(VoiceTransceiver), nameof(VoiceTransceiver.ServerReceiveMessage))]
     internal static class TransmitPatch
     {

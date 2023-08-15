@@ -6,6 +6,7 @@
     using PlayerRoles;
     using PlayerRoles.PlayableScps;
     using PlayerRoles.PlayableScps.Scp079;
+    using PlayerRoles.PlayableScps.Scp939;
     using PlayerRoles.Voice;
     using PluginAPI.Core;
     using VoiceChat;
@@ -49,6 +50,8 @@
 
         public static bool SendCheck(VoiceChatChannel channel, IVoiceRole sender, IVoiceRole receiver)
         {
+            if (channel == VoiceChatChannel.Mimicry)
+                return true;
             if (sender == receiver)
                 return false;
             if (sender.VoiceModule is not (StandardScpVoiceModule module and not Scp079VoiceModule) || !IsUsingProximityChat(module.Owner))
