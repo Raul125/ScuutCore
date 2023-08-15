@@ -1,5 +1,6 @@
 ﻿namespace ScuutCore.Modules.ChooseRole
 {
+    using System;
     using ScuutCore.API.Features;
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
@@ -15,6 +16,8 @@
     using Mirror;
     using ScuutCore.API.Extensions;
     using PluginAPI.Events;
+    using Object = UnityEngine.Object;
+    using Random = UnityEngine.Random;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<ChooseRole>
     {
@@ -79,30 +82,60 @@
         {
             var bulkList = Player.GetPlayers();
             bulkList.RemoveAll(x => x.IsOverwatchEnabled);
-            var spCount = Module.Config.SpawnQueue.Count();
+            var spCount = Module.Config.SpawnQueue.Length;
+            Queue<Team> SpawnQueue = new();
+
+            foreach (var queueItem in Module.Config.SpawnQueue)
+            {
+                switch (queueItem)
+                {
+                    case '4':
+                        SpawnQueue.Enqueue(Team.ClassD);
+                        break;
+                    case '0':
+                        SpawnQueue.Enqueue(Team.SCPs);
+                        break;
+                    case '1':
+                        SpawnQueue.Enqueue(Team.FoundationForces);
+                        break;
+                    case '3':
+                        SpawnQueue.Enqueue(Team.Scientists);
+                        break;
+                }
+            }
+
             for (int x = 0; x < bulkList.Count; x++)
             {
-                if (x >= spCount)
+                if (!SpawnQueue.Any())
                 {
                     ClassDsToSpawn += 1;
                     continue;
                 }
-                switch (Module.Config.SpawnQueue[x])
+
+                switch (SpawnQueue.Dequeue())
                 {
-                    case '4':
+                    case Team.ClassD:
                         ClassDsToSpawn += 1;
                         break;
-                    case '0':
+                    case Team.SCPs:
                         SCPsToSpawn += 1;
                         break;
-                    case '1':
+                    case Team.FoundationForces:
                         GuardsToSpawn += 1;
                         break;
-                    case '3':
+                    case Team.Scientists:
                         ScientistsToSpawn += 1;
                         break;
                 }
             }
+
+            List<Team> lateSpawn = new List<Team>();
+            if (SpawnQueue.Any())
+            {
+                lateSpawn = SpawnQueue.ToList();
+            }
+            lateSpawn.AddRange(Enumerable.Repeat(Team.ClassD, 99));
+            HumanSpawner._humanQueue = lateSpawn.ToArray();
 
             bulkList.ShuffleList();
 
