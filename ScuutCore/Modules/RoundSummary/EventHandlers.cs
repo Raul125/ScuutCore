@@ -14,6 +14,9 @@
     public sealed class EventHandlers : InstanceBasedEventHandler<RoundSummary>
     {
         private readonly Dictionary<Player, int> playerKills = new();
+        private readonly Dictionary<ReferenceHub, float> playerDamage = new();
+        private string firstDied = string.Empty;
+        private uint firstDiedTime;
         private string firstEscaped = string.Empty;
         private uint escapeTime;
         private string firstScpKiller = string.Empty;
@@ -21,12 +24,15 @@
         private string killedScp = string.Empty;
         private string killerRole = string.Empty;
 
+        #warning raul implement this yes
         public static bool PreventHints;
 
         [PluginEvent(ServerEventType.WaitingForPlayers)]
         public void OnWaitingForPlayers()
         {
             playerKills.Clear();
+            playerDamage.Clear();
+            firstDied = string.Empty;
             firstEscaped = string.Empty;
             firstScpKiller = string.Empty;
             escapedRole = string.Empty;
@@ -35,14 +41,40 @@
             PreventHints = false;
         }
 
+        public void OnAnyDamage(ReferenceHub player, DamageHandlerBase damageHandlerBase)
+        {
+            if (player == null)
+                return;
+            if (damageHandlerBase is not AttackerDamageHandler attackerDamageHandler)
+                return;
+            if (attackerDamageHandler.Attacker.Hub == null
+                || attackerDamageHandler.Damage == 0
+                || attackerDamageHandler.IsSuicide
+                || attackerDamageHandler.IsFriendlyFire)
+                return;
+            if (!playerDamage.TryGetValue(player, out var damage))
+                playerDamage.Add(player, attackerDamageHandler.Damage);
+            else
+                playerDamage[player] += attackerDamageHandler.Damage;
+        }
+
         [PluginEvent(ServerEventType.PlayerDying)]
         public void OnDying(Player player, Player attacker, DamageHandlerBase damageHandler)
         {
-            if (attacker != null && attacker is { IsSCP: false } && player is { IsSCP: true } && firstScpKiller == string.Empty)
+            if (player != null)
             {
-                firstScpKiller = attacker.Nickname;
-                killerRole = attacker.Role.ToString();
-                killedScp = player.Role.ToString();
+                if (firstDied == string.Empty)
+                {
+                    firstDied = player.Nickname;
+                    firstDiedTime = (uint)Round.Duration.TotalSeconds;
+                }
+
+                if (attacker != null && attacker is { IsSCP: false } && player.IsSCP && firstScpKiller == string.Empty)
+                {
+                    firstScpKiller = attacker.Nickname;
+                    killerRole = attacker.Role.ToString();
+                    killedScp = player.Role.ToString();
+                }
             }
 
             if (damageHandler is UniversalDamageHandler universal
@@ -83,34 +115,76 @@
             {
                 string message = string.Empty;
 
-                if (Module.Config.ShowKills && playerKills.Count > 0)
+                if (Module.Config.ShowMostDamage)
                 {
-                    var bestPlayer = playerKills.OrderByDescending(x => x.Value).ElementAt(0);
-                    message += Module.Config.KillsMessage.Replace("{player}", bestPlayer.Key.Nickname)
-                        .Replace("{kills}", bestPlayer.Value.ToString()) + "\n";
+                    if (playerDamage.Count > 0)
+                    {
+                        var bestPlayer = playerDamage.OrderByDescending(x => x.Value).First();
+                        message += Module.Config.MostDamageMessage.Replace("{player}", bestPlayer.Key.nicknameSync.DisplayName)
+                            .Replace("{damage}", bestPlayer.Value.ToString()) + "\n";
+                    }
+                    else
+                    {
+                        message += Module.Config.NoMostDamageMessage + "\n";
+                    }
                 }
-                else
-                    message += Module.Config.NoKillsMessage + "\n";
 
-                if (Module.Config.ShowEscapee && firstEscaped != string.Empty)
+                if (Module.Config.ShowKills)
                 {
-                    Enum.TryParse(escapedRole, out RoleTypeId eRole);
-                    message += Module.Config.EscapeeMessage.Replace("{player}", firstEscaped)
-                        .Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole)
-                        .Replace("{roleColor}", GetColor(eRole)) + "\n";
+                    if (playerKills.Count > 0)
+                    {
+                        var bestPlayer = playerKills.OrderByDescending(x => x.Value).First();
+                        message += Module.Config.KillsMessage.Replace("{player}", bestPlayer.Key.Nickname)
+                            .Replace("{kills}", bestPlayer.Value.ToString()) + "\n";
+                    }
+                    else
+                    {
+                        message += Module.Config.NoKillsMessage + "\n";
+                    }
                 }
-                else
-                    message += Module.Config.NoEscapeeMessage + "\n";
 
-                if (Module.Config.ShowScpFirstKill && firstScpKiller != string.Empty)
+                if (Module.Config.ShowFirstDeath)
                 {
-                    Enum.TryParse(killerRole, out RoleTypeId kRole);
-                    message += Module.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller)
-                        .Replace("{killerRole}", killerRole).Replace("{killedScp}", killedScp)
-                        .Replace("{killerColor}", GetColor(kRole)) + "\n";
+                    if (firstDied != string.Empty)
+                    {
+                        message += Module.Config.FirstDeathMessage.Replace("{player}", firstDied)
+                            .Replace("{time}", $"{firstDiedTime / 60}m {firstDiedTime % 60}s") + "\n";
+                    }
+                    else
+                    {
+                        message += Module.Config.NoFirstDeathMessage + "\n";
+                    }
                 }
-                else
-                    message += Module.Config.NoScpKillMessage + "\n";
+
+                if (Module.Config.ShowEscapee)
+                {
+                    if (firstEscaped != string.Empty)
+                    {
+                        Enum.TryParse(escapedRole, out RoleTypeId eRole);
+                        message += Module.Config.EscapeeMessage.Replace("{player}", firstEscaped)
+                            .Replace("{time}", $"{escapeTime / 60} : {escapeTime % 60}").Replace("{role}", escapedRole)
+                            .Replace("{roleColor}", GetColor(eRole)) + "\n";
+                    }
+                    else
+                    {
+                        message += Module.Config.NoEscapeeMessage + "\n";
+                    }
+                }
+
+                if (Module.Config.ShowScpFirstKill)
+                {
+                    if (firstScpKiller != string.Empty)
+                    {
+                        Enum.TryParse(killerRole, out RoleTypeId kRole);
+                        message += Module.Config.ScpFirstKillMessage.Replace("{player}", firstScpKiller)
+                            .Replace("{killerRole}", killerRole).Replace("{killedScp}", killedScp)
+                            .Replace("{killerColor}", GetColor(kRole)) + "\n";
+                    }
+                    else
+                    {
+                        message += Module.Config.NoScpKillMessage + "\n";
+                    }
+                }
 
                 for (int i = 0; i < 30; i++)
                     message += "\n";
@@ -121,6 +195,7 @@
                 Plugin.Coroutines.Add(Timing.CallDelayed(0.25f, () => PreventHints = true));
             });
         }
+
         private static string GetColor(RoleTypeId role) => PlayerRoleLoader.TryGetRoleTemplate(role, out PlayerRoleBase roleBase) ? roleBase.RoleColor.ToHex() : "#FFF";
     }
 }
