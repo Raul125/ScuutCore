@@ -215,7 +215,6 @@
     <Compile Include="Modules\ScpSpeech\Config.cs" />
     <Compile Include="Modules\ScpSpeech\EventHandlers.cs" />
     <Compile Include="Modules\ScpSpeech\ScpSpeechModule.cs" />
-    <Compile Include="Modules\ScpSpeech\SpeechHelper.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Cancel.cs" />
     <Compile Include="Modules\ScpSwap\Commands\Decline.cs" />

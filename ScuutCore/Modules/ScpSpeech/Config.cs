@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using API.Interfaces;
     using PlayerRoles;
+
     public sealed class Config : IModuleConfig
     {
-
         public bool IsEnabled { get; set; } = true;
 
         public List<RoleTypeId> PermittedRoles { get; set; } = new List<RoleTypeId>
@@ -19,6 +19,5 @@
         };
 
         public float ProximityChatRange { get; set; } = 16f;
-
     }
 }

@@ -1,32 +1,49 @@
 ﻿namespace ScuutCore.Patches.ScpSpeech
 {
-    using System.Collections.Generic;
-    using System.Reflection;
-    using System.Reflection.Emit;
     using HarmonyLib;
     using Modules.ScpSpeech;
-    using NorthwoodLib.Pools;
     using PlayerRoles.FirstPersonControl;
     using PlayerRoles.FirstPersonControl.NetworkMessages;
+    using PlayerStatsSystem;
+    using PluginAPI.Core;
+
     [HarmonyPatch(typeof(FpcNoclipToggleMessage), nameof(FpcNoclipToggleMessage.ProcessMessage))]
-    internal static class ToggleNoclipPatch
+    public class VozNoclipParche
     {
-
-        private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        private static bool Prefix(Mirror.NetworkConnection sender)
         {
-            var list = ListPool<CodeInstruction>.Shared.Rent(instructions);
-            int permittedCheck = list.FindIndex(i => i.operand is MethodInfo { Name: nameof(FpcNoclip.IsPermitted) });
-            if (ScpSpeechModule.Instance is { Config: { IsEnabled: true } })
-                list.InsertRange(list.FindIndex(permittedCheck, i => i.opcode == OpCodes.Ret), new[]
-                {
-                    new CodeInstruction(OpCodes.Ldloc_0),
-                    CodeInstruction.Call(typeof(SpeechHelper), nameof(SpeechHelper.ProcessAltToggle))
-                });
-            foreach (var codeInstruction in list)
-                yield return codeInstruction;
-            ListPool<CodeInstruction>.Shared.Return(list);
-        }
+            if (!ReferenceHub.TryGetHubNetID(sender.identity.netId, out ReferenceHub referenceHub))
+                return false;
 
+            if (Player.TryGet(referenceHub, out Player ply) && ply.IsSCP)
+            {
+                if (!ScpSpeechModule.Instance.Config.PermittedRoles.Contains(ply.Role))
+                    return false;
+
+                if (EventHandlers.ScpsToggled.Contains(referenceHub))
+                {
+                    ply.ReceiveHint("\n\n\nProximity chat <mark=#ff000055>disabled</mark>");
+                    EventHandlers.ScpsToggled.Remove(referenceHub);
+                }
+                else
+                {
+                    ply.ReceiveHint("\n\n\nProximity chat <mark=#00ff0055>enabled</mark>");
+                    EventHandlers.ScpsToggled.Add(referenceHub);
+                }
+            }
+
+            if (!FpcNoclip.IsPermitted(referenceHub))
+                return false;
+
+            if (referenceHub.roleManager.CurrentRole is IFpcRole)
+            {
+                referenceHub.playerStats.GetModule<AdminFlagsStat>().InvertFlag(AdminFlags.Noclip);
+                return false;
+            }
+
+            referenceHub.gameConsoleTransmission.SendToClient("Noclip is not supported for this class.", "yellow");
+            return false;
+        }
     }
 
 }

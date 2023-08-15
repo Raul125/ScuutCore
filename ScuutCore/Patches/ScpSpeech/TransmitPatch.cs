@@ -1,78 +1,96 @@
 ﻿namespace ScuutCore.Patches.ScpSpeech
 {
-    using System.Collections.Generic;
-    using System.Reflection.Emit;
-    using HarmonyLib;
-    using Mirror;
     using Modules.ScpSpeech;
-    using NorthwoodLib.Pools;
+    using HarmonyLib;
+    using PlayerRoles.Spectating;
     using PlayerRoles.Voice;
-    using PluginAPI.Core;
+    using PlayerRoles;
     using VoiceChat;
     using VoiceChat.Networking;
+    using PluginAPI.Core;
+    using UnityEngine;
 
     [HarmonyPatch(typeof(VoiceTransceiver), nameof(VoiceTransceiver.ServerReceiveMessage))]
-    internal static class TransmitPatch
+    public class VoicePatch
     {
-        public static bool Prefix(NetworkConnection conn, VoiceMessage msg)
+        public static bool Prefix(Mirror.NetworkConnection conn, VoiceMessage msg)
         {
-            if (msg.SpeakerNull || (int) msg.Speaker.netId != (int) conn.identity.netId || !(msg.Speaker.roleManager.CurrentRole is IVoiceRole currentRole1) || !currentRole1.VoiceModule.CheckRateLimit() || VoiceChatMutes.IsMuted(msg.Speaker))
+            if (msg.SpeakerNull || msg.Speaker.netId != conn.identity.netId)
                 return false;
-            VoiceChatChannel channel = currentRole1.VoiceModule.ValidateSend(msg.Channel);
-            if (channel == VoiceChatChannel.None)
+
+            if (msg.Speaker.roleManager.CurrentRole is not IVoiceRole voiceRole)
                 return false;
-            currentRole1.VoiceModule.CurrentChannel = channel;
-            foreach (ReferenceHub allHub in ReferenceHub.AllHubs)
+
+            if (!voiceRole.VoiceModule.CheckRateLimit())
+                return false;
+
+            VcMuteFlags flags = VoiceChatMutes.GetFlags(msg.Speaker);
+            if (flags == VcMuteFlags.GlobalRegular || flags == VcMuteFlags.LocalRegular)
+                return false;
+
+            VoiceChatChannel voiceChatChannel = voiceRole.VoiceModule.ValidateSend(msg.Channel);
+            if (voiceChatChannel == VoiceChatChannel.None)
+                return false;
+
+            voiceRole.VoiceModule.CurrentChannel = voiceChatChannel;
+            RoleTypeId role = msg.Speaker.roleManager.CurrentRole.RoleTypeId;
+
+            // Lobby && finished round chat
+            if (Round.IsRoundEnded || (!(Round.IsRoundEnded || Round.IsRoundStarted)))
             {
-                if (allHub.roleManager.CurrentRole is IVoiceRole currentRole2)
+                foreach (ReferenceHub referenceHub in ReferenceHub.AllHubs)
                 {
-                    VoiceChatChannel voiceChatChannel = currentRole2.VoiceModule.ValidateReceive(msg.Speaker, channel);
-                    if (SpeechHelper.SendCheck(voiceChatChannel, currentRole1, currentRole2))
+                    if (referenceHub == msg.Speaker)
+                        continue;
+
+                    msg.Channel = VoiceChatChannel.RoundSummary;
+                    referenceHub.connectionToClient.Send(msg, 0);
+                }
+
+                return false;
+            }
+
+            // Scp chat
+            if (voiceChatChannel is VoiceChatChannel.ScpChat)
+            {
+                if (ScpSpeechModule.Instance.Config.PermittedRoles.Contains(role) && EventHandlers.ScpsToggled.Contains(msg.Speaker))
+                {
+                    foreach (ReferenceHub referenceHub in ReferenceHub.AllHubs)
                     {
-                        if (!Round.IsRoundStarted)
-                            voiceChatChannel = VoiceChatChannel.RoundSummary;
-                        msg.Channel = voiceChatChannel;
-                        allHub.connectionToClient.Send(msg);
+                        if (referenceHub == msg.Speaker || referenceHub.roleManager.CurrentRole.Team == Team.SCPs)
+                            continue;
+
+                        bool allowSpect = false;
+                        if (referenceHub.roleManager.CurrentRole.Team == Team.Dead && msg.Speaker.IsSpectatedBy(referenceHub))
+                            allowSpect = true;
+
+                        if (!allowSpect && Vector3.Distance(msg.Speaker.transform.position, referenceHub.transform.position) > ScpSpeechModule.Instance.Config.ProximityChatRange)
+                            continue;
+
+                        msg.Channel = VoiceChatChannel.Proximity;
+                        referenceHub.connectionToClient.Send(msg);
+                    }
+
+                    return false;
+                }
+            }
+
+            // Normal chat
+            foreach (ReferenceHub referenceHub in ReferenceHub.AllHubs)
+            {
+                if (referenceHub.roleManager.CurrentRole is IVoiceRole voiceRole1)
+                {
+                    VoiceChatChannel voiceChatChannel1 = voiceRole1.VoiceModule.ValidateReceive(msg.Speaker, voiceChatChannel);
+
+                    if (voiceChatChannel1 != VoiceChatChannel.None)
+                    {
+                        msg.Channel = voiceChatChannel1;
+                        referenceHub.connectionToClient.Send(msg, 0);
                     }
                 }
             }
 
             return false;
         }
-
-        /*private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
-        {
-            var list = ListPool<CodeInstruction>.Shared.Rent(instructions);
-            if (ScpSpeechModule.Instance is { Config: { IsEnabled: true } })
-            {
-                var isProximity = generator.DeclareLocal(typeof(bool));
-                var setChannelLabel = generator.DefineLabel();
-
-                int checkIndex = list.FindLastIndex(i => i.opcode == OpCodes.Brfalse_S);
-                int setIndex = checkIndex + 2;
-                list[setIndex].labels.Add(setChannelLabel);
-                list.InsertRange(setIndex, new[]
-                {
-                    new CodeInstruction(OpCodes.Ldloc, isProximity.LocalIndex),
-                    new CodeInstruction(OpCodes.Brfalse, setChannelLabel),
-                    new CodeInstruction(OpCodes.Ldc_I4_1),
-                    new CodeInstruction(OpCodes.Stloc, 6)
-                });
-
-                list.InsertRange(checkIndex, new[]
-                {
-                    new CodeInstruction(new CodeInstruction(OpCodes.Ldloc_0)),
-                    new CodeInstruction(new CodeInstruction(OpCodes.Ldloc, 5)),
-                    CodeInstruction.Call(typeof(SpeechHelper), nameof(SpeechHelper.SendCheck)),
-                    new CodeInstruction(OpCodes.Stloc, isProximity.LocalIndex),
-                    new CodeInstruction(OpCodes.Ldloc, isProximity.LocalIndex)
-                });
-            }
-
-            foreach (var instruction in list)
-                yield return instruction;
-
-            ListPool<CodeInstruction>.Shared.Return(list);
-        }*/
     }
 }

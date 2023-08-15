@@ -4,7 +4,6 @@
     using InventorySystem.Items.Firearms;
     using InventorySystem.Items.Firearms.Attachments;
     using MEC;
-    using Modules.ScpSpeech;
     using Modules.Subclasses;
     using PlayerRoles.Voice;
     using PluginAPI.Core;
@@ -111,7 +110,7 @@
             if (SpeechUpdateTime < 0.5f)
                 return;
             SpeechUpdateTime = 0;
-            if (RoleBase is not IVoiceRole vcRole || !vcRole.VoiceModule.ServerIsSending || !SpeechHelper.IsUsingProximityChat(ReferenceHub))
+            if (RoleBase is not IVoiceRole vcRole || !vcRole.VoiceModule.ServerIsSending || !Modules.ScpSpeech.EventHandlers.ScpsToggled.Contains(ReferenceHub))
                 return;
             ReceiveHint("\n\n\n\n\n\n\n\n\n\n\n\n<size=18>You are using Proximity Chat\nPress <mark=#adadad33>Left Alt</mark> to switch to SCP Chat</size>", 0.6f);
             base.OnUpdate();
