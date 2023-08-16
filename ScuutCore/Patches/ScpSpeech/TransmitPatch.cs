@@ -60,7 +60,7 @@
                         if (referenceHub == msg.Speaker || referenceHub.roleManager.CurrentRole.Team == Team.SCPs)
                             continue;
 
-                        bool allowSpect = referenceHub.roleManager.CurrentRole.Team == Team.Dead && msg.Speaker.IsSpectatedBy(referenceHub);
+                        bool allowSpect = referenceHub.roleManager.CurrentRole.Team == Team.Dead && msg.Speaker.IsSpectatedBy(referenceHub) && ScpSpeechModule.Instance.Config.SpectatorCanHear;
 
                         if (!allowSpect && Vector3.Distance(msg.Speaker.transform.position, referenceHub.transform.position) > ScpSpeechModule.Instance.Config.ProximityChatRange)
                             continue;

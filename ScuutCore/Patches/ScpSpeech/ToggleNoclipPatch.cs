@@ -8,10 +8,13 @@
     using PluginAPI.Core;
 
     [HarmonyPatch(typeof(FpcNoclipToggleMessage), nameof(FpcNoclipToggleMessage.ProcessMessage))]
-    public class VozNoclipParche
+    public class NoclipPatch
     {
         private static bool Prefix(Mirror.NetworkConnection sender)
         {
+            if (ScpSpeechModule.Instance == null)
+                return true;
+
             if (!ReferenceHub.TryGetHubNetID(sender.identity.netId, out ReferenceHub referenceHub))
                 return false;
 

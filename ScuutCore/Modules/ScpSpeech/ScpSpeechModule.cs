@@ -3,7 +3,6 @@
     using API.Features;
     public sealed class ScpSpeechModule : EventControllerModule<ScpSpeechModule, Config, EventHandlers>
     {
-
         public static ScpSpeechModule? Instance { get; private set; }
 
         public override void OnEnabled()

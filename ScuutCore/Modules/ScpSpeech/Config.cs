@@ -19,5 +19,6 @@
         };
 
         public float ProximityChatRange { get; set; } = 16f;
+        public bool SpectatorCanHear { get; set; } = true;
     }
 }
