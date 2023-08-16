@@ -53,16 +53,14 @@
             // Scp chat
             if (voiceChatChannel is VoiceChatChannel.ScpChat)
             {
-                if (ScpSpeechModule.Instance.Config.PermittedRoles.Contains(role) && EventHandlers.ScpsToggled.Contains(msg.Speaker))
+                if ((ScpSpeechModule.Instance?.Config.PermittedRoles.Contains(role) ?? false) && EventHandlers.ScpsToggled.Contains(msg.Speaker))
                 {
                     foreach (ReferenceHub referenceHub in ReferenceHub.AllHubs)
                     {
                         if (referenceHub == msg.Speaker || referenceHub.roleManager.CurrentRole.Team == Team.SCPs)
                             continue;
 
-                        bool allowSpect = false;
-                        if (referenceHub.roleManager.CurrentRole.Team == Team.Dead && msg.Speaker.IsSpectatedBy(referenceHub))
-                            allowSpect = true;
+                        bool allowSpect = referenceHub.roleManager.CurrentRole.Team == Team.Dead && msg.Speaker.IsSpectatedBy(referenceHub);
 
                         if (!allowSpect && Vector3.Distance(msg.Speaker.transform.position, referenceHub.transform.position) > ScpSpeechModule.Instance.Config.ProximityChatRange)
                             continue;
