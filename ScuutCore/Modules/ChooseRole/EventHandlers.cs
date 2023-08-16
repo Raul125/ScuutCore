@@ -328,10 +328,12 @@
             // ---------------------------------------------------------------------------------------\\
 
             // SCP Logic, preventing SCP-079 from spawning if there isn't at least 2 other SCPs
-            List<RoleTypeId> Roles = new() { RoleTypeId.Scp049, RoleTypeId.Scp096, RoleTypeId.Scp106, RoleTypeId.Scp173, RoleTypeId.Scp939 };
+            List<RoleTypeId> Roles = new() { RoleTypeId.Scp049, RoleTypeId.Scp106, RoleTypeId.Scp173, RoleTypeId.Scp939 };
 
-            if (PlayersToSpawnAsSCP.Count > Module.Config.MinScpAmountFor079)
+            if (PlayersToSpawnAsSCP.Count > Module.Config.MinScpAmountFor079 && Random.Range(1, 101) > 50)
                 Roles.Add(RoleTypeId.Scp079);
+            else
+                Roles.Add(RoleTypeId.Scp096);
 
             foreach (Player ply in PlayersToSpawnAsSCP)
             {
