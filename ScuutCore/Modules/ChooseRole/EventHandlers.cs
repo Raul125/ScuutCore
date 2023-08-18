@@ -82,7 +82,6 @@
         {
             var bulkList = Player.GetPlayers();
             bulkList.RemoveAll(x => x.IsOverwatchEnabled);
-            var spCount = Module.Config.SpawnQueue.Length;
             Queue<Team> SpawnQueue = new();
 
             foreach (var queueItem in Module.Config.SpawnQueue)
@@ -136,6 +135,7 @@
             }
             lateSpawn.AddRange(Enumerable.Repeat(Team.ClassD, 99));
             HumanSpawner._humanQueue = lateSpawn.ToArray();
+            HumanSpawner._queueLength = lateSpawn.Count;
 
             bulkList.ShuffleList();
 
