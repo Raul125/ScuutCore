@@ -59,7 +59,7 @@
         [PluginEvent(ServerEventType.PlayerJoined)]
         public void OnPlayerJoin(Player player)
         {
-            if (Round.IsRoundStarted)
+            if (Round.IsRoundStarted || Round.IsRoundEnded)
                 return;
 
             player.GameObject.AddComponent<HudComponent>().Init(player.ReferenceHub);
