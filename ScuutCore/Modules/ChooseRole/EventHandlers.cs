@@ -68,6 +68,16 @@
             player.ClearInventory();
         }
 
+        [PluginEvent(ServerEventType.PlayerLeft)]
+        public void OnPlayerLeave(Player player)
+        {
+            foreach (var trigger in _triggers)
+            {
+                if (trigger.Players.Contains(player))
+                    trigger.Players.Remove(player);
+            }
+        }
+
         [PluginEvent(ServerEventType.RagdollSpawn)]
         public bool OnRagdollSpawn(Player player, IRagdollRole ragdoll, DamageHandlerBase damage)
         {
@@ -80,7 +90,19 @@
         [PluginEvent(ServerEventType.RoundStart)]
         public void OnRoundStart()
         {
-            var bulkList = Player.GetPlayers();
+            List<Player> bulkList = new();
+            foreach (var referenceHub in ReferenceHub.AllHubs)
+            {
+                if (referenceHub == ReferenceHub.HostHub)
+                    continue;
+                if (referenceHub == null || referenceHub.characterClassManager == null)
+                    continue;
+                if (referenceHub.gameObject == null)
+                    continue;
+                if (string.IsNullOrWhiteSpace(referenceHub.characterClassManager.UserId))
+                    continue;
+                bulkList.Add(Player.Get(referenceHub));
+            }
             bulkList.RemoveAll(x => x.IsOverwatchEnabled);
             Queue<Team> SpawnQueue = new();
 
