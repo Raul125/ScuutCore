@@ -30,6 +30,8 @@
         public string NoFirstDeathMessage { get; set; } = "No one died!";
 
         public bool ShowMostDamage { get; set; } = true;
+        public bool ExcludeScpsFromMostDamage { get; set; } = true;
+        public int DamageLimit { get; set; } = -1;
         public string MostDamageMessage { get; set; } = "<size=30><color=yellow><b>{player}</color> did the most damage, they did <color=red>{damage} damage</b></color></size>";
         public string NoMostDamageMessage { get; set; } = "No one did any damage!";
 

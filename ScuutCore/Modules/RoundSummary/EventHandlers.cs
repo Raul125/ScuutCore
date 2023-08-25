@@ -47,6 +47,8 @@
         {
             if (ev.Player == null || ev.Target == null)
                 return;
+            if (ev.Player.IsSCP && Module.Config.ExcludeScpsFromMostDamage)
+                return;
             if (ev.DamageHandler is not AttackerDamageHandler attackerDamageHandler)
                 return;
             if (attackerDamageHandler.Attacker.Hub == null
@@ -54,10 +56,13 @@
                 || attackerDamageHandler.IsSuicide
                 || attackerDamageHandler.IsFriendlyFire)
                 return;
-            if (!playerDamage.TryGetValue(ev.Player, out var damage))
-                playerDamage.Add(ev.Player, attackerDamageHandler.Damage);
+            var damage = attackerDamageHandler.Damage;
+            if (Module.Config.DamageLimit > 0 && damage > Module.Config.DamageLimit)
+                damage = Module.Config.DamageLimit;
+            if (!playerDamage.ContainsKey(ev.Player))
+                playerDamage.Add(ev.Player, damage);
             else
-                playerDamage[ev.Player] += attackerDamageHandler.Damage;
+                playerDamage[ev.Player] += damage;
         }
 
         [PluginEvent(ServerEventType.PlayerDying)]
