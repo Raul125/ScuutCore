@@ -42,7 +42,7 @@
         public static void SetRank(ReferenceHub hub, string content, string color)
         {
             var roles = hub.serverRoles;
-            roles.Network_myText = content;
+            roles.Network_myText = content.Replace("\\u", "");
             if (color != null)
                 roles.SetColor(color);
         }
