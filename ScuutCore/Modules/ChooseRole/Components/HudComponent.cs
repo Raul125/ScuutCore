@@ -39,7 +39,8 @@ namespace ScuutCore.Modules.ChooseRole
             }
 
             _counter = 0;
-            _hub.connectionToClient.Send(new HintMessage(new TextHint(Build(), new HintParameter[] { new StringHintParameter(string.Empty) }, null, 4)));
+            var text = Build();
+            _hub.hints.Show(new TextHint(text, new HintParameter[] { new StringHintParameter(text) }, null, 4));
         }
 
         private string Build()
