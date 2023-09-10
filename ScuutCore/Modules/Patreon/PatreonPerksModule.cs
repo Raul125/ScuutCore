@@ -6,12 +6,11 @@
     public sealed class PatreonPerksModule : EventControllerModule<PatreonPerksModule, Config, EventHandlers>
     {
         public override string Name => "Patreon Perks";
-        public static PatreonPerksModule Singleton { get; private set; }
 
         public override void OnEnabled()
         {
             base.OnEnabled();
-            Singleton = this;
+
             foreach (var rank in Config.RankList)
             {
                 foreach (var badge in rank.BadgeOptions)
@@ -25,11 +24,6 @@
                     }
                 }
             }
-        }
-        public override void OnDisabled()
-        {
-            base.OnDisabled();
-            Singleton = null;
         }
     }
 }

@@ -8,6 +8,7 @@
         public string SpawnQueue { get; set; } = "4014314031441404134044434414";
         public float ChaosProb { get; set; } = 40;
         public int MinScpAmountFor079 { get; set; } = 2;
+        public bool UseBroadcastsInsteadOfHints { get; set; } = false;
 
         public string SelectedTeam { get; set; } = "<b>Selected Team:</b>";
         public string Random { get; set; } = "<b>Random</b>";

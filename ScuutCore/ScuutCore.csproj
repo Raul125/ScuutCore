@@ -112,6 +112,7 @@
     <Compile Include="API\Features\CassieConfig.cs" />
     <Compile Include="API\Features\HintConfig.cs" />
     <Compile Include="API\Features\Module.cs" />
+    <Compile Include="API\Features\SingletonControllerModule.cs" />
     <Compile Include="API\Features\Subclass.cs" />
     <Compile Include="API\Helpers\PlayerDeathEffects.cs" />
     <Compile Include="API\Interfaces\IModuleConfig.cs" />

@@ -3,20 +3,19 @@
     using API.Features;
     using MEC;
 
-    public sealed class ErrorLogs : Module<Config>
+    public sealed class ErrorLogs : SingletonControllerModule<ErrorLogs, Config>
     {
-        public static ErrorLogs Singleton;
+        private CoroutineHandle _coroutineHandle;
 
         public override void OnEnabled()
         {
-            Singleton = this;
-            Timing.RunCoroutine(WebhookSender.ManageQueue());
+            _coroutineHandle = Timing.RunCoroutine(WebhookSender.ManageQueue());
             base.OnEnabled();
         }
 
         public override void OnDisabled()
         {
-            Singleton = null;
+            Timing.KillCoroutines(_coroutineHandle);
             base.OnDisabled();
         }
     }

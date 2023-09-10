@@ -5,6 +5,8 @@ using UnityEngine;
 
 namespace ScuutCore.Modules.ChooseRole
 {
+    using ScuutCore.Modules.ChooseRole.Components;
+
     public class TeamTrigger : MonoBehaviour
     {
         public Team Team;

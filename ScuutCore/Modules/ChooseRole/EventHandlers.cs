@@ -16,6 +16,7 @@
     using Mirror;
     using ScuutCore.API.Extensions;
     using PluginAPI.Events;
+    using ScuutCore.Modules.ChooseRole.Components;
     using Object = UnityEngine.Object;
     using Random = UnityEngine.Random;
 

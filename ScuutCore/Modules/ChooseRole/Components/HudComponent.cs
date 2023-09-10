@@ -1,16 +1,17 @@
-﻿using GameCore;
-using Hints;
-using NorthwoodLib.Pools;
-using PluginAPI.Core;
-using UnityEngine;
-using StringBuilder = System.Text.StringBuilder;
+﻿using StringBuilder = System.Text.StringBuilder;
 
-namespace ScuutCore.Modules.ChooseRole
+namespace ScuutCore.Modules.ChooseRole.Components
 {
+    using GameCore;
+    using Hints;
+    using NorthwoodLib.Pools;
+    using PluginAPI.Core;
+    using UnityEngine;
+
     public class HudComponent : MonoBehaviour
     {
-        public string Team = ChooseRole.Singleton.Config.Random;
-        private ReferenceHub _hub;
+        public string Team = ChooseRole.Singleton!.Config.Random;
+        private ReferenceHub _hub = null!;
 
         public void Init(ReferenceHub hub)
         {
@@ -40,13 +41,16 @@ namespace ScuutCore.Modules.ChooseRole
 
             _counter = 0;
             var text = Build();
-            _hub.hints.Show(new TextHint(text, new HintParameter[] { new StringHintParameter(text) }, null, 4));
+            if (ChooseRole.Singleton!.Config.UseBroadcastsInsteadOfHints)
+                Server.Broadcast.TargetAddElement(_hub.connectionToClient, text, 4, Broadcast.BroadcastFlags.Normal);
+            else
+                _hub.hints.Show(new TextHint(text, new HintParameter[] { new StringHintParameter(text) }, null, 4));
         }
 
         private string Build()
         {
             StringBuilder builder = StringBuilderPool.Shared.Rent();
-            builder.AppendLine(ChooseRole.Singleton.Config.StartingSoon);
+            builder.AppendLine(ChooseRole.Singleton!.Config.StartingSoon);
             builder.AppendLine(GetStatus());
             int count = Player.Count;
 

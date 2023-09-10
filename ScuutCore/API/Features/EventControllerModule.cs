@@ -10,12 +10,12 @@
     /// <typeparam name="TModuleConfig">The module config type.</typeparam>
     /// <typeparam name="THandler">The event handler type.</typeparam>
     /// <remarks>If this instance is required to be used by the event handler it should inherit the <see cref="InstanceBasedEventHandler{TModule}"/> class.</remarks>
-    public abstract class EventControllerModule<TModule, TModuleConfig, THandler> : Module<TModuleConfig>
-    where TModule : EventControllerModule<TModule, TModuleConfig, THandler>
-    where TModuleConfig : IModuleConfig, new()
-    where THandler : IEventHandler, new()
+    public abstract class EventControllerModule<TModule, TModuleConfig, THandler> : SingletonControllerModule<TModule, TModuleConfig>
+        where TModule : EventControllerModule<TModule, TModuleConfig, THandler>
+        where TModuleConfig : IModuleConfig, new()
+        where THandler : IEventHandler, new()
     {
-        public THandler EventHandlers { get; protected set; }
+        public THandler? EventHandlers { get; protected set; }
 
         public override void OnEnabled()
         {

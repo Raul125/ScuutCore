@@ -12,10 +12,9 @@
 
     public sealed class Subclasses : EventControllerModule<Subclasses, Config, EventHandlers>
     {
-        public static Subclasses Singleton;
         public static Dictionary<string, string> SpawnTranslations = new();
 
-        private SerializedSubclass[] defaultSubclassesValue =
+        private readonly SerializedSubclass[] defaultSubclassesValue =
         {
             new SerializedSubclass
             {
@@ -36,8 +35,6 @@
 
         public override void OnEnabled()
         {
-            Singleton = this;
-
             Log.Warning("Loading subclasses!");
             var serializer = new Serializer();
             var deserializer = new Deserializer();
@@ -108,12 +105,6 @@
             }
 
             base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            Singleton = null;
-            base.OnDisabled();
         }
     }
 }
