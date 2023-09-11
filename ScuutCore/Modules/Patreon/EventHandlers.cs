@@ -25,7 +25,7 @@
         private void OnWaitingForPlayers()
         {
             PatreonData.ReadAll();
+            PatreonExtensions.SpectatorListPlayers.Clear();
         }
-
     }
 }

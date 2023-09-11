@@ -133,6 +133,7 @@
     <Compile Include="Modules\ChooseRole\Config.cs" />
     <Compile Include="Modules\ChooseRole\EventHandlers.cs" />
     <Compile Include="Modules\CleanupUtility\Components\AutoClearComponent.cs" />
+    <Compile Include="Modules\Patreon\Commands\ToggleSpectatorList.cs" />
     <Compile Include="Modules\RespawnFix\RespawnFix.cs" />
     <Compile Include="Modules\RespawnFix\Config.cs" />
     <Compile Include="Modules\RespawnFix\EventHandlers.cs" />

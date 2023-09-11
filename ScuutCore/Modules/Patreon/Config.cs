@@ -51,5 +51,8 @@
         [Description("Whether to add the suffix:" + SetCustomBadge.CustomPatreon)]
         public bool CustomPatreonSuffix { get; set; } = true;
 
+        [Description("NEEDS RESPAWNTIMER")]
+        public string SpectatorListTitle { get; set; } = "<b>👥 Spectators:</b>";
+        public string SpectatorListElement { get; set; } = "%name%";
     }
 }

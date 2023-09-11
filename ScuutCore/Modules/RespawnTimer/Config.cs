@@ -17,10 +17,8 @@
             "Template"
         };
 
-        [Description("Whether the timer should be reloaded each round. Useful if you have many different timers designed.")]
-        public bool ReloadTimerEachRound { get; private set; } = true;
-
         [Description("Whether the timer should be hidden for players in overwatch.")]
         public bool HideTimerForOverwatch { get; private set; } = true;
+        public bool EnableSpectatorList { get; set; } = true;
     }
 }

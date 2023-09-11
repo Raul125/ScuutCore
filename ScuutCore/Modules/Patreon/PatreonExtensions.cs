@@ -1,7 +1,11 @@
 ﻿namespace ScuutCore.Modules.Patreon
 {
+    using System.Collections.Generic;
+    using System.Text;
     using NWAPIPermissionSystem;
+    using PlayerRoles.Spectating;
     using PlayerStatsSystem;
+    using PluginAPI.Core;
     using Types;
     public static class PatreonExtensions
     {
@@ -61,7 +65,30 @@
             return 1f;
         }
 
-        public static sbyte Multiply(sbyte value, float multiplier) => (sbyte)(value * multiplier);
+        public static List<uint> SpectatorListPlayers = new();
+        public static bool ShouldShowSpectatorList(this Player ply) => SpectatorListPlayers.Contains(ply.NetworkId);
 
+        public static void ShowSpectators(this Player ply)
+        {
+            StringBuilder sb = new();
+            List<ReferenceHub> hubs = new();
+            foreach (var hub in ReferenceHub.AllHubs)
+            {
+                if (hub == ReferenceHub.HostHub)
+                    continue;
+                if (!ply.ReferenceHub.IsSpectatedBy(hub))
+                    continue;
+                hubs.Add(hub);
+            }
+
+            if (PatreonPerksModule.Singleton == null)
+                return;
+            sb.AppendLine(PatreonPerksModule.Singleton.Config.SpectatorListTitle);
+            foreach (var hub in hubs)
+            {
+                sb.AppendLine(PatreonPerksModule.Singleton.Config.SpectatorListElement.Replace("%name%", hub.nicknameSync.MyNick));
+            }
+            ply.ReceiveHint(sb.ToString(), 1.25f);
+        }
     }
 }

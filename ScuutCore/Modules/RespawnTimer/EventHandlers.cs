@@ -9,6 +9,7 @@
     using PluginAPI.Core.Attributes;
     using PluginAPI.Enums;
     using ScuutCore.API.Features;
+    using ScuutCore.Modules.Patreon;
     using UnityEngine;
 
     public sealed class EventHandlers : InstanceBasedEventHandler<RespawnTimer>
@@ -53,6 +54,11 @@
                 {
                     if (player.Role == RoleTypeId.Overwatch && Module.Config.HideTimerForOverwatch || API.API.TimerHidden.Contains(player.UserId))
                         continue;
+                    if (player.ShouldShowSpectatorList() && Module.Config.EnableSpectatorList)
+                    {
+                        player.ShowSpectators();
+                        continue;
+                    }
 
                     player.ReceiveHint(text, 1.25f);
                 }
