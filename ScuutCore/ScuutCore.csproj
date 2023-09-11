@@ -122,6 +122,7 @@
     <Compile Include="Commands\Nick.cs" />
     <Compile Include="Commands\SpecialKill.cs" />
     <Compile Include="Commands\Suicide\ExplosiveSuicide.cs" />
+    <Compile Include="Commands\Suicide\SeveredSuicide.cs" />
     <Compile Include="Commands\Suicide\Suicide.cs" />
     <Compile Include="Commands\Suicide\VaporizeSuicide.cs" />
     <Compile Include="Config.cs" />
