@@ -83,10 +83,15 @@
 
             if (PatreonPerksModule.Singleton == null)
                 return;
-            sb.AppendLine(PatreonPerksModule.Singleton.Config.SpectatorListTitle);
+            var config = PatreonPerksModule.Singleton.Config;
+            if (hubs.Count == 0 && !config.ShowEmptySpectatorList)
+                return;
+            sb.Append(config.SpectatorListPrefix);
+            sb.AppendLine(config.SpectatorListTitle.Replace("%count%", hubs.Count.ToString()));
             foreach (var hub in hubs)
             {
-                sb.AppendLine(PatreonPerksModule.Singleton.Config.SpectatorListElement.Replace("%name%", hub.nicknameSync.MyNick));
+                sb.Append(config.SpectatorListPrefix);
+                sb.AppendLine(config.SpectatorListElement.Replace("%name%", hub.nicknameSync.MyNick));
             }
             ply.ReceiveHint(sb.ToString(), 1.25f);
         }

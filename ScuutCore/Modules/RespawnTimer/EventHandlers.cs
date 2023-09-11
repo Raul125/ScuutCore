@@ -47,18 +47,25 @@
                 yield return Timing.WaitForSeconds(1f);
 
                 Spectators.Clear();
-                Spectators.AddRange(ReferenceHub.AllHubs.Select(Player.Get).Where(x => !x.IsServer && !x.IsAlive));
+
+                foreach (Player player in Player.GetPlayers())
+                {
+                    if (player.ShouldShowSpectatorList() && Module.Config.EnableSpectatorList)
+                    {
+                        player.ShowSpectators();
+                        continue;
+                    }
+                    
+                    if (player is { IsServer: false, IsAlive: false })
+                        Spectators.Add(player);
+                }
+
                 string text = TimerView.Current.GetText(Spectators.Count);
 
                 foreach (Player player in Spectators)
                 {
                     if (player.Role == RoleTypeId.Overwatch && Module.Config.HideTimerForOverwatch || API.API.TimerHidden.Contains(player.UserId))
                         continue;
-                    if (player.ShouldShowSpectatorList() && Module.Config.EnableSpectatorList)
-                    {
-                        player.ShowSpectators();
-                        continue;
-                    }
 
                     player.ReceiveHint(text, 1.25f);
                 }
