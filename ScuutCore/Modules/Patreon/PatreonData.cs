@@ -91,8 +91,8 @@
                 else
                 {
                     text = Prefs.CustomBadge;
-                    color = Prefs.CustomBadgeColor ?? Rank.DefaultCustomColor;
-                    rainbow = null;
+                    color =  Prefs.CustomBadgeColor ?? Rank.DefaultCustomColor;
+                    rainbow = Prefs.RainbowColors;
                     return;
                 }
             }

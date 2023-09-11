@@ -87,22 +87,42 @@
 
         protected override string Permission => ColorPermissions;
         public override string Command => "customColor";
-        public override string[] Aliases { get; } =
-        {
-        };
+        public override string[] Aliases { get; } = Array.Empty<string>();
         public override string Description => "Sets your custom badge color.";
+
+        private const string rainbowString =
+            "<color=red>r</color><color=orange>a</color><color=yellow>i</color><color=green>n</color><color=blue>b</color><color=purple>o</color><color=red>w</color>";
+
         protected override bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, PatreonData data, out string response)
         {
             if (arguments.Count < 1)
             {
-                response = "Usage: patreon customColor color";
+                response = "Usage: patreon customColor <color>";
                 return false;
             }
 
             string color = string.Join(" ", arguments).Trim();
+            string[] rainbowColors = null;
+            if (data.Prefs.BadgeIndex >= data.Rank.BadgeOptions.Count)
+                rainbowColors = data.Rank.BadgeOptions.First().RainbowColors;
+            else
+                rainbowColors = data.Rank.BadgeOptions[data.Prefs.BadgeIndex].RainbowColors;
+            bool hasRainbow = rainbowColors is { Length: > 0 };
+
+            if (hasRainbow && color == "rainbow")
+            {
+                data.Prefs.RainbowColors = rainbowColors;
+                if (data.Prefs.BadgeIndex == Badge.Custom)
+                    data.UpdateBadge();
+                response = $"Your badge color has been set to {rainbowString}. Use the \"patreon selectBadge custom\" command to select it.";
+                return true;
+            }
+
             if (!TryGetColor(color, out string code))
             {
                 response = "Invalid color. Available ones: " + string.Join(" ", Colors.Select(e => $"<color={e.Value}>{e.Key}</color>"));
+                if (hasRainbow)
+                    response += " " + rainbowString;
                 return false;
             }
 
