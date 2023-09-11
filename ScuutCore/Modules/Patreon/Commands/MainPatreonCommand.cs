@@ -19,6 +19,7 @@
             RegisterCommand(new SetCustomColor());
             RegisterCommand(new FlyingRagdollSelf());
             RegisterCommand(new FlyingRagdollKills());
+            RegisterCommand(new ToggleSpectatorList());
         }
 
         public override string Command => "patreon";
