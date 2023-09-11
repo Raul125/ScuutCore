@@ -102,11 +102,10 @@
             }
 
             string color = string.Join(" ", arguments).Trim();
-            string[] rainbowColors = null;
-            if (data.Prefs.BadgeIndex >= data.Rank.BadgeOptions.Count)
-                rainbowColors = data.Rank.BadgeOptions.First().RainbowColors;
-            else
-                rainbowColors = data.Rank.BadgeOptions[data.Prefs.BadgeIndex].RainbowColors;
+            string[] rainbowColors;
+            rainbowColors = (data.Prefs.BadgeIndex >= data.Rank.BadgeOptions.Count
+                || data.Prefs.BadgeIndex < 0
+                ) ? data.Rank.BadgeOptions.First().RainbowColors : data.Rank.BadgeOptions[data.Prefs.BadgeIndex].RainbowColors;
             bool hasRainbow = rainbowColors is { Length: > 0 };
 
             if (hasRainbow && color == "rainbow")
