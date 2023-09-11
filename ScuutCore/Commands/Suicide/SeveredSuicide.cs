@@ -24,7 +24,7 @@
         public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
         {
             Player player = Player.Get(sender);
-            if (!PermissionHandler.CheckPermission(player.UserId, "scuutcore.explosivesuicide"))
+            if (!PermissionHandler.CheckPermission(player.UserId, "scuutcore.severedsuicide"))
             {
                 response = "<b><color=#00FFAE>Get permissions bozo!</color></b>";
                 return false;
