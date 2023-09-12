@@ -114,6 +114,7 @@
     <Compile Include="API\Features\Module.cs" />
     <Compile Include="API\Features\SingletonControllerModule.cs" />
     <Compile Include="API\Features\Subclass.cs" />
+    <Compile Include="API\Helpers\GlobalHelpers.cs" />
     <Compile Include="API\Helpers\PlayerDeathEffects.cs" />
     <Compile Include="API\Interfaces\IModuleConfig.cs" />
     <Compile Include="API\Interfaces\IModule.cs" />
@@ -215,6 +216,11 @@
     <Compile Include="Modules\Scp008\EventHandlers.cs" />
     <Compile Include="Modules\Scp008\Scp008.cs" />
     <Compile Include="Modules\Scp1162\SimplifiedToy.cs" />
+    <Compile Include="Modules\ScpReplace\Commands\ScpReplaceCommand.cs" />
+    <Compile Include="Modules\ScpReplace\EventHandler.cs" />
+    <Compile Include="Modules\ScpReplace\Models\ReplaceInfo.cs" />
+    <Compile Include="Modules\ScpReplace\ScpReplaceConfig.cs" />
+    <Compile Include="Modules\ScpReplace\ScpReplaceModule.cs" />
     <Compile Include="Modules\ScpSpeech\Config.cs" />
     <Compile Include="Modules\ScpSpeech\EventHandlers.cs" />
     <Compile Include="Modules\ScpSpeech\ScpSpeechModule.cs" />

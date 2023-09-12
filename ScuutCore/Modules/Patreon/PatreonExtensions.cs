@@ -97,5 +97,8 @@
             }
             ply.ReceiveHint(sb.ToString(), 1.25f);
         }
+
+        public static int GetPriorityPatreon(this Player ply) =>
+            ply.GameObject.TryGetComponent(out PatreonData data) ? data.Rank.Priority : 0;
     }
 }
