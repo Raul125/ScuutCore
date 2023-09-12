@@ -87,11 +87,13 @@
             if (hubs.Count == 0 && !config.ShowEmptySpectatorList)
                 return;
             sb.Append(config.SpectatorListPrefix);
-            sb.AppendLine(config.SpectatorListTitle.Replace("%count%", hubs.Count.ToString()));
+            sb.Append(config.SpectatorListTitle.Replace("%count%", hubs.Count.ToString()));
+            sb.AppendLine(config.SpectatorListSuffix);
             foreach (var hub in hubs)
             {
                 sb.Append(config.SpectatorListPrefix);
-                sb.AppendLine(config.SpectatorListElement.Replace("%name%", hub.nicknameSync.MyNick));
+                sb.Append(config.SpectatorListElement.Replace("%name%", hub.nicknameSync.MyNick));
+                sb.AppendLine(config.SpectatorListSuffix);
             }
             ply.ReceiveHint(sb.ToString(), 1.25f);
         }

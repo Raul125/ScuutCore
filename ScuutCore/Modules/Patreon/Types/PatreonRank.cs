@@ -8,6 +8,7 @@
     public struct PatreonRank
     {
         public string Id { get; set; }
+        public int Priority { get; set; }
 
         public List<Badge> BadgeOptions { get; set; }
 

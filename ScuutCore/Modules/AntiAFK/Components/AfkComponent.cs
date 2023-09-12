@@ -82,7 +82,7 @@
         private void TryReplace()
         {
             var toSwap = Player.GetPlayers()
-                .OrderByDescending(x => x.GameObject.TryGetComponent(out PatreonData _))
+                .OrderByDescending(x => x.GameObject.TryGetComponent(out PatreonData data) ? data.Rank.Priority : -999999999)
                 .FirstOrDefault(x => x.Role is RoleTypeId.Spectator && !x.IsOverwatchEnabled && x != player);
             if (toSwap != null)
                 new PlayerInfo(player).AddTo(toSwap);

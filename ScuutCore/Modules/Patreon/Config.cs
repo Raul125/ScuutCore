@@ -54,7 +54,8 @@
         [Description("NEEDS RESPAWNTIMER")]
         public string SpectatorListTitle { get; set; } = "<b>👥 Spectators (%count%):</b>";
         public string SpectatorListElement { get; set; } = "%name%";
-        public string SpectatorListPrefix { get; set; } = "<voffset=3>";
+        public string SpectatorListPrefix { get; set; } = "<voffset=1em>";
+        public string SpectatorListSuffix { get; set; } = "";
         public bool ShowEmptySpectatorList { get; set; } = false;
     }
 }
