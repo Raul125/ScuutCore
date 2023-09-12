@@ -48,21 +48,22 @@
 
                 Spectators.Clear();
 
-                foreach (Player player in Player.GetPlayers())
+                foreach (var player in Player.GetPlayers().Where(player => player is { IsServer: false }))
                 {
-                    if (player.ShouldShowSpectatorList() && Module.Config.EnableSpectatorList)
+                    if (player.IsAlive)
                     {
-                        player.ShowSpectators();
-                        continue;
+                        if (player.ShouldShowSpectatorList() && Module.Config.EnableSpectatorList)
+                            player.ShowSpectators();
                     }
-                    
-                    if (player is { IsServer: false, IsAlive: false })
+                    else
+                    {
                         Spectators.Add(player);
+                    }
                 }
 
                 string text = TimerView.Current.GetText(Spectators.Count);
 
-                foreach (Player player in Spectators)
+                foreach (var player in Spectators)
                 {
                     if (player.Role == RoleTypeId.Overwatch && Module.Config.HideTimerForOverwatch || API.API.TimerHidden.Contains(player.UserId))
                         continue;

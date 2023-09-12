@@ -49,9 +49,9 @@
                 foreach (var item in items)
                     player.AddItem(item);
 
-                if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079)
+                if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079
+                    && scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability))
                 {
-                    bool sub = scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability);
                     ability.TotalExp = level <= 1 ? 0 : ability.AbsoluteThresholds[Mathf.Clamp(level - 2, 0, ability.AbsoluteThresholds.Length - 1)];
                     ability.TotalExp = experience;
 

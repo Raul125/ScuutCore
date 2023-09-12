@@ -4,6 +4,7 @@
     using PlayerRoles;
     using PluginAPI.Core;
     using ScuutCore.Modules.AntiAFK.Models;
+    using ScuutCore.Modules.Patreon;
     using UnityEngine;
     using PlayerInfo = ScuutCore.Modules.AntiAFK.Models.PlayerInfo;
 
@@ -80,7 +81,9 @@
 
         private void TryReplace()
         {
-            Player toSwap = Player.GetPlayers().FirstOrDefault(x => x.Role is RoleTypeId.Spectator && !x.IsOverwatchEnabled && x != player);
+            var toSwap = Player.GetPlayers()
+                .OrderByDescending(x => x.GameObject.TryGetComponent(out PatreonData _))
+                .FirstOrDefault(x => x.Role is RoleTypeId.Spectator && !x.IsOverwatchEnabled && x != player);
             if (toSwap != null)
                 new PlayerInfo(player).AddTo(toSwap);
         }
