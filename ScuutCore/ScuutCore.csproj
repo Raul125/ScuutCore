@@ -287,6 +287,7 @@
     <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
     <Compile Include="Modules\BetterCandy\Config.cs" />
     <Compile Include="Patches\CandyGetRandomPatch.cs" />
+    <Compile Include="Patches\DropItemPatch.cs" />
     <Compile Include="Patches\KillPlayerPatch.cs" />
     <Compile Include="Patches\LockerPatch.cs" />
     <Compile Include="Patches\OverrideSegmentPatch.cs" />
