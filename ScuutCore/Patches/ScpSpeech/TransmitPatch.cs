@@ -16,6 +16,9 @@
     {
         public static bool Prefix(Mirror.NetworkConnection conn, VoiceMessage msg)
         {
+            if (ReferenceHub.LocalHub == null)
+                return true;
+
             if (msg.SpeakerNull || msg.Speaker.netId != conn.identity.netId)
                 return false;
 

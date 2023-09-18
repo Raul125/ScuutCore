@@ -36,5 +36,6 @@
 
         [Description("The broadcast to send when a player is forced to spectator for being afk.")]
         public BroadcastConfig SpectatorForced { get; set; } = new BroadcastConfig("You were detected as AFK and moved to spectator!", 30);
+        public bool DisableBaseGameAfk { get; set; } = true;
     }
 }
