@@ -8,10 +8,7 @@
     {
         public bool IsEnabled { get; set; } = true;
         public int SecondsIntoRoundActive { get; set; } = 120;
-        public int SecondsGracePeriod { get; set; } = 60;
         public int SecondsClaimPeriod { get; set; } = 15;
-        public int MinScpHealthPercent { get; set; } = 70;
-        public int HealthDeductionPercent { get; set; } = 0;
 
         public List<RoleTypeId> AllowedRoles { get; set; } = new List<RoleTypeId>
         {

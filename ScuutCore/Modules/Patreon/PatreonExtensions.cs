@@ -88,12 +88,12 @@
                 return;
             sb.Append(config.SpectatorListPrefix);
             sb.Append(config.SpectatorListTitle.Replace("%count%", hubs.Count.ToString()));
-            sb.AppendLine(config.SpectatorListSuffix);
+            sb.Append(config.SpectatorListSuffix);
             foreach (var hub in hubs)
             {
                 sb.Append(config.SpectatorListPrefix);
                 sb.Append(config.SpectatorListElement.Replace("%name%", hub.nicknameSync.MyNick));
-                sb.AppendLine(config.SpectatorListSuffix);
+                sb.Append(config.SpectatorListSuffix);
             }
             ply.ReceiveHint(sb.ToString(), 1.25f);
         }

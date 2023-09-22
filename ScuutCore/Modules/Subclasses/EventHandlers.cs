@@ -24,6 +24,8 @@
         // scroll down
         public void OnSpawn(ScuutPlayer player, RoleTypeId roleTypeId)
         {
+            if (player.CustomInfo.Contains("afk"))
+                return;
             foreach (var subclass in Subclass.List)
             {
                 if (!subclass.ToReplace.Contains(roleTypeId))

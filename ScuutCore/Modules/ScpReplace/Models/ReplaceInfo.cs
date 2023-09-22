@@ -13,7 +13,7 @@
         public float Health { get; set; }
         public DateTime LeaveTime { get; set; }
 
-        private CoroutineHandle[] coroutines;
+        private CoroutineHandle coroutine;
         public ReplaceInfo(Player player)
         {
             UserId = player.UserId;
@@ -21,13 +21,9 @@
             Health = player.Health;
             LeaveTime = DateTime.Now;
 
-            var gracePeriod = ScpReplaceModule.Singleton!.Config.SecondsGracePeriod;
-            coroutines = new CoroutineHandle[2];
-            coroutines[0] = Timing.CallDelayed(gracePeriod, () =>
-            {
-                GlobalHelpers.BroadcastToPermissions(ToString(), "scpreplace");
-            });
-            coroutines[1] = Timing.CallDelayed(gracePeriod + ScpReplaceModule.Singleton.Config.SecondsClaimPeriod, () =>
+            GlobalHelpers.BroadcastToPermissions(ToString(), "scpreplace");
+
+            coroutine = Timing.CallDelayed(ScpReplaceModule.Singleton.Config.SecondsClaimPeriod, () =>
             {
                 ScpReplaceModule.ReplaceInfos.Remove(this);
             });
@@ -38,12 +34,10 @@
             Cancel();
             GlobalHelpers.BroadcastToPermissions($"{ply.Nickname} has claimed {Role}!", "scpreplace");
             ply.SetRole(Role);
-            Timing.CallDelayed(0.5f, () => ply.Health = Health - ply.MaxHealth *
-                // ReSharper disable once PossibleLossOfFraction
-                (ScpReplaceModule.Singleton!.Config.HealthDeductionPercent / 100));
+            Timing.CallDelayed(0.5f, () => ply.Health = Health);
         }
 
-        public void Cancel() => Timing.KillCoroutines(coroutines);
+        public void Cancel() => Timing.KillCoroutines(coroutine);
 
         public override string ToString() =>
             $"{Role} has left and the grace period expired, use .scpreplace to replace them.";

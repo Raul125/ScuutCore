@@ -39,10 +39,13 @@
 
         public void AddTo(Player player)
         {
+            var customInfo = player.CustomInfo;
+            player.CustomInfo = "afkreplace";
             player.SetRole(role);
 
             Timing.CallDelayed(3f, () =>
             {
+                player.CustomInfo = customInfo;
                 player.Health = health;
                 player.Position = position;
 
