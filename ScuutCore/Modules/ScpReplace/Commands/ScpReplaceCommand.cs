@@ -19,12 +19,6 @@
         protected override bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, PatreonData data, out string response)
         {
             var ply = Player.Get(sender);
-            if (ply.IsAlive)
-            {
-                response = "You must be dead to use this command.";
-                return false;
-            }
-
             var item = ScpReplaceModule.ReplaceInfos.FirstOrDefault();
             if (item == null)
             {

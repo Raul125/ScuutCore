@@ -21,8 +21,6 @@
             Health = player.Health;
             LeaveTime = DateTime.Now;
 
-            GlobalHelpers.BroadcastToPermissions(ToString(), "scpreplace");
-
             coroutine = Timing.CallDelayed(ScpReplaceModule.Singleton.Config.SecondsClaimPeriod, () =>
             {
                 ScpReplaceModule.ReplaceInfos.Remove(this);

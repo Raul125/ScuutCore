@@ -1,5 +1,6 @@
 ﻿namespace ScuutCore.API.Helpers
 {
+    using System.Collections.Generic;
     using NWAPIPermissionSystem;
     using PluginAPI.Core;
 
@@ -10,7 +11,9 @@
             foreach (var player in Player.GetPlayers())
             {
                 if (player.CheckPermission(permission))
+                {
                     player.SendBroadcast(message, duration);
+                }
             }
         }
     }
