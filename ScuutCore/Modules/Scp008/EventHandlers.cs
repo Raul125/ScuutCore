@@ -31,9 +31,13 @@
         [PluginEvent(ServerEventType.PlayerUsedItem)]
         public void OnHealed(Player player, ItemBase item)
         {
+            if (player.EffectsManager.TryGetEffect(out Scp207 scp027)
+                && scp027.IsEnabled
+                && player.EffectsManager.TryGetEffect(out Scp1853 scp1853)
+                && scp1853.IsEnabled)
+                return;
             if (player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) && !poisonedEffect.IsEnabled)
                 return;
-
             if (!Module.Config.CureChance.TryGetValue(item.ItemTypeId, out int chance) || Random.Range(0, 100) > chance)
                 return;
             poisonedEffect.DisableEffect();
