@@ -1,23 +1,22 @@
-﻿namespace ScuutCore.API.Features
+﻿namespace ScuutCore.API.Features;
+
+using ScuutCore.API.Interfaces;
+
+public abstract class SingletonControllerModule<TModule, TModuleConfig> : Module<TModuleConfig>
+    where TModule : SingletonControllerModule<TModule, TModuleConfig>
+    where TModuleConfig : IModuleConfig, new()
 {
-    using ScuutCore.API.Interfaces;
+    public static TModule? Singleton { get; private set; }
 
-    public abstract class SingletonControllerModule<TModule, TModuleConfig> : Module<TModuleConfig>
-        where TModule : SingletonControllerModule<TModule, TModuleConfig>
-        where TModuleConfig : IModuleConfig, new()
+    public override void OnEnabled()
     {
-        public static TModule? Singleton { get; private set; }
+        Singleton = (TModule)this;
+        base.OnEnabled();
+    }
 
-        public override void OnEnabled()
-        {
-            Singleton = (TModule)this;
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            Singleton = null;
-            base.OnDisabled();
-        }
+    public override void OnDisabled()
+    {
+        Singleton = null;
+        base.OnDisabled();
     }
 }

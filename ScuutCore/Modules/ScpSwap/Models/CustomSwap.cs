@@ -5,80 +5,79 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap.Models
+namespace ScuutCore.Modules.ScpSwap.Models;
+
+using System;
+using System.Collections.Generic;
+using PluginAPI.Core;
+
+/// <summary>
+/// A container to aid in the swapping of custom classes.
+/// </summary>
+public class CustomSwap
 {
-    using System;
-    using System.Collections.Generic;
-    using PluginAPI.Core;
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CustomSwap"/> class.
+    /// </summary>
+    /// <param name="name"><inheritdoc cref="Name"/></param>
+    /// <param name="spawnMethod"><inheritdoc cref="SpawnMethod"/></param>
+    /// <param name="verificationMethod"><inheritdoc cref="VerificationMethod"/></param>
+    public CustomSwap(string name, Action<Player> spawnMethod, Func<Player, bool> verificationMethod)
+    {
+        Name = name;
+        SpawnMethod = spawnMethod;
+        VerificationMethod = verificationMethod;
+    }
 
     /// <summary>
-    /// A container to aid in the swapping of custom classes.
+    /// Gets a <see cref="List{T}"/> of all created <see cref="CustomSwap"/> instances.
     /// </summary>
-    public class CustomSwap
+    public static HashSet<CustomSwap> Registered { get; } = new HashSet<CustomSwap>();
+
+    /// <summary>
+    /// Gets the identifying name of the swappable class.
+    /// </summary>
+    public string Name { get; }
+
+    /// <summary>
+    /// Gets the method to spawn the custom class.
+    /// </summary>
+    public Action<Player> SpawnMethod { get; }
+
+    /// <summary>
+    /// Gets the method to check if a player is the custom class.
+    /// </summary>
+    public Func<Player, bool> VerificationMethod { get; }
+
+    /// <summary>
+    /// Attempts to register a <see cref="CustomSwap"/>.
+    /// </summary>
+    /// <returns>A value indicating whether the <see cref="CustomSwap"/> registered successfully.</returns>
+    public bool TryRegister()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CustomSwap"/> class.
-        /// </summary>
-        /// <param name="name"><inheritdoc cref="Name"/></param>
-        /// <param name="spawnMethod"><inheritdoc cref="SpawnMethod"/></param>
-        /// <param name="verificationMethod"><inheritdoc cref="VerificationMethod"/></param>
-        public CustomSwap(string name, Action<Player> spawnMethod, Func<Player, bool> verificationMethod)
+        foreach (CustomSwap swap in Registered)
         {
-            Name = name;
-            SpawnMethod = spawnMethod;
-            VerificationMethod = verificationMethod;
-        }
-
-        /// <summary>
-        /// Gets a <see cref="List{T}"/> of all created <see cref="CustomSwap"/> instances.
-        /// </summary>
-        public static HashSet<CustomSwap> Registered { get; } = new HashSet<CustomSwap>();
-
-        /// <summary>
-        /// Gets the identifying name of the swappable class.
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets the method to spawn the custom class.
-        /// </summary>
-        public Action<Player> SpawnMethod { get; }
-
-        /// <summary>
-        /// Gets the method to check if a player is the custom class.
-        /// </summary>
-        public Func<Player, bool> VerificationMethod { get; }
-
-        /// <summary>
-        /// Attempts to register a <see cref="CustomSwap"/>.
-        /// </summary>
-        /// <returns>A value indicating whether the <see cref="CustomSwap"/> registered successfully.</returns>
-        public bool TryRegister()
-        {
-            foreach (CustomSwap swap in Registered)
+            if (string.Equals(Name, swap.Name, StringComparison.OrdinalIgnoreCase))
             {
-                if (string.Equals(Name, swap.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    Log.Warning($"Attempted to register a {nameof(CustomSwap)} with a duplicate name of {Name}.");
-                    return false;
-                }
+                Log.Warning($"Attempted to register a {nameof(CustomSwap)} with a duplicate name of {Name}.");
+                return false;
             }
+        }
 
-            Registered.Add(this);
+        Registered.Add(this);
+        return true;
+    }
+
+    /// <summary>
+    /// Attempts to unregister a <see cref="CustomSwap"/>.
+    /// </summary>
+    /// <returns>A value indicating whether the <see cref="CustomSwap"/> registered successfully.</returns>
+    public bool TryUnregister()
+    {
+        if (Registered.Remove(this))
             return true;
-        }
 
-        /// <summary>
-        /// Attempts to unregister a <see cref="CustomSwap"/>.
-        /// </summary>
-        /// <returns>A value indicating whether the <see cref="CustomSwap"/> registered successfully.</returns>
-        public bool TryUnregister()
-        {
-            if (Registered.Remove(this))
-                return true;
-
-            Log.Warning($"Attempted to remove an unregistered {nameof(CustomSwap)} with a name of {Name}.");
-            return false;
-        }
+        Log.Warning($"Attempted to remove an unregistered {nameof(CustomSwap)} with a name of {Name}.");
+        return false;
     }
 }

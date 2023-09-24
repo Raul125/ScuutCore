@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.CleanupUtility
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.CleanupUtility;
 
-    public sealed class CleanupUtility : EventControllerModule<CleanupUtility, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class CleanupUtility : EventControllerModule<CleanupUtility, Config, EventHandlers>
+{
 }

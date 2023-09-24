@@ -1,7 +1,6 @@
-﻿namespace ScuutCore.Modules.AdminTools
+﻿namespace ScuutCore.Modules.AdminTools;
+
+using API.Features;
+public sealed class AdminTools : EventControllerModule<AdminTools, Config, EventHandlers>
 {
-    using API.Features;
-    public sealed class AdminTools : EventControllerModule<AdminTools, Config, EventHandlers>
-    {
-    }
 }

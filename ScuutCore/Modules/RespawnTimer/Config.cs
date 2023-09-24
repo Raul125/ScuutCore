@@ -1,24 +1,23 @@
-﻿namespace ScuutCore.Modules.RespawnTimer
+﻿namespace ScuutCore.Modules.RespawnTimer;
+
+using System.Collections.Generic;
+using System.ComponentModel;
+using ScuutCore.API.Interfaces;
+
+public sealed class Config : IModuleConfig
 {
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using ScuutCore.API.Interfaces;
+    public bool IsEnabled { get; set; } = true;
 
-    public sealed class Config : IModuleConfig
+    [Description("Whether debug messages shoul be shown in a server console.")]
+    public bool Debug { get; private set; } = false;
+
+    [Description("List of timer names that will be used:")]
+    public List<string> Timers { get; private set; } = new()
     {
-        public bool IsEnabled { get; set; } = true;
+        "Template"
+    };
 
-        [Description("Whether debug messages shoul be shown in a server console.")]
-        public bool Debug { get; private set; } = false;
-
-        [Description("List of timer names that will be used:")]
-        public List<string> Timers { get; private set; } = new()
-        {
-            "Template"
-        };
-
-        [Description("Whether the timer should be hidden for players in overwatch.")]
-        public bool HideTimerForOverwatch { get; private set; } = true;
-        public bool EnableSpectatorList { get; set; } = true;
-    }
+    [Description("Whether the timer should be hidden for players in overwatch.")]
+    public bool HideTimerForOverwatch { get; private set; } = true;
+    public bool EnableSpectatorList { get; set; } = true;
 }

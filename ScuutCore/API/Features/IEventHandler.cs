@@ -1,7 +1,6 @@
-﻿namespace ScuutCore.API.Features
-{
-    public interface IEventHandler
-    {
+﻿namespace ScuutCore.API.Features;
 
-    }
+public interface IEventHandler
+{
+
 }

@@ -5,38 +5,37 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap.Commands
+namespace ScuutCore.Modules.ScpSwap.Commands;
+
+using System;
+using System.Text;
+using CommandSystem;
+using NorthwoodLib.Pools;
+
+/// <summary>
+/// Lists all valid swappable roles.
+/// </summary>
+public sealed class List : ICommand
 {
-    using System;
-    using System.Text;
-    using CommandSystem;
-    using NorthwoodLib.Pools;
+    /// <inheritdoc />
+    public string Command { get; set; } = "list";
 
-    /// <summary>
-    /// Lists all valid swappable roles.
-    /// </summary>
-    public sealed class List : ICommand
+    /// <inheritdoc />
+    public string[] Aliases { get; set; } =
     {
-        /// <inheritdoc />
-        public string Command { get; set; } = "list";
+        "l"
+    };
 
-        /// <inheritdoc />
-        public string[] Aliases { get; set; } =
-        {
-            "l"
-        };
+    /// <inheritdoc />
+    public string Description { get; set; } = "Lists all valid swappable roles.";
 
-        /// <inheritdoc />
-        public string Description { get; set; } = "Lists all valid swappable roles.";
-
-        /// <inheritdoc />
-        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
-        {
-            StringBuilder stringBuilder = StringBuilderPool.Shared.Rent();
-            stringBuilder.AppendLine("Available Roles:");
-            stringBuilder.Append(string.Join(Environment.NewLine, ValidSwaps.Names));
-            response = StringBuilderPool.Shared.ToStringReturn(stringBuilder);
-            return true;
-        }
+    /// <inheritdoc />
+    public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+    {
+        StringBuilder stringBuilder = StringBuilderPool.Shared.Rent();
+        stringBuilder.AppendLine("Available Roles:");
+        stringBuilder.Append(string.Join(Environment.NewLine, ValidSwaps.Names));
+        response = StringBuilderPool.Shared.ToStringReturn(stringBuilder);
+        return true;
     }
 }

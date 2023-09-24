@@ -1,16 +1,15 @@
-﻿namespace ScuutCore.Modules.PFE
+﻿namespace ScuutCore.Modules.PFE;
+
+using System.Collections.Generic;
+using API.Interfaces;
+using PlayerRoles;
+
+public sealed class Config : IModuleConfig
 {
-    using System.Collections.Generic;
-    using API.Interfaces;
-    using PlayerRoles;
+    public bool IsEnabled { get; set; } = true;
 
-    public sealed class Config : IModuleConfig
+    public List<RoleTypeId> ExplodingRoles { get; set; } = new List<RoleTypeId>
     {
-        public bool IsEnabled { get; set; } = true;
-
-        public List<RoleTypeId> ExplodingRoles { get; set; } = new List<RoleTypeId>
-        {
-            RoleTypeId.Scp173
-        };
-    }
+        RoleTypeId.Scp173
+    };
 }

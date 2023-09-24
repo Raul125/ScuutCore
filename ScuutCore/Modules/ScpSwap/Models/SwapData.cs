@@ -5,47 +5,46 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap.Models
+namespace ScuutCore.Modules.ScpSwap.Models;
+
+using PlayerRoles;
+using PluginAPI.Core;
+using UnityEngine;
+
+/// <summary>
+/// A container to swap data between players.
+/// </summary>
+public class SwapData
 {
-    using PlayerRoles;
-    using PluginAPI.Core;
-    using UnityEngine;
+    private readonly CustomSwap customSwap;
+    private readonly RoleTypeId role;
+    private readonly Vector3 position;
+    private readonly float health;
 
     /// <summary>
-    /// A container to swap data between players.
+    /// Initializes a new instance of the <see cref="SwapData"/> class.
     /// </summary>
-    public class SwapData
+    /// <param name="player">The player to generate the data from.</param>
+    public SwapData(Player player)
     {
-        private readonly CustomSwap customSwap;
-        private readonly RoleTypeId role;
-        private readonly Vector3 position;
-        private readonly float health;
+        role = player.Role;
+        position = player.Position;
+        health = player.Health;
+        customSwap = ValidSwaps.GetCustom(player);
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SwapData"/> class.
-        /// </summary>
-        /// <param name="player">The player to generate the data from.</param>
-        public SwapData(Player player)
-        {
-            role = player.Role;
-            position = player.Position;
-            health = player.Health;
-            customSwap = ValidSwaps.GetCustom(player);
-        }
+    /// <summary>
+    /// Spawns a player with the contained swap data.
+    /// </summary>
+    /// <param name="player">The player to swap.</param>
+    public void Swap(Player player)
+    {
+        if (customSwap == null)
+            player.SetRole(role);
+        else
+            customSwap.SpawnMethod(player);
 
-        /// <summary>
-        /// Spawns a player with the contained swap data.
-        /// </summary>
-        /// <param name="player">The player to swap.</param>
-        public void Swap(Player player)
-        {
-            if (customSwap == null)
-                player.SetRole(role);
-            else
-                customSwap.SpawnMethod(player);
-
-            player.Position = position;
-            player.Health = health;
-        }
+        player.Position = position;
+        player.Health = health;
     }
 }

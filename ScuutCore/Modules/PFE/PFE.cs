@@ -1,10 +1,9 @@
-﻿namespace ScuutCore.Modules.PFE
+﻿namespace ScuutCore.Modules.PFE;
+
+using ScuutCore.API.Features;
+
+public sealed class PFE : EventControllerModule<PFE, Config, EventHandlers>
 {
-    using ScuutCore.API.Features;
+    public override string Name => "Peanut fucking explodes";
 
-    public sealed class PFE : EventControllerModule<PFE, Config, EventHandlers>
-    {
-        public override string Name => "Peanut fucking explodes";
-
-    }
 }

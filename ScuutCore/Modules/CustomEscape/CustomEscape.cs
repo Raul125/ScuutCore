@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.CustomEscape
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.CustomEscape;
 
-    public sealed class CustomEscape : EventControllerModule<CustomEscape, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class CustomEscape : EventControllerModule<CustomEscape, Config, EventHandlers>
+{
 }

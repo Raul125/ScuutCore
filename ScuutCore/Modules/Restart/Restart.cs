@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.Restart
-{
-    using ScuutCore.API.Features;
+﻿namespace ScuutCore.Modules.Restart;
 
-    public sealed class Restart : EventControllerModule<Restart, Config, EventHandlers>
-    {
-    }
+using ScuutCore.API.Features;
+
+public sealed class Restart : EventControllerModule<Restart, Config, EventHandlers>
+{
 }

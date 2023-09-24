@@ -1,32 +1,31 @@
-﻿namespace ScuutCore.Modules.RespawnTimer.Commands
+﻿namespace ScuutCore.Modules.RespawnTimer.Commands;
+
+using System;
+using API;
+using CommandSystem;
+
+[CommandHandler(typeof(ClientCommandHandler))]
+public sealed class Timer : ICommand
 {
-    using System;
-    using API;
-    using CommandSystem;
+    public string Command => "timer";
 
-    [CommandHandler(typeof(ClientCommandHandler))]
-    public sealed class Timer : ICommand
+    public string[] Aliases => Array.Empty<string>();
+
+    public string Description => "Shows / hides RespawnTimer.";
+
+    public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-        public string Command => "timer";
+        string userId = ((CommandSender)sender).SenderId;
 
-        public string[] Aliases => Array.Empty<string>();
-
-        public string Description => "Shows / hides RespawnTimer.";
-
-        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        if (!API.TimerHidden.Remove(userId))
         {
-            string userId = ((CommandSender)sender).SenderId;
+            API.TimerHidden.Add(userId);
 
-            if (!API.TimerHidden.Remove(userId))
-            {
-                API.TimerHidden.Add(userId);
-
-                response = "<color=red>Respawn Timer has been hidden!</color>";
-                return true;
-            }
-
-            response = "<color=green>Respawn Timer has been shown!</color>";
+            response = "<color=red>Respawn Timer has been hidden!</color>";
             return true;
         }
+
+        response = "<color=green>Respawn Timer has been shown!</color>";
+        return true;
     }
 }

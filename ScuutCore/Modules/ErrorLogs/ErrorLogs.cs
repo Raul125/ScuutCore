@@ -1,22 +1,21 @@
-﻿namespace ScuutCore.Modules.ErrorLogs
+﻿namespace ScuutCore.Modules.ErrorLogs;
+
+using API.Features;
+using MEC;
+
+public sealed class ErrorLogs : SingletonControllerModule<ErrorLogs, Config>
 {
-    using API.Features;
-    using MEC;
+    private CoroutineHandle _coroutineHandle;
 
-    public sealed class ErrorLogs : SingletonControllerModule<ErrorLogs, Config>
+    public override void OnEnabled()
     {
-        private CoroutineHandle _coroutineHandle;
+        _coroutineHandle = Timing.RunCoroutine(WebhookSender.ManageQueue());
+        base.OnEnabled();
+    }
 
-        public override void OnEnabled()
-        {
-            _coroutineHandle = Timing.RunCoroutine(WebhookSender.ManageQueue());
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            Timing.KillCoroutines(_coroutineHandle);
-            base.OnDisabled();
-        }
+    public override void OnDisabled()
+    {
+        Timing.KillCoroutines(_coroutineHandle);
+        base.OnDisabled();
     }
 }

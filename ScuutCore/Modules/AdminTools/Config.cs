@@ -1,9 +1,8 @@
-﻿namespace ScuutCore.Modules.AdminTools
-{
-    using API.Interfaces;
+﻿namespace ScuutCore.Modules.AdminTools;
 
-    public sealed class Config : IModuleConfig
-    {
-        public bool IsEnabled { get; set; } = true;
-    }
+using API.Interfaces;
+
+public sealed class Config : IModuleConfig
+{
+    public bool IsEnabled { get; set; } = true;
 }

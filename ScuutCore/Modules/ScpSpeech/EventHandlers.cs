@@ -1,28 +1,27 @@
-﻿namespace ScuutCore.Modules.ScpSpeech
+﻿namespace ScuutCore.Modules.ScpSpeech;
+
+using API.Features;
+using PlayerRoles;
+using PlayerRoles.PlayableScps;
+using PluginAPI.Core;
+using PluginAPI.Core.Attributes;
+using PluginAPI.Enums;
+using System.Collections.Generic;
+
+public sealed class EventHandlers : InstanceBasedEventHandler<ScpSpeechModule>
 {
-    using API.Features;
-    using PlayerRoles;
-    using PlayerRoles.PlayableScps;
-    using PluginAPI.Core;
-    using PluginAPI.Core.Attributes;
-    using PluginAPI.Enums;
-    using System.Collections.Generic;
+    public static List<ReferenceHub> ScpsToggled = new();
 
-    public sealed class EventHandlers : InstanceBasedEventHandler<ScpSpeechModule>
+    [PluginEvent(ServerEventType.PlayerChangeRole)]
+    public void OnRoleChanged(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason reason)
     {
-        public static List<ReferenceHub> ScpsToggled = new();
+        if (oldRole is FpcStandardScp)
+            ScpsToggled.Remove(player.ReferenceHub);
+    }
 
-        [PluginEvent(ServerEventType.PlayerChangeRole)]
-        public void OnRoleChanged(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason reason)
-        {
-            if (oldRole is FpcStandardScp)
-                ScpsToggled.Remove(player.ReferenceHub);
-        }
-
-        [PluginEvent(ServerEventType.WaitingForPlayers)]
-        public void OnWaitingForPlayers()
-        {
-            ScpsToggled.Clear();
-        }
+    [PluginEvent(ServerEventType.WaitingForPlayers)]
+    public void OnWaitingForPlayers()
+    {
+        ScpsToggled.Clear();
     }
 }

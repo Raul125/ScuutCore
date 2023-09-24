@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.BetterCandy
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.BetterCandy;
 
-    public sealed class BetterCandy : SingletonControllerModule<BetterCandy, Config>
-    {
-    }
+using API.Features;
+
+public sealed class BetterCandy : SingletonControllerModule<BetterCandy, Config>
+{
 }

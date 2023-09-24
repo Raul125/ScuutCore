@@ -1,51 +1,50 @@
-﻿namespace ScuutCore.Commands.Suicide
+﻿namespace ScuutCore.Commands.Suicide;
+
+using System;
+using CommandSystem;
+using CustomPlayerEffects;
+using PluginAPI.Core;
+using ScuutCore.API.Helpers;
+using PermissionHandler = NWAPIPermissionSystem.PermissionHandler;
+
+[CommandHandler(typeof(ClientCommandHandler))]
+public class SeveredSuicide : ICommand
 {
-    using System;
-    using CommandSystem;
-    using CustomPlayerEffects;
-    using PluginAPI.Core;
-    using ScuutCore.API.Helpers;
-    using PermissionHandler = NWAPIPermissionSystem.PermissionHandler;
+    public const string DeathReason = "Hands fell off";
 
-    [CommandHandler(typeof(ClientCommandHandler))]
-    public class SeveredSuicide : ICommand
+    public string Command { get; } = "severedsuicide";
+
+    public string[] Aliases { get; } = new[]
     {
-        public const string DeathReason = "Hands fell off";
+        "sever"
+    };
 
-        public string Command { get; } = "severedsuicide";
+    public string Description { get; } = "Sever your hands";
 
-        public string[] Aliases { get; } = new[]
+    public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+    {
+        Player player = Player.Get(sender);
+        if (!PermissionHandler.CheckPermission(player.UserId, "scuutcore.severedsuicide"))
         {
-            "sever"
-        };
-
-        public string Description { get; } = "Sever your hands";
-
-        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
-        {
-            Player player = Player.Get(sender);
-            if (!PermissionHandler.CheckPermission(player.UserId, "scuutcore.severedsuicide"))
-            {
-                response = "<b><color=#00FFAE>Get permissions bozo!</color></b>";
-                return false;
-            }
-
-            if (!Round.IsRoundStarted)
-            {
-                response = "You gotta wait for the round to start!";
-                return false;
-            }
-
-            if (Plugin.Singleton.Config.SuicideDisabledRoles.Contains(player.Role))
-            {
-                response = "Disabled for this role";
-                return false;
-            }
-
-            player.EffectsManager.EnableEffect<SeveredHands>();
-
-            response = "Done";
-            return true;
+            response = "<b><color=#00FFAE>Get permissions bozo!</color></b>";
+            return false;
         }
+
+        if (!Round.IsRoundStarted)
+        {
+            response = "You gotta wait for the round to start!";
+            return false;
+        }
+
+        if (Plugin.Singleton.Config.SuicideDisabledRoles.Contains(player.Role))
+        {
+            response = "Disabled for this role";
+            return false;
+        }
+
+        player.EffectsManager.EnableEffect<SeveredHands>();
+
+        response = "Done";
+        return true;
     }
 }

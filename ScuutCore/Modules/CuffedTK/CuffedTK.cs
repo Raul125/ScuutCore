@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.CuffedTK
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.CuffedTK;
 
-    public sealed class CuffedTK : EventControllerModule<CuffedTK, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class CuffedTK : EventControllerModule<CuffedTK, Config, EventHandlers>
+{
 }

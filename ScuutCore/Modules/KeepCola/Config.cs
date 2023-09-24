@@ -1,9 +1,8 @@
-﻿namespace ScuutCore.Modules.KeepCola
-{
-    using ScuutCore.API.Interfaces;
+﻿namespace ScuutCore.Modules.KeepCola;
 
-    public sealed class Config : IModuleConfig
-    {
-        public bool IsEnabled { get; set; } = true;
-    }
+using ScuutCore.API.Interfaces;
+
+public sealed class Config : IModuleConfig
+{
+    public bool IsEnabled { get; set; } = true;
 }

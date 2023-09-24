@@ -1,19 +1,18 @@
-﻿namespace ScuutCore.Modules.CleanupUtility.Components
+﻿namespace ScuutCore.Modules.CleanupUtility.Components;
+
+using UnityEngine;
+
+public class AutoClearComponent : MonoBehaviour
 {
-    using UnityEngine;
+    public float TimeLeft;
+    public bool Enabled = false;
 
-    public class AutoClearComponent : MonoBehaviour
+    private void FixedUpdate()
     {
-        public float TimeLeft;
-        public bool Enabled = false;
-
-        private void FixedUpdate()
-        {
-            if (!Enabled)
-                return;
-            TimeLeft--;
-            if (TimeLeft <= 0)
-                Destroy(gameObject);
-        }
+        if (!Enabled)
+            return;
+        TimeLeft--;
+        if (TimeLeft <= 0)
+            Destroy(gameObject);
     }
 }

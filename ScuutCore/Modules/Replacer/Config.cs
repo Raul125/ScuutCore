@@ -1,31 +1,30 @@
-﻿namespace ScuutCore.Modules.Replacer
+﻿namespace ScuutCore.Modules.Replacer;
+
+using System.Collections.Generic;
+using API.Features;
+using API.Interfaces;
+using PlayerRoles;
+
+public sealed class Config : IModuleConfig
 {
-    using System.Collections.Generic;
-    using API.Features;
-    using API.Interfaces;
-    using PlayerRoles;
+    public bool IsEnabled { get; set; } = true;
 
-    public sealed class Config : IModuleConfig
+    public BroadcastConfig BroadCast { get; set; } = new BroadcastConfig
     {
-        public bool IsEnabled { get; set; } = true;
+        Duration = 10,
+        Text = "<i>You have replaced a disconnected player</i>",
+        AbleToShow = true,
+        BroadcastFlags = Broadcast.BroadcastFlags.Normal,
+        ClearPrevious = false,
+    };
 
-        public BroadcastConfig BroadCast { get; set; } = new BroadcastConfig
-        {
-            Duration = 10,
-            Text = "<i>You have replaced a disconnected player</i>",
-            AbleToShow = true,
-            BroadcastFlags = Broadcast.BroadcastFlags.Normal,
-            ClearPrevious = false,
-        };
+    public int DontReplaceTime { get; set; } = 360;
 
-        public int DontReplaceTime { get; set; } = 360;
-
-        public List<RoleTypeId> DisallowedRolesToReplace { get; set; } = new List<RoleTypeId>
-        {
-            RoleTypeId.Tutorial,
-            RoleTypeId.Overwatch,
-            RoleTypeId.Spectator,
-            RoleTypeId.None,
-        };
-    }
+    public List<RoleTypeId> DisallowedRolesToReplace { get; set; } = new List<RoleTypeId>
+    {
+        RoleTypeId.Tutorial,
+        RoleTypeId.Overwatch,
+        RoleTypeId.Spectator,
+        RoleTypeId.None,
+    };
 }

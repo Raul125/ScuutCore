@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.RoundSummary
-{
-    using ScuutCore.API.Features;
+﻿namespace ScuutCore.Modules.RoundSummary;
 
-    public sealed class RoundSummary : EventControllerModule<RoundSummary, Config, EventHandlers>
-    {
-    }
+using ScuutCore.API.Features;
+
+public sealed class RoundSummary : EventControllerModule<RoundSummary, Config, EventHandlers>
+{
 }

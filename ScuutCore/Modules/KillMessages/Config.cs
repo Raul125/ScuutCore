@@ -1,11 +1,10 @@
-﻿namespace ScuutCore.Modules.KillMessages
+﻿namespace ScuutCore.Modules.KillMessages;
+
+using API.Interfaces;
+
+public sealed class Config : IModuleConfig
 {
-    using API.Interfaces;
+    public bool IsEnabled { get; set; } = true;
 
-    public sealed class Config : IModuleConfig
-    {
-        public bool IsEnabled { get; set; } = true;
-
-        public string Message { get; set; } = "Killed <color=red>{name}</color>";
-    }
+    public string Message { get; set; } = "Killed <color=red>{name}</color>";
 }

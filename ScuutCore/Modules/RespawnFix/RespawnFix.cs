@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.RespawnFix
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.RespawnFix;
 
-    public sealed class RespawnFix : EventControllerModule<RespawnFix, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class RespawnFix : EventControllerModule<RespawnFix, Config, EventHandlers>
+{
 }

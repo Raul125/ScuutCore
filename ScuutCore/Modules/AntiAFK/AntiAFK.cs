@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.AntiAFK
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.AntiAFK;
 
-    public sealed class AntiAFK : EventControllerModule<AntiAFK, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class AntiAFK : EventControllerModule<AntiAFK, Config, EventHandlers>
+{
 }

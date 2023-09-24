@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.AutoFFToggle
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.AutoFFToggle;
 
-    public sealed class AutoFFToggle : EventControllerModule<AutoFFToggle, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class AutoFFToggle : EventControllerModule<AutoFFToggle, Config, EventHandlers>
+{
 }

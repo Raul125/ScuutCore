@@ -1,72 +1,71 @@
-﻿namespace ScuutCore.Modules.AdminTools.Commands.TeleportX
+﻿namespace ScuutCore.Modules.AdminTools.Commands.TeleportX;
+
+using System;
+using CommandSystem;
+using PlayerRoles;
+using PluginAPI.Core;
+
+[CommandHandler(typeof(RemoteAdminCommandHandler))]
+[CommandHandler(typeof(GameConsoleCommandHandler))]
+public class TeleportX : ParentCommand
 {
-    using System;
-    using CommandSystem;
-    using PlayerRoles;
-    using PluginAPI.Core;
+    public TeleportX() => LoadGeneratedCommands();
 
-    [CommandHandler(typeof(RemoteAdminCommandHandler))]
-    [CommandHandler(typeof(GameConsoleCommandHandler))]
-    public class TeleportX : ParentCommand
+    public override string Command { get; } = "teleportx";
+
+    public override string[] Aliases { get; } = new string[] { "tpx" };
+
+    public override string Description { get; } = "Teleports all users or a user to another user";
+
+    public override void LoadGeneratedCommands() { }
+
+    protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-        public TeleportX() => LoadGeneratedCommands();
-
-        public override string Command { get; } = "teleportx";
-
-        public override string[] Aliases { get; } = new string[] { "tpx" };
-
-        public override string Description { get; } = "Teleports all users or a user to another user";
-
-        public override void LoadGeneratedCommands() { }
-
-        protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        if (arguments.Count != 2)
         {
-            if (arguments.Count != 2)
-            {
-                response = "Usage: teleportx (People teleported: (player id / name) or (all / *)) (Teleported to: (player id / name) or (all / *))";
-                return false;
-            }
+            response = "Usage: teleportx (People teleported: (player id / name) or (all / *)) (Teleported to: (player id / name) or (all / *))";
+            return false;
+        }
 
-            switch (arguments.At(0))
-            {
-                case "*":
-                case "all":
-                    Player ply = Player.Get(int.Parse(arguments.At(1)));
-                    if (ply == null)
-                    {
-                        response = $"Player not found: {arguments.At(1)}";
-                        return false;
-                    }
+        switch (arguments.At(0))
+        {
+            case "*":
+            case "all":
+                Player ply = Player.Get(int.Parse(arguments.At(1)));
+                if (ply == null)
+                {
+                    response = $"Player not found: {arguments.At(1)}";
+                    return false;
+                }
 
-                    foreach (Player plyr in Player.GetPlayers())
-                    {
-                        if (plyr.Role == RoleTypeId.Spectator || ply.Role == RoleTypeId.None)
-                            continue;
+                foreach (Player plyr in Player.GetPlayers())
+                {
+                    if (plyr.Role == RoleTypeId.Spectator || ply.Role == RoleTypeId.None)
+                        continue;
 
-                        plyr.Position = ply.Position;
-                    }
+                    plyr.Position = ply.Position;
+                }
 
-                    response = $"Everyone has been teleported to Player {ply.Nickname}";
-                    return true;
-                default:
-                    Player pl = Player.Get(int.Parse(arguments.At(0)));
-                    if (pl == null)
-                    {
-                        response = $"Player not found: {arguments.At(0)}";
-                        return false;
-                    }
+                response = $"Everyone has been teleported to Player {ply.Nickname}";
+                return true;
+            default:
+                Player pl = Player.Get(int.Parse(arguments.At(0)));
+                if (pl == null)
+                {
+                    response = $"Player not found: {arguments.At(0)}";
+                    return false;
+                }
 
-                    Player plr = Player.Get(int.Parse(arguments.At(1)));
-                    if (plr == null)
-                    {
-                        response = $"Player not found: {arguments.At(1)}";
-                        return false;
-                    }
+                Player plr = Player.Get(int.Parse(arguments.At(1)));
+                if (plr == null)
+                {
+                    response = $"Player not found: {arguments.At(1)}";
+                    return false;
+                }
 
-                    pl.Position = plr.Position;
-                    response = $"Player {pl.Nickname} has been teleported to Player {plr.Nickname}";
-                    return true;
-            }
+                pl.Position = plr.Position;
+                response = $"Player {pl.Nickname} has been teleported to Player {plr.Nickname}";
+                return true;
         }
     }
 }

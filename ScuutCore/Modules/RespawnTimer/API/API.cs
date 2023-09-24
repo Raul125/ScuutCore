@@ -1,9 +1,8 @@
-﻿namespace ScuutCore.Modules.RespawnTimer.API
-{
-    using System.Collections.Generic;
+﻿namespace ScuutCore.Modules.RespawnTimer.API;
 
-    public static class API
-    {
-        public static List<string> TimerHidden { get; } = new();
-    }
+using System.Collections.Generic;
+
+public static class API
+{
+    public static List<string> TimerHidden { get; } = new();
 }

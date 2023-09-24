@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.RemoteKeycard
-{
-    using ScuutCore.API.Features;
+﻿namespace ScuutCore.Modules.RemoteKeycard;
 
-    public sealed class RemoteKeycard : EventControllerModule<RemoteKeycard, Config, EventHandlers>
-    {
-    }
+using ScuutCore.API.Features;
+
+public sealed class RemoteKeycard : EventControllerModule<RemoteKeycard, Config, EventHandlers>
+{
 }

@@ -5,51 +5,50 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace ScuutCore.Modules.ScpSwap.Commands
+namespace ScuutCore.Modules.ScpSwap.Commands;
+
+using System;
+using CommandSystem;
+using Models;
+using PluginAPI.Core;
+
+/// <summary>
+/// Accepts an active swap request.
+/// </summary>
+public sealed class Accept : ICommand
 {
-    using System;
-    using CommandSystem;
-    using Models;
-    using PluginAPI.Core;
+    /// <inheritdoc />
+    public string Command { get; set; } = "accept";
 
-    /// <summary>
-    /// Accepts an active swap request.
-    /// </summary>
-    public sealed class Accept : ICommand
+    /// <inheritdoc />
+    public string[] Aliases { get; set; } =
     {
-        /// <inheritdoc />
-        public string Command { get; set; } = "accept";
+        "yes",
+        "y"
+    };
 
-        /// <inheritdoc />
-        public string[] Aliases { get; set; } =
+    /// <inheritdoc />
+    public string Description { get; set; } = "Accepts an active swap request.";
+
+    /// <inheritdoc />
+    public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+    {
+        Player playerSender = Player.Get(sender);
+        if (playerSender == null)
         {
-            "yes",
-            "y"
-        };
-
-        /// <inheritdoc />
-        public string Description { get; set; } = "Accepts an active swap request.";
-
-        /// <inheritdoc />
-        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
-        {
-            Player playerSender = Player.Get(sender);
-            if (playerSender == null)
-            {
-                response = "This command must be from the game level.";
-                return false;
-            }
-
-            Swap swap = Swap.FromReceiver(playerSender);
-            if (swap == null)
-            {
-                response = "You do not have a pending swap request.";
-                return false;
-            }
-
-            swap.Run();
-            response = "Swap successful!";
-            return true;
+            response = "This command must be from the game level.";
+            return false;
         }
+
+        Swap swap = Swap.FromReceiver(playerSender);
+        if (swap == null)
+        {
+            response = "You do not have a pending swap request.";
+            return false;
+        }
+
+        swap.Run();
+        response = "Swap successful!";
+        return true;
     }
 }

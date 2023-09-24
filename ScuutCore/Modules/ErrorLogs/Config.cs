@@ -1,10 +1,9 @@
-﻿namespace ScuutCore.Modules.ErrorLogs
-{
-    using API.Interfaces;
+﻿namespace ScuutCore.Modules.ErrorLogs;
 
-    public sealed class Config : IModuleConfig
-    {
-        public bool IsEnabled { get; set; } = true;
-        public string Url { get; set; } = "";
-    }
+using API.Interfaces;
+
+public sealed class Config : IModuleConfig
+{
+    public bool IsEnabled { get; set; } = true;
+    public string Url { get; set; } = "";
 }

@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.ScpSwap
-{
-    using ScuutCore.API.Features;
+﻿namespace ScuutCore.Modules.ScpSwap;
 
-    public sealed class ScpSwap : EventControllerModule<ScpSwap, Config, EventHandlers>
-    {
-    }
+using ScuutCore.API.Features;
+
+public sealed class ScpSwap : EventControllerModule<ScpSwap, Config, EventHandlers>
+{
 }

@@ -1,20 +1,19 @@
-﻿namespace ScuutCore.Modules.ScpSpeech
+﻿namespace ScuutCore.Modules.ScpSpeech;
+
+using API.Features;
+public sealed class ScpSpeechModule : EventControllerModule<ScpSpeechModule, Config, EventHandlers>
 {
-    using API.Features;
-    public sealed class ScpSpeechModule : EventControllerModule<ScpSpeechModule, Config, EventHandlers>
+    public static ScpSpeechModule? Instance { get; private set; }
+
+    public override void OnEnabled()
     {
-        public static ScpSpeechModule? Instance { get; private set; }
+        Instance = this;
+        base.OnEnabled();
+    }
 
-        public override void OnEnabled()
-        {
-            Instance = this;
-            base.OnEnabled();
-        }
-
-        public override void OnDisabled()
-        {
-            Instance = null;
-            base.OnDisabled();
-        }
+    public override void OnDisabled()
+    {
+        Instance = null;
+        base.OnDisabled();
     }
 }

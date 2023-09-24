@@ -1,9 +1,8 @@
-﻿namespace ScuutCore.Modules.LastPerson
-{
-    using ScuutCore.API.Features;
+﻿namespace ScuutCore.Modules.LastPerson;
 
-    public class LastPerson : EventControllerModule<LastPerson, Config, EventHandlers>
-    {
-        
-    }
+using ScuutCore.API.Features;
+
+public class LastPerson : EventControllerModule<LastPerson, Config, EventHandlers>
+{
+    
 }

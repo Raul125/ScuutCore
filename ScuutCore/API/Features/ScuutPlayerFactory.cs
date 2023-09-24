@@ -1,20 +1,19 @@
-﻿namespace ScuutCore.API.Features
+﻿namespace ScuutCore.API.Features;
+
+using System;
+using PluginAPI.Core;
+using PluginAPI.Core.Factories;
+using PluginAPI.Core.Interfaces;
+
+public sealed class ScuutPlayerFactory : PlayerFactory
 {
-    using System;
-    using PluginAPI.Core;
-    using PluginAPI.Core.Factories;
-    using PluginAPI.Core.Interfaces;
+    public override Type BaseType { get; } = typeof(ScuutPlayer);
 
-    public sealed class ScuutPlayerFactory : PlayerFactory
+    public override Player Create(IGameComponent component)
     {
-        public override Type BaseType { get; } = typeof(ScuutPlayer);
+        if (component is ReferenceHub hub && hub.isLocalPlayer)
+            return new Server(hub);
 
-        public override Player Create(IGameComponent component)
-        {
-            if (component is ReferenceHub hub && hub.isLocalPlayer)
-                return new Server(hub);
-
-            return new ScuutPlayer(component);
-        }
+        return new ScuutPlayer(component);
     }
 }

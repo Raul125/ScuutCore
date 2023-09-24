@@ -1,30 +1,29 @@
-﻿namespace ScuutCore.Modules.AdminTools.Commands.Tags
+﻿namespace ScuutCore.Modules.AdminTools.Commands.Tags;
+
+using System;
+using CommandSystem;
+
+[CommandHandler(typeof(RemoteAdminCommandHandler))]
+[CommandHandler(typeof(GameConsoleCommandHandler))]
+public class Tags : ParentCommand
 {
-    using System;
-    using CommandSystem;
+    public Tags() => LoadGeneratedCommands();
 
-    [CommandHandler(typeof(RemoteAdminCommandHandler))]
-    [CommandHandler(typeof(GameConsoleCommandHandler))]
-    public class Tags : ParentCommand
+    public override string Command { get; } = "tags";
+
+    public override string[] Aliases { get; } = new string[] { };
+
+    public override string Description { get; } = "Hides staff tags in the server";
+
+    public override void LoadGeneratedCommands() 
     {
-        public Tags() => LoadGeneratedCommands();
+        RegisterCommand(new Hide());
+        RegisterCommand(new Show());
+    }
 
-        public override string Command { get; } = "tags";
-
-        public override string[] Aliases { get; } = new string[] { };
-
-        public override string Description { get; } = "Hides staff tags in the server";
-
-        public override void LoadGeneratedCommands() 
-        {
-            RegisterCommand(new Hide());
-            RegisterCommand(new Show());
-        }
-
-        protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
-        {
-            response = "Invalid subcommand. Available ones: hide, show";
-            return false;
-        }
+    protected override bool ExecuteParent(ArraySegment<string> arguments, ICommandSender sender, out string response)
+    {
+        response = "Invalid subcommand. Available ones: hide, show";
+        return false;
     }
 }

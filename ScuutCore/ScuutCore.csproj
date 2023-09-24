@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10</LangVersion>
     <Nullable>Enable</Nullable>
     <AssemblyTitle>ScuutCore</AssemblyTitle>
     <Product>Raul125</Product>
@@ -40,5 +40,11 @@
     <Reference Include="UnityEngine.CoreModule" HintPath="$(EXILED_REFERENCES)\UnityEngine.CoreModule.dll" />
     <Reference Include="UnityEngine.PhysicsModule" HintPath="$(EXILED_REFERENCES)\UnityEngine.PhysicsModule.dll" />
     <Reference Include="UnityEngine.UnityWebRequestModule" HintPath="$(EXILED_REFERENCES)\UnityEngine.UnityWebRequestModule.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\Zereth\source\repos\ScuutCore\ScuutCore\.editorconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Zereth\source\repos\ScuutCore\ScuutCore\.editorconfig" />
   </ItemGroup>
 </Project>

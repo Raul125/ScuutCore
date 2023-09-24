@@ -1,5 +1,5 @@
-﻿namespace ScuutCore.Commands.Suicide
-{
+﻿namespace ScuutCore.Commands.Suicide;
+
 	using System;
 	using CommandSystem;
 	using Footprinting;
@@ -42,4 +42,3 @@
 			return true;
 		}
 	}
-}

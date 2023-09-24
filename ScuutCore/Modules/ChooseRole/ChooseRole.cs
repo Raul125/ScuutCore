@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.ChooseRole
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.ChooseRole;
 
-    public sealed class ChooseRole : EventControllerModule<ChooseRole, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class ChooseRole : EventControllerModule<ChooseRole, Config, EventHandlers>
+{
 }

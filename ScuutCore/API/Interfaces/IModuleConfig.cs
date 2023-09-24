@@ -1,7 +1,6 @@
-﻿namespace ScuutCore.API.Interfaces
+﻿namespace ScuutCore.API.Interfaces;
+
+public interface IModuleConfig
 {
-    public interface IModuleConfig
-    {
-        bool IsEnabled { get; set; }
-    }
+    bool IsEnabled { get; set; }
 }

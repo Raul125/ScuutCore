@@ -1,13 +1,12 @@
-﻿namespace ScuutCore.API.Helpers
-{
-    using PluginAPI.Core;
-    using Utils;
+﻿namespace ScuutCore.API.Helpers;
 
-    public static class PlayerDeathEffects
+using PluginAPI.Core;
+using Utils;
+
+public static class PlayerDeathEffects
+{
+    public static void PlayExplosionEffect(Player ply)
     {
-        public static void PlayExplosionEffect(Player ply)
-        {
-            ExplosionUtils.ServerSpawnEffect(ply.Position,ItemType.GrenadeHE);
-        }
+        ExplosionUtils.ServerSpawnEffect(ply.Position,ItemType.GrenadeHE);
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.Chaos
-{
-    using API.Features;
+﻿namespace ScuutCore.Modules.Chaos;
 
-    public sealed class Chaos : EventControllerModule<Chaos, Config, EventHandlers>
-    {
-    }
+using API.Features;
+
+public sealed class Chaos : EventControllerModule<Chaos, Config, EventHandlers>
+{
 }

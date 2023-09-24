@@ -1,9 +1,8 @@
-﻿namespace ScuutCore.Modules.Restart
-{
-    using API.Interfaces;
+﻿namespace ScuutCore.Modules.Restart;
 
-    public sealed class Config : IModuleConfig
-    {
-        public bool IsEnabled { get; set; } = true;
-    }
+using API.Interfaces;
+
+public sealed class Config : IModuleConfig
+{
+    public bool IsEnabled { get; set; } = true;
 }

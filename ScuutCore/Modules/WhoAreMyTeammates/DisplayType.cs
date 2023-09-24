@@ -1,9 +1,8 @@
-﻿namespace ScuutCore.Modules.WhoAreMyTeammates
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates;
+
+public enum DisplayType
 {
-    public enum DisplayType
-    {
-        Hint,
-        ConsoleMessage,
-        Broadcast
-    }
+    Hint,
+    ConsoleMessage,
+    Broadcast
 }

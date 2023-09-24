@@ -1,8 +1,7 @@
-﻿namespace ScuutCore.Modules.WhoAreMyTeammates
-{
-    using ScuutCore.API.Features;
+﻿namespace ScuutCore.Modules.WhoAreMyTeammates;
 
-    public class WhoAreMyTeammates : EventControllerModule<WhoAreMyTeammates, Config, EventHandlers>
-    {
-    }
+using ScuutCore.API.Features;
+
+public class WhoAreMyTeammates : EventControllerModule<WhoAreMyTeammates, Config, EventHandlers>
+{
 }

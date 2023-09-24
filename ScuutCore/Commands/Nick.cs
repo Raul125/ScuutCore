@@ -6,35 +6,34 @@ using System.Linq;
 using Hints;
 using NWAPIPermissionSystem;
 
-namespace ScuutCore.Commands
+namespace ScuutCore.Commands;
+
+[CommandHandler(typeof(ClientCommandHandler))]
+public class Nick : ICommand
 {
-    [CommandHandler(typeof(ClientCommandHandler))]
-    public class Nick : ICommand
+    public string Command { get; } = "nick";
+
+    public string[] Aliases { get; } = new string[] { };
+
+    public string Description { get; } = "";
+
+    public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
     {
-        public string Command { get; } = "nick";
-
-        public string[] Aliases { get; } = new string[] { };
-
-        public string Description { get; } = "";
-
-        public bool Execute(ArraySegment<string> arguments, ICommandSender sender, out string response)
+        Player player = Player.Get(sender);
+        if (PermissionHandler.CheckPermission(player.UserId, "scuutcore.nick"))
         {
-            Player player = Player.Get(sender);
-            if (PermissionHandler.CheckPermission(player.UserId, "scuutcore.nick"))
-            {
-                string name = string.Empty;
-                foreach (string str in arguments)
-                    name += str + " ";
+            string name = string.Empty;
+            foreach (string str in arguments)
+                name += str + " ";
 
-                response = "<b><color=#00FFAE>Nickname changed!</color></b>";
-                player.DisplayNickname = name.Trim();
-            }
-            else
-            {
-                response = "<b><color=#00FFAE>Donate!</color></b>";
-            }
-
-            return true;
+            response = "<b><color=#00FFAE>Nickname changed!</color></b>";
+            player.DisplayNickname = name.Trim();
         }
+        else
+        {
+            response = "<b><color=#00FFAE>Donate!</color></b>";
+        }
+
+        return true;
     }
 }
