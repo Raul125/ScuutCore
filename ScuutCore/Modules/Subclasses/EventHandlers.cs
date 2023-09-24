@@ -21,10 +21,10 @@
             _subclassesSpawned.Clear();
         }
 
-        // scroll down
+        // scroll down for call
         public void OnSpawn(ScuutPlayer player, RoleTypeId roleTypeId)
         {
-            if (player.CustomInfo.Contains("afk"))
+            if (player.CustomInfo?.Contains("afk") ?? false)
                 return;
             foreach (var subclass in Subclass.List)
             {

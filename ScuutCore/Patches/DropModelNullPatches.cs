@@ -24,7 +24,8 @@
         }
     }
 
-    [HarmonyPatch(typeof(InventoryExtensions), nameof(InventoryExtensions.ServerCreatePickup))]
+    [HarmonyPatch(typeof(InventoryExtensions), nameof(InventoryExtensions.ServerCreatePickup), 
+        typeof(ItemBase), typeof(PickupSyncInfo), typeof(Vector3), typeof(bool), typeof(Action<ItemPickupBase>))]
     public static class ServerCreatePickupPatch
     {
         public static bool Prefix(ItemBase item, PickupSyncInfo psi, Vector3 position, bool spawn,
