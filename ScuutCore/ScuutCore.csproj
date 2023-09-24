@@ -1,313 +1,44 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{70196084-B79C-4B59-ABC8-411952576ED1}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ScuutCore</RootNamespace>
-    <AssemblyName>ScuutCore</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFramework>net48</TargetFramework>
     <LangVersion>9.0</LangVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-    <Nullable>enable</Nullable>
+    <Nullable>Enable</Nullable>
+    <AssemblyTitle>ScuutCore</AssemblyTitle>
+    <Product>Raul125</Product>
+    <Copyright>Copyright © 2022</Copyright>
+    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <FileVersion>1.0.7.0</FileVersion>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\Lib.Harmony.2.2.2\lib\net48\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>$(EXILED_REFERENCES)\Assembly-CSharp-Publicized.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>$(EXILED_REFERENCES)\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
-    <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(EXILED_REFERENCES)\CommandSystem.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Mirror">
-      <HintPath>$(EXILED_REFERENCES)\Mirror.dll</HintPath>
-    </Reference>
-    <Reference Include="mscorlib" />
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NorthwoodLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(EXILED_REFERENCES)\NorthwoodLib.dll</HintPath>
-    </Reference>
-    <Reference Include="NWAPIPermissionSystem">
-      <HintPath>..\Refs\NWAPIPermissionSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="PluginAPI, Version=13.1.1.0, Culture=neutral, processorArchitecture=Amd64">
-      <HintPath>packages\Northwood.PluginAPI.13.1.1\lib\net48\PluginAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="Pooling">
-      <HintPath>$(EXILED_REFERENCES)\Pooling.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>$(EXILED_REFERENCES)\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.AudioModule">
-      <HintPath>$(EXILED_REFERENCES)\UnityEngine.AudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>$(EXILED_REFERENCES)\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.PhysicsModule">
-      <HintPath>$(EXILED_REFERENCES)\UnityEngine.PhysicsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>$(EXILED_REFERENCES)\UnityEngine.UnityWebRequestModule.dll</HintPath>
-    </Reference>
-    <Reference Include="YamlDotNet, Version=12.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-      <HintPath>packages\YamlDotNet.12.3.1\lib\net47\YamlDotNet.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Lib.Harmony" Version="2.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <PackageReference Include="Northwood.PluginAPI" Version="13.1.1" />
+    <PackageReference Include="YamlDotNet" Version="12.3.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Extensions\RoleExtensions.cs" />
-    <Compile Include="API\Features\EventControllerModule.cs" />
-    <Compile Include="API\Features\IEventHandler.cs" />
-    <Compile Include="API\Features\InstanceBasedEventHandler.cs" />
-    <Compile Include="API\Features\ScuutPlayerFactory.cs" />
-    <Compile Include="API\Features\ScuutPlayer.cs" />
-    <Compile Include="API\Features\BroadcastConfig.cs" />
-    <Compile Include="API\Features\CassieConfig.cs" />
-    <Compile Include="API\Features\HintConfig.cs" />
-    <Compile Include="API\Features\Module.cs" />
-    <Compile Include="API\Features\SingletonControllerModule.cs" />
-    <Compile Include="API\Features\Subclass.cs" />
-    <Compile Include="API\Helpers\GlobalHelpers.cs" />
-    <Compile Include="API\Helpers\PlayerDeathEffects.cs" />
-    <Compile Include="API\Interfaces\IModuleConfig.cs" />
-    <Compile Include="API\Interfaces\IModule.cs" />
-    <Compile Include="API\Loader\Loader.cs" />
-    <Compile Include="Commands\Server.cs" />
-    <Compile Include="Commands\Nick.cs" />
-    <Compile Include="Commands\SpecialKill.cs" />
-    <Compile Include="Commands\Suicide\ExplosiveSuicide.cs" />
-    <Compile Include="Commands\Suicide\SeveredSuicide.cs" />
-    <Compile Include="Commands\Suicide\Suicide.cs" />
-    <Compile Include="Commands\Suicide\VaporizeSuicide.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="EventHandlers.cs" />
-    <Compile Include="Modules\ChooseRole\ChooseRole.cs" />
-    <Compile Include="Modules\ChooseRole\Components\HudComponent.cs" />
-    <Compile Include="Modules\ChooseRole\Components\TeamTrigger.cs" />
-    <Compile Include="Modules\ChooseRole\Config.cs" />
-    <Compile Include="Modules\ChooseRole\EventHandlers.cs" />
-    <Compile Include="Modules\CleanupUtility\Components\AutoClearComponent.cs" />
-    <Compile Include="Modules\Patreon\Commands\ToggleSpectatorList.cs" />
-    <Compile Include="Modules\RespawnFix\RespawnFix.cs" />
-    <Compile Include="Modules\RespawnFix\Config.cs" />
-    <Compile Include="Modules\RespawnFix\EventHandlers.cs" />
-    <Compile Include="Modules\ErrorLogs\ErrorLogs.cs" />
-    <Compile Include="Modules\ErrorLogs\Config.cs" />
-    <Compile Include="Modules\ErrorLogs\ErrorPatch.cs" />
-    <Compile Include="Modules\AdminTools\Commands\Jail\Jail.cs" />
-    <Compile Include="Modules\AdminTools\Commands\Tags\Hide.cs" />
-    <Compile Include="Modules\AdminTools\Commands\Tags\Show.cs" />
-    <Compile Include="Modules\AdminTools\Commands\Tags\Tags.cs" />
-    <Compile Include="Modules\AdminTools\Commands\TeleportX\TeleportX.cs" />
-    <Compile Include="Modules\AntiAFK\Components\AfkComponent.cs" />
-    <Compile Include="Modules\AntiAFK\Models\PlayerInfo.cs" />
-    <Compile Include="Modules\AntiAFK\Models\PositionInfo.cs" />
-    <Compile Include="Modules\AutoFFToggle\Config.cs" />
-    <Compile Include="Modules\AutoFFToggle\AutoFFToggle.cs" />
-    <Compile Include="Modules\AutoFFToggle\EventHandlers.cs" />
-    <Compile Include="Modules\AntiAFK\AntiAFK.cs" />
-    <Compile Include="Modules\AntiAFK\Config.cs" />
-    <Compile Include="Modules\AntiAFK\EventHandlers.cs" />
-    <Compile Include="Modules\AdminTools\AdminTools.cs" />
-    <Compile Include="Modules\AdminTools\Config.cs" />
-    <Compile Include="Modules\AdminTools\EventHandlers.cs" />
-    <Compile Include="Modules\AutoNuke\AutoNuke.cs" />
-    <Compile Include="Modules\AutoNuke\Config.cs" />
-    <Compile Include="Modules\AutoNuke\EventHandlers.cs" />
-    <Compile Include="Modules\ErrorLogs\Message.cs" />
-    <Compile Include="Modules\ErrorLogs\WebhookSender.cs" />
-    <Compile Include="Modules\KeepCola\Config.cs" />
-    <Compile Include="Modules\KeepCola\EventHandlers.cs" />
-    <Compile Include="Modules\KeepCola\KeepCola.cs" />
-    <Compile Include="Modules\LastPerson\Config.cs" />
-    <Compile Include="Modules\LastPerson\EventHandlers.cs" />
-    <Compile Include="Modules\LastPerson\LastPerson.cs" />
-    <Compile Include="Modules\NukeRadiation\Components\NukeRadiationComponent.cs" />
-    <Compile Include="Modules\NukeRadiation\Config.cs" />
-    <Compile Include="Modules\NukeRadiation\EventHandlers.cs" />
-    <Compile Include="Modules\NukeRadiation\NukeRadiation.cs" />
-    <Compile Include="Modules\NukeRadiation\Patches\DecontaminationEffectPatch.cs" />
-    <Compile Include="Modules\Patreon\Commands\FlyingRagdollKills.cs" />
-    <Compile Include="Modules\Patreon\Commands\FlyingRagdollSelf.cs" />
-    <Compile Include="Modules\Patreon\Commands\MainPatreonCommand.cs" />
-    <Compile Include="Modules\Patreon\Commands\PatreonExclusiveCommand.cs" />
-    <Compile Include="Modules\Patreon\Commands\SetBadgeIndex.cs" />
-    <Compile Include="Modules\Patreon\Commands\SetCustomBadge.cs" />
-    <Compile Include="Modules\Patreon\Commands\SetCustomColor.cs" />
-    <Compile Include="Modules\Patreon\Config.cs" />
-    <Compile Include="Modules\Patreon\EventHandlers.cs" />
-    <Compile Include="Modules\Patreon\PatreonData.cs" />
-    <Compile Include="Modules\Patreon\PatreonExtensions.cs" />
-    <Compile Include="Modules\Patreon\PatreonPerksModule.cs" />
-    <Compile Include="Modules\Patreon\Types\Badge.cs" />
-    <Compile Include="Modules\Patreon\Types\PatreonPreferences.cs" />
-    <Compile Include="Modules\Patreon\Types\PatreonRank.cs" />
-    <Compile Include="Modules\Patreon\Types\UserRankAssociation.cs" />
-    <Compile Include="Modules\RainbowTags\RainbowTagController.cs" />
-    <Compile Include="Modules\RespawnTimer\API\API.cs" />
-    <Compile Include="Modules\RespawnTimer\API\Extensions\StringBuilderExtensions.cs" />
-    <Compile Include="Modules\RespawnTimer\API\Features\TimerView.cs" />
-    <Compile Include="Modules\RespawnTimer\Commands\Timer.cs" />
-    <Compile Include="Modules\RespawnTimer\Configs\Properties.cs" />
-    <Compile Include="Modules\RespawnTimer\RespawnTimer.cs" />
-    <Compile Include="Modules\RespawnTimer\Config.cs" />
-    <Compile Include="Modules\RespawnTimer\EventHandlers.cs" />
-    <Compile Include="Modules\PFE\Config.cs" />
-    <Compile Include="Modules\PFE\EventHandlers.cs" />
-    <Compile Include="Modules\PFE\PFE.cs" />
-    <Compile Include="Modules\RemoteKeycard\Extensions.cs" />
-    <Compile Include="Modules\Replacer\Config.cs" />
-    <Compile Include="Modules\Replacer\Replacer.cs" />
-    <Compile Include="Modules\Replacer\EventHandlers.cs" />
-    <Compile Include="Modules\CustomEscape\Config.cs" />
-    <Compile Include="Modules\CustomEscape\EventHandlers.cs" />
-    <Compile Include="Modules\CustomEscape\CustomEscape.cs" />
-    <Compile Include="Modules\PocketFall\Config.cs" />
-    <Compile Include="Modules\PocketFall\EventHandlers.cs" />
-    <Compile Include="Modules\PocketFall\PocketFall.cs" />
-    <Compile Include="Modules\Scp008\Config.cs" />
-    <Compile Include="Modules\Scp008\EventHandlers.cs" />
-    <Compile Include="Modules\Scp008\Scp008.cs" />
-    <Compile Include="Modules\Scp1162\SimplifiedToy.cs" />
-    <Compile Include="Modules\ScpReplace\Commands\ScpReplaceCommand.cs" />
-    <Compile Include="Modules\ScpReplace\EventHandler.cs" />
-    <Compile Include="Modules\ScpReplace\Models\ReplaceInfo.cs" />
-    <Compile Include="Modules\ScpReplace\ScpReplaceConfig.cs" />
-    <Compile Include="Modules\ScpReplace\ScpReplaceModule.cs" />
-    <Compile Include="Modules\ScpSpeech\Config.cs" />
-    <Compile Include="Modules\ScpSpeech\EventHandlers.cs" />
-    <Compile Include="Modules\ScpSpeech\ScpSpeechModule.cs" />
-    <Compile Include="Modules\ScpSwap\Commands\Accept.cs" />
-    <Compile Include="Modules\ScpSwap\Commands\Cancel.cs" />
-    <Compile Include="Modules\ScpSwap\Commands\Decline.cs" />
-    <Compile Include="Modules\ScpSwap\Commands\List.cs" />
-    <Compile Include="Modules\ScpSwap\Commands\ScpSwapParent.cs" />
-    <Compile Include="Modules\ScpSwap\Models\ConsoleMessage.cs" />
-    <Compile Include="Modules\ScpSwap\Models\CustomSwap.cs" />
-    <Compile Include="Modules\ScpSwap\Models\Swap.cs" />
-    <Compile Include="Modules\ScpSwap\Models\SwapData.cs" />
-    <Compile Include="Modules\ScpSwap\ScpSwap.cs" />
-    <Compile Include="Modules\ScpSwap\Config.cs" />
-    <Compile Include="Modules\ScpSwap\EventHandlers.cs" />
-    <Compile Include="Modules\RainbowTags\RainbowTags.cs" />
-    <Compile Include="Modules\RainbowTags\Config.cs" />
-    <Compile Include="Modules\RainbowTags\EventHandlers.cs" />
-    <Compile Include="Modules\Scp1162\Scp1162.cs" />
-    <Compile Include="Modules\Scp1162\Config.cs" />
-    <Compile Include="Modules\Scp1162\EventHandlers.cs" />
-    <Compile Include="Modules\RemoteKeycard\RemoteKeycard.cs" />
-    <Compile Include="Modules\RemoteKeycard\Config.cs" />
-    <Compile Include="Modules\RemoteKeycard\EventHandlers.cs" />
-    <Compile Include="Modules\CleanupUtility\CleanupUtility.cs" />
-    <Compile Include="Modules\CleanupUtility\Config.cs" />
-    <Compile Include="Modules\CleanupUtility\EventHandlers.cs" />
-    <Compile Include="Modules\ScpSwap\ValidSwaps.cs" />
-    <Compile Include="Modules\RoundSummary\RoundSummary.cs" />
-    <Compile Include="Modules\RoundSummary\Config.cs" />
-    <Compile Include="Modules\RoundSummary\EventHandlers.cs" />
-    <Compile Include="Modules\Restart\Config.cs" />
-    <Compile Include="Modules\Restart\EventHandlers.cs" />
-    <Compile Include="Modules\Restart\Restart.cs" />
-    <Compile Include="Modules\Subclasses\Config.cs" />
-    <Compile Include="Modules\Subclasses\DeclaredSubclasses\Scientist\HeadResearcher.cs" />
-    <Compile Include="Modules\Subclasses\EventHandlers.cs" />
-    <Compile Include="Modules\Subclasses\Models\SerializedSubclass.cs" />
-    <Compile Include="Modules\Subclasses\Subclasses.cs" />
-    <Compile Include="Modules\WhoAreMyTeammates\Commands\WamtList.cs" />
-    <Compile Include="Modules\WhoAreMyTeammates\DisplayType.cs" />
-    <Compile Include="Modules\WhoAreMyTeammates\Models\WamtBroadcast.cs" />
-    <Compile Include="Modules\WhoAreMyTeammates\WhoAreMyTeammates.cs" />
-    <Compile Include="Modules\WhoAreMyTeammates\Config.cs" />
-    <Compile Include="Modules\WhoAreMyTeammates\EventHandlers.cs" />
-    <Compile Include="Modules\Chaos\Chaos.cs" />
-    <Compile Include="Modules\Chaos\Config.cs" />
-    <Compile Include="Modules\Chaos\EventHandlers.cs" />
-    <Compile Include="Modules\Teslas\Teslas.cs" />
-    <Compile Include="Modules\Teslas\Config.cs" />
-    <Compile Include="Modules\Health\Health.cs" />
-    <Compile Include="Modules\Health\Config.cs" />
-    <Compile Include="Modules\Health\EventHandlers.cs" />
-    <Compile Include="Modules\Health\Modules\AhpRole.cs" />
-    <Compile Include="Modules\Scp096Notifications\Scp096Notifications.cs" />
-    <Compile Include="Modules\Scp096Notifications\Config.cs" />
-    <Compile Include="Modules\Scp096Notifications\EventHandlers.cs" />
-    <Compile Include="Modules\KillMessages\KillMessages.cs" />
-    <Compile Include="Modules\KillMessages\Config.cs" />
-    <Compile Include="Modules\KillMessages\EventHandlers.cs" />
-    <Compile Include="Modules\CuffedTK\CuffedTK.cs" />
-    <Compile Include="Modules\CuffedTK\Config.cs" />
-    <Compile Include="Modules\CuffedTK\EventHandlers.cs" />
-    <Compile Include="Modules\BetterCandy\BetterCandy.cs" />
-    <Compile Include="Modules\BetterCandy\Config.cs" />
-    <Compile Include="Patches\CandyGetRandomPatch.cs" />
-    <Compile Include="Patches\DisableAfkPatch.cs" />
-    <Compile Include="Patches\DropModelNullPatches.cs" />
-    <Compile Include="Patches\KillPlayerPatch.cs" />
-    <Compile Include="Patches\LockerPatch.cs" />
-    <Compile Include="Patches\OverrideSegmentPatch.cs" />
-    <Compile Include="Patches\PocketItemUpdatePatch.cs" />
-    <Compile Include="Patches\PreventRandomSpawning.cs" />
-    <Compile Include="Patches\RagdollPatch.cs" />
-    <Compile Include="Patches\Scp106Teleport.cs" />
-    <Compile Include="Patches\ScpSpeech\ToggleNoclipPatch.cs" />
-    <Compile Include="Patches\ScpSpeech\TransmitPatch.cs" />
-    <Compile Include="Patches\TeslaInRangePatch.cs" />
-    <Compile Include="Plugin.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Reference Include="Assembly-CSharp" HintPath="$(EXILED_REFERENCES)\Assembly-CSharp-Publicized.dll" />
+    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(EXILED_REFERENCES)\Assembly-CSharp-firstpass.dll" />
+    <Reference Include="CommandSystem.Core" HintPath="$(EXILED_REFERENCES)\CommandSystem.Core.dll" SpecificVersion="False" />
+    <Reference Include="Mirror" HintPath="$(EXILED_REFERENCES)\Mirror.dll" />
+    <Reference Include="NorthwoodLib" HintPath="$(EXILED_REFERENCES)\NorthwoodLib.dll" SpecificVersion="False" />
+    <Reference Include="NWAPIPermissionSystem" HintPath="..\Refs\NWAPIPermissionSystem.dll" />
+    <Reference Include="Pooling" HintPath="$(EXILED_REFERENCES)\Pooling.dll" />
+    <Reference Include="UnityEngine" HintPath="$(EXILED_REFERENCES)\UnityEngine.dll" />
+    <Reference Include="UnityEngine.AudioModule" HintPath="$(EXILED_REFERENCES)\UnityEngine.AudioModule.dll" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(EXILED_REFERENCES)\UnityEngine.CoreModule.dll" />
+    <Reference Include="UnityEngine.PhysicsModule" HintPath="$(EXILED_REFERENCES)\UnityEngine.PhysicsModule.dll" />
+    <Reference Include="UnityEngine.UnityWebRequestModule" HintPath="$(EXILED_REFERENCES)\UnityEngine.UnityWebRequestModule.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="$(EXILED_REFERENCES)\PluginAPI.dll" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
