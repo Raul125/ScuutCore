@@ -40,7 +40,7 @@ public sealed class EventHandlers : InstanceBasedEventHandler<RainbowTags>
     private bool TryGetColors(string rank, out string[] availableColors)
     {
         availableColors = null;
-        return !string.IsNullOrEmpty(rank) && Module.Config.Sequences.TryGetValue(rank, out availableColors);
+        return !string.IsNullOrEmpty(rank) && (Module.Config.Sequences?.TryGetValue(rank, out availableColors) ?? false);
     }
 
     public static string GetKey(UserGroup group) => ServerStatic.PermissionsHandler._groups

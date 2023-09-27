@@ -11,7 +11,7 @@
 
         protected override string Permission => PatreonChatCommandPermissions;
         public override string Command => "patreonchat";
-        public override string[] Aliases { get; } = { };
+        public override string[] Aliases { get; } = { "pchat" };
         public override string Description => "Write in patreonchat.";
 
         protected override bool ExecuteInternal(ArraySegment<string> arguments, ReferenceHub sender, PatreonData data, out string response)
