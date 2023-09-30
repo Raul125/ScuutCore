@@ -52,7 +52,7 @@ jobs:
           msbuild.exe ScuutPlugins.sln /p:Configuration="Release" /p:Platform="Any CPU"
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "ScuutCore/bin/Release/ScuutCore.dll"
+          artifacts: "ScuutCore/bin/Release/net48/ScuutCore.dll"
           generateReleaseNotes: false
           makeLatest: true
           token: ${{ secrets.GITHUB_TOKEN }}
