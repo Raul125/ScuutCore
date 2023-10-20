@@ -9,20 +9,25 @@ public class HintConfig
         Message = ms;
     }
 
+#pragma warning disable CS8618
     public HintConfig()
+#pragma warning restore CS8618
     {
     }
 
     public string Message { get; set; }
     public int Time { get; set; } = 5;
 
-    public void Show(Player ply = null)
+    public void Show(Player ply)
     {
-        if (ply != null)
-            ply.ReceiveHint(Message, Time);
-        else
+        ply.ReceiveHint(Message, Time);
+    }
+
+    public void ShowAll()
+    {
+        foreach (var player in Player.GetPlayers())
         {
-            foreach (var player in Player.GetPlayers())
+            if (!player.IsServer)
                 player.ReceiveHint(Message, Time);
         }
     }

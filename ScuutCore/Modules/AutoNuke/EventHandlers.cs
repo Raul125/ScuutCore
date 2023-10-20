@@ -38,20 +38,18 @@ public sealed class EventHandlers : InstanceBasedEventHandler<AutoNuke>
             yield break;
 
         Module.Config.AutoNukeCassieWarn.Play();
-        foreach (var ply in Player.GetPlayers())
-            Module.Config.AutoNukeWarnBroadcast.Show(ply);
+        Module.Config.AutoNukeWarnBroadcast.ShowAll();
 
-        Module.Config.AutoNukeWarnHint.Show();
+        Module.Config.AutoNukeWarnHint.ShowAll();
         yield return Timing.WaitForSeconds(Module.Config.AutoNukeStartTime - Module.Config.AutoNukeWarn);
 
         IsAutoNuke = true;
         if (Warhead.IsDetonated || Warhead.IsDetonationInProgress)
             yield break;
         Module.Config.AutoNukeCassieStart.Play();
-        foreach (var ply in Player.GetPlayers())
-            Module.Config.AutoNukeStartBroadcast.Show(ply);
+        Module.Config.AutoNukeStartBroadcast.ShowAll();
 
-        Module.Config.AutoNukeStartHint.Show();
+        Module.Config.AutoNukeStartHint.ShowAll();
         AlphaWarheadController.Singleton.IsLocked = false;
         AlphaWarheadController.Singleton.CooldownEndTime = 0;
         AlphaWarheadController.Singleton.StartDetonation(Module.Config.IsVanillaAutomaticNuke);

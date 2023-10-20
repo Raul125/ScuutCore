@@ -27,4 +27,12 @@ public class BroadcastConfig
 
         ply.SendBroadcast(Text, Duration, BroadcastFlags, ClearPrevious);
     }
+
+    public void ShowAll()
+    {
+        if (!AbleToShow)
+            return;
+
+        Map.Broadcast(Duration, Text, BroadcastFlags, ClearPrevious);
+    }
 }

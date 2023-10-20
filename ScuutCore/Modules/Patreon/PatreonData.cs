@@ -172,6 +172,11 @@ public sealed class PatreonData : MonoBehaviour
 
     public void UpdateBadge()
     {
+        if (Hub.serverRoles.GlobalHidden)
+        {
+            Hub.serverRoles.RefreshHiddenTag();
+            return;
+        }
         if (PermissionHandler.CheckPermission(Hub.queryProcessor._sender, "scuutcore.patreon.disabled"))
             return;
         GetBadge(out string badge, out string color, out string[] rainbow);
