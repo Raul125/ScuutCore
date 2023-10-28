@@ -20,6 +20,7 @@ using PluginAPI.Events;
 using ScuutCore.Modules.ChooseRole.Components;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
+using PlayerRoles.Ragdolls;
 
 public sealed class EventHandlers : InstanceBasedEventHandler<ChooseRole>
 {

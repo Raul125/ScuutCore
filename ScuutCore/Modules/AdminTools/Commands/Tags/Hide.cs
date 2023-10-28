@@ -1,7 +1,6 @@
 ﻿namespace ScuutCore.Modules.AdminTools.Commands.Tags;
 
 using System;
-using API.Extensions;
 using CommandSystem;
 using PluginAPI.Core;
 
@@ -23,7 +22,7 @@ public class Hide : ICommand
 
         foreach (Player player in Player.GetPlayers())
             if (player.ReferenceHub.serverRoles.RemoteAdmin)
-                player.ReferenceHub.serverRoles.HideTag();
+                player.ReferenceHub.serverRoles.TryHideTag();
 
         response = "All staff tags are hidden now";
         return true;
