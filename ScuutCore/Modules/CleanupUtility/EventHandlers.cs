@@ -7,6 +7,7 @@ using InventorySystem.Items.Pickups;
 using MapGeneration;
 using MEC;
 using Mirror;
+using PlayerRoles.Ragdolls;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;

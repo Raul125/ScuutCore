@@ -21,8 +21,8 @@ public class Show : ICommand
         }
 
         foreach (Player player in Player.GetPlayers())
-            if (player.ReferenceHub.serverRoles.RemoteAdmin && !player.ReferenceHub.serverRoles.RaEverywhere)
-                player.ReferenceHub.characterClassManager.UserCode_CmdRequestShowTag__Boolean(false);
+            if (player.ReferenceHub.serverRoles.RemoteAdmin && !player.ReferenceHub.authManager.RemoteAdminGlobalAccess)
+                player.ReferenceHub.serverRoles.RefreshLocalTag();
 
         response = "All staff tags are now visible";
         return true;

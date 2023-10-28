@@ -58,10 +58,10 @@ public sealed class PatreonData : MonoBehaviour
     private void Awake()
     {
         Hub = GetComponent<ReferenceHub>();
-        Prefs = Preferences.TryGetValue(Hub.characterClassManager.UserId, out var data) ? data : new PatreonPreferences();
+        Prefs = Preferences.TryGetValue(Hub.authManager.UserId, out var data) ? data : new PatreonPreferences();
     }
 
-    private void OnDestroy() => Preferences[Hub.characterClassManager.UserId] = Prefs;
+    private void OnDestroy() => Preferences[Hub.authManager.UserId] = Prefs;
 
     private void Update()
     {

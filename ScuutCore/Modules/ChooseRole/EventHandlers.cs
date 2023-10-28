@@ -14,6 +14,7 @@ using UnityEngine;
 using PlayerStatsSystem;
 using AdminToys;
 using Mirror;
+using PlayerRoles.Ragdolls;
 using ScuutCore.API.Extensions;
 using PluginAPI.Events;
 using ScuutCore.Modules.ChooseRole.Components;
@@ -100,7 +101,7 @@ public sealed class EventHandlers : InstanceBasedEventHandler<ChooseRole>
                 continue;
             if (referenceHub.gameObject == null)
                 continue;
-            if (string.IsNullOrWhiteSpace(referenceHub.characterClassManager.UserId))
+            if (string.IsNullOrWhiteSpace(referenceHub.authManager.UserId))
                 continue;
             bulkList.Add(Player.Get(referenceHub));
         }
@@ -378,7 +379,7 @@ public sealed class EventHandlers : InstanceBasedEventHandler<ChooseRole>
         RoleAssigner._spawned = true;
         RoleAssigner.LateJoinTimer.Restart();
         foreach (var ply in bulkList)
-            RoleAssigner.AlreadySpawnedPlayers.Add(ply.ReferenceHub.characterClassManager.UserId);
+            RoleAssigner.AlreadySpawnedPlayers.Add(ply.ReferenceHub.authManager.UserId);
 
         foreach (var prim in _triggers)
         {
