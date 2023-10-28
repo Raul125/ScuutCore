@@ -22,7 +22,7 @@ public class Hide : ICommand
 
         foreach (Player player in Player.GetPlayers())
             if (player.ReferenceHub.serverRoles.RemoteAdmin)
-                player.ReferenceHub.characterClassManager.UserCode_CmdRequestHideTag();
+                player.ReferenceHub.serverRoles.TryHideTag();
 
         response = "All staff tags are hidden now";
         return true;

@@ -12,6 +12,7 @@ using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using ScuutCore.Modules.CleanupUtility.Components;
 using UnityEngine;
+using PlayerRoles.Ragdolls;
 
 public sealed class EventHandlers : InstanceBasedEventHandler<CleanupUtility>
 {
