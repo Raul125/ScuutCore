@@ -41,6 +41,11 @@ public sealed class ScuutPlayer : Player
             int id = ++setSubclassProc;
             Plugin.Coroutines.Add(Timing.CallDelayed(1f, () =>
             {
+                if (!value.ToReplace.Contains(Role))
+                {
+                    SubClass = null;
+                    return;
+                }
                 if (id != setSubclassProc)
                     return;
                 CustomInfo = $"Subclass: {SubClass.Name}";
