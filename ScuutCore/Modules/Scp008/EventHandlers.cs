@@ -19,11 +19,13 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
         var target = e.Target;
         if (!target.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect))
             return;
+
         if (poisonedEffect.IsEnabled || e.DamageHandler is not AttackerDamageHandler { Attacker: { Role: RoleTypeId.Scp0492 } })
             return;
 
         if (Random.Range(0, 100) > Module.Config.InfectionChance)
             return;
+
         target.EffectsManager.EnableEffect<Poisoned>();
         Module.Config.InfectedHint.Show(target);
     }
@@ -36,10 +38,13 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
             && player.EffectsManager.TryGetEffect(out Scp1853 scp1853)
             && scp1853.IsEnabled)
             return true;
+
         if (player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) && !poisonedEffect.IsEnabled)
             return true;
+
         if (!Module.Config.CureChance.TryGetValue(item.ItemTypeId, out int chance) || Random.Range(0, 100) > chance)
             return true;
+
         poisonedEffect.DisableEffect();
         Module.Config.CuredHint.Show(player);
         return true;
@@ -50,6 +55,9 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
     {
         var player = e.Player;
         if (!player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) || !poisonedEffect.IsEnabled)
+            return true;
+
+        if (e.DamageHandler is UniversalDamageHandler universalDamage && universalDamage.TranslationId == DeathTranslations.Crushed.Id)
             return true;
 
         if (Module.Config.DropInventory)
