@@ -12,8 +12,6 @@ using YamlDotNet.Serialization;
 
 public sealed class Subclasses : EventControllerModule<Subclasses, Config, EventHandlers>
 {
-    public static Dictionary<string, string> SpawnTranslations = new();
-
     private readonly SerializedSubclass[] defaultSubclassesValue =
     {
         new SerializedSubclass
@@ -77,32 +75,6 @@ public sealed class Subclasses : EventControllerModule<Subclasses, Config, Event
         }
         Subclass.List.Add(Config.HeadResearcher);
         Config.HeadResearcher.OnLoaded();
-
-        string yamlFile = Path.Combine(Plugin.Singleton.Config.ConfigsFolder, "subclasstranslations.yml");
-        Dictionary<string, string> deserialized = null;
-        try
-        {
-            if (File.Exists(yamlFile))
-            {
-                string subclassConfigs = File.ReadAllText(yamlFile);
-                deserialized = deserializer.Deserialize<Dictionary<string, string>>(subclassConfigs);
-            }
-
-            if (deserialized is null)
-            {
-                Dictionary<string, string> toWrite = new();
-                foreach (var subclass in Subclass.List)
-                    toWrite.Add(subclass.Name, "Youre a " + subclass.Name);
-
-                File.WriteAllText(Path.Combine(Paths.Configs, yamlFile), serializer.Serialize(toWrite));
-            }
-
-            SpawnTranslations = deserialized;
-        }
-        catch (Exception e)
-        {
-            Log.Error("An error occurred while deserializing the subclass translations file: " + e);
-        }
 
         base.OnEnabled();
     }

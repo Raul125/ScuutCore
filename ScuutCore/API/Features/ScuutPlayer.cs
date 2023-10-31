@@ -53,12 +53,13 @@ public sealed class ScuutPlayer : Player
                 ClearInventory();
                 AmmoBag.Clear();
                 GrantLoadout();
+                GrantEffects();
 
                 SubClass.OnReceived(this);
                 Plugin.Coroutines.Add(Timing.CallDelayed(Subclasses.Singleton.Config.MessageDelay, () =>
                 {
                     float duration = Subclasses.Singleton.Config.SpawnSubclassHintDuration;
-                    ReceiveHint(Subclasses.SpawnTranslations[SubClass.Name],
+                    ReceiveHint(value.GetSpawnMessage(this),
                         new HintEffect[]
                         {
                             HintEffectPresets.FadeIn(0.05f),
@@ -68,6 +69,14 @@ public sealed class ScuutPlayer : Player
                 }));
             }));
         }
+    }
+
+    private void GrantEffects()
+    {
+        var effects = SubClass.GetEffects(this);
+        if (effects is { Count: > 0 })
+            foreach (var kvp in effects)
+                EffectsManager.ChangeState(kvp.Key, kvp.Value, 999999999);
     }
 
     private void GrantLoadout()
@@ -94,6 +103,18 @@ public sealed class ScuutPlayer : Player
             }
         }
 
+        var randomItemLoadout = SubClass.GetRandomSpawnItems(this);
+        if (randomItemLoadout is { Count: > 0 })
+        {
+            foreach (var item in randomItemLoadout)
+            {
+                if (IsInventoryFull)
+                    break;
+                if (UnityEngine.Random.Range(0, 100) <= item.Value)
+                    AddItem(item.Key);
+            }
+        }
+
         var ammoLoadout = SubClass.GetAmmoLoadout(this);
         if (SubClass.GetAmmoLoadout(this) is { Count: > 0 })
         {
@@ -102,13 +123,8 @@ public sealed class ScuutPlayer : Player
         }
     }
 
-    public override void OnDestroy()
-    {
-        base.OnDestroy();
-    }
 
-    public float SpeechUpdateTime;
-
+    float SpeechUpdateTime;
     public override void OnUpdate()
     {
         SpeechUpdateTime += Time.deltaTime;

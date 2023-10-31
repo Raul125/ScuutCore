@@ -32,10 +32,20 @@ public abstract class Subclass
     public virtual ItemType[]? GetSpawnLoadout(Player player) => null;
 
     /// <summary>
+    /// Key is item, value is chance it spawns.
+    /// </summary>
+    public virtual Dictionary<ItemType, ushort>? GetRandomSpawnItems(Player player) => null;
+
+    /// <summary>
     /// Gets the spawn ammo.
     /// </summary>
     /// <returns>Ammo dict.</returns>
     public virtual Dictionary<ItemType, ushort>? GetAmmoLoadout(Player player) => null;
+
+    /// <summary>
+    /// Gets the spawn effects.
+    /// </summary>
+    public virtual Dictionary<string, byte> GetEffects(Player player) => null;
 
     /// <summary>
     /// Gets the roles it can replace.
@@ -70,4 +80,10 @@ public abstract class Subclass
     /// </summary>
     /// <param name="player">The player.</param>
     public virtual void OnLost(Player player){}
+
+    /// <summary>
+    /// Gets the spawn message.
+    /// </summary>
+    /// <returns>The spawn message.</returns>
+    public virtual string GetSpawnMessage(Player ply) => $"You are a {Name}!";
 }
