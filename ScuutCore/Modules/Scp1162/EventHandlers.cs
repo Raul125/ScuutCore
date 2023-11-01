@@ -11,6 +11,7 @@ using PluginAPI.Core.Items;
 using PluginAPI.Core.Zones;
 using System.Linq;
 using InventorySystem.Items.Usables.Scp330;
+using PlayerRoles;
 
 public sealed class EventHandlers : InstanceBasedEventHandler<Scp1162>
 {
@@ -30,6 +31,8 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp1162>
     public bool OnPlayerDroppedItem(Player player, ItemBase item)
     {
         if (!Round.IsRoundStarted) 
+            return true;
+        if (player.Role == RoleTypeId.Scp3114)
             return true;
 
         if (Vector3.Distance(SCP1162Position, player.Position) <= Module.Config.SCP1162Distance)
