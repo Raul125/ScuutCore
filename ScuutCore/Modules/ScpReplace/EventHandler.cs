@@ -13,14 +13,18 @@ public class EventHandler : InstanceBasedEventHandler<ScpReplaceModule>
     {
         if (!Module.Config.AllowedRoles.Contains(player.Role))
             return;
+        Module.Debug($"Player {player.Nickname} left the server, role {player.Role} is allowed");
         if (Round.Duration.TotalSeconds > Module.Config.SecondsIntoRoundActive)
             return;
+        Module.Debug("Passed time check");
         ScpReplaceModule.ReplaceInfos.Add(new ReplaceInfo(player));
+        Module.Debug($"Added {player.Nickname} to replace list");
     }
 
     [PluginEvent(ServerEventType.WaitingForPlayers)]
     public void OnWaitingForPlayers()
     {
         ScpReplaceModule.ReplaceInfos.Clear();
+        Module.Debug("Cleared replace list");
     }
 }

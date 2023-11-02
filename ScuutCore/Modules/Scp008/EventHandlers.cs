@@ -57,7 +57,9 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
         if (!player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) || !poisonedEffect.IsEnabled)
             return true;
 
-        if (e.DamageHandler is UniversalDamageHandler universalDamage && universalDamage.TranslationId == DeathTranslations.Crushed.Id)
+        if (e.DamageHandler is UniversalDamageHandler universalDamage 
+            && (universalDamage.TranslationId == DeathTranslations.Crushed.Id
+            || universalDamage.TranslationId == DeathTranslations.PocketDecay.Id))
             return true;
 
         if (Module.Config.DropInventory)

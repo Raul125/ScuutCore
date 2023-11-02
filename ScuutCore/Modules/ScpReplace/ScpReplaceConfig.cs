@@ -7,6 +7,7 @@ using ScuutCore.API.Interfaces;
 public class ScpReplaceConfig : IModuleConfig
 {
     public bool IsEnabled { get; set; } = true;
+    public bool Debug { get; set; } = false;
     public int SecondsIntoRoundActive { get; set; } = 120;
     public int SecondsClaimPeriod { get; set; } = 15;
 

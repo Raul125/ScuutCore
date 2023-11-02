@@ -21,14 +21,17 @@ public class ReplaceInfo
         Health = player.Health;
         LeaveTime = DateTime.Now;
 
+        ScpReplaceModule.Singleton.Debug($"Replace constr {UserId} role {Role}");
         coroutine = Timing.CallDelayed(ScpReplaceModule.Singleton.Config.SecondsClaimPeriod, () =>
         {
+            ScpReplaceModule.Singleton.Debug($"Removed {UserId} role {Role} from replace list");
             ScpReplaceModule.ReplaceInfos.Remove(this);
         });
     }
 
     public void Apply(Player ply)
     {
+        ScpReplaceModule.Singleton.Debug($"Apply {UserId} role {Role}");
         Cancel();
         GlobalHelpers.BroadcastToPermissions($"{ply.Nickname} has claimed {Role}!", "scpreplace");
         ply.SetRole(Role);
