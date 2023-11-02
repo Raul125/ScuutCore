@@ -12,10 +12,16 @@ public class EventHandler : InstanceBasedEventHandler<ScpReplaceModule>
     [PluginEvent(ServerEventType.PlayerChangeRole)]
     public void OnChangingRole(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
     {
+        if (Module.Config.ExtraDebug)
+            Log.Debug($"ChangingRole reason: {changeReason}, role: {player.Role}");
         if (changeReason != RoleChangeReason.Destroyed)
             return;
         if (!Module.Config.AllowedRoles.Contains(player.Role))
+        {
+            if (Module.Config.ExtraDebug)
+                Log.Debug($"Role {player.Role} is not allowed");
             return;
+        }
 
         Module.Debug($"Player {player.Nickname} left the server, role {player.Role} is allowed");
         if (Round.Duration.TotalSeconds > Module.Config.SecondsIntoRoundActive)

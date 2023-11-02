@@ -3,12 +3,14 @@
 using API.Features;
 using CustomPlayerEffects;
 using InventorySystem.Items;
+using MapGeneration;
 using PlayerRoles;
 using PlayerStatsSystem;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
 using PluginAPI.Events;
+using ScuutCore.API.Extensions;
 using UnityEngine;
 
 public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
@@ -56,8 +58,14 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
         var player = e.Player;
         if (!player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) || !poisonedEffect.IsEnabled)
             return true;
-        if (player.EffectsManager.TryGetEffect<Corroding>(out var corrodingEffect) && corrodingEffect.IsEnabled)
-            return true;
+
+        var currRoom = RoomIdUtils.RoomAtPositionRaycasts(player.Position, false);
+        if (currRoom != null)
+        {
+            var name = currRoom.gameObject.name.RemoveBracketsOnEndOfName();
+            if (name == "PocketWorld")
+                return true;
+        }
 
         if (e.DamageHandler is UniversalDamageHandler universalDamage 
             && universalDamage.TranslationId == DeathTranslations.Crushed.Id)
