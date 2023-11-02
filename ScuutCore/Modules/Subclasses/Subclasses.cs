@@ -47,9 +47,17 @@ public sealed class Subclasses : EventControllerModule<Subclasses, Config, Event
                 try
                 {
                     if (file.Contains("list"))
-                        serializedSubclasses.AddRange(deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file)));
+                    {
+                        var deserialized = deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file));
+                        File.WriteAllText(file, serializer.Serialize(deserialized));
+                        serializedSubclasses.AddRange(deserialized);
+                    }
                     else
-                        serializedSubclasses.Add(deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file)));
+                    {
+                        var deserialized = deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file));
+                        File.WriteAllText(file, serializer.Serialize(deserialized));
+                        serializedSubclasses.Add(deserialized);
+                    }
                 }
                 catch (Exception e)
                 {

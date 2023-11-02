@@ -56,10 +56,11 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
         var player = e.Player;
         if (!player.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect) || !poisonedEffect.IsEnabled)
             return true;
+        if (player.EffectsManager.TryGetEffect<Corroding>(out var corrodingEffect) && corrodingEffect.IsEnabled)
+            return true;
 
         if (e.DamageHandler is UniversalDamageHandler universalDamage 
-            && (universalDamage.TranslationId == DeathTranslations.Crushed.Id
-            || universalDamage.TranslationId == DeathTranslations.PocketDecay.Id))
+            && universalDamage.TranslationId == DeathTranslations.Crushed.Id)
             return true;
 
         if (Module.Config.DropInventory)

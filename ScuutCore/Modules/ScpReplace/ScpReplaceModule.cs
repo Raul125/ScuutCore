@@ -11,7 +11,7 @@ public class ScpReplaceModule : EventControllerModule<ScpReplaceModule, ScpRepla
 
     public void Debug(string message)
     {
-        if (Config?.Debug ?? false)
-            Log.Info(message);
+        if (Config.Debug)
+            Log.Debug(message);
     }
 }
