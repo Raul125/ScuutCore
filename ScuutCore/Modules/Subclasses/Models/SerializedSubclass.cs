@@ -60,7 +60,7 @@ public class SerializedSubclass : Subclass
     public override Dictionary<ItemType, ushort>? GetRandomSpawnItems(Player player) => RandomSpawnItems;
     public override Dictionary<ItemType, ushort>? GetAmmoLoadout(Player player) => SpawnAmmo;
 
-    public override Dictionary<string, byte> GetEffects => Effects;
+    public override Dictionary<string, byte> GetEffects(Player player) => Effects;
 
     [YamlIgnore]
     public override RoleTypeId[] ToReplace => RolesToReplace;
