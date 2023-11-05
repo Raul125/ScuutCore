@@ -9,13 +9,11 @@ using ScuutCore.Modules.ScpReplace.Models;
 
 public class EventHandler : InstanceBasedEventHandler<ScpReplaceModule>
 {
-    [PluginEvent(ServerEventType.PlayerChangeRole)]
-    public void OnChangingRole(Player player, PlayerRoleBase oldRole, RoleTypeId newRole, RoleChangeReason changeReason)
+    [PluginEvent(ServerEventType.PlayerLeft)]
+    public void OnPlayerLeave(Player player)
     {
         if (Module.Config.ExtraDebug)
-            Log.Debug($"ChangingRole reason: {changeReason}, role: {player.Role}");
-        if (changeReason != RoleChangeReason.Destroyed)
-            return;
+            Log.Debug($"Left role: {player.Role}");
         if (!Module.Config.AllowedRoles.Contains(player.Role))
         {
             if (Module.Config.ExtraDebug)
