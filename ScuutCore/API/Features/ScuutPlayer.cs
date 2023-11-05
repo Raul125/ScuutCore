@@ -1,9 +1,12 @@
 ﻿namespace ScuutCore.API.Features;
 
+using System;
+using System.Reflection;
 using Hints;
 using InventorySystem.Items.Firearms;
 using InventorySystem.Items.Firearms.Attachments;
 using MEC;
+using Mirror;
 using Modules.Subclasses;
 using PlayerRoles.Voice;
 using PluginAPI.Core;
@@ -31,6 +34,7 @@ public sealed class ScuutPlayer : Player
             if (value == null)
             {
                 CustomInfo = "";
+                Scale = Vector3.one;
                 subClass?.OnLost(this);
                 subClass = null;
                 setSubclassProc++;
@@ -50,6 +54,7 @@ public sealed class ScuutPlayer : Player
                     return;
                 CustomInfo = $"Subclass: {SubClass.Name}";
                 Health = value.Health;
+                Scale = value.Scale;
                 ClearInventory();
                 AmmoBag.Clear();
                 GrantLoadout();
@@ -68,6 +73,34 @@ public sealed class ScuutPlayer : Player
                         duration);
                 }));
             }));
+        }
+    }
+
+    private static MethodInfo? sendSpawnMessage;
+    public static MethodInfo SendSpawnMessage => sendSpawnMessage ??= typeof(NetworkServer).GetMethod("SendSpawnMessage", BindingFlags.NonPublic | BindingFlags.Static)!;
+
+    /// <summary>
+    /// Gets or sets the player's scale.
+    /// </summary>
+    public Vector3 Scale
+    {
+        get => ReferenceHub.transform.localScale;
+        set
+        {
+            if (value == Scale)
+                return;
+
+            try
+            {
+                ReferenceHub.transform.localScale = value;
+
+                foreach (Player target in GetPlayers())
+                    SendSpawnMessage?.Invoke(null, new object[] { ReferenceHub.networkIdentity, target.Connection });
+            }
+            catch (Exception exception)
+            {
+                Log.Error($"{nameof(Scale)} error: {exception}");
+            }
         }
     }
 
@@ -122,7 +155,6 @@ public sealed class ScuutPlayer : Player
                 SetAmmo(ammo.Key, ammo.Value);
         }
     }
-
 
     float SpeechUpdateTime;
     public override void OnUpdate()

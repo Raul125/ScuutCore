@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using PlayerRoles;
 using PluginAPI.Core;
 using ScuutCore.API.Features;
+using UnityEngine;
 using YamlDotNet.Serialization;
 
 public class SerializedSubclass : Subclass
@@ -11,6 +12,7 @@ public class SerializedSubclass : Subclass
     public virtual string SubclassName { get; set; } = "Name";
     public virtual string SubclassSpawnMessage { get; set; } = "replaceme";
     public virtual float SubclassHealth { get; set; } = 100f;
+    public virtual Vector3 SubclassScale { get; set; } = Vector3.one;
     public virtual float SubclassSpawnChance { get; set; } = 0f;
     public virtual int SubclassMaxAlive { get; set; } = 0;
     public virtual int SubclassMaxPerRound { get; set; } = 0;
@@ -44,6 +46,8 @@ public class SerializedSubclass : Subclass
     public override string Name => SubclassName;
     [YamlIgnore]
     public override float Health => SubclassHealth;
+    [YamlIgnore]
+    public override Vector3 Scale => SubclassScale;
     [YamlIgnore]
     public override float SpawnChance => SubclassSpawnChance;
     [YamlIgnore]

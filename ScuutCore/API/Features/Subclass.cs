@@ -7,6 +7,7 @@ using PlayerRoles;
 using PluginAPI.Core;
 using PluginAPI.Core.Interfaces;
 using ScuutCore.API.Helpers;
+using UnityEngine;
 
 public abstract class Subclass
 {
@@ -24,6 +25,11 @@ public abstract class Subclass
     /// The subclasses health.
     /// </summary>
     public virtual float Health { get; } = 100f;
+
+    /// <summary>
+    /// The subclasses scale.
+    /// </summary>
+    public virtual Vector3 Scale { get; } = Vector3.one;
 
     /// <summary>
     /// Gets the spawn items.

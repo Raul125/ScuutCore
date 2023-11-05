@@ -1,6 +1,5 @@
 ﻿namespace ScuutCore.Modules.ScpReplace;
 
-using PlayerRoles;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
 using PluginAPI.Enums;
