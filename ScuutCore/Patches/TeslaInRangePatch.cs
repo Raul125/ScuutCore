@@ -4,27 +4,32 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using HarmonyLib;
 using Modules.Teslas;
+using ScuutCore.API.Extensions;
 
 [HarmonyPatch(typeof(TeslaGate), nameof(TeslaGate.PlayerInRange))]
 public static class TeslaInRangePatch
 {
-
     public static bool DisableTriggering(ReferenceHub hub) => Teslas.Singleton?.Config?.Roles.Contains(hub.roleManager.CurrentRole.RoleTypeId) ?? false;
 
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
     {
-        var list = new List<CodeInstruction>(instructions);
-        var label = generator.DefineLabel();
-        list[0].labels.Add(label);
-        list.InsertRange(0, new[]
+        List<CodeInstruction> newInstructiosns = instructions.BeginTranspiler();
+
+        Label allowLabel = generator.DefineLabel();
+
+        newInstructiosns[0].labels.Add(allowLabel);
+
+        newInstructiosns.InsertRange(0, new[]
         {
-            new CodeInstruction(OpCodes.Ldarg_1),
+            // if (DisableTriggering(player))
+            //     return false;
+            new(OpCodes.Ldarg_1),
             CodeInstruction.Call(typeof(TeslaInRangePatch), nameof(DisableTriggering)),
-            new CodeInstruction(OpCodes.Brfalse, label),
-            new CodeInstruction(OpCodes.Ldc_I4_0),
-            new CodeInstruction(OpCodes.Ret)
+            new(OpCodes.Brfalse, allowLabel),
+            new(OpCodes.Ldc_I4_0),
+            new(OpCodes.Ret)
         });
 
-        return list;
+        return newInstructiosns.FinishTranspiler();
     }
 }
