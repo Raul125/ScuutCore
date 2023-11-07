@@ -1,8 +1,10 @@
 ﻿namespace ScuutCore.Modules.AntiAFK;
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using API.Features;
 using API.Interfaces;
+using PlayerRoles;
 
 public sealed class Config : IModuleConfig
 {
@@ -11,8 +13,14 @@ public sealed class Config : IModuleConfig
     [Description("The minimum amount of players that should be on the server to run the afk check.")]
     public int MinimumPlayers { get; set; } = 2;
 
-    [Description("Whether tutorials will be ignored from afk checks.")]
-    public bool IgnoreTutorials { get; set; } = true;
+    [Description("Ignored roles")]
+    public List<RoleTypeId> IgnoredRoles { get; set; } = new List<RoleTypeId>
+    {
+        RoleTypeId.Spectator,
+        RoleTypeId.Scp079,
+        RoleTypeId.Overwatch,
+        RoleTypeId.Tutorial
+    };
 
     [Description("The amount of time, in seconds, that a player will receive a warning that they have hit the maximum afk time.")]
     public int GraceTime { get; set; } = 15;

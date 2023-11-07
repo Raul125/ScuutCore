@@ -35,16 +35,14 @@ public class AfkComponent : MonoBehaviour
 
     private void CheckAfk()
     {
-        if (player.Role is RoleTypeId.Scp079 ||
-            !player.IsAlive ||
-            AntiAFK.Singleton.Config.MinimumPlayers > Player.Count ||
-            (AntiAFK.Singleton.Config.IgnoreTutorials && player.Role == RoleTypeId.Tutorial))
+        if (AntiAFK.Singleton.Config.IgnoredRoles.Contains(player.Role) ||
+            AntiAFK.Singleton.Config.MinimumPlayers > Player.Count)
         {
             afkTime = 0;
             return;
         }
 
-        PositionInfo currentPosition = new PositionInfo(player);
+        var currentPosition = new PositionInfo(player);
         if (currentPosition != lastPosition)
         {
             afkTime = 0;
