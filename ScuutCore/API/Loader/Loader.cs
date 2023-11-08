@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Exiled.Loader.Features.Configs.CustomConverters;
 using Interfaces;
 using PluginAPI.Core;
+using UnityEngine;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -14,11 +16,13 @@ public static class Loader
 {
     public static ISerializer Serializer { get; } = new SerializerBuilder()
         .WithNamingConvention(UnderscoredNamingConvention.Instance)
+        .WithTypeConverter(new VectorsConverter())
         .IgnoreFields()
         .Build();
 
     public static IDeserializer Deserializer { get; } = new DeserializerBuilder()
         .WithNamingConvention(UnderscoredNamingConvention.Instance)
+        .WithTypeConverter(new VectorsConverter())
         .IgnoreFields()
         .IgnoreUnmatchedProperties()
         .Build();
