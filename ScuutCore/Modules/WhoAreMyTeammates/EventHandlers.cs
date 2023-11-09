@@ -89,7 +89,7 @@ public sealed class EventHandlers : InstanceBasedEventHandler<WhoAreMyTeammates>
             var player = players[i];
 
             stringBuilder.Append(' ').Append(player.Nickname);
-            if (player.IsSCP())
+            if (player.IsSCP(true))
                 stringBuilder.Append(' ').Append(player.ReferenceHub.roleManager._curRole.RoleName);
 
             if (i != cutOff)
