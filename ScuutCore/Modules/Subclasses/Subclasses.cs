@@ -8,6 +8,7 @@ using Models;
 using PlayerRoles;
 using PluginAPI.Core;
 using PluginAPI.Helpers;
+using ScuutCore.API.Loader;
 using YamlDotNet.Serialization;
 
 public sealed class Subclasses : EventControllerModule<Subclasses, Config, EventHandlers>
@@ -34,8 +35,7 @@ public sealed class Subclasses : EventControllerModule<Subclasses, Config, Event
     public override void OnEnabled()
     {
         Log.Warning("Loading subclasses!");
-        var serializer = new Serializer();
-        var deserializer = new Deserializer();
+
         List<SerializedSubclass> serializedSubclasses = new();
         if (Directory.Exists(Config.SubclassFolder))
         {
@@ -48,14 +48,14 @@ public sealed class Subclasses : EventControllerModule<Subclasses, Config, Event
                 {
                     if (file.Contains("list"))
                     {
-                        var deserialized = deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file));
-                        File.WriteAllText(file, serializer.Serialize(deserialized));
+                        var deserialized = Loader.Deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file));
+                        File.WriteAllText(file, Loader.Serializer.Serialize(deserialized));
                         serializedSubclasses.AddRange(deserialized);
                     }
                     else
                     {
-                        var deserialized = deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file));
-                        File.WriteAllText(file, serializer.Serialize(deserialized));
+                        var deserialized = Loader.Deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file));
+                        File.WriteAllText(file, Loader.Serializer.Serialize(deserialized));
                         serializedSubclasses.Add(deserialized);
                     }
                 }
@@ -70,8 +70,8 @@ public sealed class Subclasses : EventControllerModule<Subclasses, Config, Event
         {
             Directory.CreateDirectory(Config.SubclassFolder);
             File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclass.yml"),
-            serializer.Serialize(defaultSubclassesValue[0]));
-            File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), serializer.Serialize(defaultSubclassesValue));
+                Loader.Serializer.Serialize(defaultSubclassesValue[0]));
+            File.WriteAllText(Path.Combine(Config.SubclassFolder, "exampleclasses.list.yml"), Loader.Serializer.Serialize(defaultSubclassesValue));
         }
         else
         {
