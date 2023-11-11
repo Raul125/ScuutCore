@@ -20,6 +20,7 @@ public sealed class Config : IModuleConfig
     {
         ItemType.Flashlight
     };
+
     public List<RoleTypeId> RoleBlacklist { get; set; } = new()
     {
         RoleTypeId.Spectator,
@@ -36,5 +37,7 @@ public sealed class Config : IModuleConfig
         RoleChangeReason.Destroyed,
         RoleChangeReason.Died,
     };
+
     public HeadResearcher HeadResearcher { get; set; } = new HeadResearcher();
+    public bool TryOldSerializer { get; set; } = true;
 }

@@ -32,9 +32,13 @@ public sealed class Subclasses : EventControllerModule<Subclasses, Config, Event
         }
     };
 
+    private Deserializer _deserializer;
     public override void OnEnabled()
     {
         Log.Warning("Loading subclasses!");
+
+        if (Config.TryOldSerializer)
+            _deserializer = new Deserializer();
 
         List<SerializedSubclass> serializedSubclasses = new();
         if (Directory.Exists(Config.SubclassFolder))
@@ -46,15 +50,18 @@ public sealed class Subclasses : EventControllerModule<Subclasses, Config, Event
 
                 try
                 {
+                    var text = File.ReadAllText(file);
                     if (file.Contains("list"))
                     {
-                        var deserialized = Loader.Deserializer.Deserialize<List<SerializedSubclass>>(File.ReadAllText(file));
+                        var deserialized = Loader.Deserializer.Deserialize<List<SerializedSubclass>>(text);
                         File.WriteAllText(file, Loader.Serializer.Serialize(deserialized));
                         serializedSubclasses.AddRange(deserialized);
                     }
                     else
                     {
-                        var deserialized = Loader.Deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file));
+                        var deserialized = Loader.Deserializer.Deserialize<SerializedSubclass>(text);
+                        if (deserialized.SubclassSpawnMessage == "replaceme")
+                            deserialized = _deserializer.Deserialize<SerializedSubclass>(File.ReadAllText(file));
                         File.WriteAllText(file, Loader.Serializer.Serialize(deserialized));
                         serializedSubclasses.Add(deserialized);
                     }
