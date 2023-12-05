@@ -14,7 +14,7 @@ using UnityEngine;
 public sealed class EventHandlers : InstanceBasedEventHandler<AdminTools>
 {
 
-    public static readonly List<Jailed> JailedPlayers = new List<Jailed>();
+    public static readonly List<Jailed> JailedPlayers = new();
 
     [PluginEvent(ServerEventType.PlayerJoined)]
     public void OnPlayerVerified(Player player)

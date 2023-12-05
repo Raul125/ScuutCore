@@ -16,7 +16,7 @@ public class HeadResearcher : SerializedSubclass
     public override int SubclassMaxPerRound { get; set; } = 0;
     public string SpawnHint { get; set; } = "Scps alive this round: %scps%";
 
-    private List<Player> _players = new List<Player>();
+    private List<Player> _players = new();
     public override List<Player> GetPlayers() => _players;
     public override void OnReceived(Player player)
     {

@@ -19,10 +19,10 @@ using PluginAPI.Core;
 /// </summary>
 public static class ValidSwaps
 {
-    private static readonly List<string> NamesValue = new List<string>();
-    private static readonly List<CustomSwap> CustomSwapsValue = new List<CustomSwap>();
-    private static readonly List<RoleTypeId> DefaultSwapsValue = new List<RoleTypeId>();
-    private static readonly Dictionary<string, RoleTypeId> TranslatableSwapsValue = new Dictionary<string, RoleTypeId>();
+    private static readonly List<string> NamesValue = new();
+    private static readonly List<CustomSwap> CustomSwapsValue = new();
+    private static readonly List<RoleTypeId> DefaultSwapsValue = new();
+    private static readonly Dictionary<string, RoleTypeId> TranslatableSwapsValue = new();
 
     /// <summary>
     /// Gets a collection of all available swap names.
@@ -42,7 +42,7 @@ public static class ValidSwaps
     /// <summary>
     /// Gets a collection of all translatable swaps.
     /// </summary>
-    public static ReadOnlyDictionary<string, RoleTypeId> TranslatableSwaps => new ReadOnlyDictionary<string, RoleTypeId>(TranslatableSwapsValue);
+    public static ReadOnlyDictionary<string, RoleTypeId> TranslatableSwaps => new(TranslatableSwapsValue);
 
     /// <summary>
     /// Attempts to get a <see cref="RoleTypeId"/> from <see cref="Translation.TranslatableSwaps"/> or from directly parsing a request.

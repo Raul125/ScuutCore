@@ -15,7 +15,7 @@ public static class ErrorPatch
     {
         if (ErrorLogs.Singleton?.Config.IsEnabled ?? true)
             return;
-        StackTrace stackTrace = new StackTrace();
+        StackTrace stackTrace = new();
         StackFrame[] stackFrames = stackTrace.GetFrames() ?? Array.Empty<StackFrame>();
         MethodBase? method = stackFrames.Length > 1 ? stackFrames[2].GetMethod() : null;
         string pluginInfo = "unknown";

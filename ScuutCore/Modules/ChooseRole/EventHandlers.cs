@@ -153,7 +153,7 @@ public sealed class EventHandlers : InstanceBasedEventHandler<ChooseRole>
             }
         }
 
-        List<Team> lateSpawn = new List<Team>();
+        List<Team> lateSpawn = new();
         if (SpawnQueue.Any())
         {
             lateSpawn = SpawnQueue.ToList();
