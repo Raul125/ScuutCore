@@ -13,13 +13,13 @@ using PermissionHandler = NWAPIPermissionSystem.PermissionHandler;
 
 public sealed class PatreonData : MonoBehaviour
 {
-    private static readonly Dictionary<string, PatreonPreferences> Preferences = new Dictionary<string, PatreonPreferences>();
+    private static readonly Dictionary<string, PatreonPreferences> Preferences = new();
 
     public ReferenceHub Hub { get; private set; }
 
     private PatreonRank rank;
 
-    private PatreonPreferences prefs = new PatreonPreferences();
+    private PatreonPreferences prefs = new();
 
     public PatreonRank Rank
     {

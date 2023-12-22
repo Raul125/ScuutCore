@@ -11,7 +11,7 @@ using UnityEngine;
 
 public abstract class Subclass
 {
-    public static List<Subclass> List = new List<Subclass>();
+    public static List<Subclass> List = new();
 
     // Changed later in SerializedSubclass
     public virtual List<Player> GetPlayers() => null;

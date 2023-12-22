@@ -13,7 +13,7 @@ using RoundSummary = global::RoundSummary;
 
 public sealed class EventHandlers : IEventHandler
 {
-    private Dictionary<Subclass, int> _subclassesSpawned = new Dictionary<Subclass, int>();
+    private Dictionary<Subclass, int> _subclassesSpawned = new();
 
     [PluginEvent(ServerEventType.RoundEnd)]
     public void RoundEnd(RoundSummary.LeadingTeam leadingTeam)

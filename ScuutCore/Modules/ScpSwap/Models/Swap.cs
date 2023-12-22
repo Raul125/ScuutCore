@@ -20,8 +20,8 @@ using PluginAPI.Events;
 /// </summary>
 public class Swap
 {
-    private static readonly List<Swap> Swaps = new List<Swap>();
-    private static readonly List<CoroutineHandle> Coroutines = new List<CoroutineHandle>();
+    private static readonly List<Swap> Swaps = new();
+    private static readonly List<CoroutineHandle> Coroutines = new();
     private CoroutineHandle coroutine;
 
     private Swap(Player sender, Player receiver)
@@ -105,8 +105,8 @@ public class Swap
     public void Run()
     {
         PartiallyDestroy();
-        SwapData senderData = new SwapData(Sender);
-        SwapData receiverData = new SwapData(Receiver);
+        SwapData senderData = new(Sender);
+        SwapData receiverData = new(Receiver);
 
         senderData.Swap(Receiver);
         receiverData.Swap(Sender);

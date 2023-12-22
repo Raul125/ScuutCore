@@ -10,7 +10,7 @@ public sealed class SetCustomColor : PatreonExclusiveCommand
 
     #region Color Dictionary
 
-    private static readonly Dictionary<string, string> Colors = new Dictionary<string, string>
+    private static readonly Dictionary<string, string> Colors = new()
     {
         {
             "pink", "#FF96DE"

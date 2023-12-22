@@ -11,8 +11,8 @@ using UnityEngine;
 
 public class PlayerInfo
 {
-    private readonly List<ItemType> items = new List<ItemType>();
-    private readonly List<CandyKindID> candies = new List<CandyKindID>();
+    private readonly List<ItemType> items = new();
+    private readonly List<CandyKindID> candies = new();
     private readonly RoleTypeId role;
     private readonly Vector3 position;
     private readonly float health;

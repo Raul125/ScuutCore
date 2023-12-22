@@ -55,7 +55,7 @@ public class SerializedSubclass : Subclass
     [YamlIgnore]
     public override int MaxPerRound => SubclassMaxPerRound;
 
-    private List<Player> _players = new List<Player>();
+    private List<Player> _players = new();
     public override List<Player> GetPlayers() => _players;
     public override void OnReceived(Player player) => _players.Add(player);
     public override void OnLost(Player player) => _players.Remove(player);
