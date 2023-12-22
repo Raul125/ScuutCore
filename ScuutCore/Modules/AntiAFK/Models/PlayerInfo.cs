@@ -1,5 +1,6 @@
 ﻿namespace ScuutCore.Modules.AntiAFK.Models;
 
+using System;
 using System.Collections.Generic;
 using InventorySystem.Items.Usables.Scp330;
 using MEC;
@@ -28,12 +29,22 @@ public class PlayerInfo
         foreach (var item in player.Items)
             items.Add(item.ItemTypeId);
 
-        if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079)
+        try
         {
-            bool sub = scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability);
-            level = sub ? ability.AccessTierLevel : 0; ;
-            experience = sub ? ability.TotalExp : 0;
-            energy = scp079.SubroutineModule.TryGetSubroutine(out Scp079AuxManager abilityaux) ? abilityaux.CurrentAux : 0;
+            if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079)
+            {
+                bool sub = scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability);
+                level = sub ? ability.AccessTierLevel : 0;
+                ;
+                experience = sub ? ability.TotalExp : 0;
+                energy = scp079.SubroutineModule.TryGetSubroutine(out Scp079AuxManager abilityaux)
+                    ? abilityaux.CurrentAux
+                    : 0;
+            }
+        }
+        catch (Exception e)
+        {
+            Log.Error($"AntiAFK constr 079 role: {player.Role}: " + e);
         }
     }
 
@@ -52,16 +63,25 @@ public class PlayerInfo
             foreach (var item in items)
                 player.AddItem(item);
 
-            if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079
-                && scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability))
+            try
             {
-                ability.TotalExp = level <= 1 ? 0 : ability.AbsoluteThresholds[Mathf.Clamp(level - 2, 0, ability.AbsoluteThresholds.Length - 1)];
-                ability.TotalExp = experience;
+                if (player.ReferenceHub.roleManager.CurrentRole is Scp079Role scp079
+                    && scp079.SubroutineModule.TryGetSubroutine(out Scp079TierManager ability))
+                {
+                    ability.TotalExp = level <= 1
+                        ? 0
+                        : ability.AbsoluteThresholds[Mathf.Clamp(level - 2, 0, ability.AbsoluteThresholds.Length - 1)];
+                    ability.TotalExp = experience;
 
-                if (!scp079.SubroutineModule.TryGetSubroutine(out Scp079AuxManager abilityaux))
-                    return;
+                    if (!scp079.SubroutineModule.TryGetSubroutine(out Scp079AuxManager abilityaux))
+                        return;
 
-                abilityaux.CurrentAux = energy;
+                    abilityaux.CurrentAux = energy;
+                }
+            }
+            catch (Exception e)
+            {
+                Log.Error($"AntiAFK addto 079 role: {player.Role}: " + e);
             }
         });
     }
