@@ -31,8 +31,9 @@ public sealed class EventHandlers : InstanceBasedEventHandler<WhoAreMyTeammates>
         if (!broadcast.IsEnabled)
             return;
 
-#warning scp3114 - remove after halloween
-        var players = Player.GetPlayers().Where(x => x.Role.GetTeam() == broadcast.Team && broadcast.Team == Team.SCPs && x.Role == RoleTypeId.Scp3114).ToList();
+        var players = broadcast.Team == Team.SCPs
+            ? Player.GetPlayers().Where(x => x.IsSCP(true)).ToList()
+            : Player.GetPlayers().Where(x => x.Role.GetTeam() == broadcast.Team).ToList();
         if (broadcast.MaxPlayers > -1 && players.Count >= broadcast.MaxPlayers)
             return;
 

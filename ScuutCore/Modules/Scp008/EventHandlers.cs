@@ -18,11 +18,14 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
     [PluginEvent(ServerEventType.PlayerDamage)]
     public void OnHurt(PlayerDamageEvent e)
     {
+        if (Module.Config.BlacklistedRoles.Contains(e.Player.Role))
+            return;
+
         var target = e.Target;
         if (!target.EffectsManager.TryGetEffect<Poisoned>(out var poisonedEffect))
             return;
 
-        if (poisonedEffect.IsEnabled || e.DamageHandler is not AttackerDamageHandler { Attacker: { Role: RoleTypeId.Scp0492 } })
+        if (poisonedEffect.IsEnabled || e.DamageHandler is not AttackerDamageHandler { Attacker.Role: RoleTypeId.Scp0492 })
             return;
 
         if (Random.Range(0, 100) > Module.Config.InfectionChance)

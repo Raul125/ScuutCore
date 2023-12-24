@@ -4,6 +4,7 @@ using ScuutCore.API.Features;
 using ScuutCore.API.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel;
+using PlayerRoles;
 
 public class Config : IModuleConfig
 {
@@ -33,4 +34,11 @@ public class Config : IModuleConfig
     };
 
     public bool DropInventory { get; set; } = true;
+
+    public List<RoleTypeId> BlacklistedRoles { get; set; } = new()
+    {
+        RoleTypeId.Flamingo,
+        RoleTypeId.AlphaFlamingo,
+        RoleTypeId.ZombieFlamingo
+    };
 }

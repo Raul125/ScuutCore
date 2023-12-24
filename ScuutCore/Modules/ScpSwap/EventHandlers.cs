@@ -19,7 +19,6 @@ public sealed class EventHandlers : InstanceBasedEventHandler<ScpSwap>
 
         Plugin.Coroutines.Add(Timing.CallDelayed(0.1f, () =>
         {
-            #warning scp3114 - remove after halloween
             if ((player.Role.GetTeam() is Team.SCPs || player.Role == RoleTypeId.Scp3114 || customSwap != null) &&
                 Round.Duration.TotalSeconds < Module.Config.SwapTimeout)
                 Module.Config.StartMessage.Show(player);
