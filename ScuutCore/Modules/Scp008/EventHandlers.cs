@@ -18,6 +18,8 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
     [PluginEvent(ServerEventType.PlayerDamage)]
     public void OnHurt(PlayerDamageEvent e)
     {
+        if (e.Player == null)
+            return;
         if (Module.Config.BlacklistedRoles.Contains(e.Player.Role))
             return;
 
