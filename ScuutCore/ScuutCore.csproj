@@ -24,7 +24,7 @@
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    <PackageReference Include="Northwood.PluginAPI" Version="13.1.1" />
+    <PackageReference Include="Northwood.PluginAPI" Version="13.1.2" />
     <PackageReference Include="YamlDotNet" Version="12.3.1" />
   </ItemGroup>
   <ItemGroup>

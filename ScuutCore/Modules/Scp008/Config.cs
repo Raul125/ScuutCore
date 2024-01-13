@@ -37,8 +37,5 @@ public class Config : IModuleConfig
 
     public List<RoleTypeId> BlacklistedRoles { get; set; } = new()
     {
-        RoleTypeId.Flamingo,
-        RoleTypeId.AlphaFlamingo,
-        RoleTypeId.ZombieFlamingo
     };
 }

@@ -76,7 +76,6 @@ public static class Extension
     /// Check if the player is any SCP.
     /// </summary>
     /// <returns>true if player is SCP</returns>
-    public static bool IsSCP(this Player ply, bool include3314 = false, bool includeFlamingo = true) => ply.Role is RoleTypeId.Scp049 or RoleTypeId.Scp079
-        or RoleTypeId.Scp096 or RoleTypeId.Scp106 or RoleTypeId.Scp173 or RoleTypeId.Scp0492 or RoleTypeId.Scp939 || (include3314 && ply.Role == RoleTypeId.Scp3114)
-        || (includeFlamingo && ply.Role is RoleTypeId.Flamingo or RoleTypeId.AlphaFlamingo or RoleTypeId.ZombieFlamingo);
+    public static bool IsSCP(this Player ply, bool include3314 = false) => ply.Role is RoleTypeId.Scp049 or RoleTypeId.Scp079
+        or RoleTypeId.Scp096 or RoleTypeId.Scp106 or RoleTypeId.Scp173 or RoleTypeId.Scp0492 or RoleTypeId.Scp939 || (include3314 && ply.Role == RoleTypeId.Scp3114);
 }
