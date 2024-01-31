@@ -16,6 +16,7 @@ public sealed class Config : IModuleConfig
     public bool LoadGuns { get; set; } = true;
     public bool GiveItemsToNonSubclasses { get; set; } = true;
     public float ChanceForItems { get; set; } = 69f;
+
     public List<ItemType> Items { get; set; } = new()
     {
         ItemType.Flashlight
