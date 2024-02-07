@@ -5,6 +5,7 @@ using CustomPlayerEffects;
 using InventorySystem.Items;
 using MapGeneration;
 using PlayerRoles;
+using PlayerRoles.PlayableScps.Scp079.Rewards;
 using PlayerStatsSystem;
 using PluginAPI.Core;
 using PluginAPI.Core.Attributes;
@@ -79,6 +80,7 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
         if (Module.Config.DropInventory)
             player.DropEverything();
 
+        TerminationRewards.OnHumanTerminated(e.Player.ReferenceHub, e.DamageHandler);
         player.ReferenceHub.roleManager.ServerSetRole(RoleTypeId.Scp0492, RoleChangeReason.Revived, RoleSpawnFlags.None);
         return false;
     }
