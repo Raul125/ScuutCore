@@ -81,7 +81,7 @@ public sealed class EventHandlers : InstanceBasedEventHandler<Scp008>
             player.DropEverything();
 
         TerminationRewards.OnHumanTerminated(e.Player.ReferenceHub, e.DamageHandler);
-        player.ReferenceHub.roleManager.ServerSetRole(RoleTypeId.Scp0492, RoleChangeReason.Revived, RoleSpawnFlags.None);
+        player.ReferenceHub.roleManager.ServerSetRole(RoleTypeId.Scp0492, RoleChangeReason.Died, RoleSpawnFlags.None);
         return false;
     }
 }
