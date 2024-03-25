@@ -7,7 +7,8 @@ public sealed class Config : IModuleConfig
     public bool IsEnabled { get; set; } = true;
     public string SpawnQueue { get; set; } = "4014314031441404134044434414";
     public float ChaosProb { get; set; } = 40;
-    public int MinScpAmountFor079 { get; set; } = 2;
+    public int MinScpAmountFor079And3114 { get; set; } = 2;
+    public bool Add3114 { get; set; } = true;
     public bool UseBroadcastsInsteadOfHints { get; set; } = false;
 
     public string SelectedTeam { get; set; } = "<b>Selected Team:</b>";

@@ -1,9 +1,9 @@
-﻿using PlayerRoles;
+﻿namespace ScuutCore.Modules.ChooseRole;
+
+using PlayerRoles;
 using PluginAPI.Core;
 using System.Collections.Generic;
 using UnityEngine;
-
-namespace ScuutCore.Modules.ChooseRole;
 
 using ScuutCore.Modules.ChooseRole.Components;
 
@@ -24,10 +24,9 @@ public class TeamTrigger : MonoBehaviour
         if (ply is null || ContainsPlayer(ply))
             return;
 
-        if (ply.TryGetComponent<HudComponent>(out var comp))
-            comp.Team = getTeamString(Team);
-
         Players.Add(ply);
+        if (ply.TryGetComponent<HudComponent>(out var comp))
+            comp.Team = GetTeamString(Team);
     }
 
     private void OnTriggerExit(Collider other)
@@ -36,15 +35,14 @@ public class TeamTrigger : MonoBehaviour
         if (ply is null || !ContainsPlayer(ply))
             return;
 
+        Players.Remove(ply);
         if (ply.TryGetComponent<HudComponent>(out var comp))
             comp.Team = ChooseRole.Singleton.Config.Random;
-
-        Players.Remove(ply);
     }
 
     public bool ContainsPlayer(Player player) => Players.Contains(player);
 
-    private static string getTeamString(Team team)
+    private static string GetTeamString(Team team)
     {
         if (team == Team.ClassD)
             return ChooseRole.Singleton.Config.ClassD;

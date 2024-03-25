@@ -1,17 +1,16 @@
-﻿using StringBuilder = System.Text.StringBuilder;
-
-namespace ScuutCore.Modules.ChooseRole.Components;
+﻿namespace ScuutCore.Modules.ChooseRole.Components;
 
 using GameCore;
 using Hints;
 using NorthwoodLib.Pools;
 using PluginAPI.Core;
+using System.Text;
 using UnityEngine;
 
 public class HudComponent : MonoBehaviour
 {
     public string Team = ChooseRole.Singleton!.Config.Random;
-    private ReferenceHub _hub = null!;
+    private ReferenceHub _hub;
 
     public void Init(ReferenceHub hub)
     {
@@ -28,9 +27,14 @@ public class HudComponent : MonoBehaviour
     private void Update()
     {
         _counter += Time.deltaTime;
-
         if (_counter < 0.5f)
             return;
+
+        if (_hub.gameObject == null)
+        {
+            Destroy(this);
+            return;
+        }
 
         if (Round.IsRoundStarted)
         {
@@ -44,12 +48,10 @@ public class HudComponent : MonoBehaviour
         if (ChooseRole.Singleton!.Config.UseBroadcastsInsteadOfHints)
         {
             Server.Broadcast.TargetClearElements(_hub.connectionToClient);
-            Server.Broadcast.TargetAddElement(_hub.connectionToClient, text, 4, Broadcast.BroadcastFlags.Normal);
+            Server.Broadcast.TargetAddElement(_hub.connectionToClient, text, 1, Broadcast.BroadcastFlags.Normal);
         }
         else
-        {
-            _hub.hints.Show(new TextHint(text, new HintParameter[] { new StringHintParameter(text) }, null, 4));
-        }
+            _hub.hints.Show(new TextHint(text, new HintParameter[] { new StringHintParameter(text) }, null, 1));
     }
 
     private string Build()
